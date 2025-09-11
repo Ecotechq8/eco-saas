@@ -1,0 +1,39 @@
+<!--<odoo>-->
+<!--    &lt;!&ndash; Kanban view &ndash;&gt;-->
+<!--    <record id="view_apps_category_kanban" model="ir.ui.view">-->
+<!--        <field name="name">apps.category.kanban</field>-->
+<!--        <field name="model">apps.category</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <kanban>-->
+<!--                <templates>-->
+<!--                    <t t-name="kanban-box">-->
+<!--                        <div class="o_kanban_record" style="padding:20px; text-align:center; cursor:pointer;"-->
+<!--                             t-att-data-id="record.id.raw_value"-->
+<!--                             t-att-data-action="record.action_id.id"-->
+<!--                             t-on-click="() => this.trigger_up('do_action', {action_id: record.action_id.raw_value})">-->
+<!--                            <div style="font-size:30px; margin-bottom:10px;">-->
+<!--                                <i t-att-class="'fa ' + record.icon.raw_value"/>-->
+<!--                            </div>-->
+<!--                            <div style="font-size:18px; font-weight:bold;">-->
+<!--                                <field name="name"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </t>-->
+<!--                </templates>-->
+<!--            </kanban>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Action to open the Kanban &ndash;&gt;-->
+<!--    <record id="action_apps_category" model="ir.actions.act_window">-->
+<!--        <field name="name">App Categories</field>-->
+<!--        <field name="res_model">apps.category</field>-->
+<!--        <field name="view_mode">kanban</field>-->
+<!--        <field name="view_id" ref="view_apps_category_kanban"/>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Menu item to access &ndash;&gt;-->
+<!--    <menuitem id="menu_apps_category_root" name="App Categories"-->
+<!--              parent="base.menu_management"-->
+<!--              action="action_apps_category"/>-->
+<!--</odoo>-->

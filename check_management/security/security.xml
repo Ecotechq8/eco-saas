@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="group_cash_payment" model="res.groups">
+            <field name="name">Cash Payment</field>
+        </record>
+
+        <record id="group_check_payment" model="res.groups">
+            <field name="name">Check Payment</field>
+        </record>
+
+
+        <record id="group_send_payment" model="res.groups">
+            <field name="name">Send Payment</field>
+        </record>
+
+        <record id="group_post_payment" model="res.groups">
+            <field name="name">Post Payment</field>
+        </record>
+
+
+        <record id="group_cancel_payment" model="res.groups">
+            <field name="name">Cancel Payment</field>
+        </record>
+
+
+    </data>
+</odoo>

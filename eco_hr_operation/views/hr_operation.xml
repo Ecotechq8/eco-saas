@@ -1,0 +1,82 @@
+<odoo>
+    <!-- HR Operation Views -->
+    <record id="view_hr_operation_form" model="ir.ui.view">
+        <field name="name">hr.operation.form</field>
+        <field name="model">hr.operation</field>
+        <field name="arch" type="xml">
+            <form string="HR Operation">
+                <header>
+                    <button name="action_confirm" invisible="state == 'confirmed'" string="Confirm" type="object"/>
+                    <button name="action_cancel" invisible="state in ['cancelled','confirmed']"
+                            string="Cancel" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,cancelled,confirmed"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="responsible_id"/>
+                            <field name="type_id"/>
+                        </group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="identification_no"/>
+                            <field name="job_title"/>
+                            <field name="nationality_id"/>
+                            <field name="manager_id"/>
+                            <field name="department_id"/>
+                            <field name="date_of_birth"/>
+                            <field name="contract_id"/>
+                            <field name="contract_start_date"/>
+                            <field name="contract_end_date"/>
+                            <field name="show_fields" invisible="1"/>
+                            <field name="last_work_date" required="show_fields=='final_release'"
+                                   invisible="not show_fields=='final_release'"/>
+                            <field name="to_mr_miss" required="show_fields=='proceed_work'"
+                                   invisible="not show_fields=='proceed_work'"/>
+                            <field name="calling_date" invisible="not show_fields=='investigation_call'"
+                                   required="show_fields=='investigation_call'"/>
+                            <field name="calling_time" invisible="not show_fields=='investigation_call'"
+                                   required="show_fields=='investigation_call'"/>
+                            <field name="passport_withdrawal" invisible="1"/>
+                            <field name="passport_delivery_date" invisible="not show_fields=='passport_withdrawal'"
+                                   required="show_fields=='passport_withdrawal'"/>
+                            <field name="passport_receive_date" invisible="not show_fields=='passport_withdrawal'"
+                                   required="show_fields=='passport_withdrawal'"/>
+                            <field name="purpose_of_passport_withdrawal"
+                                   invisible="not show_fields=='passport_withdrawal'"
+                                   required="show_fields=='passport_withdrawal'"/>
+                            <field name="proceed_work_leave" invisible="1"/>
+                            <field name="date_resumes_duty" invisible="not show_fields=='proceed_work_leave'"
+                                   required="show_fields=='proceed_work_leave'"/>
+                            <field name="reason_change_resume_date" invisible="not show_fields=='proceed_work_leave' "
+                                   required="show_fields=='proceed_work_leave'"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hr_operation_tree" model="ir.ui.view">
+        <field name="name">hr.operation.tree</field>
+        <field name="model">hr.operation</field>
+        <field name="arch" type="xml">
+            <list string="HR Operations">
+                <field name="date"/>
+                <field name="employee_id"/>
+                <field name="job_title"/>
+                <field name="type_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_hr_operation" model="ir.actions.act_window">
+        <field name="name">HR Operations</field>
+        <field name="res_model">hr.operation</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_hr_operation" name="HR Operations" parent="hr.menu_hr_root"
+              action="action_hr_operation" sequence="20"/>
+</odoo>

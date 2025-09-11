@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="get_attendance_wizard" model="ir.ui.view">
+        <field name="name">Get Attendance Wizard</field>
+        <field name="model">get.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Get Attendance">
+                <group>
+                    <group>
+                        <field name="start_date" required="1"/>
+                        <field name="device_id" invisible="1" required="1"/>
+                    </group>
+                    <group>
+                        <field name="end_date" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="get_attendance"
+                        string="Get Attendance"
+                        type="object"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

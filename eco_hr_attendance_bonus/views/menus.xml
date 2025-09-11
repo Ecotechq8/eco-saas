@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menuitem_eco_hr_attendance_bonus" name="Employee Attendance Bonus" sequence="5"
+                  parent="rm_hr_attendance_sheet.menu_hr_attendance_sheet_setting"
+                  action="eco_hr_attendance_bonus.eco_hr_attendance_bonus_action"/>
+
+
+    </data>
+</odoo>

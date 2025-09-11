@@ -1,0 +1,91 @@
+<odoo>
+    <data>
+        <record id="check_book_form_view" model="ir.ui.view">
+            <field name="name">check.book.form</field>
+            <field name="model">check.book</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <header>
+                        <button name="activate_check_book"
+                            string="Activate"
+                            class="oe_highlight"
+                            type="object"
+                            invisible="state in ['active','closed']"
+                        />
+                        <button name="close_check_book" 
+                            string="Close" 
+                            class="oe_highlight"
+                            invisible="state in ['draft','closed']"
+                            type="object"
+                        />
+                        <button name="cancel_current_check" 
+                            string="Cancel Current Check" 
+                            class="oe_highlight"
+                            invisible="state in ['draft','closed']"
+                            type="object"
+                        />
+
+                    <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" string="Name"/>
+                            <h1>
+                                <field name="name" readonly="state != 'draft'"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <!-- <field name="number_of_digits"/> -->
+                                <field name="bank_id" readonly="state != 'draft'"/>
+                                <field name="next_check_no" readonly="1" invisible="state =='closed'"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="start_check_no" readonly="state != 'draft'"/>
+                                <field name="last_check_no" readonly="state != 'draft'"/>
+                                <field name="payment_journal" readonly="state != 'draft'"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Checks"
+                                  invisible="state =='draft'">
+                                <field name="check_ids" readonly="1">
+                                    <list editable="bottom">
+                                        <field name="check_number" readonly="check_book_id != 0"/>
+                                        <field name="investor_id"/>
+                                        <field name="check_date"/>
+                                        <field name="check_book_id"/>
+                                        <field name="amount"/>
+                                        <field name="check_bank"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="check_book_list_view" model="ir.ui.view">
+            <field name="name">check.book.list</field>
+            <field name="model">check.book</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="bank_id"/>
+                    <field name="payment_journal"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="check_action_check_book" model="ir.actions.act_window">
+            <field name="name">Check Book</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">check.book</field>
+            <field name="view_mode">form,list</field>
+        </record>
+    </data>
+</odoo>

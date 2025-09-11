@@ -1,0 +1,305 @@
+<odoo>
+    <data>
+
+
+        <record id='checks_object_search' model='ir.ui.view'>
+            <field name='name'>checks.management.search</field>
+            <field name='model'>check.management</field>
+            <field name='arch' type='xml'>
+                <search>
+                    <field name="check_number" string="Check Number"/>
+                    <field name="investor_id" string="Customer"/>
+                    <field name="amount" string="Check Amount"/>
+                    <field name="payment_date"/>
+                    <field name="transaction_date"/>
+                    <!-- <field name="is_police_report"/> -->
+                    <field name="police_date"/>
+                    <field name="police_number"/>
+                    <filter string="Police Report" name="police_report" domain="[('is_police_report','=', True)]"/>
+
+                    <filter string="Deposited Checks" name="deposite_checks" domain="[('state','=', 'depoisted')]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Payment Date" name="groupby_payment_date" domain="[]"
+                                context="{'group_by': 'payment_date'}"/>
+                        <filter string="Transaction Date" name="groupby_transaction_date" domain="[]"
+                                context="{'group_by': 'transaction_date'}"/>
+                        <filter string="Police Date" name="groupby_police_date" domain="[]"
+                                context="{'group_by': 'police_date'}"/>
+                    </group>
+
+                </search>
+            </field>
+        </record>
+
+
+        <record id="checks_object_form" model="ir.ui.view">
+            <field name="name">checks.object.form</field>
+            <field name="model">check.management</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="arch" type="xml">
+                <form string="" create="false">
+                    <header>
+                        <button name="button_deposit_checks"
+                                string="Deposit Checks"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state not in ('holding', 'returned')"/>
+                        <!--                                attrs="{'invisible':[('state', 'not in', ['holding', 'returned'])]}"/>-->
+                        <button name="button_customer_return"
+                                string="Customer Return"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state not in ('holding', 'returned')"/>
+                        <!--                                attrs="{'invisible':[('state', 'not in', ['holding', 'returned'])]}"/>-->
+                        <button name="button_reject_checks"
+                                string="Reject Checks"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'depoisted'"/>
+                        <!--                                attrs="{'invisible':[('state', 'not in', 'depoisted')]}"/>-->
+                        <button name="button_approve_checks"
+                                string="Collect checks"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state not in ('holding', 'depoisted', 'rejected', 'returned')"/>
+                        <!--                                attrs="{'invisible':[('state', 'not in', ['holding', 'depoisted', 'rejected', 'returned'])]}"/>-->
+                        <button name="button_company_return"
+                                string="Responsed"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'rejected'"/>
+
+                        <button name="button_debited_check"
+                                string="Debit"
+                                type="object"
+                                class="oe_highlight"
+                                invisible="state != 'handed'"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" name="button_journal_entries"
+                                    string="Journal Items" type="object" icon="fa-bars"/>
+                        </div>
+                        <group>
+                            <group string="Check Info">
+                                <field name="type" readonly="1" invisible="1"/>
+                                <field name="check_type" invisible="1"/>
+                                <field name="check_number" readonly="1"/>
+                                <field name="check_bank"/>
+                                <field name="check_date" readonly="1"/>
+                                <field name="dep_bank"/>
+                                <field name="amount" readonly="1"/>
+                                <field name="open_amount" readonly="1"/>
+                                <field name="will_collection_user"/>
+                            </group>
+                            <group string="Customer Info" invisible="check_type == 'pay'">
+                                <field name="investor_id" readonly="1" invisible="0"/>
+                                <field name="is_transfer_to_collect" invisible="state != 'rejected'"/>
+                                <field name="date_to_transfer" invisible="is_transfer_to_collect==False"/>
+                                <field name="automatic_transfer_date" invisible="is_transfer_to_collect==False"/>
+                                <field name="payment_date"/>
+                                <field name="transaction_date"/>
+                                <field name="is_police_report"/>
+                                <field name="police_date" invisible="is_police_report==False"/>
+                                <field name="automatic_policy_date" invisible="is_police_report==False"/>
+                                <field name="police_number" invisible="is_police_report==False"/>
+                                <field name="reject_reason" invisible="state !='rejected'" readonly="1"/>
+                            </group>
+                            <group string="Vendor Info" invisible="check_type == 'rece'">
+                                <field name="investor_id" readonly="1" invisible="0"/>
+                                <field name="payment_date"/>
+                                <field name="transaction_date"/>
+                                <field name="is_police_report" invisible="state !='rejected'"/>
+                                <field name="police_date" invisible="is_police_report==False"/>
+                                <field name="police_number" invisible="is_police_report==False"/>
+                                <field name="reject_reason" invisible="state !='rejected'" readonly="1"/>
+
+                            </group>
+                        </group>
+
+                        <notebook>
+                        </notebook>
+
+                    </sheet>
+                    <chatter></chatter>
+
+
+                </form>
+            </field>
+        </record>
+
+
+        <record id="checks_object_list" model="ir.ui.view">
+            <field name="name">checks.object.list</field>
+            <field name="model">check.management</field>
+            <!--            <field name="view_type">list</field>-->
+            <field name="arch" type="xml">
+                <list string="" create="false" edit="false">
+                    <field name="check_number"/>
+                    <field name="check_date"/>
+                    <field name="investor_id"/>
+                    <field name="check_bank"/>
+                    <field name="dep_bank"/>
+                    <field name="amount" sum="Total Amount"/>
+                    <field name="currency_id"/>
+                    <field name="open_amount" sum="Total Open Amount"/>
+                    <field name="type" invisible="1"/>
+                    <field name="is_transfer_to_collect" string="Transfer To Collect"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="native_check_holding_action" model="ir.actions.act_window">
+            <field name="name">Holding Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','holding')]</field>
+            <field name="context">{'menu_sent':'holding'}</field>
+        </record>
+
+        <record id="native_check_depoisted_action" model="ir.actions.act_window">
+            <field name="name">Depoisted Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','depoisted')]</field>
+            <field name="context">{'menu_sent':'depoist'}</field>
+        </record>
+
+        <record id="native_check_approved_action" model="ir.actions.act_window">
+            <field name="name">Collected checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','approved')]</field>
+            <field name="context">{'menu_sent':'approved'}</field>
+        </record>
+
+        <record id="native_check_rejected_action" model="ir.actions.act_window">
+            <field name="name">Rejected Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','rejected')]</field>
+            <field name="context">{'menu_sent':'rejected'}</field>
+        </record>
+
+        <record id="native_check_returned_action" model="ir.actions.act_window">
+            <field name="name">Returned Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','returned')]</field>
+            <field name="context">{'menu_sent':'returned'}</field>
+        </record>
+
+        <record id="native_check_handed_action" model="ir.actions.act_window">
+            <field name="name">Handed Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','handed')]</field>
+            <field name="context">{'menu_sent':'handed'}</field>
+        </record>
+
+        <record id="native_check_debited_action" model="ir.actions.act_window">
+            <field name="name">Debited Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','debited')]</field>
+            <field name="context">{'menu_sent':'debited'}</field>
+        </record>
+
+        <record id="check_action_recieve_create_menu" model="ir.actions.server">
+            <field name="name">Receive Check</field>
+            <field name="model_id" ref="model_normal_payments"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_create_receive_check()</field>
+        </record>
+
+        <record id="native_check_canceled_action" model="ir.actions.act_window">
+            <field name="name">Cancel Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','canceled')]</field>
+            <field name="context">{'menu_sent':'canceled'}</field>
+        </record>
+
+        <record id="native_check_csreturned_action" model="ir.actions.act_window">
+            <field name="name">Customer Returned Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','cs_return')]</field>
+            <field name="context">{'menu_sent':'cs_return'}</field>
+        </record>
+
+
+        <record id="native_check_vendor_returned_action" model="ir.actions.act_window">
+            <field name="name">Vendor Returned Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('state','=','vendor_return')]</field>
+            <field name="context">{'menu_sent':'vendor_return'}</field>
+        </record>
+
+
+        <record id="native_check_rece_action" model="ir.actions.act_window">
+            <field name="name">Receivable Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('check_type','=','rece')]</field>
+            <field name="context">{'menu_sent':'recivable'}</field>
+        </record>
+
+        <record id="native_check_pay_action" model="ir.actions.act_window">
+            <field name="name">Payable Checks</field>
+            <field name="res_model">check.management</field>
+            <field name="view_mode">list,form,pivot,graph</field>
+            <!--            <field name="view_type">form</field>-->
+            <field name="domain">[('check_type','=','pay')]</field>
+            <field name="context">{'menu_sent':'payable'}</field>
+        </record>
+
+        <record id="check_action_pay_create_menu" model="ir.actions.server">
+            <field name="name">Pay Check</field>
+            <field name="model_id" ref="model_normal_payments"/>
+            <field name="state">code</field>
+            <field name="code">action = model.action_create_pay_check()</field>
+        </record>
+
+        <record id="ttttt_check_pivot_view" model="ir.ui.view">
+            <field name="name">check.management.pivot.check</field>
+            <field name="model">check.management</field>
+            <field name="arch" type="xml">
+                <pivot string="Check" display_quantity="true">
+                    <field name="check_date" interval="month" type="row"/>
+                    <field name="dep_bank" type="col"/>
+                    <field name="open_amount" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="tttt_check_graph_view" model="ir.ui.view">
+            <field name="name">check.management.graph</field>
+            <field name="model">check.management</field>
+            <field name="arch" type="xml">
+                <graph string="Check">
+                    <field name="dep_bank" type="col"/>
+                    <field name="check_date" type="row"/>
+                    <field name="open_amount" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

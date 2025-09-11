@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="menuitem_employee_attendance" name="Employee Attendance Report" sequence="5"
+                  parent="hr.hr_menu_hr_reports"
+                  action="eco_hr_custom_reports.employee_attendance_action"/>
+        <menuitem id="menuitem_employee_absent" name="Employee Absent Report" sequence="6"
+                  parent="hr.hr_menu_hr_reports"
+                  action="eco_hr_custom_reports.employee_absent_action"/>
+    </data>
+</odoo>

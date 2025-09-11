@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_button_deposit_checks" model="ir.actions.server">
+        <field name="name">Deposit Checks</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="check_management.model_check_management" />
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+    <record id="action_button_approve_checks" model="ir.actions.server">
+        <field name="name">Collect checks</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="check_management.model_check_management" />
+
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action3').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+    <record id="action_button_reject_checks" model="ir.actions.server">
+        <field name="name">Reject Checks</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+                <field name="binding_model_id" ref="check_management.model_check_management" />
+
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action2').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+    <record id="action_button_customer_return_checks" model="ir.actions.server">
+        <field name="name">Customer Return</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+                <field name="binding_model_id" ref="check_management.model_check_management" />
+
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action7').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+    <record id="action_button_company_return_checks" model="ir.actions.server">
+        <field name="name">Company Responsed</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="check_management.model_check_management" />
+
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action5').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+    <record id="action_button_debit_checks" model="ir.actions.server">
+        <field name="name">Debit Check</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="check_management.model_check_management" />
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action3').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+
+    <record id="action_vendor_return_checks" model="ir.actions.server">
+        <field name="name">Vendor Return</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="check_management.model_check_management" />
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action_return_vendor').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+
+    <record id="action_split_merge_checks" model="ir.actions.server">
+        <field name="name">Split-Merge</field>
+        <field name="model_id" ref="check_management.model_check_management"/>
+        <field name="state">code</field>
+        <field name="binding_model_id" ref="check_management.model_check_management" />
+        <field name="code">action = model.env.ref('check_management.check_cycle_wizard_action8').read()[0]</field>
+        <field name="type">ir.actions.server</field>
+        <!-- Add other necessary fields here -->
+    </record>
+
+
+    <!-- Define action servers for other buttons similarly -->
+</odoo>

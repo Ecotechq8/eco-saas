@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_operation_type,access.hr.operation.type,model_hr_operation_type,,1,1,1,1
+access_hr_operation,access.hr.operation,model_hr_operation,,1,1,1,1

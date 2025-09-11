@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_proceed_working_document">
+        <t t-call="web.basic_layout">
+            <div class="header">
+                <center>
+                    <img t-attf-src="/hr_printouts/static/src/img/proceed_work_header.png" alt="Header"
+                         style="width:100%"/>
+                </center>
+            </div>
+            <div class="page" style="font-weight:bold;">
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid black;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            الاسـم:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Name
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            الرقم الوظيفى:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.pin"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :.Employee No
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            الوظيفة:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.job_title.name"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Position
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            تاريخ التعيين:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.contract_start_date"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Hire Date
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            الإدارة:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.department_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Department
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td colspan="2" style="border: 1px solid white;">
+                            <strong>
+                                إلى السـيـد
+                                          
+                                          
+                                          
+                                <span t-field="doc.to_mr_miss"/>
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                          
+                                .To MR
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong style="font-size:14px;">
+                                يرجى التكرم بالعلم أن الموظف المذكور بياناته أعلاه
+                                <br/>
+                                <br/>
+                                قد باشرالعمل بتاريخ
+                                <span t-field="doc.contract_start_date"/>
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong style="font-size:14px;float:left;">
+                                Please be informed that the above mentioned
+                                <br/>
+                                <br/>
+                                Employee has already start for Duty on
+                                <span t-field="doc.contract_start_date"/>
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong style="font-size:14px;">
+                                إسم مدير القسم / اﻹدارة
+                                <br/>
+                                <br/>
+                                التوقيع
+                                <br/>
+                                <br/>
+                                التاريخ
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong style="font-size:14px;float:left;">
+                                Dept. Heads Approval
+                                <br/>
+                                <br/>
+                                Signature
+                                <br/>
+                                <br/>
+                                Date
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="footer" style="background-color:#cccccc;">
+                <span>
+                    ملاحظة: يعبأ هذا النموذج ويقدم ﻹدارة الموارد البشرية والشئون اﻹدارية بتاريخ أقصاه يوم واحد بعد
+                    مباشرة
+                    العمل
+                    <br/>
+                    NOTE: This form must be filled up and submitted to HRD not later than the following day of the
+                    commencement date.
+                </span>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_proceed_working_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_printouts.report_proceed_working_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_proceed_working_report" model="ir.actions.report">
+        <field name="name">مباشرة عمل</field>
+        <field name="model">hr.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_printouts.report_proceed_working_printout</field>
+        <field name="report_file">hr_printouts.report_proceed_working_printout</field>
+        <field name="binding_model_id" ref="eco_hr_operation.model_hr_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

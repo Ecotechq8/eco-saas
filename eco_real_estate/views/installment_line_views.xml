@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+
+        <!-- Installment line -->
+        <record id="view_installment_line_list" model="ir.ui.view">
+            <field name="name">installment.line.list</field>
+            <field name="model">installment.line</field>
+            <field name="arch" type="xml">
+                <list string="Installment line">
+                    <field name="seq" widget="handle"/>
+                    <field name="name"/>
+                    <field name="instalment_percent"/>
+                    <field name="installment_no"/>
+                    <field name="by_period" />
+
+                </list>
+            </field>
+        </record>
+
+        <record id="view_installment_line_form" model="ir.ui.view">
+            <field name="name">installment.line.form</field>
+            <field name="model">installment.line</field>
+            <field name="arch" type="xml">
+                <form string="Installment line">
+                    <sheet>
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Name"/>
+                        </h1>
+
+                        <group>
+                            <field name="calculated_by"/>
+                            <field name="type"/>
+                            <field name="maintanance_exclude" invisible="type != 'maintenance'"/>
+                            <field name="instalment_percent"/>
+                            <field name="installment_no"/>
+                            <field name="journal_id"  domain="[('type','in',['bank','cash'])]" widget="selection"/>
+                        </group>
+                        <group string="Instalment Range">
+                            <field name="range"/>
+                            <field name="by_period" invisible="range != 'period'"/>
+                            <field name="by_days" invisible="range != 'days'"/>
+                            <field name="shift_by"/>
+                            <field name="shift_days" invisible="shift_by != 'days'"/>
+                            <field name="shift_months" invisible="shift_by != 'month'"/>
+                            <field name="company_id" groups="base.group_multi_company" invisible="1"/>
+                        </group>
+                    </sheet>
+                 
+                </form>
+            </field>
+        </record>
+
+        <record id="action_installment_line_form_act_window" model="ir.actions.act_window">
+            <field name="name">Installment line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">installment.line</field>
+            <field name="view_mode">form,list</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new installment line
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

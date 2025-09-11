@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+        <record id="employee_document_expiry" model="ir.cron">
+            <field name="name">Employee Document Expiration</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="code">model._notify_hr_manager()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="False"/>
+
+        </record>
+    </data>
+</odoo>
+

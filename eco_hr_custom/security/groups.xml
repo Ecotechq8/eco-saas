@@ -1,0 +1,9 @@
+<odoo>
+
+    <record id="group_custom_create_payslip" model="res.groups">
+        <field name="name">Crate Payslip Input</field>
+    </record>
+<!--    <record id="hr_payroll.access_hr_payslip_input_user" model="ir.model.access">-->
+<!--        <field name="perm_create" eval="0"/>-->
+<!--    </record>-->
+</odoo>

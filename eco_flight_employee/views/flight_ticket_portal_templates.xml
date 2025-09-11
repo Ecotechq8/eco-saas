@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Add to Portal Menu -->
+    <template id="portal_my_flight_ticket" inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My Flight Tickets</t>
+                <t t-set="text">View your Flight Ticket Requests</t>
+                <t t-set="url" t-value="'/my/flight_ticket'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- Breadcrumbs -->
+    <template id="portal_flight_ticket_breadcrumb" inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'flight_ticket' or flight_ticket"
+                t-attf-class="breadcrumb-item #{'active ' if not flight_ticket else ''}">
+                <a t-if="flight_ticket" t-attf-href="/my/flight_ticket?{{ keep_query() }}">Flight Ticket</a>
+                <t t-else="">Flight Ticket</t>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- List View -->
+    <template id="eco_flight_employee.portal_my_flight_ticket_details">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">Flight Ticket Requests</t>
+                <div class="form-inline ml-lg-4">
+                    <a class="btn btn-success btn-sm" href="/my/flight_ticket/new">
+                        <i class="fa fa-plus"/>
+                        Create New
+                    </a>
+                </div>
+            </t>
+
+            <t t-if="employee">
+                <div class="alert alert-info mb-3">
+                    <strong>Employee:</strong>
+                    <span t-esc="employee.name"/>
+                </div>
+            </t>
+
+            <t t-if="not tickets">
+                <div class="alert alert-warning mt8">No Flight Ticket Requests</div>
+            </t>
+
+            <t t-if="tickets">
+                <t t-call="portal.portal_table">
+                    <thead>
+                        <tr>
+                            <th>Reference</th>
+                            <th>Request Date</th>
+                            <th>Class</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="tickets" t-as="ticket">
+                            <tr>
+                                <td>
+                                    <a t-attf-href="/my/flight_ticket/#{ticket.id}">
+                                        <span t-esc="ticket.name"/>
+                                    </a>
+                                </td>
+                                <td>
+                                    <span t-field="ticket.request_date"/>
+                                </td>
+                                <td>
+                                    <span t-field="ticket.class_type"/>
+                                </td>
+                                <td>
+                                    <span t-field="ticket.state"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Detail View -->
+    <template id="portal_my_flight_ticket_view">
+        <t t-call="portal.portal_layout">
+            <t t-call="portal.portal_record_layout">
+                <t t-set="card_header">
+                    <div class="row no-gutters">
+                        <div class="col-md">
+                            <h5>
+                                <small class="text-muted">Flight Ticket -</small>
+                                <span t-field="flight_ticket.name"/>
+                            </h5>
+                        </div>
+                        <div class="col-md text-md-right">
+                            <small class="mr-2">
+                                <b>Status:</b>
+                            </small>
+                            <span t-field="flight_ticket.state"/>
+                        </div>
+                    </div>
+                </t>
+                <t t-set="card_body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Request Date</strong>
+                                <div class="col">
+                                    <span t-field="flight_ticket.request_date"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Class</strong>
+                                <div class="col">
+                                    <span t-field="flight_ticket.class_type"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Number of Tickets</strong>
+                                <div class="col">
+                                    <span t-field="flight_ticket.number_of_ticket"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Total Amount</strong>
+                                <div class="col">
+                                    <span t-field="flight_ticket.amount_total"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Create Form -->
+    <template id="new_flight_ticket_request">
+        <t t-call="portal.portal_layout">
+            <div class="container my-5">
+                <div class="card shadow-sm">
+                    <div class="card-header">
+                        <h4>Create New Flight Ticket Request</h4>
+                    </div>
+                    <div class="card-body">
+                        <t t-if="error">
+                            <div class="alert alert-danger" role="alert">
+                                <t t-esc="error"/>
+                            </div>
+                        </t>
+
+                        <form method="POST" action="/my/flight_ticket/submit" class="js_website_submit_form">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                            <div class="form-group">
+                                <label>Employee</label>
+                                <input type="text" class="form-control" t-att-value="current_employee.name"
+                                       readonly="1"/>
+                                <input type="hidden" name="employee_id" t-att-value="current_employee.id"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Remaining Tickets</label>
+                                <input type="text" class="form-control" readonly="1"
+                                       t-att-value="remaining_ticket"/>
+                                <input type="hidden" name="remaining_ticket" t-att-value="remaining_ticket"/>
+                            </div>
+
+                            <input type="hidden" name="contract_id" t-att-value="contract_id"/>
+
+                            <div class="form-group">
+                                <label>Class</label>
+                                <input name="class_type" class="form-control" required="required"
+                                       t-att-value="class_type or ''"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Number of Tickets</label>
+                                <input type="number" name="number_of_ticket" class="form-control" min="1"
+                                       required="required" t-att-value="number_of_ticket or ''"/>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ticket Amount</label>
+                                <input type="number" step="1" name="amount_untaxed" class="form-control"
+                                       required="required" t-att-value="amount_untaxed or ''"/>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

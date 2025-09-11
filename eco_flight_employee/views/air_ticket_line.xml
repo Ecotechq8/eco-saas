@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_air_ticket_line_list" model="ir.ui.view">
+            <field name="name">air.ticket.line.list</field>
+            <field name="model">air.ticket.line</field>
+            <field name="arch" type="xml">
+                <list string="Air Ticket Lines" create="0">
+                    <field name="date"/>
+                    <field name="employee_id"/>
+                    <field name="contract_id"/>
+                    <field name="air_ticket_type"/>
+                    <field name="ticket_count" sum="Total"/>
+                    <field name="total_amount" sum="Total"/>
+                    <field name="currency_id" column_invisible="True"/>
+
+                </list>
+            </field>
+        </record>
+        <!-- Air Ticket Line Action -->
+        <record id="action_air_ticket_line" model="ir.actions.act_window">
+            <field name="name">Air Ticket Lines</field>
+            <field name="res_model">air.ticket.line</field>
+            <field name="view_mode">list</field>
+        </record>
+    </data>
+</odoo>

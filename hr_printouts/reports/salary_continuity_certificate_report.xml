@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_salary_continuity_certificate_document">
+        <t t-call="web.basic_layout">
+            <div class="page" style="font-weight:bold;">
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td class="text-right" style="border: 1px solid white;">
+                            <strong>
+                                التاريخ:
+                            </strong>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                        </td>
+                        <td class="text-center" style="border: 1px solid white;">
+                            <strong>
+                                <h4>
+                                    <strong>
+                                        <span>شـهادة استمرارية راتب</span>
+                                        <br/>
+                                        <span>Salary Continuity Certificate</span>
+                                    </strong>
+                                </h4>
+                            </strong>
+                        </td>
+                        <td dir="ltr" style="border: 1px solid white;">
+                            <strong>
+                                Date:
+                            </strong>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td colspan="2" style="border: 1px solid white;">
+                            <strong>
+                                السـادة /
+                                <span t-esc="doc.to_mr_miss"/>
+                                &#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                المـحتـرمـيـن
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong style="font-size:14px;">
+                                تشهد شركة فوارس للخدمات البترولية بالبيانات التالية:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong style="font-size:14px;float:left;">
+                                Fawares Petroleum Services Company certifies the following:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            السيد /
+                            <span t-esc="doc.with_context(lang='ar_001').employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            MR \
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            بطاقة مدنية رقم :
+                            <span t-field="doc.identification_no"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            CID Number:
+                            <span t-field="doc.identification_no"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            الجـنـسـية:
+                            <span t-esc="doc.with_context(lang='ar_001').nationality"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Nationality:
+                            <span t-field="doc.nationality"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            تـاريـخ التعيين:
+                            <span t-field="doc.contract_start_date"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Join Date:
+                            <span t-field="doc.contract_start_date"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            الوظـيـفـة:
+                            <span t-esc="doc.with_context(lang='ar_001').job_title.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Job Title:
+                            <span t-field="doc.job_title.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            إجمالى الراتـب:
+                            <span t-field="doc.contract_id.total_amount"/>
+                            <br/>
+                            <br/>
+                            <span>
+                                (فقط
+                                &#160;
+                                <span t-esc="doc.currency_id.with_context(lang='ar_001').amount_to_text(doc.contract_id.total_amount)"/>
+                                &#160;
+                                كويتى لا غير)
+                            </span>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Total Salary:
+                            <span t-field="doc.contract_id.total_amount"/>
+                            <br/>
+                            <br/>
+                            (
+                            <span
+                                    t-esc="doc.currency_id.with_context(lang='en_US').amount_to_text(doc.contract_id.total_amount)"/>
+                            )
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            و لازال مستمر بعمله لدينا و يتم تحويل راتبه على بنك
+                            <span t-field="doc.employee_id.bank_account_id.bank_id.name"/>
+                            برقم حساب
+                            <br/>
+                            <br/>
+                            (<span t-field="doc.employee_id.bank_account_id.acc_number"/>)
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            He is still continuous with us ,The
+                            above-mentioned salary transferred to his
+                            <span t-field="doc.employee_id.bank_account_id.bank_id.name"/>
+                            Bank IBAN ACCOUNT #
+                            <br/>
+                            <br/>
+                            (<span t-field="doc.employee_id.bank_account_id.acc_number"/>)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong style="font-size:14px;">
+                                لقد تم تزويده بهذه الشهادة لتقديمهها الى الجهة المعنية دون
+                                تحمل أى مسئولية قاتوتية تجاة الغير.
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong style="font-size:14px;float:left;">
+                                This Certificate is issued upon request without any responsibility of the company.
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong style="font-size:14px;">
+                                علما بان مدة صلاحية هذه الشهادة شهر واحد من تاريخه.
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong style="font-size:14px;float:left;">
+                                This letter is valid for One month from today.
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <center>
+                    <h5>
+                        شركة فوارس للخدمات البترولية
+                        <br/>
+                        Fawares Petroleum Services company
+                    </h5>
+                </center>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_salary_continuity_certificate_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_printouts.report_salary_continuity_certificate_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_salary_continuity_certificate_report" model="ir.actions.report">
+        <field name="name">Salary Continuity Certificate / شهادة استمرارية راتب</field>
+        <field name="model">hr.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_printouts.report_salary_continuity_certificate_printout</field>
+        <field name="report_file">hr_printouts.report_salary_continuity_certificate_printout</field>
+        <field name="binding_model_id" ref="eco_hr_operation.model_hr_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="sol_rental_form_view" model="ir.ui.view">
+        <field name="name">sol.rental.form.view</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='qty_delivered']" position="after">
+                <field name="qty_returned" string="Returned Quantity" readonly="1"/>
+            </xpath>
+            <xpath expr="//field[@name='product_uom_qty']" position="after">
+                <field name="pickup_date" string="Pickup Date" readonly="1"/>
+                <field name="return_date" string="Return Date" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="sol_rental_search_view" model="ir.ui.view">
+        <field name="name">sol.rental.search.view</field>
+        <field name="model">sale.order.line</field>
+        <field name="inherit_id" ref="sale.view_sales_order_line_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_id']" position="after">
+                <field name="is_rental_line"/>
+                <field name="is_picked_up"/>
+                <field name="is_returned"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sol_rental_timeline_action" model="ir.actions.act_window">
+        <field name="name">Rental Products Timeline</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.order.line</field>
+        <field name="view_mode">timeline</field>
+        <field name="search_view_id" ref="sol_rental_search_view"/>
+        <field name="context">{}</field>
+        <field name="domain">
+            [('is_rental_line', '=', True)]
+        </field>
+    </record>
+
+    <record id="sttl_sale_rental.sol_rental_timeline_action" model="ir.actions.act_window">
+        <field name="view_mode">timeline</field>
+        <field name="context">{}</field>
+    </record>
+</odoo>

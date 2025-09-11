@@ -1,0 +1,430 @@
+<odoo>
+    <data>
+        <template id="template_work_contract_document">
+            <t t-call="web.basic_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.employee_id.lang})"/>
+                <div class="page" dir="rtl">
+                    <center>
+                        <img t-attf-src="/contract_report_enhancement/static/src/img/contract_header.png" alt="Header"
+                             style="width:100%"/>
+                    </center>
+                    <br/>
+                    <div class="text-center">
+                        <strong>
+                            <span style="font-size:18px;color:black;">
+                                <u>نموذج عقد عمل استرشادى</u>
+                                <br/>
+                                <u>في القطاع الأهلي</u>
+                            </span>
+                        </strong>
+                    </div>
+                    <br/>
+                    <div align="right">
+                        <strong>
+                            دولة الكويت
+                            <br/>
+                            الهيئة العامة للقوى العاملة / إدارة عمل العقود و المشاريع الحكومية
+                        </strong>
+                    </div>
+                    <br/>
+                    <div align="right">
+                        <strong>إنه في يوم الموافق
+                            <span t-field="o.date_start"/>
+                        </strong>
+                    </div>
+                    <br/>
+                    <span>
+                        <strong>تحرر هذا العقد بين كل من :</strong>
+                    </span>
+                    <br/>
+                    <span>
+                        <strong>شركة/ فوارس للخدمات البترولية ويمثلها فى التوقيع على العقد:</strong>
+                    </span>
+                    <br/>
+                    <span>
+                        <strong>الجنسية/ كويتى</strong>
+                        <br/>
+                        <strong>رقم مدني/</strong>
+                        <br/>
+                        <strong>الإقامة/</strong>
+                    </span>
+                    <br/>
+                    <span>
+                        <right>
+                            <strong>طرف ثان</strong>
+                        </right>
+                    </span>
+                    <br/>
+                    <br/>
+                    <span>
+                        <strong>الاسم:</strong>
+                        <span t-field="o.employee_id.name"/>
+                    </span>
+                    <br/>
+                    <span>
+                        <strong>الجنسية:</strong>
+                        <span t-field="o.employee_id.country_id.name"/>
+                    </span>
+                    <br/>
+                    <span>
+                        <strong>رقم مدني:</strong>
+                        <span t-field="o.employee_id.identification_id"/>
+                    </span>
+                    <br/>
+                    <div align="center">
+                        <strong>
+                            <u>
+                                تمهيد
+                            </u>
+                        </strong>
+                    </div>
+                    <br/>
+                    <span style="font-size:15px;">
+                        يمتلك الطرف الأول منشأة باسم شركة فوارس للخدمات البترولية
+                        تعمل في مجال البترول ويرغب فى التعاقد مع الطرف الثاني للعمل لديه بمهنة
+                        <strong>
+                            <span t-field="o.job_id.name"/>
+                        </strong>
+                        وبعد أن أقر الطرفان بأهليتهما في إبرام هذا العقد تم الاتفاق علي ما يلي:
+                    </span>
+                    <br/>
+                    <br/>
+                    <span class="text-right">
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>
+                                        البند الأول
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يعتبر التمهيد السابق جزءا لا يتجزأ من هذا العقد .
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الثاني</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " طبيعة العمل "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            تعاقد الطرف الأول مع الطرف الثاني للعمل لديه
+                            <strong>
+                                <span t-field="o.job_id.name"/>
+                            </strong>
+                            داخل دولة الكويت.
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الثالث</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>" فترة التجربة "</u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يخضع الطرف الثاني لفترة تجربة لمدة لا تزيد عن 100 يوم عمل ، ويحق لكل طرف إنهاء
+                            العقد خلال تلك الفترة دون إخطار .
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الرابع</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " قيمة الأجر "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يتقاضى الطرف الثاني عن تنفيذ هذا العقد أجرا مقداره
+                            <strong> <span t-field="o.total_amount"/> 
+                            </strong>
+                            دينارا
+                            يدفع في نهاية كل شهر . ولا يجوز للطرف الأول تخفيض الأجر أثناء سريان هذا العقد .
+                            ولا يجوز نقل الطرف الثانى إلى الأجر اليومى دون موافقته .
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الخامس</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " نفاذ العقد "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يبدأ نفاذ العقد اعتبارا من
+                            <strong> <span t-field="o.date_start"/> 
+                            </strong>
+                            ويلتزم الطرف الثانى بالقيام بأداء عمله طوال مدة نفاذه
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند السادس</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " مدة العقد ".
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            هذا العقد محدد المدة ويبدأ اعتبار من
+                            <strong> <span t-field="o.date_start"/> 
+                            </strong>
+                            و لمدة
+                            <span/>
+                            و يجوز تجديد العقد بموافقة الطرفين لمدد مماثلة بحد أقصى خمس سنوات ميلادية
+                            <br/>
+                            إعتبار العقد محدد المدة أو غير محدد المدة يخضع إختياره لإدارة الطرفين.
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند السابع</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " الإجازة السنوية "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            للطرف الثاني الحق في إجازة سنوية مدفوعة الأجر مدتها 30 يوما ، ولا يستحقها عن
+                            السنة الأولى إلا بعد انقضاء مدة تسعة أشهر تحسب من تاريخ نفاذ العقد .
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الثامن</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " عدد ساعات العمل "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            لا يجوز للطرف الأول تشغيل الطرف الثاني لمدة تزيد عن ثماني ساعات عمل يوميا
+                            تتخللها فترة راحة لا تقل عن ساعة باستثناء الحالات المقررة قانونا .
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند التاسع</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " قيمة تذكرة السفر "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يتحمل الطرف الأول مصاريف عودة الطرف الثاني إلى بلده عند انتهاء علاقة العمل
+                            ومغادرته نهائيا للبلاد في حالة تم احضاره من قبل الشركة شرط التزامه بانظمة الشركة
+                            وقوانين البلاد.
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند العاشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " التأمين ضد إصابات وأمراض العمل "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يلتزم الطرف الأول بالتأمين على الطرف الثانى ضد إصابات وأمراض العمل ، كما يلتزم
+                            بقيمة التأمين الصحى طبقا للقانون رقم (1) لسنة 1999.
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الحادى عشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " مكافأة نهاية الخدمة "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            يستحق الطرف الثانى مكافأة نهاية الخدمة المنصوص عليها بالقوانين المنظمة
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الثانى عشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " القانون الواجب التطبيق "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            تسري أحكام قانون العمل فى القطاع الأهلى رقم 6 لسنة 2010 والقرارات المنفذة له
+                            فيما لم يرد بشأنه نص فى هذا العقد ، ويقع باطلا كل شرط تم الاتفاق عليه بالمخالفة
+                            لأحكام القانون ، ما لم يكن فيه ميزة أفضل للعامل
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الثالث عشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " شروط خاصة "
+                                    </u>
+                                </strong>
+                            </center>
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.employee_id.company_id.notes_ids" t-as="note">
+                                <t t-set="i" t-value="i+1"/>
+                                <div class="text-right">
+                                    <br/>
+                                    <t t-esc="i"/>. <t t-esc="note.special_notes_ar"/>
+                                    <br/>
+                                </div>
+                            </t>
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الرابع عشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " المحكمة المختصة "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            تختص المحكمة الكلية ودوائرها العمالية طبقا لأحكام القانون رقم 46 لسنة 1987 ،
+                            بنظر كافة المنازعات الناشئة عن تطبيق أو تفسير هذا العقد.
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند الخامس عشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " لغة العقد "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            حرر هذا العقد باللغتين العربية والانجليزية، ويعتد بنصوص اللغة العربية عند وقوع
+                            أى تعارض بينهما .
+                        </p>
+                        <p>
+                            <center>
+                                <strong>
+                                    <u>البند السادس عشر</u>
+                                </strong>
+                                <br/>
+                                <strong>
+                                    <u>
+                                        " نسخ العقد "
+                                    </u>
+                                </strong>
+                            </center>
+                            <br/>
+                            حرر هذا العقد من ثلاث نسخ بيد كل طرف نسخة للعمل بموجبها والثالثة تودع لدى الهيئة
+                            العامة للقوى العاملة.
+                        </p>
+                    </span>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="text-center">
+                        <strong>
+                            الطرف الأول
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            الطرف الثاني
+                            <br/>
+                            <br/>
+                            ----------------------------
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            ----------------------------
+                        </strong>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_employee_template_work_contract_enh">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="contract_report_enhancement.template_work_contract_document"
+                       t-lang="o.employee_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_employee_template_work_contract_enh_report" model="ir.actions.report">
+            <field name="name">عقد عمل عربي</field>
+            <field name="model">hr.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">contract_report_enhancement.report_employee_template_work_contract_enh</field>
+            <field name="report_file">contract_report_enhancement.report_employee_template_work_contract_enh</field>
+            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paperformat_template_work_contract_report" model="report.paperformat">
+            <field name="name">Template Work Contract Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">25</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="contract_report_enhancement.action_employee_template_work_contract_enh_report"
+                model="ir.actions.report">
+            <field name="paperformat_id" ref="contract_report_enhancement.paperformat_template_work_contract_report"/>
+        </record>
+    </data>
+</odoo>

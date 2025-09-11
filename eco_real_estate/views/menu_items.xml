@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- <data> -->
+
+    <menuitem id="eco_menu_real_estate_root" name="Real Estate" sequence="5"  web_icon="eco_real_estate,static/description/realestate.png"/>
+
+
+    <!-- property -->
+    <menuitem id="eco_menu_real_estate_property_root" name="Property"
+              parent="eco_real_estate.eco_menu_real_estate_root" sequence="1"/>
+
+    <menuitem id="menu_property_list_sub_unit" action="action_property_act_window" sequence="1"
+              parent="eco_real_estate.eco_menu_real_estate_property_root"/>
+    <menuitem id="menu_property_reservation" action="property_reservation_action" sequence="2"
+              parent="eco_real_estate.eco_menu_real_estate_property_root" name="Reservation"/>
+
+
+    <!-- Configuration -->
+    <menuitem id="eco_menu_real_estate_configuration" name="Configuration"
+              parent="eco_real_estate.eco_menu_real_estate_root" sequence="80"/>
+    <menuitem name="Phases" id="property_phase_menu" parent="eco_real_estate.eco_menu_real_estate_configuration"
+              action="property_phase_act_window"/>
+    <menuitem name="Zone" id="property_zone_menu" parent="eco_real_estate.eco_menu_real_estate_configuration"
+              action="property_zone_act_window"/>
+    <menuitem name="Building" id="property_building_menu" parent="eco_real_estate.eco_menu_real_estate_configuration" action="property_building_act_window"/>
+    <menuitem name="Block" id="property_block_menu" parent="eco_real_estate.eco_menu_real_estate_configuration" action="property_block_act_window"/>
+    <menuitem name="Floor" id="property_floor_menu" parent="eco_real_estate.eco_menu_real_estate_configuration" action="property_floor_act_window"/>
+    <menuitem name="Level" id="property_level_menu" parent="eco_real_estate.eco_menu_real_estate_configuration" action="property_level_act_window"/>
+    <menuitem name="Project Location" id="project_location_menu" parent="eco_real_estate.eco_menu_real_estate_configuration"
+              action="project_location_act_window"/>
+    <menuitem name="Project source" id="property_source_menu" parent="eco_real_estate.eco_menu_real_estate_configuration"
+              action="project_source_act_window"/>
+    <menuitem name="Project category type" id="property_category_type_menu" parent="eco_real_estate.eco_menu_real_estate_configuration"
+              action="project_category_type_act_window"/>
+
+
+    <!-- </data> -->
+</odoo>

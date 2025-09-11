@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_final_release_document">
+        <t t-call="web.basic_layout">
+            <div class="page" style="font-weight:bold;font-size:14px;">
+                <center>
+                    <img t-attf-src="/hr_printouts/static/src/img/final_release_header.png" alt="Header"
+                         style="width:100%"/>
+                </center>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid black;" dir="rtl">
+                    <tr>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            اسم الموظف:
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            :Employee Name
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            الرقم الوظيفى:
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            <span t-field="doc.employee_id.pin"/>
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            :# .Emp
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            القسم / اﻹدارة:
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            <span t-field="doc.department_id.name"/>
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            :Dept. / Unit
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            الوظيفة:
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            <span t-field="doc.job_title.name"/>
+                        </td>
+                        <td style="border-bottom: 1px solid white;" class="text-center">
+                            :Position
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            تاريخ التعيين:
+                        </td>
+                        <td class="text-center">
+                            <span t-field="doc.contract_id.date_start"/>
+                        </td>
+                        <td class="text-center">
+                            :Hire Date
+                        </td>
+                        <td class="text-center">
+                            تاريخ آخر يوم عمل:
+                        </td>
+                        <td class="text-center">
+                            <span t-field="doc.last_work_date"/>
+                        </td>
+                        <td class="text-center">
+                            :Last Working Day
+                        </td>
+                    </tr>
+                </table>
+                <table class="table" style="width:100%;border: 1px solid black;" dir="ltr">
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Dept. / Unit</strong>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Items for Handover</strong>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Name</strong>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Signature</strong>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Date</strong>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Remarks</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" rowspan="5">
+                            <strong>
+                                قسم المشاريع
+                                <br/>
+                                Project Department
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Keys</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Company Assets</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Petty Cash</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Others</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" rowspan="4">
+                            <strong>
+                                قسم اﻷمن والسلامة
+                                <br/>
+                                QHSE Department
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>HSE Monitering</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Black Key</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Others</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" rowspan="4">
+                            <strong>
+                                Fleet Department
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Car</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Petrol card</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Others</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>
+                                قسم الفواتير
+                                <br/>
+                                Invoice Dep.
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid black;height:10px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:10px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:10px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:10px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:10px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" rowspan="4">
+                            <strong>
+                                IT
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>H/W (PC, Printer, Scan, etc.)</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>S/W (Sys, applications, etc)</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Email</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" rowspan="7">
+                            <strong>
+                                Finance
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Cash Under Custody</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Uncollected Invoices</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Blocked Invoices</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Loan</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Telephone Bills</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Insurance Balance</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" rowspan="9">
+                            <strong>
+                                ادارة الموارد البشرية
+                                <br/>
+                                HR Department
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Residency Transfer</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Mobile SIM Card</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Mobile Handset</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Medical Card</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Telephone Bills</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Finger Print</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Get Pass</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <strong>Others</strong>
+                        </td>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                        <td style="border: 1px solid black;height:20px;" class="text-center"/>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_final_release_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_printouts.report_final_release_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_final_release_report" model="ir.actions.report">
+        <field name="name">إخلاء طـرف</field>
+        <field name="model">hr.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_printouts.report_final_release_printout</field>
+        <field name="report_file">hr_printouts.report_final_release_printout</field>
+        <field name="binding_model_id" ref="eco_hr_operation.model_hr_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="paperformat_final_release_report" model="report.paperformat">
+        <field name="name">Final Release Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5.00</field>
+        <field name="margin_bottom">5.00</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="hr_printouts.action_final_release_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="hr_printouts.paperformat_final_release_report"/>
+    </record>
+
+</odoo>

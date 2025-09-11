@@ -1,0 +1,52 @@
+<odoo>
+    <record id="view_balance_history_tree" model="ir.ui.view">
+        <field name="name">balance.history.tree</field>
+        <field name="model">balance.history</field>
+        <field name="arch" type="xml">
+            <list>
+                <header>
+                    <button name="print_excel_report" type="object" string="Print Excel Report"/>
+                </header>
+                <field name="employee"/>
+                <field name="joining_date"/>
+                <field name="total_salary"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="eos_segment"/>
+
+                <field name="opening_balance_leave_days"/>
+                <field name="opening_balance_leave_amount"/>
+
+                <field name="leave_monthly"/>
+                <field name="leave_monthly_value"/>
+
+                <field name="time_off_request_days"/>
+                <field name="time_off_request_amount"/>
+
+                <field name="ending_balance_leave_days"/>
+                <field name="ending_balance_leave_amount"/>
+
+                <field name="opening_balance_eos_days"/>
+                <field name="opening_balance_eos_amount"/>
+
+                <field name="eos_allowance_days"/>
+                <field name="eos_allowance_amount"/>
+
+                <field name="esb_paid_days"/>
+                <field name="esb_paid_amount"/>
+
+                <field name="ending_balance_eos_days"/>
+                <field name="ending_balance_eos_amount"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_balance_history" model="ir.actions.act_window">
+        <field name="name">Balance History</field>
+        <field name="res_model">balance.history</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <menuitem id="menu_balance_history" name="Balance History" parent="hr.menu_hr_root"
+              action="action_balance_history"/>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_contract_form_inherit_air_ticket" model="ir.ui.view">
+            <field name="name">hr.contract.form.inherit.has.air.ticket</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='resource_calendar_warning']" position="after">
+                    <field name="has_air_ticket" string="Has Air Ticket"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page string="Air Tickets" invisible=" not has_air_ticket">
+                        <group>
+                            <field name="air_ticket_type"/>
+                            <field name="ticket_count"/>
+                            <field name="total_amount"/>
+                            <field name="ticket_duration_date"/>
+                            <button name="generate_air_ticket_lines"
+                                    string="Generate Air Ticket Line"
+                                    type="object"
+                                    class="btn-primary"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

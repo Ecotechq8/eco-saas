@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="balance_history_excel_report" model="ir.actions.report">
+            <field name="name">Balance History Excel Report</field>
+            <field name="model">balance.history</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">eos_history_report.balance_history_excel_report</field>
+            <field name="report_file">eos_history_report.balance_history_excel_report</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,94 @@
+<odoo>
+    <data>
+
+
+        <menuitem name="Checks" id="native_check_main_menu"
+                  sequence="20"
+                  groups="account.group_account_manager"/>
+
+        <menuitem
+            name="Check Books"
+            id="check_book_menuitem"
+            action="check_action_check_book"
+            parent="account.account_account_menu"
+        />
+
+
+        <menuitem name="Cash Payments" id="default_norm_pay_menu" parent="native_check_main_menu"
+                    sequence="10"
+                  groups="account.group_account_manager,check_management.group_cash_payment"/>
+                  <!-- action="check_action_norm_pay_action" sequence="10" -->
+
+        <menuitem name="Pay" id="norm_payment_pay_menu" parent="default_norm_pay_menu"
+                  action="check_action_norm_payment_send_action" sequence="10"
+                  groups="account.group_account_manager"/>
+
+        <menuitem name="Receive" id="norm_payment_reveive_menu" parent="default_norm_pay_menu"
+                  action="check_action_norm_payment_receive_action" sequence="10"
+                  groups="account.group_account_manager"/>
+
+        <menuitem name="Internal" id="default_norm_internal_menu" parent="default_norm_pay_menu"
+                  action="check_action_norm_payment_internal_action" sequence="10"
+                  groups="account.group_account_manager"/>
+
+
+        <menuitem name="Checks Received" id="native_checks_menu_receive" parent="native_check_main_menu" sequence="100"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Checks Paid" id="native_checks_menu_paid" parent="native_check_main_menu" sequence="200"
+                  groups="account.group_account_manager"/>
+
+        <menuitem name="Receive check" id="create_recieved_check"  parent="native_checks_menu_receive"
+        sequence="0"
+            action="check_action_recieve_create_menu"
+        />
+
+        <menuitem name="Pay check" id="create_paid_check"  parent="native_checks_menu_paid"
+        sequence="0"
+            action="check_action_pay_create_menu"
+        />
+
+        <menuitem name="Holding Checks" id="native_holding_checks" parent="native_checks_menu_receive"
+                  action="native_check_holding_action" sequence="3"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Depoisted Checks" id="native_depoisted_checks" parent="native_checks_menu_receive"
+                  action="native_check_depoisted_action" sequence="4"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Collected checks" id="native_approved_checks" parent="native_checks_menu_receive"
+                  action="native_check_approved_action" sequence="5"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Rejected Checks" id="native_rejected_checks" parent="native_checks_menu_receive"
+                  action="native_check_rejected_action" sequence="6"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Responsed" id="native_returned_checks" parent="native_checks_menu_receive"
+                  action="native_check_returned_action" sequence="7"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Canceled Checks" id="native_canceled_checks" parent="native_checks_menu_receive"
+                  action="native_check_canceled_action" sequence="8"/>
+
+
+        <menuitem name="Returned Checks To Customer" id="native_csreturned_checks" parent="native_checks_menu_receive"
+                  action="native_check_csreturned_action" sequence="9"
+                  groups="account.group_account_manager"/>
+        <menuitem name="All Receivable Checks" id="native_all_rece_checks" parent="native_checks_menu_receive"
+                  action="native_check_rece_action" sequence="12"
+                  groups="account.group_account_manager"/>
+
+        <menuitem name="Handed Checks" id="native_handed_checks" parent="native_checks_menu_paid"
+                  action="native_check_handed_action" sequence="10"
+                  groups="account.group_account_manager"/>
+        <menuitem name="Debited Checks" id="native_debited_checks" parent="native_checks_menu_paid"
+                  action="native_check_debited_action" sequence="11"
+                  groups="account.group_account_manager"/>
+                  
+        <menuitem name="Returned Checks To Vendor" id="native_vendor_returned_checks" parent="native_checks_menu_paid"
+                  action="native_check_vendor_returned_action" sequence="12"
+                  groups="account.group_account_manager"/>
+
+
+
+        <menuitem name="All Payable Checks" id="native_all_pay_checks" parent="native_checks_menu_paid"
+                  action="native_check_pay_action" sequence="13"
+                  groups="account.group_account_manager"/>
+
+    </data>
+</odoo>

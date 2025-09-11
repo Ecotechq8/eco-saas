@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_sick_leave_form_document">
+        <t t-call="web.basic_layout">
+            <div class="header">
+                <center>
+                    <img t-attf-src="/leaves_printouts/static/src/img/sick_leave_header.png" alt="Header"
+                         style="width:100%"/>
+                </center>
+            </div>
+            <div class="page" style="font-weight:bold;">
+                <br/>
+                <br/>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-center">
+                            إسم الموظف:
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center" colspan="4">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Employee's Name:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-center">
+                            الوظيفـــــة:
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center">
+                            <span t-field="doc.employee_id.job_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Designation:
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center">
+                            الإدارة:
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center">
+                            <span t-field="doc.employee_id.department_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Department:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2"/>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            التاريـــخ:
+                            &#160;&#160;&#160;&#160;
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                            &#160;&#160;&#160;&#160;
+                            :Date
+                        </td>
+                        <td style="border: 1px solid white;" colspan="2"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-center" colspan="3">
+                            توقيع المسئول المباشر
+                            <br/>
+                            <br/>
+                            Direct Supervisor's Signature
+                            <br/>
+                            <br/>
+                            .........................................
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center" colspan="3">
+                            توقيع وختم إدارة الموارد البشرية والشئون اﻻدارية
+                            <br/>
+                            <br/>
+                            HR . Admin. Dept .Signature Stamp
+                            <br/>
+                            <br/>
+                            .........................................
+                        </td>
+                    </tr>
+                </table>
+                <strong>
+                    __________________________________________________________________________________________________________________________________
+                </strong>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2"/>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            <strong>
+                                <u>
+                                    ملاحظات الطبيب المعالج
+                                    <br/>
+                                    Doctor Use
+                                </u>
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" colspan="2"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="3" dir="rtl">
+                            العيادة التى عولج بها المريض:
+                            ................................................................
+                        </td>
+                        <td style="border: 1px solid white;" colspan="3" dir="ltr">
+                            Clinic Name :...........................................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="3" dir="rtl">
+                            تاريخ المراجعه:
+                            ............................................................................
+                        </td>
+                        <td style="border: 1px solid white;" colspan="3" dir="ltr">
+                            Visit Date: .......................................................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2"/>
+                        <td style="border: 1px solid white;" class="text-center" colspan="4">
+                            <strong>
+                                التشخيص وتوصيات الطبيب
+                                &#160;&#160;&#160;&#160;&#160;
+                                Prescriptions Doctor's Recommendation
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" colspan="2"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="6">
+                            ...................................................................................................................................................................................................................................
+                            <br/>
+                            <br/>
+                            ...................................................................................................................................................................................................................................
+                            <br/>
+                            <br/>
+                            ...................................................................................................................................................................................................................................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="4"/>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            ختم و توقيع الطبيب المعالج
+                            <br/>
+                            <br/>
+                            Doctor's Signature Stamp
+                            <br/>
+                            <br/>
+                            .........................................
+                        </td>
+                    </tr>
+                </table>
+                <strong>
+                    __________________________________________________________________________________________________________________________________
+                </strong>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="3" dir="rtl">
+                            الموظف المذكور عاد للعمل بتاريخ:
+                            ............................................
+                        </td>
+                        <td style="border: 1px solid white;" colspan="3" dir="ltr">
+                            Resumed Duty ON:...........................................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="3" dir="rtl">
+                            توقيع المسئول المباشر:
+                            ................................................................
+                        </td>
+                        <td style="border: 1px solid white;" colspan="3" dir="ltr">
+                            Direct Supervisor's Signature:........................
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_sick_leave_form_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="leaves_printouts.report_sick_leave_form_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_sick_leave_form_report" model="ir.actions.report">
+        <field name="name">نموذج أجازة مرضية</field>
+        <field name="model">hr.leave</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">leaves_printouts.report_sick_leave_form_printout</field>
+        <field name="report_file">leaves_printouts.report_sick_leave_form_printout</field>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

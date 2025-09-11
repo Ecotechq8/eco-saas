@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <record model="ir.ui.view" id="sales_commission_worksheet_form_view">
+            <field name="name">Sales Commission</field>
+            <field name="model">sales.commission</field>
+            <field name="arch" type="xml">
+                <form string="Sales Commission Form">
+                    <header>
+                        <button string="Confirm" type="object" name="action_confirm"
+                                invisible="state not in ('generate')"/>
+                        <button name="genrate_commission_lines" type="object" string="Genrate" class="oe_highlight"
+                                invisible="state not in ('draft')"/>
+                        <button string="Create Invoice" type="object" name="action_create_invoice"
+                                invisible="state not in ('confirm')"
+                                class="oe_highlight"/>
+                        <button string="Create Payslip" type="object" name="action_create_payslip"
+                                invisible="state not in ('confirm')"
+                                class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="action_cancel"
+                                invisible="state in ('invoice','payslip','cancel')"/>
+
+                        <button string="Reset to Draft" type="object" name="action_draft"
+                                invisible="state not in ('cancel')"
+                        />
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="commission_user_id" readonly="state != 'draft'"/>
+                                <field name="start_date" readonly="state != 'draft'"/>
+                                <field name="end_date" readonly="state != 'draft'"/>
+                                <field name="effective_date" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="type"/>
+                                <field name="direct_type"/>
+                                <!--                                <field name="product_id"/>-->
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="currency_id" invisible="1"/>
+                                <!-- <field name="invoice_id" readonly='1' /> -->
+                                <field name="invoice_id" readonly="1"/>
+                                <!--                                <field name="is_paid" readonly="state != 'draft'"/>-->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Sales Commission Lines">
+
+                                <field name="sales_commission_line" readonly="1" no_label="1">
+                                    <list string="Commissions">
+                                        <field name="sales_commission_id" column_invisible="1"/>
+                                        <field name="company_id" column_invisible="1"/>
+                                        <field name="currency_id" column_invisible="1"/>
+                                        <field name="property_id"/>
+                                        <field name="sale_amount_total"/>
+                                        <field name="commission_rate"/>
+                                        <field name="commission_amount"/>
+                                        <field name="sale_order_id"/>
+                                    </list>
+                                </field>
+
+                                <group>
+                                    <field name="amount" widget="monetary"/>
+
+                                </group>
+                            </page>
+                        </notebook>
+
+                    </sheet>
+                   <chatter></chatter>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sales_commission_worksheet_list_view">
+            <field name="name">Sales Commission List</field>
+            <field name="model">sales.commission</field>
+            <field name="arch" type="xml">
+                <list string="Sales Commission List">
+                    <field name="name"/>
+                    <field name="commission_user_id"/>
+                    <field name="start_date" readonly="state != 'draft'"/>
+                    <field name="end_date" readonly="state != 'draft'"/>
+                    <field name="amount" widget="monetary"/>
+                    <field name="currency_id" readonly="state != 'draft'"/>
+                    <field name="state"/>
+                    <field name="company_id" invisible='1' groups="base.group_multi_company"/>
+                </list>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sales_commission_worksheet_search_view">
+            <field name="name">Sales Commission Search</field>
+            <field name="model">sales.commission</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="commission_user_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <group string="Group By">
+                        <filter name="by_sales_user_id" string="Sales User"
+                                context="{'group_by': 'commission_user_id'}"/>
+                        <filter name="by_company_id" string="Company"
+                                context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sales_commission_worksheet_action">
+            <field name="name">Commissions</field>
+            <field name="res_model">sales.commission</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_commission_main" name="Commissions" sequence="29"
+                  parent="eco_real_estate.eco_menu_real_estate_root" action="sales_commission_worksheet_action"/>
+    </data>
+</odoo>

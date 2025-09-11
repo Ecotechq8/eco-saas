@@ -1,0 +1,27 @@
+{
+    'name': 'Rental Sales',
+    'version': '18.0.1.0',
+    'summary': "",
+    'description': """ """,
+    'category': 'Sales',
+    'author': "Silver Touch Technologies Limited",
+    'website': "https://www.silvertouch.com",
+    'license': 'AGPL-3',
+    'depends': ['sale', 'sale_management', 'sale_stock', 'sale_pdf_quote_builder'],
+    'demo': [],
+    'data': [
+        "security/ir.model.access.csv",
+        "wizard/rental_wizard.xml",
+        "views/sale_order_view.xml",
+        "views/sale_order_line_view.xml",
+        "views/product_template_view.xml",
+        "views/sale_report.xml",
+        "views/rental_menus.xml",
+    ],
+    'assets': {},
+    'installable': True,
+    'auto-install': False,
+    'application': True,
+    "images": ['static/description/banner.png'],
+
+}

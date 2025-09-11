@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_loan_request_form_document">
+        <t t-call="web.external_layout">
+            <div class="page" style="font-weight:bold;">
+                <h4>
+                    <center>
+                        طلــب صرف سلفـــة
+                        <br/>
+                        Loan Request Form
+                    </center>
+                </h4>
+                <br/>
+                <div dir="ltr">
+                    <strong>Date:</strong>
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                </div>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid black;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            إسم الموظف
+                        </td>
+                        <td style="border: 1px solid black;width:25%;" class="text-center">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Name
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            الرقـم
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.pin"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Code
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            الوظيفـة
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.job_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            job
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            الإدارة
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.department_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Dept.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            تاريخ التعييـن
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.contract_id.date_start"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Hire Date
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            الراتب والبدﻻت
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.contract_id.total_amount"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Salary
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            رصيد اﻻجازات
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.leaves_count"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Leave Balance
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            ميلغ رصيد اﻻجازات
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.leave_balance"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Vac. Amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center">
+                            رصيد نهاية الخدمة
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <!--                            <span t-field="doc"/>-->
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Indemnity Balance
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            ميلغ نهاية الخدمة
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.indemnity_liability"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            Indemnity Amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            مبلغ السلفة المطلوبة
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            <span t-field="doc.loan_amount"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            Required Loan Amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;height:50px;" class="text-center" colspan="2">
+                            ملاحـظـات
+                        </td>
+                        <td style="border: 1px solid black;height:50px;" class="text-center" colspan="2">
+                            <span t-field="doc.notes"/>
+                        </td>
+                        <td style="border: 1px solid black;height:50px;" class="text-center" colspan="2">
+                            Notes
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:30px;" colspan="6"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="4"/>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            رئيس شئون الموظفين
+                            <br/>
+                            <br/>
+                            HR Manager
+                            <br/>
+                            <br/>
+                            _________________________________________
+                        </td>
+                    </tr>
+                </table>
+                <strong>
+                    __________________________________________________________________________________________________________________________________
+                </strong>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid black;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            مبلغ السلفة المعتمد
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            <span t-field="doc.loan_amount"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            Approved amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            عدد اﻷقساط
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            <span t-field="doc.term"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            Installments
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            قيمة القسط
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            <span t-field="doc.installment_amount"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            Installment Amount
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;height:50px;" class="text-center" colspan="2">
+                            ملاحـظـات أخـرى
+                        </td>
+                        <td style="border: 1px solid black;height:50px;" class="text-center" colspan="2">
+                        </td>
+                        <td style="border: 1px solid black;height:50px;" class="text-center" colspan="2">
+                            Other Notes
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:10px;" colspan="6"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            المدير المباشر
+                            <br/>
+                            <br/>
+                            Direct Manager
+                            <br/>
+                            <br/>
+                            .........................................
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            مدير الشئون اﻻدارية
+                            <br/>
+                            <br/>
+                            HR Manager
+                            <br/>
+                            <br/>
+                            .........................................
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center" colspan="2">
+                            المدير العام
+                            <br/>
+                            <br/>
+                            General Manager
+                            <br/>
+                            <br/>
+                            .........................................
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_loan_request_form_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="loans_printout.report_loan_request_form_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_sick_leave_form_report" model="ir.actions.report">
+        <field name="name">طلب صرف سلفة</field>
+        <field name="model">employee.loan</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">loans_printout.report_loan_request_form_printout</field>
+        <field name="report_file">loans_printout.report_loan_request_form_printout</field>
+        <field name="binding_model_id" ref="dev_hr_loan.model_employee_loan"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

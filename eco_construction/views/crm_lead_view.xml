@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_crm_opportunity_assign_form_inherited_view" model="ir.ui.view">
+        <field name="name">crm.lead.request.inherit</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button string="Create Quotation" name="custom_create_quotation" type="object"
+                        class="oe_highlight"
+                        groups="sales_team.group_procurement_manager_approval,sales_team.group_sale_salesman" invisible="procurement_approval != 'approve'"/>
+                  <button string="Approve" name="action_approve_boq" type="object"
+                        class="oe_highlight"
+                        groups="eco_construction.group_procurement_manager_approval" invisible="procurement_approval != 'draft'"/>
+                  <button string="Reject" name="action_reject_boq" type="object"
+                        class="oe_highlight"
+                        groups="eco_construction.group_procurement_manager_approval" invisible="procurement_approval != 'draft'"/>
+                  <button string="Reset To Draft" name="action_reset_to_draft" type="object"
+                        class="oe_highlight"
+                        groups="eco_construction.group_procurement_manager_approval"/>
+            </xpath>
+            <xpath expr="//sheet/widget[1]" position="before">
+                <field name="procurement_approval" invisible="1"/>
+                <widget name="web_ribbon" title="Approved" invisible="procurement_approval != 'approve'"/>
+                <widget name="web_ribbon" title="Rejected" bg_color="text-bg-danger" invisible="procurement_approval != 'reject'"/>
+            </xpath>
+            <xpath expr="//button[@name='action_sale_quotations_new']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//notebook/page[@name='lead']" position="after">
+                <page string="Bill of Quantity">
+                    <!-- <group > -->
+                    <field name="request_quota_line" nolabel="1" widget="section_and_note_one2many"
+                           context="{'list_view_ref': 'eco_construction.request_quota_view_list'}" readonly="procurement_approval != 'draft'">
+
+                    </field>
+                    <!-- </group> -->
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

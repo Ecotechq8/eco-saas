@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="employee_attendance_report_template">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="doc">
+                <!--                <style>-->
+                <!--                    td, th {-->
+                <!--                    padding: 10px;-->
+                <!--                    }-->
+                <!--                </style>-->
+                <div class="page" dir="rtl">
+                    <div align="center">
+                        <t t-if="request.env.company.logo">
+                            <img t-if="request.env.company.logo" class="o_company_logo_big"
+                                 t-att-src="image_data_uri(request.env.company.logo)"/>
+                        </t>
+                    </div>
+                    <div align="center">
+                        <h3>Employee Attendance</h3>
+                    </div>
+                    <t t-set="data" t-value="doc.prepare_report_values()"/>
+                    <table class=" table table-borderless" style="width=100%">
+                        <tr>
+                            <td>
+                                من:
+                                <t t-esc="data.get('date_start')"/>
+                            </td>
+                            <td>
+                                إلى:
+                                <t t-esc="data.get('date_end')"/>
+
+                            </td>
+                            <td>
+                                القسم:
+                                <t t-esc="data.get('department_id')"/>
+                            </td>
+                            <td>
+                                الشركة:
+                                <t t-esc="data.get('company_id')"/>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <t t-if="data.get('employees_info')">
+                        <table class="o_has_total_table table o_main_table" style="width=100%">
+                            <thead>
+                                <th style="text-align:right">
+                                    اسم الموظف
+                                </th>
+                                <th style="text-align:right">
+                                    عدد الاجازات الرسمية
+                                </th>
+                                <th style="text-align:right">
+                                    عدد أيام الحضور
+                                </th>
+                                <th style="text-align:right">
+                                    عدد أيام الغياب
+                                </th>
+                            </thead>
+                            <t t-foreach="data.get('employees_info')" t-as="line">
+                                <tr>
+                                    <td>
+                                        <t t-esc="line['name']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['holidays']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['actual_working_days']"/>
+                                    </td>
+                                    <td>
+                                        <t t-esc="line['absence_days']"/>
+                                    </td>
+
+                                </tr>
+                            </t>
+
+                        </table>
+                    </t>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

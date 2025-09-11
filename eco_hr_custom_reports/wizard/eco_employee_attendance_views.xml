@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="employee_attendance_view_form" model="ir.ui.view">
+        <field name="name">employee.attendance.view.form</field>
+        <field name="model">eco.employee.attendance</field>
+        <field name="arch" type="xml">
+            <form string="Employee Attendance Info ">
+                <group>
+                    <group>
+                        <field name="date_start"/>
+                        <field name="department_id"/>
+
+                    </group>
+                    <group>
+                        <field name="date_end"/>
+                        <field name="company_id"/>
+
+                    </group>
+                </group>
+                <group>
+                    <field name="employee_ids" widget="many2many_tags"/>
+                </group>
+                <footer>
+                    <button name="action_print_pdf" string="Print Pdf" type="object" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="employee_attendance_action" model="ir.actions.act_window">
+        <field name="name">Employee Attendance Info</field>
+        <field name="res_model">eco.employee.attendance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="employee_attendance_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+    <record id="employee_absent_action" model="ir.actions.act_window">
+        <field name="name">Employee Absent Info</field>
+        <field name="res_model">eco.employee.attendance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="employee_attendance_view_form"/>
+        <field name="context">{'absent_report':'1'}</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="employee_monthly_attendance_action" model="ir.actions.act_window">
+        <field name="name">Employee Monthly Attendance</field>
+        <field name="res_model">eco.employee.attendance</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="employee_attendance_view_form"/>
+        <field name="context">{'monthly_attendance_report':'1'}</field>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

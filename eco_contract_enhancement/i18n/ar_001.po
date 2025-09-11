@@ -1,0 +1,196 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ejabi_contract_enhancement
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 17.0+e\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-12-24 09:32+0000\n"
+"PO-Revision-Date: 2024-12-24 11:35+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: ar\n"
+"X-Generator: Poedit 2.3\n"
+
+#. module: ejabi_contract_enhancement
+#: model_terms:ir.ui.view,arch_db:ejabi_contract_enhancement.hr_contract_inherited_view_form
+msgid "/ month"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields.selection,name:ejabi_contract_enhancement.selection__hr_contract__payment_type__bank
+msgid "Bank"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields.selection,name:ejabi_contract_enhancement.selection__hr_contract__payment_type__cash
+msgid "Cash"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__contract_end_training
+msgid "Contract End Training"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__contract_join_date
+msgid "Contract Join Date"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__contract_start_training
+msgid "Contract Start Training"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__day_value
+msgid "Day Value"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model_terms:ir.ui.view,arch_db:ejabi_contract_enhancement.hr_contract_inherited_view_form
+msgid "Days & Hours"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model,name:ejabi_contract_enhancement.model_hr_contract
+msgid "Employee Contract"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__flat_bonus
+msgid "Flat Bonus"
+msgstr "مكافأة ثابتة"
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__food_allowance
+msgid "Food Allowance"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__fuel_allowance
+msgid "Fuel Allowance"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__hour_value
+msgid "Hour Value"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__housing_allowance
+msgid "Housing Allowance"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__id
+msgid "ID"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.actions.act_window,name:ejabi_contract_enhancement.insurance_company_action
+#: model:ir.ui.menu,name:ejabi_contract_enhancement.insurance_company_menu
+#: model:ir.ui.menu,name:ejabi_contract_enhancement.menu_config_insurance_company
+msgid "Insurance Companies"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__insurance_company
+#: model_terms:ir.ui.view,arch_db:ejabi_contract_enhancement.insurance_company_form_view
+msgid "Insurance Company"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__name
+msgid "Insurance Company Name"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__insurance_end_date
+msgid "Insurance End Date"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__insurance_number
+msgid "Insurance Number"
+msgstr "رقم التأمين"
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__insurance_start_date
+msgid "Insurance Start Date"
+msgstr "تاريخ بدء التأمين"
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_insurance_company__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__medical_details
+msgid "Medical Details"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__number_of_month_days
+msgid "No. Month Days"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__other_allowances
+msgid "Other Allowances"
+msgstr "بدلات أخرى"
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__payment_type
+msgid "Payment Type"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__refunded_salary
+msgid "Refunded Salary"
+msgstr "راتب مسترد"
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__total_amount
+msgid "Total Salary "
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__transportation_allowance
+msgid "Transportation Allowance"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model.fields,field_description:ejabi_contract_enhancement.field_hr_contract__workdays_hour
+msgid "Workdays Hour"
+msgstr ""
+
+#. module: ejabi_contract_enhancement
+#: model:ir.model,name:ejabi_contract_enhancement.model_insurance_company
+msgid "insurance.company"
+msgstr ""

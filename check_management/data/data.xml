@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence 1 -->
+        <record id="sequence_pay" model="ir.sequence">
+            <field name="name">send payment Sequence</field>
+            <field name="code">pay.send</field>
+            <field name="prefix">SP</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <!-- Sequence 2 -->
+        <record id="sequence_recieve" model="ir.sequence">
+            <field name="name">Recieve Sequence</field>
+            <field name="code">receive.pay</field>
+            <field name="prefix">RP</field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+        </record>
+
+        <!-- Sequence 3 -->
+        <record id="sequence_internal" model="ir.sequence">
+            <field name="name">Internal Sequence</field>
+            <field name="code">internal.pay</field>
+            <field name="prefix">IP</field>
+            <field name="suffix"></field>
+            <field name="padding">5</field>
+            <field name="number_increment">1</field>
+            <field name="number_next">1</field>
+        </record>
+
+    </data>
+</odoo>

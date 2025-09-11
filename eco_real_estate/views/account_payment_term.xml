@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_view_payment_term_form_inherit" model="ir.ui.view">
+            <field name="name">account_view_payment_term_form_inherit</field>
+            <field name="model">account.payment.term</field>
+            <field name="inherit_id" ref="account.view_payment_term_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]" position="after">
+                    <group string="Installment Details">
+                        <field name="installment_lines" readonly="state != 'draft'"/>
+                    </group>
+                </xpath>
+                <xpath expr="//sheet" position="before">
+                    <header>
+                        <field name="state" widget="statusbar"/>
+                        <button name="compute_payment_term_line" type="object" string="Compute" class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <button name="action_approve" type="object" string="Approve" class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <button name="action_reject" type="object" string="Reject" class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']" position="replace">
+                    <field name="line_ids" widget="payment_term_line_ids" nolabel="1" colspan="2">
+                        <list string="Payment Terms" create="false" edit="0">
+                            <field name="value" string="Due Type"/>
+                            <field name="value_amount" string="Value"/>
+                            <field name="nb_days" string="Number Of Days" />
+                            <field name="journal_id" domain="[('type','in',['bank','cash'])]" widget="selection"/>
+                            <field name="type"/>
+                            <field name="delay_type" nolabel="1"/>
+                        </list>
+                        <form string="Payment Terms" create="false" edit="1">
+                            <group>
+                                <field name="journal_id" readonly="0" domain="[('type','in',['bank','cash'])]"
+                                       widget="selection"/>
+
+                            </group>
+
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

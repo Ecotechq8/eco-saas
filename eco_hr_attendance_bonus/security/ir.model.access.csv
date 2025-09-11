@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_eco_hr_attendance_bonus,access_eco_hr_attendance_bonus,model_eco_hr_attendance_bonus,,1,1,1,1
+
+

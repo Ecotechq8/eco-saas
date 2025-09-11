@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="eco_construction_project_form_inherit" model="ir.ui.view">
+            <field name="name">eco_construction.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button string="Create Contract" name="project_create_quotation" type="object"
+                            class="oe_highlight"/>
+                    <button string="Create PO/Subcontracting" name="%(action_create_purchase_order)d" type="action"
+                            class="oe_highlight"/>
+                    <button string="Create Letter Of Guarantee" name="action_create_guarantee_letter" type="object"
+                            class="oe_highlight"/>
+                </xpath>
+                <xpath expr="//sheet/div[1]" position="inside">
+
+                        <button type="object" name="button_view_guarantee_letter" class="oe_stat_button"
+                                icon="fa-book" invisible="guarantee_letter_count == 0">
+                            <field name="guarantee_letter_count" widget="statinfo"/>
+                        </button>
+                        <button type="object" name="button_view_purchase_orders" class="oe_stat_button"
+                                icon="fa-book" >
+                            <field name="purchase_orders_count" widget="statinfo"/>
+                        </button>
+                        <button type="object" name="button_view_contract_orders" class="oe_stat_button"
+                                icon="fa-book" >
+                            <field name="sale_orders_count" widget="statinfo"/>
+                        </button>
+
+                </xpath>
+                <xpath expr="//page[@name='description']" position="after">
+
+                    <page string="Bill of Quantity">
+                        <field name="request_quota_line" invisible="not sale_id or project_request_quota_line"
+                               context="{'list_view_ref': 'eco_construction.request_quota_view_list'}">
+                        </field>
+                        <field name="project_request_quota_line" invisible="request_quota_line"
+                               widget="section_and_note_one2many"
+                               context="{'list_view_ref': 'eco_construction.request_quota_view_list'}">
+                        </field>
+                    </page>
+
+                </xpath>
+                <xpath expr="//field[@name='date_start']" position="after">
+                    <field name="sale_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

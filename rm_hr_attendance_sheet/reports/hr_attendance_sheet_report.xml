@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_attendance_sheet_document">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <h2 id="payslip_name">
+                        <span t-field="o.name"/>
+                    </h2>
+                    <div class="oe_structure"/>
+                    <table style="width:100%">
+                        <tr>
+                            <td class="w-25">
+                                <strong>Employee</strong>
+                                <span t-field="o.employee_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">
+                                <strong>Department</strong>
+                                <span t-field="o.department_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">
+                                <strong>Contact</strong>
+                                <span t-field="o.contract_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-25">
+                                <strong>Attendance Policy</strong>
+                                <span t-field="o.att_policy_id.name"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                    <table style="width:100%,border:1px solid black;">
+                        <tr>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Date</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Day</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>AC/IN</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>AC/OUT</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Worked Hours</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Late In</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Overtime</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Status</strong>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <strong>Note</strong>
+                            </td>
+                        </tr>
+                        <tr t-foreach="o.line_ids" t-as="line">
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.date"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.day"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.ac_sign_in"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.ac_sign_out"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.worked_hours"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.act_late_in"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.act_overtime"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.status"/>
+                            </td>
+                            <td style="width:10%;border:1px solid black;" class="text-center">
+                                <span t-field="line.note"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                    <strong>
+                        <u>Summary</u>
+                    </strong>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>
+                                <u>Overtime</u>
+                            </strong>
+                            <br/>
+                            <br/>
+                            <strong>No of Overtimes</strong>
+                            <span t-field="o.no_overtime"/>
+                            <br/>
+                            <strong>Total Overtime</strong>
+                            <span t-field="o.tot_overtime"/>
+                        </div>
+                        <div class="col-4">
+                            <strong>
+                                <u>Late In</u>
+                            </strong>
+                            <br/>
+                            <br/>
+                            <strong>No of Late</strong>
+                            <span t-field="o.no_late"/>
+                            <br/>
+                            <strong>Total Late In</strong>
+                            <span t-field="o.tot_late"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>
+                                <u>Absence</u>
+                            </strong>
+                            <br/>
+                            <br/>
+                            <strong>No of Absence Days</strong>
+                            <span t-field="o.no_absence"/>
+                            <br/>
+                            <strong>Total absence Hours</strong>
+                            <span t-field="o.tot_absence"/>
+                        </div>
+                        <div class="col-4">
+                            <strong>
+                                <u>Attendance</u>
+                            </strong>
+                            <br/>
+                            <br/>
+                            <strong>No of Attendance Days</strong>
+                            <span t-field="o.no_attendance"/>
+                            <br/>
+                            <strong>Total Attendance Hours</strong>
+                            <span t-field="o.tot_attendance"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-4">
+                            <strong>
+                                <u>Difference Time</u>
+                            </strong>
+                            <br/>
+                            <br/>
+                            <strong>No of Diff Times</strong>
+                            <span t-field="o.no_difftime"/>
+                            <br/>
+                            <strong>Total Diff time Hours</strong>
+                            <span t-field="o.tot_difftime"/>
+                        </div>
+                        <div class="col-4"/>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_attendance_sheet">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="rm_hr_attendance_sheet.report_attendance_sheet_document"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_report_attendance_sheet" model="ir.actions.report">
+            <field name="name">Attendance Sheet Report</field>
+            <field name="model">attendance.sheet</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">rm_hr_attendance_sheet.report_attendance_sheet</field>
+            <field name="report_file">rm_hr_attendance_sheet.report_attendance_sheet</field>
+            <field name="print_report_name">'Attendance Sheet - %s' % (object.name)</field>
+            <field name="binding_model_id" eval="False"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+<odoo>
+    <record id="group_employee_expiry_mail_send" model="res.groups">
+        <field name="name">Employee Doc. Expiry</field>
+    </record>
+</odoo>

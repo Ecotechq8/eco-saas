@@ -1,0 +1,281 @@
+<odoo>
+    <data>
+        <template id="template_leave_entitlement_payment_document">
+            <t t-call="web.basic_layout">
+                <div class="header">
+                    <center>
+                        <img t-attf-src="/leaves_printouts/static/src/img/leave_payment_header.png" alt="Header"
+                             style="width:100%"/>
+                    </center>
+                </div>
+                <div class="page" dir="rtl">
+                    <div class="text-left">
+                        <strong>التاريخ:</strong>
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </div>
+                    <br/>
+                    <table style="width:100%;border: 1px solid white;" dir="rtl">
+                        <tr>
+                            <td style="border: 1px solid white;">
+                                <strong>رقم الموظف</strong>
+                            </td>
+                            <td style="border: 1px solid white;">
+                                <strong>الاسـم</strong>
+                            </td>
+                            <td style="border: 1px solid white;">
+                                <strong>الوظيفة</strong>
+                            </td>
+                            <td style="border: 1px solid white;">
+                                <strong>اﻻدارة</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;">
+                                <span/>
+                            </td>
+                            <td style="border: 1px solid white;">
+                                <span t-field="doc.employee_id.name"/>
+                            </td>
+                            <td style="border: 1px solid white;">
+                                <span t-field="doc.employee_id.job_id.name"/>
+                            </td>
+                            <td style="border: 1px solid white;">
+                                <span t-field="doc.employee_id.department_id.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>تاريخ التعيين</strong>
+                                &#160;&#160;
+                                <span t-field="doc.employee_id.contract_id.date_start"/>
+                                &#160;&#160;
+                                <strong>Hiring Date</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" colspan="2">
+                                <strong>الراتب اﻻساسي</strong>
+                                &#160;&#160;&#160;
+                                <span t-field="doc.employee_id.contract_id.wage"/>
+                                &#160;&#160;&#160;
+                                <strong>Basic Salary</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <t t-set="total_allowance"
+                               t-value="doc.employee_id.contract_id.total_amount - doc.employee_id.contract_id.wage"/>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>البدﻻت</strong>
+                                &#160;&#160;&#160;
+                                <span t-esc="total_allowance"/>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>بداية اﻻجازة</strong>
+                                &#160;&#160;&#160;
+                                <span t-field="doc.request_date_from"/>
+                                &#160;&#160;&#160;
+                                <strong>Start Vacation</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>نهاية اﻻجازة</strong>
+                                &#160;&#160;&#160;
+                                <span t-field="doc.request_date_to"/>
+                                &#160;&#160;&#160;
+                                <strong>End Vacation</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>عدد ايام اﻻجازة الفعليه</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Actual Number of vacation Days</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>العطل الرسمية</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Public Vacations</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>الرصيد حتى 31/12/2024</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Vacation Balance until 31/12/2024</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>أيام اﻻجازة المدفوعة</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Paid Vacation Days</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>صافي الرصيد</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Net Balance</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>أيام اﻻجازة الغير المدفوعة</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Unpaid Vacation Days</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>أيام عمل قبل اﻻجازة في حال الرغبة بالصرف مقدم
+                                </strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Working days before the holidays</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;">
+                                <span/>
+                                <strong>يـــوم</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="3">
+                                <strong>قيمة ايام اﻻجازة مدفوعة</strong>
+                                &#160;&#160;&#160;
+                                <!--                                <span t-field="doc"/>-->
+                                &#160;&#160;&#160;
+                                <strong>Paid Vacation Days</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>قيمة العطل الرسمية</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>إضافي / أخرى</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>البدﻻت</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                                &#160;&#160;&#160;
+                                <strong>Allowances</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>مجموع</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                                &#160;&#160;&#160;
+                                <strong>Total</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>خصومات الراتب</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                                &#160;&#160;&#160;
+                                <strong>Salary Deductions</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>ذمم مالية</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                                &#160;&#160;&#160;
+                                <strong>Unpaid Vacation Days</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;height:40px;" colspan="2">
+                                <strong>الصافى</strong>
+                                &#160;&#160;&#160;
+                                <span/>
+                                &#160;&#160;&#160;
+                                <strong>Net</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:40px;" colspan="2"/>
+                        </tr>
+                    </table>
+                    <br/>
+                    <br/>
+                    <table style="width:100%;border: 1px solid white;" dir="rtl">
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>مدير الشئون اﻻدارية</strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>المدير المالى</strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>المدير العام</strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_leave_entitlement_payment">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="leaves_printouts.template_leave_entitlement_payment_document"
+                       t-lang="doc.employee_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_leave_entitlement_payment_report" model="ir.actions.report">
+            <field name="name">نموذج صرف مستحقات اﻻجازة</field>
+            <field name="model">hr.leave</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">leaves_printouts.report_leave_entitlement_payment</field>
+            <field name="report_file">leaves_printouts.report_leave_entitlement_payment</field>
+            <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

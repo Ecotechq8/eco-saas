@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_hr_employee_inherited_form_view" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherited.view</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='private_phone']" position="after">
+                <field name="bank_number"/>
+                <field name="bank_iban_number" string="Iban Number"/>
+                <field name="bank_id" string="Bank"/>
+            </xpath>
+            <xpath expr="//field[@name='pin']" position="after">
+                <field name="delegation_required"/>
+            </xpath>
+            <xpath expr="//field[@name='passport_id']" position="after">
+                <field name="passport_expiry_date"/>
+                <field name="passport_location"/>
+            </xpath>
+            <xpath expr="//field[@name='identification_id']" position="after">
+                <field name="identification_expiry_date"/>
+            </xpath>
+            <xpath expr="//field[@name='country_id']" position="after">
+                <field name="nationality_number"/>
+                <field name="article"/>
+                <field name="nationality_date"/>
+            </xpath>
+            <xpath expr="//page[@name='personal_information']/group/group[3]" position="after">
+                <group string="Medical Info.">
+                    <field name="medical_card_number"/>
+                    <field name="medical_card_expiry_date"/>
+                </group>
+                <group string="Iqama/Bitaqa Details">
+                    <field name="iqama_profession"/>
+                    <field name="expiry_date"/>
+                </group>
+                <group string="Sponsor Details">
+                    <field name="sponsor_name"/>
+                    <field name="sponsor_address"/>
+                    <field name="sponsor_delivery_postal_address"/>
+                    <field name="sponsor_registration_number"/>
+                    <field name="sponsor_civil_id"/>
+                    <field name="sponsor_phone"/>
+                    <field name="sponsor_fax"/>
+                </group>
+            </xpath>
+            <xpath expr="//field[@name='bank_account_id']" position="after">
+                <field name="bank_card_expiry_date"/>
+            </xpath>
+            <xpath expr="//h1" position="after">
+                <h1>
+                    <field name="arabic_name" placeholder="Employee's Arabic Name" required="True"
+                           style="font-size: min(4vw, 2.6rem);"/>
+                </h1>
+            </xpath>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="view_employee_inherited_filter">
+        <field name="name">hr.employee.inherite.search</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='parent_id']" position="before">
+                <field name="passport_id"/>
+                <field name="identification_id"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

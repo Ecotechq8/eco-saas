@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=PT+Serif:400,700');
+
+
+ *:not(.fa){   
+    /* font-family: 'Montserrat', sans-serif; */
+    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'PT Serif', serif;;
+    /*font-family: 'Roboto Slab', serif;*/
+    color: #38393b;
+    font-size: 14px;
+}
+
+.invoice {   
+    font-size: 18px;
+}
+
+.box {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.toll-free{
+    padding: 2px;
+    background-color: #e9e9e9;
+    border-radius: 1px;
+    font-weight: 700;
+}
+
+.fa-envelope:before {
+content: "\f0e0"; }
+
+.fa-envelope-open:before {
+content: "\f2b6"; }
+
+.fa-envelope-open-text:before {
+content: "\f658"; }
+
+.fa-envelope-square:before {
+content: "\f199"; }
+
+.fa-globe:before {
+content: "\f0ac"; }
+
+.fa-globe-africa:before {
+content: "\f57c"; }
+
+.fa-globe-americas:before {
+content: "\f57d"; }
+
+.fa-globe-asia:before {
+content: "\f57e"; }
+
+.fa-globe-europe:before {
+content: "\f7a2"; }
+
+.fa-phone:before {
+content: "\f095"; }
+
+.fa-phone-alt:before {
+content: "\f879"; }
+
+.fa-phone-slash:before {
+content: "\f3dd"; }
+
+.fa-phone-square:before {
+content: "\f098"; }
+
+.fa-phone-square-alt:before {
+content: "\f87b"; }
+
+.fa-phone-volume:before {
+content: "\f2a0"; }
+
+.name-box{
+    float: right;
+    padding: 10px;
+    width: 170px;
+    height: 70px;
+    background-color: #e9e9e9;
+    border-radius: 5px;
+    text-align:right;
+    margin-top: -20px;
+    margin-bottom: 20px;
+    
+}
+
+.name-box > strong {
+    font-size: 20px;
+}
+
+.name-box > span {
+    font-size: 15px;
+}
+
+
+.grey {
+    background-color: #e9e9e9;
+    border-bottom: 1px solid #38393b;
+    font-weight: bold;
+}
+.black {
+    background-color: #000000;
+    color: #fff;
+    border-bottom: 1px solid #000000;
+    font-weight: bold;
+}
+.line {
+    border-bottom: 1px solid #00205b;
+}
+
+.head-name {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+
+.head-strong-start {
+    color: #00205b;
+	font-size: 25px;
+	font-weight: 700;
+}
+
+ul, ol {
+     margin-left:3em;
+}
+ul li{
+	font-size: 8px;
+}
+
+.details-box {
+	font-size: 20px;
+}
+
+.boxed {
+    border: 1px solid grey;
+}
+
+.reward {
+    margin-top: -30px; 
+    margin-bottom: -30px;
+}
+
+
+tr.is-total td{
+    background-color: #c7dbfc;
+  }
+
+.br { 
+    display: block; 
+    margin-bottom: 0em; 
+} 
+  
+.brsmall { 
+    display: block; 
+    margin-bottom: -.2em; 
+} 
+  
+.brxsmall { 
+    display: block; 
+    margin-bottom: -.4em; 
+} 
+
+table.sale_main_table > tbody > tr > td{
+    border-top: none;
+    border-bottom: 1px solid grey;
+}
+
+table.contract_table > tbody > tr > td{
+    border-top: none;
+    border-bottom: 1px dashed grey;
+}
+
+
+table.sale_table > tbody > tr > td{
+    border-top: none;
+}
+
+thead.blue {
+    background-color: #00205b;
+    color: #fff;
+  }
+
+.fade-blue1 {
+    background-color: #00205b;
+    color: #fff;
+  }
+
+.fade-blue2 {
+    background-color: #9CC3D5;
+    color: #fff;
+  }
+
+.warning {
+    color : #AD3232
+}
+.approval {
+    color : #198C19;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.doc-name {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.header {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+
+.head1 {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tab-space {
+    tab-size: 16;
+}
+
+.footer {
+    font-size: 12px;
+    border-top: none;
+}
+.line2 {
+    border-top: 1px solid rgb(0, 0, 0);
+}
+
+.text-right {
+    text-align: right;
+}
+
+.header2 {
+    width: 100%;
+    border: 1px solid black;
+    
+}
+
+.header2 > thead > tr > th {
+    padding: 3px;
+    border: 1px solid black;
+}
+
+
+
+.header2 > tbody > tr > td {
+    padding: 3px;
+    border: 1px solid black;
+
+}
+
+.header2 {
+    width: 100%;
+    border: 1px solid black;
+}
+
+.header2 > thead > tr > th {
+    padding: 3px;
+    border: 1px solid black;
+    font-size: 14px;
+    background-color: #e9e9e9;
+}
+.header2 > thead > tr > td {
+    font-size: 14px;
+}
+.header2 > tbody > tr > td{
+    font-size: 14px;
+}
+.header2 > thead > tr > td > span{
+    font-size: 14px;
+}
+.header2 > thead > tr > th > span{
+    font-size: 14px;
+}
+.header2 > tbody > tr > td > span{
+    font-size: 14px;
+}
+
+.header2 > thead > tr > td > strong{
+    font-size: 14px;
+}
+.header2 > thead > tr > th > strong{
+    font-size: 14px;
+}
+.header2 > tbody > tr > td > strong{
+    font-size: 14px;
+}
+
+.header2 > tbody > tr > td {
+    padding: 3px;
+    border: 1px solid black;
+    font-size: 14px;
+}
+
+.tr
+{
+line-height: 15px;
+}

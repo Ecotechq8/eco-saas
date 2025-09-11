@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="request_quota_view_list" model="ir.ui.view">
+        <field name="name">request_quota_view_list</field>
+        <field name="model">request.quotation</field>
+        <field name="arch" type="xml">
+            <list editable="bottom" limit="200">
+
+                <control>
+                    <create name="add_product_control" string="Add a product"/>
+                    <create name="add_section_control" string="Add a section"
+                            context="{'default_display_type': 'line_section'}"/>
+                    <create name="add_note_control" string="Add a note"
+                            context="{'default_display_type': 'line_note'}"/>
+
+                </control>
+                <field name="display_type" column_invisible="True"/>
+                <field name="sequence" widget="handle"/>
+                <field
+                        name="product_id"
+                        required="not display_type"
+                        force_save="1"
+                        context="{
+                                        'partner_id': parent.partner_id,
+                                        'company_id': parent.company_id,
+                                        'default_description_sale': name
+                                    }"
+                        options="{
+                                        'no_open': True,
+                                    }"
+                        domain="[('sale_ok', '=', True)]"
+                        widget="sol_product_many2one"/>
+                <field name="name" widget="section_and_note_text" optional="show"/>
+                <field name="product_uom_qty"/>
+                <field name="product_uom" options='{"no_open": True}'/>
+                <field name="qty_onhand" readonly="1"/>
+                <field name="price_unit"/>
+                <field name="cost"/>
+                <!--                            <field name="qty_onhand"/>-->
+
+                <field name="custom_order_line_id" readonly="1" column_invisible="1"/>
+                <field name="custom_order_id" readonly="1" column_invisible="1"/>
+            </list>
+        </field>
+    </record>
+</odoo>

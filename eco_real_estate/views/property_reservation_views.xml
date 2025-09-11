@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <!--        Property Reservation-->
+        <record id="property_reservation_list_view" model="ir.ui.view">
+            <field name="name">Property Reservation list</field>
+            <field name="model">property.reservation</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="project_id"/>
+                    <field name="phase_id"/>
+                    <field name="property_id"/>
+                    <field name="type"/>
+                    <field name="discount_type"/>
+                    <field name="discount"/>
+                    <field name="payment_strategy"/>
+                    <field name="property_price"/>
+                    <field name="net_price"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="property_reservation_form_view" model="ir.ui.view">
+            <field name="name">Property Reservation Form</field>
+            <field name="model">property.reservation</field>
+            <field name="arch" type="xml">
+                <form string="Property Reservation">
+                    <header>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft, reserved, contract_ini, contract_rev, check,contracted "/>
+                        <button name="action_request_exception" type="object" string="Request Exception"
+                                class="oe_highlight"
+                                invisible="state != 'draft'"/>
+                        <button name="action_approve_exception" type="object" string="Approve Exception"
+                                class="oe_highlight"
+                                invisible="state != 'req_exception'"/>
+                        <button name="action_reject_exception" type="object" string="Reject Exception"
+                                class="oe_highlight"
+                                invisible="state != 'req_exception'"/>
+                        <button name="action_reserve" type="object" string="Reserve" class="oe_highlight"
+                                invisible="state not in 'draft,approve_exception,reject_exception'"/>
+                        <button name="action_initialize_contract" type="object" string="Initialize Contract"
+                                class="oe_highlight" invisible="state != 'reserved'"/>
+                        <button name="action_review_contract" type="object" string="Review Contract"
+                                class="oe_highlight" invisible="state != 'contract_ini'"/>
+                        <button name="action_check_contract" type="object" string="Receive Checks" class="oe_highlight"
+                                invisible="state != 'contract_rev'"/>
+                        <button name="action_contracted" type="object" string="Create Contract" class="oe_highlight"
+                                invisible="state != 'check'"/>
+                        <button name="%(action_reservation_cancel_reason)d" string="Cancel"
+                                class="oe_edit_only btn-primary"
+                                invisible="state in 'cancel,contracted'"
+                                type="action"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title mb24">
+                            <h4>
+                                <strong>
+                                    <field class="text-break" name="name" readonly="1"/>
+                                </strong>
+                            </h4>
+                        </div>
+                        <group>
+                            <group string="Property Details">
+                                <field name="reservation_date"/>
+                                <field name="property_id" domain="[('state','=','free')]"/>
+                                <field name="type"/>
+                                <field name="project_id"/>
+                                <field name="phase_id"/>
+
+                                <field name="discount_type"/>
+                                <div class="o_td_label" invisible="discount_type == False">
+                                    <label for="discount" string="Discount Amount"
+                                           invisible="discount_type == 'percentage'"/>
+                                    <label for="discount" string="Discount Percentage"
+                                           invisible="discount_type == 'amount'"/>
+                                </div>
+
+                                <field name="discount" nolabel="1" invisible="discount_type == False"/>
+                                <field name="payment_term_ids" invisible="1"/>
+                                <field name="payment_strategy" domain="[('id','in',payment_term_ids)]"
+                                       widget="selection"/>
+                                <field name="property_price"/>
+                                <field name="net_price"/>
+                            </group>
+                            <group string="Sales Details">
+                                <field name="sale_id" readonly="1"/>
+                                <field name="sales_type"/>
+                                <field name="sales_agent_type"/>
+                                <field name="sales_agent" domain="[('is_agent','=',True)]"/>
+                                <field name="source"/>
+                                <field name="user_id"/>
+                                <field name="team_id"/>
+                                <field name="first_check_no" widget="char"/>
+                                <field name="maintenance_based_on"/>
+                                <field name="maintenance_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Customer Details">
+                                <field name="customer_id"/>
+                                <!--                                <field name="slistt"/>-->
+                                <field name="phone"/>
+                                <field name="mobile"/>
+                                <field name="email"/>
+                                <field name="function"/>
+                            </group>
+
+                            <group string="Identification Info">
+                                <field name="country_id"/>
+                                <field name="id_type"/>
+                                <field name="id_number"/>
+                                <field name="customer_photo_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+
+                            <page string="Reservation Conditions">
+                                <field name="reservation_conditions" colspan="4" nolabel="1"/>
+                            </page>
+                            <page string="Exception Request">
+                                <field name="exp_request" colspan="4" nolabel="1"/>
+                            </page>
+                            <page name="payments" string="Payments">
+                                <field name="payment_strategy_line_ids" readonly="1">
+                                    <list string="Payment Terms">
+                                        <field name="serial"/>
+                                        <field name="description"/>
+                                        <field name="all_percent"/>
+                                        <field name="value_amount"/>
+                                        <field name="percent"/>
+                                        <field name="payment_date"/>
+                                        <field name="journal_id"/>
+                                        <field name="check_no"/>
+                                        <field name="type"/>
+                                        <field name="payment_id"
+                                               options="{'no_open': False}"/>
+                                        <button name="create_payment" type="object" string="Collected"
+                                                invisible="payment_id != False or type != 'deposit' or parent.state != 'draft'"/>
+                                        <button name="create_payment" type="object" string="Collected"
+                                                invisible="payment_id != False  or parent.state != 'check' "/>
+                                    </list>
+                                    <form>
+                                        <group>
+
+                                            <field name="check_no"/>
+                                            <field name="payment_id"
+                                                   options="{'no_open': False, 'no_create': True, 'no_create_edit': True}"
+                                                   readonly="1"/>
+                                        </group>
+                                    </form>
+
+                                </field>
+                            </page>
+                            <page name="payment_Attachments" string="Payment Attachments">
+                                <field name="payment_attachment_ids">
+                                    <list editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="datas" string="File Content"/>
+                                        <field name="payment_attach_type" string="Type"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="legal_papers" string="Legal Papers">
+                                <field name="legal_paper_ids">
+                                    <list editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="datas" string="File Content"/>
+                                        <field name="property_legal_type" string="Type"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="pay_for_other" string="Payment For Other">
+                                <group>
+                                    <group>
+                                        <field name="other_partner_id"/>
+                                        <field name="partner_id_type"/>
+                                        <field name="partner_id_number"/>
+                                        <field name="partner_photo_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="partner_date"/>
+                                        <field name="partner_country_id"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="Cancel_reason" string="Cancel Reason">
+                                <group>
+                                    <field name="cancel_payment_id" readonly="1"/>
+                                    <field name="cancel_reason" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter></chatter>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_reservation_action" model="ir.actions.act_window">
+            <field name="name">Property Reservation</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.reservation</field>
+            <field name="view_mode">list,form,graph</field>
+            <field name="view_id" ref="property_reservation_list_view"/>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to add a new Property Reservation
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

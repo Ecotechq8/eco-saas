@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+Copyright (C) 2015 DevIntelle Consulting Service Pvt.Ltd (<http://www.devintellecs.com>).
+
+For Module Support : devintelle@gmail.com  or Skype : devintelle 
+ -->
+<odoo>
+
+    <record id="view_reservation_cancel_reason_form" model="ir.ui.view">
+        <field name="name">view.reservation.cancel.reason.form</field>
+        <field name="model">reservation.cancel.reason</field>
+        <field name="arch" type="xml">
+            <form string="Reject Reason">
+                <group>
+                    <field name="type" widget="radio"/>
+                    <field name="journal_id" invisible="type != 'amount'" required="type == 'amount'"
+                           domain="[('type','in',['bank','cash'])]"/>
+                    <field name="amount" invisible="type != 'amount'" required="type == 'amount'"/>
+
+                </group>
+                <group>
+                    <field name="reason"/>
+                </group>
+
+                <footer>
+                    <button string="Cancel" name="cancel_reason" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Discard" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_reservation_cancel_reason" model="ir.actions.act_window">
+        <field name="name">Cancel Reason</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">reservation.cancel.reason</field>
+        <field name="view_id" ref="view_reservation_cancel_reason_form"/>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+</odoo>

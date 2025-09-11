@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_internal_investigation_document">
+        <t t-call="web.basic_layout">
+            <div class="header">
+                <center>
+                    <img t-if="env.company.logo" t-att-src="image_data_uri(env.company.logo)"
+                         style="width:150px;height:180px;" alt="Logo"/>
+                </center>
+            </div>
+            <div class="page">
+                <table class="table" style="width:100%;border: 1px solid white;height:30px;" dir="rtl">
+                    <tr>
+                        <td class="text-right" style="border: 1px solid white;">
+                            <strong>
+                                التاريخ:
+                            </strong>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                        </td>
+                        <!--                        <td class="text-center" style="border: 1px solid white;vertical-align: top;">-->
+                        <!--                            <img t-attf-src="/hr_printouts/static/src/img/logo.png" alt="Header"-->
+                        <!--                                 style="width:50%;"/>-->
+                        <!--                        </td>-->
+                        <td dir="ltr" style="border: 1px solid white;">
+                            <strong>
+                                Date:
+                            </strong>
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-center">
+                            <h4>
+                                <strong>الموضوع : استدعاء إداري</strong>
+                            </h4>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center">
+                            <h4>
+                                <strong>Subject : Internal Investigation</strong>
+                            </h4>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong style="font-size:14px;">
+                                يرجى التكرم بإبلاغ السيد /
+                                <span t-field="doc.employee_id.name"/>
+                                - الوظيفة
+                                <span t-field="doc.job_title.name"/>
+                                <br/>
+                                ضرورة التواجد في إدارة الموارد البشرية
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong style="font-size:14px;float:left;">
+                                Kindly inform Mr.
+                                <span t-field="doc.employee_id.name"/>
+                                – Position
+                                <span t-field="doc.job_title.name"/>
+                                <br/>
+                                hat he/she is require to be present
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            في تمام الساعة:
+                            <t t-if="doc.calling_time">
+                                <span t-field="doc.calling_time"/>
+                            </t>
+                            &#160;&#160;
+                            بتاريخ:
+                            <t t-if="doc.calling_date">
+                                <span t-field="doc.calling_date"/>
+                            </t>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            at the:
+                            <t t-if="doc.calling_time">
+                                <span t-field="doc.calling_time"/>
+                            </t>
+                            &#160;&#160;
+                            Date:
+                            <t t-if="doc.calling_date">
+                                <span t-field="doc.calling_date"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            ذلك للتحقيق اداريا.
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            for Investigation.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <img t-att-src="'/hr_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            &#160;&#160;
+                            مع اﻻستمرار في العمل
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <img t-att-src="'/hr_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            &#160;&#160;
+                            Continue his duties.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <img t-att-src="'/hr_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            &#160;&#160;
+                            مع الوقف عن العمل لحين انتهاء التحقيق
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <img t-att-src="'/hr_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            &#160;&#160;
+                            Is excused from his duties until the investigation complete.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right">
+                            وهذا للعلم ونفاذ مفعوله قانونا.
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            Kindly take the necessary action to inform him/her.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:50px;"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;font-weight:bold;" class="text-center">
+                            مدير الموارد البشرية
+                            &#160;&#160;&#160;&#160;&#160;
+                            الموظـــــــف
+                            <br/>
+                            <br/>
+                            ______________
+                            &#160;&#160;&#160;&#160;&#160;
+                            ________________
+                        </td>
+                        <td style="border: 1px solid white;font-weight:bold;" class="text-center">
+                            HRD Manager
+                            &#160;&#160;&#160;&#160;&#160;
+                            Employee
+                            <br/>
+                            <br/>
+                            ______________
+                            &#160;&#160;&#160;&#160;&#160;
+                            ________________
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="footer">
+                <img t-attf-src="/hr_printouts/static/src/img/footer.png" alt="Footer" style="width:100%;"/>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_internal_investigation_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_printouts.report_internal_investigation_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_salary_continuity_certificate_report" model="ir.actions.report">
+        <field name="name">استدعاء إدارى</field>
+        <field name="model">hr.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_printouts.report_internal_investigation_printout</field>
+        <field name="report_file">hr_printouts.report_internal_investigation_printout</field>
+        <field name="binding_model_id" ref="eco_hr_operation.model_hr_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

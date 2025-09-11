@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="normal_payments_check_form_view_inherit" model="ir.ui.view">
+            <field name="name">realestate.noraml.payments.form</field>
+            <field name="model">normal.payments</field>
+            <field name="inherit_id" ref="check_management.normal_payments_check_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analyitc_id']" position="after">
+                    <field name="project_id"/>
+                    <field name="property_id"/>
+                    <field name="reservation_id"/>
+                </xpath>
+                <xpath expr="//field[@name='pay_check_ids']/list" position="inside">
+                    <field name="payment_strategy_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

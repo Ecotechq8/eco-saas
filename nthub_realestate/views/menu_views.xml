@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+        <!-- root_main_menu -->
+        <menuitem id="real_estate_menu" name="Real Estate" web_icon="nthub_realestate,static/description/icon.png"
+                  sequence="28"/>
+        <menuitem id="dash_menu" name="Dashboard" parent="real_estate_menu" action="open_board_my_dash_action" sequence="0"/>
+
+        <!-- property_structure_menu -->
+        <menuitem id="property_structure_menu" parent="real_estate_menu"
+                  name="Property Structure" sequence="1"/>
+        <menuitem id="regions_menu_action" parent="property_structure_menu"
+                  name="Regions" action="regions_actions" sequence="0"/>
+        <menuitem id="rs_project_menu_action" parent="property_structure_menu"
+                  name="Projects" action="rs_project_action" sequence="1"/>
+        <menuitem id="sub_property_menu_action" parent="property_structure_menu"
+                  name="Properties" action="sub_properties_action" sequence="2"/>
+
+        <!-- partners_menu -->
+        <menuitem id="partners_menu" parent="real_estate_menu"
+                  name="Partners" sequence="2"/>
+        <menuitem name="Tenants" id="tenants_menu_action" parent="partners_menu" action="tenants_action" sequence="0"/>
+        <menuitem name="Owners" id="owner_menu_action" parent="partners_menu" action="owner_action" sequence="1"/>
+
+        <!-- reservation_menu_item -->
+        <menuitem id="reservation_menu_item" parent="real_estate_menu"
+                  name="Booking" action="unit_reservation_form_action" sequence="3"/>
+
+        <!-- settlement_menu_item -->
+        <menuitem id="settlement_menu_item" parent="real_estate_menu"
+                  name="Settlement" sequence="4"/>
+
+        <menuitem id="ownership_settlement_menu_item" parent="settlement_menu_item"
+                  name="Ownership Settlement" action="ownership_contract_line_action" sequence="0"/>
+        <menuitem id="rental_settlement_menu_item" parent="settlement_menu_item"
+                  name="Rental Settlement" action="rental_contract_line_action" sequence="1"/>
+
+        <!-- contracts_menu_item -->
+        <menuitem id="contracts_menu_item" parent="real_estate_menu"
+                  name="Contracts" sequence="5"/>
+        <menuitem id="ownership_contract_menu_item" parent="contracts_menu_item"
+                  name="Ownership Contracts" action="ownership_contract_action" sequence="0"/>
+        <menuitem id="real_contract_action_menu_item" parent="contracts_menu_item"
+                  name="Rental Contracts" action="rental_contract_action" sequence="1"/>
+
+
+        <!-- configration_menu -->
+        <menuitem id="configration_menu" parent="real_estate_menu"
+                  name="Configration" sequence="100"/>
+        <menuitem id="setting_menu_action" parent="configration_menu"
+                  name="Settings" action="action_general_config" sequence="0"/>
+        <menuitem id="installment_template_action_menu" parent="configration_menu"
+                  name="Installment Template" action="installment_template_form_action" sequence="1"/>
+        <menuitem id="main_property_type_menu_action" parent="configration_menu"
+                  name="Project Type" action="main_property_type_action" sequence="2"/>
+        <menuitem id="property_status_menu_action" parent="configration_menu"
+                  name="Property Status" action="property_status_action" sequence="3"/>
+        <menuitem id="property_description_menu_action" parent="configration_menu"
+                  name="Property Description" action="property_description_action" sequence="4"/>
+        <menuitem id="furniture_menu_action" parent="configration_menu"
+                  name="Furniture" action="furniture_action" sequence="5"/>
+
+    </data>
+</odoo>

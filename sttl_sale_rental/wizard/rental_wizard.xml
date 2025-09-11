@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="rental_pickup_wizard_view_form" model="ir.ui.view">
+        <field name="name">rental.pickup.wizard.view.form</field>
+        <field name="model">rental.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Validate a Pick Up">
+                <sheet>
+<!--                    <group>-->
+                        <field name="rental_line_ids" nolabel="1">
+                            <list create="false" editable="top" delete="false">
+                                <field name="product_id" readonly="1" force_save="1"/>
+                                <field name="order_line_id" invisible="1" column_invisible="1"/>
+                                <field name="qty_reserved" required="1" readonly="1" force_save="1"/>
+                                <field name="tracking" invisible="1" column_invisible="1"/>
+                                <field name="line_lot_ids" invisible="1" column_invisible="1"/>
+                                <field name="lot_ids" domain="[('product_id', '=', product_id), ('product_qty', '>', 0)]"
+                                       widget="many2many_tags"
+                                       invisible="tracking != 'serial'"
+                                       options="{'no_create':True, 'no_create_edit':True}"/>
+                                <field name="qty_delivered" force_save="1" readonly="tracking in ['serial']"/>
+                                <field name="product_template_id" invisible="1" column_invisible="1"/>
+                            </list>
+                        </field>
+<!--                    </group>-->
+                    <footer>
+                        <button name="pickup_validate" type="object" string="Validate" class="btn btn-primary"/>
+                        <button name="cancel" special="cancel" string="Discard"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    
+    <record id="rental_return_wizard_view_form" model="ir.ui.view">
+        <field name="name">rental.return.wizard.view.form</field>
+        <field name="model">rental.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Validate a Return">
+                <sheet>
+                        <field name="rental_line_ids" nolabel="1">
+                            <list create="false" editable="top" delete="false">
+                                <field name="product_id" readonly="1" force_save="1"/>
+                                <field name="order_line_id" column_invisible="1"/>
+                                <field name="qty_to_return" readonly="1" force_save="1"/>
+                                <field name="tracking" column_invisible="1"/>
+                                <field name="line_lot_ids" column_invisible="1" />
+                                <field name="lot_ids" domain="[('id', 'in', line_lot_ids)]"
+                                       widget="many2many_tags"
+                                       invisible="tracking != 'serial'"
+                                       options="{'no_open':true, 'no_create':true, 'no_create_edit':true}"/>
+                                <field name="qty_returned" readonly="tracking in ['serial']" force_save="1"/>
+                                <field name="product_template_id" column_invisible="1"/>
+                            </list>
+                        </field>
+                    <footer>
+                        <button name="return_validate" type="object" string="Validate" class="btn btn-primary"/>
+                        <button name="cancel" special="cancel" string="Discard"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

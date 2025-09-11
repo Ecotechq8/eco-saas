@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="product_rental_form_view" model="ir.ui.view">
+        <field name="name">product.rental.form.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='options']" position="inside">
+                <span class="d-inline-block">
+                    <field name="is_rent"/>
+                    <label for="is_rent"/>
+                </span>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button class="oe_stat_button" name="action_view_rentals" type="object" icon="fa-signal"
+                        invisible="not is_rent"
+                        >
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="rental_count" widget="statinfo" nolabel="1" class="mr4"/>
+                            <field name="uom_name"/>
+                        </span>
+                        <span class="o_stat_text">In Rental</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='sales']" position="after">
+                <page name="rental" string="Rental" invisible="not is_rent">
+                    <field name="rental_price_ids" nolabel="1">
+                        <list editable="bottom">
+                            <control>
+                                <create name="add_rental_price" string="Add a price"/>
+                            </control>
+                            <field name="unit_type" required="1"/>
+                            <field name="product_template_id" column_invisible="True"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="price" required="1"/>
+                        </list>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="rental_product_search_view" model="ir.ui.view">
+        <field name="name">rental.product.search.view</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_search_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='filter_to_purchase']" position="after">
+                <filter string="Can be Rented" name="filter_to_rent" domain="[('is_rent', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_rental_product_template_action" model="ir.actions.act_window">
+        <field name="name">Products</field>
+        <field name="res_model">product.template</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{
+            'default_sale_ok': False,
+            'default_is_rent': True,
+            'default_purchase_ok': False,
+            'search_default_filter_to_rent': True,
+            }
+        </field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new rental product!
+            </p>
+        </field>
+    </record>
+
+</odoo>

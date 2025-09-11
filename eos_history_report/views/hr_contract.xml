@@ -1,0 +1,36 @@
+<odoo>
+    <data>
+        <record id="hr_contract_inherited_view_form" model="ir.ui.view">
+            <field name="name">hr.contract.inherited.view.form</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="eco_contract_enhancement.hr_contract_inherited_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='other']" position="after">
+                    <page string="Opening Balance (Leaves)">
+                        <group>
+                            <group>
+                                <field name="opening_balance_leave_days"/>
+                                <field name="opening_balance_leave_amount"/>
+                            </group>
+                        </group>
+                    </page>
+
+                    <page string="Opening Balance (EOS)">
+                        <group>
+                            <group>
+                                <field name="opening_balance_eos_days"/>
+                                <field name="opening_balance_eos_amount"/>
+                            </group>
+                        </group>
+                    </page>
+
+                </xpath>
+
+                <field name="day_value" position="after">
+                    <field name="leave_monthly_value"/>
+                    <field name="leave_monthly"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--        phases-->
+        <record id="property_phase_form_view" model="ir.ui.view">
+            <field name="name">property.phase.form</field>
+            <field name="model">property.phase</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Phase Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="phase_number"/>
+                            </group>
+                            <group>
+                                <field name="project_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter></chatter>
+
+
+                </form>
+            </field>
+        </record>
+
+        <record id="property_phase_list_view" model="ir.ui.view">
+            <field name="name">property.phase.list</field>
+            <field name="model">property.phase</field>
+            <field name="arch" type="xml">
+                <list string="Phases">
+                    <field name="name"/>
+                    <field name="phase_number"/>
+                    <field name="project_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="property_phase_search_view" model="ir.ui.view">
+            <field name="name">property.phase.search</field>
+            <field name="model">property.phase</field>
+            <field name="arch" type="xml">
+                <search string="Phases">
+                    <group expand="1" string="Group By">
+                        <filter string="Project" name="project_id" domain="[]"
+                                context="{'group_by':'project_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="property_phase_act_window" model="ir.actions.act_window">
+            <field name="name">Phases</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.phase</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Phase.
+                </p>
+            </field>
+        </record>
+
+
+        <!--zone -->
+        <record id="property_zone_form_view" model="ir.ui.view">
+            <field name="name">property.zone.form</field>
+            <field name="model">property.zone</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="zone Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="zone_number"/>
+                            </group>
+                            <group>
+                                <field name="phase_id"/>
+                            </group>
+                            <group>
+                                <field name="project_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_zone_list_view" model="ir.ui.view">
+            <field name="name">property.zone.list</field>
+            <field name="model">property.zone</field>
+            <field name="arch" type="xml">
+                <list string="zones">
+                    <field name="name"/>
+                    <field name="zone_number"/>
+                    <field name="phase_id"/>
+                    <field name="project_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="property_zone_search_view" model="ir.ui.view">
+            <field name="name">property.zone.search</field>
+            <field name="model">property.zone</field>
+            <field name="arch" type="xml">
+                <search string="zones">
+                    <group expand="1" string="Group By">
+                        <filter string="Project" name="project_id" domain="[]"
+                                context="{'group_by':'project_id'}"/>
+                    </group>
+                    <group expand="1" string="Group By">
+                        <filter string="phase" name="phase_id" domain="[]"
+                                context="{'group_by':'phase_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="property_zone_act_window" model="ir.actions.act_window">
+            <field name="name">zones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.zone</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new zone.
+                </p>
+            </field>
+        </record>
+
+
+        <!--        building-->
+        <record id="property_building_form_view" model="ir.ui.view">
+            <field name="name">property.building.form</field>
+            <field name="model">property.building</field>
+            <field name="arch" type="xml">
+                <form string="ModelTitle">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="building Name"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="building_number"/>
+                                <field name="phase_id"/>
+                            </group>
+                            <group>
+                                <field name="project_id"/>
+                                <field name="zone_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="property_building_list_view" model="ir.ui.view">
+            <field name="name">property.building.list</field>
+            <field name="model">property.building</field>
+            <field name="arch" type="xml">
+                <list string="buildings">
+                    <field name="name"/>
+                    <field name="building_number"/>
+                    <field name="project_id"/>
+                    <field name="phase_id"/>
+                    <field name="zone_id"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="property_building_search_view" model="ir.ui.view">
+            <field name="name">property.building.search</field>
+            <field name="model">property.building</field>
+            <field name="arch" type="xml">
+                <search string="buildings">
+                    <group expand="0" string="Group By">
+                        <filter string="Project" name="group_by_project_id" domain="[]"
+                                context="{'group_by':'project_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="property_building_act_window" model="ir.actions.act_window">
+            <field name="name">buildings</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.building</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new building.
+                </p>
+            </field>
+        </record>
+
+        <!--        Property block-->
+        <record id="property_block_act_window" model="ir.actions.act_window">
+            <field name="name">Property Block</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.block</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new Block.
+                </p>
+            </field>
+        </record>
+
+        <!--        Property floor-->
+        <record id="property_floor_act_window" model="ir.actions.act_window">
+            <field name="name">Property floor</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.floor</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new floor.
+                </p>
+            </field>
+        </record>
+
+        <!--        Property level-->
+        <record id="property_level_act_window" model="ir.actions.act_window">
+            <field name="name">Property level</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">property.level</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new level.
+                </p>
+            </field>
+        </record>
+
+
+        <!--        project location-->
+        <record id="project_location_act_window" model="ir.actions.act_window">
+            <field name="name">Project Location</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.location</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Let's create first Project Location.
+                </p>
+            </field>
+        </record>
+
+        <!--Project source-->
+        <record id="project_source_act_window" model="ir.actions.act_window">
+            <field name="name">Project Source</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.source</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Let's create first Project Source.
+                </p>
+            </field>
+        </record>
+
+        <!--Project Category type-->
+        <record id="project_category_type_act_window" model="ir.actions.act_window">
+            <field name="name">Project Category</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">project.category.type</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Let's create first Project Project Category .
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

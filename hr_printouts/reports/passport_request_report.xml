@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_passport_request_document">
+        <t t-call="web.basic_layout">
+            <div class="header">
+                <center>
+                    <img t-attf-src="/hr_printouts/static/src/img/passport_header.png" alt="Header"
+                         style="width:100%"/>
+                </center>
+            </div>
+            <div class="page" style="font-weight:bold;">
+                <br/>
+                <br/>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid black;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            التاريخ:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Date
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            رقم الموظف:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.pin"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Emp.No
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            اسم الموظف:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center" colspan="2">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Employee Name
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            الوظيفة:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.job_title.name"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            :Title
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-center">
+                            اﻹدارة:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.department_id.name"/>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-left" dir="ltr">
+                            Dept.:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right" dir="rtl" colspan="6">
+                            <strong>
+                                اتقدم انا الموقع ادناه بطلب جواز سفري و ذلك خلال الفترة التالية
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:5px;border-bottom: 1px solid black;border-right:1px solid white;"/>
+                    </tr>
+                    <tr>
+                        <td class="text-right"
+                            style="border: 1px solid black;border-top:1px solid black;background-color:#cccccc;">
+                            تاريخ اﻻستلام:
+                        </td>
+                        <td class="text-center" style="border: 1px solid black;border-top:1px solid black;">
+                            <span t-field="doc.passport_receive_date"/>
+                        </td>
+                        <td class="text-center"
+                            style="border: 1px solid black;border-top:1px solid black;background-color:#cccccc;">
+                            :Date Received
+                        </td>
+                        <td class="text-center"
+                            style="border: 1px solid black;border-top:1px solid black;background-color:#cccccc;">
+                            تاريخ التسليم:
+                        </td>
+                        <td class="text-center" style="border: 1px solid black;border-top:1px solid black;">
+                            <span t-field="doc.passport_delivery_date"/>
+                        </td>
+                        <td class="text-center"
+                            style="border: 1px solid black;border-top:1px solid black;background-color:#cccccc;">
+                            :Date of Delivery
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center" style="border: 1px solid black;background-color:#cccccc;">
+                            عــدد اﻻيـام:
+                        </td>
+                        <td class="text-center" style="border: 1px solid black;">
+                            <span t-field="doc.number_of_days"/>
+                        </td>
+                        <td class="text-left" style="border: 1px solid black;background-color:#cccccc;" dir="ltr">
+                            Days No:
+                        </td>
+                        <td colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="2" style="border: 1px solid black;background-color:#cccccc;">
+                            الغرض من سحب الجواز:
+                        </td>
+                        <td class="text-center" colspan="2" style="height:30px;border: 1px solid black;">
+                            <span t-field="doc.purpose_of_passport_withdrawal"/>
+                        </td>
+                        <td class="text-left" colspan="2" style="border: 1px solid black;background-color:#cccccc;"
+                            dir="ltr">
+                            Reason:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-center" colspan="3">
+                            توقيع الموظف
+                            <br/>
+                            <br/>
+                            Applicant Sign
+                            <br/>
+                            <br/>
+                            _______________________________________
+                        </td>
+                        <td style="border: 1px solid white;" class="text-center" colspan="3">
+                            المدير المباشر
+                            <br/>
+                            <br/>
+                            Direct Manger Sign
+                            <br/>
+                            <br/>
+                            _______________________________________
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:5px;border-bottom: 1px solid black;border-right:1px solid white;border-left:1px solid white;"
+                            colspan="6"/>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-center" style="border: 1px solid black;background-color:#cccccc;">
+                            <strong>
+                                مسئول العهدة
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="6" dir="rtl" style="border: 1px solid black;">
+                            الموظف لديه عهدة
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span style="border:1px solid black;padding:7px;">
+                                نعم
+                            </span>
+                            <span style="border:1px solid black;padding:7px;">
+                                لا
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-center" style="border: 1px solid black;background-color:#cccccc;">
+                            <strong>
+                                اﻻدارة المالية
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="6" dir="rtl" style="border: 1px solid black;">
+                            الموظف عليه ذمم او سلف
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <span style="border:1px solid black;padding:7px;">
+                                نعم
+                            </span>
+                            <span style="border:1px solid black;padding:7px;">
+                                لا
+                            </span>
+                            <br/>
+                            <br/>
+                            الاسـم:
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            التوقيع:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-center" style="border: 1px solid black;background-color:#cccccc;">
+                            <strong>
+                                ادارة الشئون اﻻدارية
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-right" colspan="6" dir="rtl" style="border: 1px solid black;">
+                            قرار ادارة الشئون اﻻدرية
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            <img t-att-src="'/hr_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            لا مانع
+                            &#160;&#160;&#160;
+                            <img t-att-src="'/hr_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            مرفوض
+                            <br/>
+                            <br/>
+                            الاسـم:
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                            التوقيع:
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:5px;border: 1px solid white;"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:30px;" class="text-right" colspan="3">
+                            <span style="font-size:15px;">
+                                ملاحظة : قسم الشئون اﻻدارية هى الجهة الوحيدة المخولة باستلام جواز السفر حيث تعتبر اﻻدارة
+                                غير
+                                مسئولة عنه فى حال تسليمه ﻷى جهة اخري
+                            </span>
+                        </td>
+                        <td style="border: 1px solid white;height:30px;" class="text-left" colspan="3" dir="ltr">
+                            <span style="font-size:15px;">
+                                Note: Personal Dev. is the only authorized custodian of passports ,and the MGMT is not
+                                responsible for any passports given to other than Personnel Div
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:5px;border: 1px solid white;"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-left" colspan="6" dir="ltr">
+                            General Manger Sign توقيع المدير العام
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_passport_request_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_printouts.report_passport_request_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_passport_request_report" model="ir.actions.report">
+        <field name="name">طلب استلام جواز سفر</field>
+        <field name="model">hr.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_printouts.report_passport_request_printout</field>
+        <field name="report_file">hr_printouts.report_passport_request_printout</field>
+        <field name="binding_model_id" ref="eco_hr_operation.model_hr_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_auto_checkout_employees" model="ir.cron">
+            <field name="name">Auto Checkout Missing Employees</field>
+            <field name="model_id" ref="hr_attendance.model_hr_attendance"/>
+            <field name="state">code</field>
+            <field name="code">model.auto_checkout_employees()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">True</field>
+            <field name="nextcall">2025-05-15 02:00:00</field>
+        </record>
+    </data>
+
+</odoo>

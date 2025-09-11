@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+fm_property_crud,fm_property_crud,model_fm_property,,1,1,1,1
+fm_unit_crud,fm_unit_crud,model_fm_unit,,1,1,1,1
+fm_unit_lines_crud,fm_unit_lines_crud,model_fm_unit_lines,,1,1,1,1
+fm_management_crud,fm_management_crud,model_fm_management,,1,1,1,1
+invoice_wizard_crud,invoice_wizard_crud,model_invoice_wizard,,1,1,1,1
+unit_lines_wizard_crud,unit_lines_wizard_crud,model_unit_lines_wizard,,1,1,1,1

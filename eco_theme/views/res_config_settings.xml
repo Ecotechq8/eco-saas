@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+
+    <record id="view_res_config_settings_appsbar_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="muk_web_appsbar.view_res_config_settings_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='appbar_image']/../.." position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_config_settings_colors_form" model="ir.ui.view">
+        <field name="name">res.config.settings.form</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="muk_web_colors.view_res_config_settings_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='branding_settings']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//block[@id='branding_settings']" position="after">
+                <block title="Backend Theme" id="theme_settings">
+                    <setting string="Theme Colors" help="Customize the look and feel of the theme">
+                        <div class="w-50 row">
+                            <label for="color_brand_light" string="Brand" class="d-block w-75 py-2"/>
+                            <field name="color_brand_light" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="color_primary_light" string="Primary" class="d-block w-75 py-2"/>
+                            <field name="color_primary_light" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="theme_color_appsmenu_text" string="Menu Text" class="d-block w-75 py-2"/>
+                            <field name="theme_color_appsmenu_text" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="theme_color_appbar_text" string="Apps Text" class="d-block w-75 py-2"/>
+                            <field name="theme_color_appbar_text" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="theme_color_appbar_active" string="Apps Active" class="d-block w-75 py-2"/>
+                            <field name="theme_color_appbar_active" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="theme_color_appbar_background" string="Background" class="d-block w-75 py-2"/>
+                            <field name="theme_color_appbar_background" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                    </setting>
+                    <setting string="Context Colors" help="Customize context colors of the system">
+                        <div class="w-50 row">
+                            <label for="color_info_light" string="Info" class="d-block w-75 py-2"/>
+                            <field name="color_info_light" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="color_success_light" string="Success" class="d-block w-75 py-2"/>
+                            <field name="color_success_light" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="color_warning_light" string="Warning" class="d-block w-75 py-2"/>
+                            <field name="color_warning_light" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <div class="w-50 row">
+                            <label for="color_danger_light" string="Danger" class="d-block w-75 py-2"/>
+                            <field name="color_danger_light" class="d-block w-25 p-0 m-0" widget="color"/>
+                        </div>
+                        <button
+                                name="action_reset_theme_color_assets"
+                                icon="oi-arrow-right"
+                                type="object"
+                                string="Reset Theme Colors"
+                                class="btn-link"
+                        />
+                    </setting>
+                    <setting
+                            string="Background Image"
+                            company_dependent="1"
+                            help="Set the background image for the apps menu"
+                    >
+                        <field name="theme_background_image" widget="image" class="ml-4 w-75"/>
+                    </setting>
+                    <setting
+                            string="Favicon &amp; Logo"
+                            company_dependent="1"
+                            help="Set your own favicon and logo for the appsbar"
+                    >
+                        <div class="w-50 row">
+                            <label for="appbar_image" string="Logo" class="o_light_label mb-1"/>
+                            <field name="appbar_image" widget="image" class="ml-4 oe_avatar"/>
+                            <div class="w-100 mt-1"/>
+                            <label for="theme_favicon" string="Favicon" class="o_light_label mb-1"/>
+                            <field name="theme_favicon" widget="image" class="ml-4 oe_avatar"/>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="base.menu_view_base_module_update" model="ir.ui.menu">
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Hide Apply Scheduled Upgrades -->
+    <record id="base.menu_view_base_module_upgrade" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+    <record id="base_import_module.menu_view_base_module_import" model="ir.ui.menu">
+        <field name="active" eval="False"/>
+    </record>
+
+
+    <!--    &lt;!&ndash; Main Apps Root Menu &ndash;&gt;-->
+    <!--    <menuitem id="apps_main_menu"-->
+    <!--              name="Categories"-->
+    <!--              parent="base.menu_management"-->
+    <!--              sequence="10"/>-->
+
+    <!--    &lt;!&ndash; ================= Inventory Section ================= &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_inventory_header"-->
+    <!--              name="Inventory"-->
+    <!--              parent="apps_main_menu"-->
+    <!--              sequence="10"-->
+    <!--              groups="stock.group_stock_manager,stock.group_stock_user"/>-->
+
+    <!--    &lt;!&ndash; Inventory Dashboard &ndash;&gt;-->
+    <!--    <record id="action_inventory_dashboard" model="ir.actions.act_window">-->
+    <!--        <field name="name">Inventory Dashboard</field>-->
+    <!--        <field name="res_model">stock.picking.type</field>-->
+    <!--        <field name="view_mode">kanban,list</field>-->
+    <!--    </record>-->
+    <!--    <menuitem id="apps_menu_inventory_dashboard"-->
+    <!--              name="Dashboard"-->
+    <!--              parent="apps_menu_inventory_header"-->
+    <!--              action="action_inventory_dashboard"-->
+    <!--              sequence="1"/>-->
+
+    <!--    &lt;!&ndash; Transfers &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_inventory_transfers"-->
+    <!--              name="Transfers"-->
+    <!--              parent="apps_menu_inventory_header"-->
+    <!--              action="stock.action_picking_tree_all"-->
+    <!--              sequence="2"/>-->
+
+    <!--    &lt;!&ndash; Products &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_inventory_products"-->
+    <!--              name="Products"-->
+    <!--              parent="apps_menu_inventory_header"-->
+    <!--              action="product.product_template_action"-->
+    <!--              sequence="3"/>-->
+
+    <!--    &lt;!&ndash; ================= Sales Section ================= &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_sales_header"-->
+    <!--              name="Sales"-->
+    <!--              parent="apps_main_menu"-->
+    <!--              sequence="20"-->
+    <!--              groups="sales_team.group_sale_manager,sales_team.group_sale_salesman"/>-->
+
+    <!--    &lt;!&ndash; Sales Orders &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_sales_orders"-->
+    <!--              name="Orders"-->
+    <!--              parent="apps_menu_sales_header"-->
+    <!--              action="sale.action_orders"-->
+    <!--              sequence="1"/>-->
+
+    <!--    &lt;!&ndash; Customers &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_sales_customers"-->
+    <!--              name="Customers"-->
+    <!--              parent="apps_menu_sales_header"-->
+    <!--              action="base.action_partner_form"-->
+    <!--              sequence="2"/>-->
+
+    <!--    &lt;!&ndash; Quotations &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_sales_quotations"-->
+    <!--              name="Quotations"-->
+    <!--              parent="apps_menu_sales_header"-->
+    <!--              action="sale.action_quotations"-->
+    <!--              sequence="3"/>-->
+
+    <!--    &lt;!&ndash; ================= Accounting Section ================= &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_accounting_header"-->
+    <!--              name="Accounting"-->
+    <!--              parent="apps_main_menu"-->
+    <!--              sequence="30"-->
+    <!--              groups="account.group_account_user"/>-->
+
+    <!--    &lt;!&ndash; Dashboard &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_accounting_dashboard"-->
+    <!--              name="Dashboard"-->
+    <!--              parent="apps_menu_accounting_header"-->
+    <!--              action="account.action_move_journal_line"-->
+    <!--              sequence="1"/>-->
+
+    <!--    &lt;!&ndash; Customer Invoices &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_accounting_invoices"-->
+    <!--              name="Customer Invoices"-->
+    <!--              parent="apps_menu_accounting_header"-->
+    <!--              action="account.action_move_out_invoice_type"-->
+    <!--              sequence="2"/>-->
+
+    <!--    &lt;!&ndash; Vendor Bills &ndash;&gt;-->
+    <!--    <menuitem id="apps_menu_accounting_vendorbills"-->
+    <!--              name="Vendor Bills"-->
+    <!--              parent="apps_menu_accounting_header"-->
+    <!--              action="account.action_move_in_invoice_type"-->
+    <!--              sequence="3"/>-->
+
+
+    <!--    &lt;!&ndash; Sales Category &ndash;&gt;-->
+    <!--    <record id="action_apps_sales" model="ir.actions.act_window">-->
+    <!--        <field name="name">Sales Apps</field>-->
+    <!--        <field name="res_model">ir.module.module</field>-->
+    <!--        <field name="view_mode">kanban,list</field>-->
+    <!--        <field name="context">{'search_default_category_sales': 1}</field>-->
+    <!--        <field name="domain">[('category_id.name','=','Sales')]</field>-->
+    <!--    </record>-->
+    <!--    <menuitem id="menu_apps_sales" name="Sales" parent="base.menu_management" action="action_apps_sales" sequence="5"/>-->
+
+    <!--    &lt;!&ndash; HR Category &ndash;&gt;-->
+    <!--    <record id="action_apps_hr" model="ir.actions.act_window">-->
+    <!--        <field name="name">Human Resources Apps</field>-->
+    <!--        <field name="res_model">ir.module.module</field>-->
+    <!--        <field name="view_mode">kanban,list</field>-->
+    <!--        <field name="context">{'search_default_category_hr': 1}</field>-->
+    <!--        <field name="domain">[('category_id.name','=','Human Resources')]</field>-->
+    <!--    </record>-->
+    <!--    <menuitem id="menu_apps_hr" name="Human Resources" parent="base.menu_management" action="action_apps_hr"-->
+    <!--              sequence="6"/>-->
+
+    <!--    &lt;!&ndash; Inventory Category &ndash;&gt;-->
+    <!--    <record id="action_apps_inventory" model="ir.actions.act_window">-->
+    <!--        <field name="name">Inventory Apps</field>-->
+    <!--        <field name="res_model">ir.module.module</field>-->
+    <!--        <field name="view_mode">kanban,list</field>-->
+    <!--        <field name="context">{'search_default_category_inventory': 1}</field>-->
+    <!--        <field name="domain">[('category_id.name','=','Inventory')]</field>-->
+    <!--    </record>-->
+    <!--    <menuitem id="menu_apps_inventory" name="Inventory" parent="base.menu_management" action="action_apps_inventory"-->
+    <!--              sequence="7"/>-->
+
+    <!--    &lt;!&ndash; Accounting Category &ndash;&gt;-->
+    <!--    <record id="action_apps_accounting" model="ir.actions.act_window">-->
+    <!--        <field name="name">Accounting Apps</field>-->
+    <!--        <field name="res_model">ir.module.module</field>-->
+    <!--        <field name="view_mode">kanban,list</field>-->
+    <!--        <field name="context">{'search_default_category_accounting': 1}</field>-->
+    <!--        <field name="domain">[('category_id.name','=','Accounting')]</field>-->
+    <!--    </record>-->
+    <!--    <menuitem id="menu_apps_accounting" name="Accounting" parent="base.menu_management" action="action_apps_accounting"-->
+    <!--              sequence="8"/>-->
+
+    <!--    &lt;!&ndash; Website Category &ndash;&gt;-->
+    <!--    <record id="action_apps_website" model="ir.actions.act_window">-->
+    <!--        <field name="name">Website Apps</field>-->
+    <!--        <field name="res_model">ir.module.module</field>-->
+    <!--        <field name="view_mode">kanban,list</field>-->
+    <!--        <field name="context">{'search_default_category_website': 1}</field>-->
+    <!--        <field name="domain">[('category_id.name','=','Website')]</field>-->
+    <!--    </record>-->
+    <!--    <menuitem id="menu_apps_website" name="Website" parent="base.menu_management" action="action_apps_website"-->
+    <!--              sequence="9"/>-->
+
+
+    <!--    <record id="menu_view_base_module_update" model="ir.ui.menu">-->
+    <!--        <field name="active" eval="False"/>-->
+    <!--    </record>-->
+
+
+</odoo>

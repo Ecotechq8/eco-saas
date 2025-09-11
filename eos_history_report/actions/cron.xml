@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_create_balance_history" model="ir.cron">
+        <field name="name">Create Balance History</field>
+        <field name="interval_number">1</field>
+        <field name="interval_type">months</field>
+        <field name="model_id" ref="model_balance_history"/>
+        <field name="code">model.create_balance_history()</field>
+        <field name="state">code</field>
+    </record>
+</odoo>

@@ -1,0 +1,414 @@
+<odoo>
+    <data>
+        <template id="template_reservation_form_document">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.env.lang})"/>
+                <div class="page" dir="rtl">
+                    <table style="width:100%;border: 1px solid white;">
+                        <tr>
+                            <td style="border: 1px solid white;background-color:red;color:white;" class="text-center"
+                                colspan="4">
+                                <strong>
+                                    طلب حجز Form Reservation
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>التـاريـخ</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.reservation_date"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Date</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;background-color:red;color:white" class="text-center"
+                                colspan="4">
+                                <strong>
+                                    مواصفات العقار Details Property
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم الوحدة</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.default_code"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Unit Ref. no.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>اسم العقار</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.building_id.name"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Building Name</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم العقار</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.building_id.building_number"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Building No.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>المكان</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.zone_id.name"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Location</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>المرحله</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.phase_id.name"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Phase</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>القطاع</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.block_id.name"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Block No.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم الطابق</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.property_id.floor_id.name"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Floor No.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;background-color:red;color:white" class="text-center"
+                                colspan="4">
+                                <strong>
+                                    بيانات العميل Details Client
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>الاسم</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.customer_id"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Name</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم البطاقه الشخصيه</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-esc="o.id_number"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>QID No.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>الجنسية</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.country_id"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Nationality</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم السجل (شركات)</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>C.R. No. (Companies)</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم الهاتف / الجوال</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.phone"/>
+
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Mobile No./Telephone No.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>الايميل</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-field="o.email"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Email</strong>
+                            </td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td style="border: 1px solid white;background-color:red;color:white" class="text-center"-->
+<!--                                colspan="4">-->
+<!--                                <strong>-->
+<!--                                    قيمة الايجار Value Lease-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td class="text-right" style="border:1px solid white;">-->
+<!--                                <strong>الايجار الشهرية</strong>-->
+<!--                            </td>-->
+<!--                            <td class="text-center" style="border:1px solid white;" colspan="2">-->
+<!--                                <span/>-->
+<!--                            </td>-->
+<!--                            <td class="text-left" style="border:1px solid white;" dir="ltr">-->
+<!--                                <strong>Monthly Rental</strong>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td class="text-right" style="border:1px solid white;">-->
+<!--                                <strong>المدة الايجارية</strong>-->
+<!--                            </td>-->
+<!--                            <td class="text-center" style="border:1px solid white;" colspan="2">-->
+<!--                                <span/>-->
+<!--                            </td>-->
+<!--                            <td class="text-left" style="border:1px solid white;" dir="ltr">-->
+<!--                                <strong>Term Lease</strong>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td class="text-right" style="border:1px solid white;">-->
+<!--                                <strong>تاريخ بدايه العقد (المتوقع)</strong>-->
+<!--                            </td>-->
+<!--                            <td class="text-center" style="border:1px solid white;" colspan="2">-->
+<!--                                <span/>-->
+<!--                            </td>-->
+<!--                            <td class="text-left" style="border:1px solid white;" dir="ltr">-->
+<!--                                <strong>Lease contract starting date-->
+<!--                                    (expected)-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+<!--                        <tr>-->
+<!--                            <td class="text-right" style="border:1px solid white;">-->
+<!--                                <strong>تاريخ نهاية العقد (المتوقع)</strong>-->
+<!--                            </td>-->
+<!--                            <td class="text-center" style="border:1px solid white;" colspan="2">-->
+<!--                                <span/>-->
+<!--                            </td>-->
+<!--                            <td class="text-left" style="border:1px solid white;" dir="ltr">-->
+<!--                                <strong>Lease contract ending date-->
+<!--                                    (expected)-->
+<!--                                </strong>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                        <tr>
+                            <td style="border: 1px solid white;background-color:red;color:white" class="text-center"
+                                colspan="4">
+                                <strong>
+                                    شيك /نقدي تامين Cheque Security
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>رقم الشيك</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                               <span t-esc="str(o.first_check_no)"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Cheque No.</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>البنك</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>Bank</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>الفرع</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>
+                                    Branch
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;">
+                                <strong>القيمة</strong>
+                            </td>
+                            <td class="text-center" style="border:1px solid white;" colspan="2">
+                                <span t-esc="sum(o.payment_strategy_line_ids.filtered(lambda l: l.type == 'deposit').mapped('value_amount')) or 0"/>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;" dir="ltr">
+                                <strong>
+                                    Amount
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;background-color:red;color:white" class="text-center"
+                                colspan="4">
+                                <strong>
+                                    الشروط والاحكام Conditions and Terms
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-right" style="border:1px solid white;width:50%;" colspan="2">
+                                <strong style="font-size:13px;">
+                                    1. خضع هذا الطلب لتاكيد الطرف الاول (اريان للاصول) وموافقته
+                                    <br/>
+                                    2. وفي حاله لم يعتمد الطرف الاول طلب الحجز , سيتم اعاده شيك التامين للطرف الثاني
+                                    <br/>
+                                    3. انه من المتفق عليه ان الطرف الاول , غير مسئول عن اي من اضرار كلا الطرفين
+                                    <br/>
+                                    4. في حالة قام الطرف الثاني (العميل) بالغاء الحجز يسقط حقه ف استرداد مبلغ التامين
+                                    بحيث يعد كشرط جزائي عن الغاء الحجز
+                                    <br/>
+                                    5. توقيع الطرف الثاني يوكد قبول الشروط والاحكام الخاصه بهذا الطلب
+                                </strong>
+                            </td>
+                            <td class="text-left" style="border:1px solid white;width:50%;" colspan="2" dir="ltr">
+                                <strong style="font-size:13px;">
+                                    1. This form shall be subject to confirmation and approval by the First Party
+                                    (Ariane Properties).
+                                    <br/>
+                                    2. In the event that the first party does not approve the Reservation form, the
+                                    Security deposit shall be returned to the second party
+                                    <br/>
+                                    3. It is agreed that the first party, is not responsible for any damage to both
+                                    parties
+                                    <br/>
+                                    4. In the event that the second party (Client) Wants to cancels the reservation, his
+                                    right to recover the security deposit shall be forfeited, as it is considered as a
+                                    penalty condition for cancelling the reservation.
+                                    <br/>
+                                    5. The signature of the second party confirms acceptance of the terms and
+                                    conditions of this application.
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;background-color:red;color:white;width:25%;"
+                                class="text-center">
+                                <strong>
+                                    توقيع العميل
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;background-color:red;color:white;width:25%;"
+                                class="text-center">
+                                <strong>
+                                    اعتماد وكيل المؤجر
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;background-color:red;color:white;width:25%;"
+                                class="text-center">
+                                <strong>
+                                    Approval Lessor Agent
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;background-color:red;color:white;width:25%;"
+                                class="text-center">
+                                <strong>
+                                    Client Signature
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>
+                                    ---------------------
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>
+                                    ---------------------
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>
+                                    ---------------------
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>
+                                    ---------------------
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_reservation_form">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="eco_real_estate.template_reservation_form_document" t-lang="o.env.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_template_reservation_form_report" model="ir.actions.report">
+            <field name="name">طلب حجز الوحده</field>
+            <field name="model">property.reservation</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">eco_real_estate.report_reservation_form</field>
+            <field name="report_file">eco_real_estate.report_reservation_form</field>
+            <field name="binding_model_id" ref="model_property_reservation"/>
+            <field name="binding_type">report</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="res_config_settings_view_form_eos" model="ir.ui.view">
+            <field name="name">res.config.settings.eos</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="hr_eos.res_config_settings_view_form_eos"/>
+            <field name="arch" type="xml">
+                <div name="hr_eos_calculation" position="inside">
+                    <div class="d-flex">
+                        <label for="eos_calculation_type" class="o_light_label"/>
+                        <field name="eos_calculation_type" class="ml16"/>
+                    </div>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

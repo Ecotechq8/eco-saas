@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="property_reservation_form_view" model="ir.ui.view">
+            <field name="name">property_reservation_form_view</field>
+            <field name="model">property.reservation</field>
+            <field name="inherit_id" ref="eco_real_estate.property_reservation_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_strategy_line_ids']/list/field[@name='payment_id']" position="attributes">
+                    <attribute name="column_invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_id']" position="after">
+                    <field name="check_payment_id"  optional="hide"/>
+                    <field name="check_management_id" string="Status"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_strategy_line_ids']/list/button[@name='create_payment'][1]" position="attributes">
+                    <attribute name="invisible">check_payment_id != False or type != 'deposit' or parent.state != 'draft'</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_strategy_line_ids']/list/button[@name='create_payment'][2]" position="attributes">
+                    <attribute name="invisible">check_payment_id != False  or parent.state != 'check'</attribute>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

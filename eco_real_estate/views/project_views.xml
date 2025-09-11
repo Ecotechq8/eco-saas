@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="eco_real_estate_project_form_inherit" model="ir.ui.view">
+            <field name="name">eco_real_estate.project.form</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.edit_project"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='description']" position="after">
+                    <page name="project_details" string="Project Details">
+                        <group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="location_id"/>
+                                <field name="project_number"/>
+                                <field name="source_id"/>
+                                <field name="plot_area"/>
+                                <field name="height"/>
+                            </group>
+                            <group>
+<!--                                <field name="analytic_account_id"/>-->
+                                <field name="date_start" string="Contract Start Date"/>
+                                <field name="date" string="Contract End Date"/>
+                                <field name="site_receiving_date"/>
+                                <field name="delivery_date"/>
+                                <field name="city"/>
+                            </group>
+                        </group>
+                    </page>
+                    <page name="property" string="properties">
+                        <field name="property_ids" readonly="1"
+                               context="{'list_view_ref': 'eco_real_estate.view_property_list','form_view_ref': 'eco_real_estate.view_property_form'}">
+                        </field>
+                    </page>
+                    <page name="zones" string="Zones">
+                        <field name="zone_ids" readonly="1"
+                               context="{'list_view_ref': 'eco_real_estate.property_zone_list_view','form_view_ref': 'eco_real_estate.property_zone_form_view'}">
+
+                        </field>
+                    </page>
+                    <page name="buildings" string="Buildings">
+                        <field name="building_ids" readonly="1"
+                               context="{'list_view_ref': 'eco_real_estate.property_building_list_view','form_view_ref': 'eco_real_estate.property_building_form_view'}">
+
+                        </field>
+                    </page>
+                    <page name="payment_term" string="Payment Terms">
+
+                            <field name="payment_term_ids">
+                                <list create="0">
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+
+                    </page>
+                </xpath>
+                <field name="label_tasks" position="after">
+                    <field name="project_categ_type_ids" widget="many2many_tags"/>
+                    
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

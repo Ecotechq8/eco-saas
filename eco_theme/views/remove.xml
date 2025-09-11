@@ -1,0 +1,9 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<odoo>-->
+<!--    <template id="override_support_link" inherit_id="web.webclient_bootstrap" inherit_mode="extension">-->
+<!--        <xpath expr="//a[@data-menu='support']" position="attributes">-->
+<!--            <attribute name="href">https://odoo.ecotech-mena.com/</attribute>-->
+<!--            <attribute name="target">_blank</attribute>-->
+<!--        </xpath>-->
+<!--    </template>-->
+<!--</odoo>-->

@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_request_quotation,request.quotation,model_request_quotation,,1,1,1,1
+access_wizard_create_purchase_order,wizard.create.purchase.order,model_wizard_create_purchase_order,,1,1,1,1
+access_wizard_so_payment,wizard.so.payment,model_wizard_so_payment,,1,1,1,1
+
+access_guarantee_letter,access_guarantee_letter,model_guarantee_letter,,1,1,1,1
+access_guarantee_letter_type,access_guarantee_letter_type,model_guarantee_letter_type,,1,1,1,1
+access_guarantee_letter_transaction,access_guarantee_letter_transaction,model_guarantee_letter_transaction,,1,1,1,1
+access_guarantee_letter_extension,access_guarantee_letter_extension,model_guarantee_letter_extension,,1,1,1,1
+

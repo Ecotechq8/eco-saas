@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<templates xml:space="preserve">
+
+	<t t-inherit="web.NavBar.AppsMenu" t-inherit-mode="extension" owl="1">
+		<xpath expr="//button[@data-hotkey='h']" position="replace">
+			<button data-hotkey="h" title="Home Menu">
+				<i>
+					<img alt="Custom by UnitSoft" src="/us_navbar_branding_logo/static/img/ecotech2.png" height="32"/>
+				</i>
+				<i class="oi oi-apps">
+					<!-- <img alt="Custom by UnitSoft" src="us_navbar_branding_logo/static/img/default_logo_right.png" height="32"/>-->
+				</i>
+			</button>
+		</xpath>
+	</t>
+
+</templates>

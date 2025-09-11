@@ -1,0 +1,12 @@
+<odoo>
+    <data>
+        <record id="ir_cron_scheduler_create_attendance" model="ir.cron">
+            <field name="name">Auto Create Attendance</field>
+            <field name="model_id" ref="hr.model_hr_employee"/>
+            <field name="state">code</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="code">model.action_create_attendance()</field>
+        </record>
+    </data>
+</odoo>

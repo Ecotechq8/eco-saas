@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="hr_leave_type_inherit_form_view" model="ir.ui.view">
+            <field name="name">hr.leave.type.form.view</field>
+            <field name="model">hr.leave.type</field>
+            <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form/sheet/group[1]" position="after">
+                    <group string="Leave Types">
+                        <!--                        <field name="pay_in_advance" invisible="annual_leave == False"/>-->
+                        <field name="sick_leave"/>
+                        <field name="sick_leave_reset_date" invisible="sick_leave != True"/>
+                        <field name="sick_leave_rules_ids" invisible="sick_leave != True">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="days_from"/>
+                                <field name="days_to"/>
+                                <field name="deduction"/>
+                            </list>
+                        </field>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

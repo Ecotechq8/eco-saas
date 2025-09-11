@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.project</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="50"/>
+            <field name="inherit_id" ref="base.res_config_settings_view_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//app[@name='project']" position="inside">
+                        <block title="Move BOQ line to Sale Order" name="move_boq_to_sale_order">
+                            <setting id="move_boq_to_sale_order" help="Move Bill Of Quantity line to Sale Order Line">
+                                <field name="move_boq_to_sale_order"/>
+                            </setting>
+                        </block>
+                        <block title="Advanced customer Account" name="adv_customer">
+                            <setting id="adv_customer" help="Add Advanced customer Account">
+                                <field name="adv_customer" options="{'no_create_edit': True, 'no_open': True}"/>
+                            </setting>
+                        </block>
+                        <block title="Customer Retention Account" name="customer_retention">
+                            <setting id="customer_retention" help="Add Customer Retention Account">
+                                <field name="customer_retention" options="{'no_create_edit': True, 'no_open': True}"/>
+                            </setting>
+                        </block>
+
+                </xpath>
+            </field>
+        </record>
+</odoo>

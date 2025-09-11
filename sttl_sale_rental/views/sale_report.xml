@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_sale_report_search_inherited" model="ir.ui.view">
+        <field name="name">sale.report.search.inherited</field>
+        <field name="model">sale.report</field>
+        <field name="inherit_id" ref="sale.view_order_product_search"/>
+        <field name="arch" type="xml">
+            <search>
+                <field name="next_pickup_date" />
+                <field name="is_rental_order"/>
+                <filter name="Rentals" string="Rental Orders" domain="[('is_rental_order', '=', True)]"/>
+                <separator />
+                <group expand="1" string="Group By">
+                    <separator orientation="vertical" />
+                    <filter string="Pick up Next" name="next_pickup_date"
+                        context="{'group_by':'next_pickup_date'}" />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sale_report_inherited_rental_view_action" model="ir.actions.act_window">
+        <field name="name">Rental Orders Analysis</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">sale.report</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="context">
+            {'search_default_Rentals':1,
+            'group_by_no_leaf':1,'group_by':[]}
+        </field>
+    </record>
+
+</odoo>

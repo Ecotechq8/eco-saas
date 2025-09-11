@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="sequence_property_reservation" model="ir.sequence">
+            <field name="name">reservation</field>
+            <field name="code">property.reservation</field>
+            <field name="prefix">RES/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+        <record id="sequence_reservation_payment" model="ir.sequence">
+            <field name="name">Reservation Payment</field>
+            <field name="code">reservation.payment</field>
+            <field name="prefix">RN/</field>
+            <field eval="1" name="number_next"/>
+            <field eval="1" name="number_increment"/>
+            <field eval="False" name="company_id"/>
+            <field name="padding">4</field>
+        </record>
+
+
+
+    </data>
+</odoo>

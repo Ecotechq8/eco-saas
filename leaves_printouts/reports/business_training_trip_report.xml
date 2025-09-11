@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_business_training_trip_document">
+        <t t-call="web.basic_layout">
+            <div class="header">
+                <center>
+<!--                    <img t-attf-src="/leaves_printouts/static/src/img/header.png" alt="Header"-->
+<!--                         style="width:100%"/>-->
+                </center>
+            </div>
+            <div class="page" style="font-weight:bold;">
+                <h4>
+                    <center>
+                        <strong>
+                            طلب سفر لرحلة عمل / تدريب
+                            <br/>
+                            BUSINESS / TRAINING TRIP REQUISITION FORM
+                        </strong>
+                    </center>
+                </h4>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="ltr">
+                    <tr>
+                        <td style="border: 1px solid white;width:30%;" class="text-left">
+                            <strong>
+                                Name:
+                            </strong>
+                        </td>
+                        <td>
+                            <span class="text-center" style="width:25%;" t-field="doc.employee_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-left">
+                            <strong>
+                                Employee No:
+                            </strong>
+                        </td>
+                        <td>
+                            <span class="text-center" style="width:25%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;width:30%;" class="text-right">
+                            <strong>
+                                Position:
+                            </strong>
+                        </td>
+                        <td>
+                            <span class="text-center" style="width:25%;" t-field="doc.employee_id.job_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong>
+                                Grade:
+                            </strong>
+                        </td>
+                        <td>
+                            <span style="width:25%;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;width:30%;" class="text-right">
+                            <strong>
+                                Department / Unit:
+                            </strong>
+                        </td>
+                        <td>
+                            <span class="text-center" style="width:25%;" t-field="doc.employee_id.department_id.name"/>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong>
+                                Event starting date:
+                            </strong>
+                        </td>
+                        <td>
+                            <span style="width:25%;" t-field="doc.request_date_from"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;width:30%;" class="text-right">
+                            <strong>
+                                Country(s) to Visit:
+                            </strong>
+                        </td>
+                        <td>
+                            <span class="text-center" style="width:25%;"
+                                  t-esc="', '.join(doc.country_ids.mapped('name'))"/>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-right">
+                            <strong>
+                                Event ending date:
+                            </strong>
+                        </td>
+                        <td>
+                            <span style="width:25%;" t-field="doc.request_date_to"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right" colspan="4">
+                            <strong>Purpose of Trip Event Details:</strong>
+                        </td>
+                    </tr>
+                    <t t-if="doc.name">
+                        <tr>
+                            <td>
+                                <span t-field="doc.name"/>
+                            </td>
+                        </tr>
+                    </t>
+                    <t t-else="">
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="4">
+                                __________________________________________________________________________________________________
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="4">
+                                __________________________________________________________________________________________________
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="4">
+                                __________________________________________________________________________________________________
+                            </td>
+                        </tr>
+                    </t>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right" colspan="4">
+                            <strong>Subsidizing Expenses:</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-right" colspan="4">
+                            <strong>Chargeable to Al Durrah A/c or Host A/c</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" class="text-left" colspan="2">
+                            <strong style="font-size:13px;">
+                                If Al Durrah A/c, Mention the %age share to each Host
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-left">
+                            <strong style="font-size:13px;">Please write the name of the Unit / Brand</strong>
+                        </td>
+                        <td style="border: 1px solid white;" class="text-left">
+                            <strong style="font-size:13px;">Please write the name of the Host</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2">
+                            <strong>Flight Tickets</strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            NTEC
+                            <span t-esc="doc.flight_tickets_unit or '_______________________________'"/>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            <span t-esc="doc.flight_tickets_host or '_______________________________'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2">
+                            <strong>Hotel</strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            NTEC
+                            <span t-esc="doc.hotel_unit or '_______________________________'"/>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            <span t-esc="doc.hotel_host or '_______________________________'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2">
+                            <strong>
+                                Airport Pickup Drop
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            NTEC
+                            <span t-esc="doc.airport_pickup_unit or '_______________________________'"/>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            <span t-esc="doc.airport_pickup_host or '_______________________________'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2">
+                            <strong>
+                                Transportations
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            NTEC
+                            <span t-esc="doc.transportation_unit or '_______________________________'"/>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            <span t-esc="doc.transportation_host or '_______________________________'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2">
+                            <strong>Event Fee(s)</strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            NTEC
+                            <span t-esc="doc.event_fees_unit or '_______________________________'"/>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            <span t-esc="doc.event_fees_host or '_______________________________'"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;" colspan="2">
+                            <strong>Others</strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            NTEC
+                            <span t-esc="doc.others_unit or '_______________________________'"/>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <img t-att-src="'/leaves_printouts/static/src/img/no_mark.png'"
+                                 style="max-height: 21px;"/>
+                            <span t-esc="doc.others_host or '_______________________________'"/>
+                        </td>
+                    </tr>
+                </table>
+                <t t-if="doc.flight_details_ids">
+                    <table style="width:100%;border: 1px solid black;" dir="rtl">
+                        <tr>
+                            <td style="border: 1px solid black;" colspan="7" class="text-center">
+                                <strong>
+                                    Flight Details
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>From</strong>
+                            </th>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>To</strong>
+                            </th>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>Airlines</strong>
+                            </th>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>Flight No.</strong>
+                            </th>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>Ticket Class</strong>
+                            </th>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>Departure Date Time</strong>
+                            </th>
+                            <th style="border: 1px solid black;" class="text-center">
+                                <strong>Arrival Date Time</strong>
+                            </th>
+                        </tr>
+                        <tr t-foreach="doc.flight_details_ids" t-as="flight_detail">
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.date_from"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.date_to"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.airlines"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.flight_no"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.ticket_class"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.departure_date_time"/>
+                            </td>
+                            <td style="border: 1px solid black;" class="text-center">
+                                <span t-esc="flight_detail.arrival_date_time"/>
+                            </td>
+
+                        </tr>
+                    </table>
+                </t>
+                <br/>
+                <p class="text-left">
+                    <strong>A - Total No. of business / training days :</strong>
+                    <br/>
+                    <strong>B - Days (Before After):</strong>____________________________________
+                    <br/>
+                    <strong>C - &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;Days
+                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;KD
+                    </strong>
+                    <br/>
+                    <strong>
+                        Total Amount =&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; ___________________________
+                        &#160;&#160;&#160;KD
+                    </strong>
+                </p>
+                <p class="text-left">
+                    <strong>
+                        Employee Signature:
+                        <br/>
+                        Department / Unit Manager Signature:
+                        <br/>
+                        HRD Manager Signature:
+                        <br/>
+                        Finance Manager Signature:
+                        <br/>
+                        GM Signature:
+                    </strong>
+                </p>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_business_training_trip_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="leaves_printouts.report_business_training_trip_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_business_training_trip_report" model="ir.actions.report">
+        <field name="name">طلب سفر لرحلة عمل/تدريب</field>
+        <field name="model">hr.leave</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">leaves_printouts.report_business_training_trip_printout</field>
+        <field name="report_file">leaves_printouts.report_business_training_trip_printout</field>
+        <field name="binding_model_id" ref="hr_holidays.model_hr_leave"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+    <record id="paperformat_trip_report" model="report.paperformat">
+        <field name="name">Trip Paper Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">40.00</field>
+        <field name="margin_bottom">5.00</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">35</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <record id="leaves_printouts.action_business_training_trip_report" model="ir.actions.report">
+        <field name="paperformat_id" ref="leaves_printouts.paperformat_trip_report"/>
+    </record>
+</odoo>

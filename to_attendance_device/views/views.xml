@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_resource_calendar_attendance_tree" model="ir.ui.view">
+            <field name="name">resource.calendar.attendance.tree</field>
+            <field name="model">resource.calendar.attendance</field>
+            <field name="inherit_id" ref="resource.view_resource_calendar_attendance_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='hour_from']" position="before">
+                    <field name="start_shift" widget="float_time"/>
+                </xpath>
+                <xpath expr="//field[@name='hour_to']" position="after">
+                    <field name="end_shift" widget="float_time"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_company_form" model="ir.ui.view">
+            <field name="name">res.company.view.form.inherit</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='social_media']" position="before">
+                    <group>
+                        <field name="attendance_methode"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

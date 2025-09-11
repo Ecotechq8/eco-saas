@@ -1,0 +1,30 @@
+<odoo>
+    <record id="view_res_config_settings_air_ticket" model="ir.ui.view">
+        <field name="name">res.config.settings.air.ticket</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//block[@id='invoicing_settings']" position="after">
+                <block title="Flight Ticket" name="flight_ticket_setting_container">
+                    <setting id="air_ticket_debit_account_id" string="Air Ticket Debit Account"
+                             help="Set the default debit account for flight ticket transactions.">
+                        <field name="air_ticket_debit_account_id" options="{'no_open': True}"/>
+                    </setting>
+                    <setting id="air_ticket_credit_account_id" string="Air Ticket Credit Account"
+                             help="Set the default credit account for flight ticket transactions.">
+                        <field name="air_ticket_credit_account_id" options="{'no_open': True}"/>
+                    </setting>
+                    <setting id="air_ticket_product_id" string="Air Ticket Product"
+                             help="Product used when booking flight tickets (must be of type 'Service').">
+                        <field name="air_ticket_product_id" domain="[('type','=','service')]"/>
+                    </setting>
+                    <setting id="air_ticket_journal" string="Air Ticket journal"
+                             help="Journal account for air ticket').">
+                        <field name="air_ticket_journal_id"/>
+                    </setting>
+                </block>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

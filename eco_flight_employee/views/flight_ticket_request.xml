@@ -1,0 +1,139 @@
+<odoo>
+    <data>
+        <record id="view_flight_ticket_form" model="ir.ui.view">
+            <field name="name">flight.ticket.form</field>
+            <field name="model">flight.ticket.request</field>
+            <field name="arch" type="xml">
+                <form string="Flight Ticket Request">
+                    <header>
+                        <button name="action_register_payment"
+                                string="Register Payment"
+                                type="object"
+                                class="btn-primary"
+                                invisible="ticket_type != 'payment' or state != 'confirmed' or payment_id "/>
+
+                        <button name="action_create_vendor_bill"
+                                type="object"
+                                string="Create Vendor Bill"
+                                class="btn-primary"
+                                invisible="ticket_type != 'flight_company' or state != 'confirmed' or vendor_bill_id"/>
+
+                        <button name="action_submit_for_approval"
+                                type="object"
+                                string="Submit for Approval"
+                                class="btn-primary"
+                                invisible="state != 'draft'"/>
+
+                        <button name="action_approval"
+                                type="object"
+                                string="Approval"
+                                class="btn-primary"
+                                invisible="state != 'submit_for_approval'"/>
+
+                        <button name="action_confirm"
+                                type="object"
+                                string="Confirm"
+                                class="btn-primary"
+                                invisible="state != 'approval'"/>
+
+                        <button name="action_cancel"
+                                type="object"
+                                string="Reset to Draft"
+                                class="btn-secondary"
+                                invisible="state != 'confirmed'"/>
+
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="draft,submit_for_approval,approval,confirmed"/>
+                    </header>
+                    <sheet>
+                        <!-- Smart Buttons -->
+                        <div class="oe_button_box" name="button_box">
+                            <button type="object"
+                                    name="open_ticket_request_action_list"
+                                    class="oe_stat_button"
+                                    icon="fa-plane">
+                                <field name="ticket_request_count" widget="statinfo" string="Requests"/>
+                            </button>
+                            <button name="action_view_vendor_bill"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-file-text-o"
+                                    invisible="not vendor_bill_id">
+                                <field name="vendor_bill_id" widget="statinfo" string="Vendor Bill"/>
+                            </button>
+                        </div>
+                        <group>
+                            <group string="Employee Details">
+                                <field name="name"/>
+                                <field name="employee_id" domain="[('id', 'in', allowed_employee_ids)]"
+                                       readonly=" state == 'confirmed'"/>
+                                <field name="request_date" readonly=" state == 'confirmed'"/>
+                            </group>
+                            <group string="Flight Info">
+                                <field name="ticket_type" readonly=" state == 'confirmed'"/>
+                                <field name="departure_time" readonly=" state == 'confirmed'"
+                                       invisible="ticket_type == 'payment' or ticket_type == 'payslip'"/>
+                                <field name="flight_id" readonly=" state == 'confirmed'"
+                                       invisible="ticket_type == 'payment' or ticket_type == 'payslip'"
+                                       required="ticket_type == 'flight_company'"/>
+                                <field name="class_type" readonly=" state == 'confirmed'"
+                                       invisible="ticket_type == 'payment' or ticket_type == 'payslip'"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Ticket Info">
+                                <field name="number_of_ticket" readonly=" state == 'confirmed'"/>
+                                <field name="remaining_ticket" readonly="1"/>
+                            </group>
+                            <group string="Cost Breakdown">
+                                <field name="amount_untaxed" readonly=" state == 'confirmed'"/>
+                                <field name="tax_ids" widget="many2many_tags" readonly=" state == 'confirmed'"
+                                       invisible="ticket_type == 'payment' or ticket_type == 'payslip'"/>
+                                <field name="amount_total" readonly=" state == 'confirmed'"/>
+                                <field name="currency_id" readonly="1"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <field name="vendor_bill_id" invisible="1"/>
+                            <field name="allowed_employee_ids" invisible="1"/>
+                            <field name="contract_id" invisible="1"/>
+                            <field name="payment_id" invisible="1"/>
+                        </group>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <!-- Flight Ticket Tree View -->
+        <record id="view_flight_ticket_list" model="ir.ui.view">
+            <field name="name">flight.ticket.list</field>
+            <field name="model">flight.ticket.request</field>
+            <field name="arch" type="xml">
+                <list string="Flight Tickets">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="request_date"/>
+                    <field name="remaining_ticket" sum="Total"/>
+                    <field name="number_of_ticket" sum="Total"/>
+                    <field name="amount_untaxed" sum="Total"/>
+                    <field name="amount_total" sum="Total"/>
+                    <field name="currency_id" column_invisible="True"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+        <!-- Flight Ticket Action -->
+        <record id="action_flight_ticket" model="ir.actions.act_window">
+            <field name="name">Flight Tickets</field>
+            <field name="res_model">flight.ticket.request</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create your first flight ticket
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

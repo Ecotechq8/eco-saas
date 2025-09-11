@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_hr_payslip_input,access_custom_hr_payslip_input,om_hr_payroll.model_hr_payslip_input,eco_hr_custom.group_custom_create_payslip,1,1,1,1
+
+

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="product_template_form_view_commission">
+            <field name="name">property.form</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='options']/span" position="after">
+                    <span class="d-inline-block">
+                        <field name="is_commission_product"/>
+                        <label for="is_commission_product"/>
+                    </span>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

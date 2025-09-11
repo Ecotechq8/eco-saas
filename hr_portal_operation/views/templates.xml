@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Breadcrumbs of operation -->
+    <template id="portal_op_menu" name="Portal layout : operations menu entry"
+              inherit_id="portal.portal_breadcrumbs" priority="25">
+        <xpath expr="//ol[hasclass('o_portal_submenu')]" position="inside">
+            <li t-if="page_name == 'operation' or operation"
+                t-attf-class="breadcrumb-item #{'active ' if not operation else ''}">
+                <a t-if="operation" t-attf-href="/my/operation?{{ keep_query() }}">
+                    operation
+                </a>
+                <t t-else="">
+                    operation
+                </t>
+            </li>
+        </xpath>
+    </template>
+
+    <!-- My operation menu in Main portal document page -->
+    <template id="portal_my_operation" name="Portal My operation : operation entries"
+              inherit_id="portal.portal_my_home" priority="20">
+        <xpath expr="//div[hasclass('o_portal_docs')]" position="inside">
+            <t t-call="portal.portal_docs_entry">
+                <t t-set="title">My operation</t>
+                <t t-set="text">Display your operation</t>
+                <t t-set="url" t-value="'/my/operation'"/>
+                <t t-set="config_card" t-value="True"/>
+            </t>
+        </xpath>
+    </template>
+
+    <!-- operation template -->
+    <template id="portal_my_op_details" name="My operation">
+        <t t-call="portal.portal_layout">
+            <t t-set="breadcrumbs_searchbar" t-value="True"/>
+            <t t-call="portal.portal_searchbar">
+                <t t-set="title">operation</t>
+                <div class="form-inline ml-lg-4" t-if="request.env.user.employee_id">
+                    <a class="btn btn-success btn-sm" href="/my/operation/request">
+                        <i class="fa fa-plus"/>
+                        Create New
+                    </a>
+                </div>
+            </t>
+            <div class="modal fade modal_new_op" role="form">
+                <div class="modal-dialog">
+                    <form method="POST" class="modal-content js_website_submit_form new_op_form">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <header class="modal-header">
+                            <h4 class="modal-title">New operation Request</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;
+                            </button>
+                        </header>
+                        <main class="modal-body" id="new-opp-dialog">
+                            <div class="form-group">
+                                <label for="employee_id">Employee</label>
+                                <select name="employee_id" class="form-control employee_select employee_id"
+                                        required="True" readonly="">
+                                    <option t-att-value="emp_id">
+                                        <t t-esc="emp_name"/>
+                                    </option>
+                                </select>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label class="control-label" for="date">Date</label>
+                                    <div class="input-group date">
+                                        <input type="date" name="date" class="form-control date_from date"
+                                               data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </main>
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button t-attf-class="btn btn-primary new_op_confirm">Confirm</button>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+
+            <t t-if="not grouped_op">
+                <div class="alert alert-warning mt8" role="alert">
+                    There are no operation
+                </div>
+            </t>
+            <t t-if="grouped_op">
+                <t t-call="portal.portal_table">
+                    <t t-foreach="grouped_op" t-as="leave">
+                        <thead>
+                            <tr t-attf-class="{{'thead-light' if not groupby == 'none' else ''}}">
+                                <th>Employee</th>
+                                <th>Date</th>
+                                <th>operation type</th>
+                                <th>Status</th>
+                                <th>Buttons</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="operation" t-as="op">
+                                <tr>
+                                    <td>
+                                        <a t-if="op.employee_id.name" t-attf-href="/my/operation/#{op.id}">
+                                            <span t-field="op.employee_id.name"/>
+                                        </a>
+                                        <a t-else="" class="btn btn-primary btn-sm"
+                                           t-attf-href="/my/operation/#{op.id}">
+                                            <span>Add Employee</span>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <span t-field="op.date"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="op.type_id.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="op.state"/>
+                                    </td>
+
+                                    <td class="create_cancel">
+                                        <t t-if="op.state =='draft'">
+                                            <a t-att-id="portalpopup_btn" class="btn btn-secondary op popover-test"
+                                               role="button"
+                                               t-att-data-op-id="op.id" style="color: white;">Cancel
+                                            </a>
+                                        </t>
+                                        <div name="cancellation_form" id="opModal" class="opModal row">
+                                            <div id="cancelpopup" class="modal fade" tabindex="-1" role="dialog"
+                                                 aria-labelledby="myModalLabel"
+                                                 aria-hidden="true">
+                                                <form enctype="multipart/form-data" t-att-data-op-id="op.id">
+                                                    <div class="modal-dialog modal-dialog-centered" role="document">
+                                                        <div class="modal-content" style="text-align: center;">
+                                                            <div class="modal-header text-center">
+                                                                <h4 class="modal-title w-100 font-weight-bold">
+                                                                    Cancellation Form
+                                                                </h4>
+                                                                <button type="button" class="closeCustom"
+                                                                        data-dismiss="modal" aria-label="Close">×
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body mx-3">
+                                                                <div class="md-form mb-5">
+                                                                    <label data-error="wrong" data-success="right"
+                                                                           for="name">Cancellation Reason
+                                                                    </label>
+                                                                    <input type="text"
+                                                                           class="form-control validate name" id="name"
+                                                                           name="name"
+                                                                           required="required"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="modal-footer d-flex justify-content-center">
+                                                                <button type="submit" class="btn btn-primary create">
+                                                                    Submit
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+
+                                    </td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </t>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <!-- Edit operation template -->
+    <template id="portal_my_op_edit" name="My operation">
+        <t t-call="portal.portal_layout">
+            <!--            <t t-call="portal.portal_record_layout">-->
+            <t t-set="card_header">
+                <div class="row no-gutters">
+                    <div class="col-md">
+                        <h5 class="mb-2 mb-md-0">
+                            <small class="text-muted">operation Request -</small>
+                            <span t-field="operation.employee_id.name"/>
+                        </h5>
+                    </div>
+                    <div class="col-md text-md-right">
+                        <div class="d-inline-block">
+                            <small class="mr-2 mt-1 float-left">
+                                <b>State:</b>
+                            </small>
+                            <div t-foreach="operation" t-as="op" class="float-left">
+                                <span t-field="op.state"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+            <!---->
+            <t t-set="card_body">
+                <div class="row">
+                    <div class="col-lg-5 mb-4 mb-lg-0">
+                        <div class="border-bottom d-flex justify-content-between py-2 mb-3 align-items-center">
+                            <h5 class="mb-0">
+                                <span class="text-nowrap" t-esc="operation.employee_id.name"/>
+                            </h5>
+                        </div>
+                        <div class="row mb-2">
+                            <strong class="col-12 col-sm-4">Operation Type</strong>
+                            <div class="col">
+                                <span t-if="operation.type_id" t-field="operation.type_id.name"/>
+                                <span t-else="" class="text-muted">-</span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <strong class="col-12 col-sm-4">Date</strong>
+                            <div class="col">
+                                <span t-if="operation.employee_id" t-field="operation.date"/>
+                                <span t-else="" class="text-muted">-</span>
+                            </div>
+                        </div>
+
+                        <t t-if="operation.type_id.show_fields == 'passport_withdrawal'">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Passport Delivery Date:</strong>
+                                <div class="col">
+                                    <span t-field="operation.passport_delivery_date"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Passport Receive Date:</strong>
+                                <div class="col">
+                                    <span t-field="operation.passport_receive_date"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Purpose of Passport Withdrawal:</strong>
+                                <div class="col">
+                                    <span t-field="operation.purpose_of_passport_withdrawal"/>
+                                </div>
+                            </div>
+                        </t>
+
+                        <t t-if="operation.show_fields == 'proceed_work'">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">To Mr./Miss:</strong>
+                                <div class="col">
+                                    <span t-field="operation.to_mr_miss"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="operation.show_fields == 'final_release'">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Last Work Date:</strong>
+                                <div class="col">
+                                    <span t-field="operation.last_work_date"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="operation.show_fields == 'proceed_work_leave'">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Date Resumes Duty:</strong>
+                                <div class="col">
+                                    <span t-field="operation.date_resumes_duty"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Reason for Changing Resume Date:</strong>
+                                <div class="col">
+                                    <span t-field="operation.reason_change_resume_date"/>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-if="operation.show_fields == 'investigation_call'">
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Calling Date:</strong>
+                                <div class="col">
+                                    <span t-field="operation.calling_date"/>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <strong class="col-12 col-sm-4">Calling Time:</strong>
+                                <div class="col">
+                                    <span t-field="operation.calling_time"/>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+            </t>
+            <!--            </t>-->
+        </t>
+    </template>
+
+    <template id="new_operation_request" name="Create New operation">
+        <t t-call="portal.portal_layout">
+            <!--            <t t-call="portal.portal_record_layout">-->
+            <!--                <t t-set="card_header">-->
+            <!--                    <div class="row no-gutters">-->
+            <!--                        <div class="col-md">-->
+            <!--                            <h5 class="mb-2 mb-md-0">-->
+            <!--                                <small class="text-muted">Create New operation Request</small>-->
+            <!--                            </h5>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </t>-->
+            <!--                <t t-set="card_body">-->
+            <!--                    <div class="modal_new_op">-->
+            <!--                        <div>-->
+            <form method="POST" action="/my/operation/request" class="modal-content js_website_submit_form new_op_form">
+                <div class="row o_portal_details">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <header class="modal-header">
+                        <h4 class="modal-title">New operation Request</h4>
+                    </header>
+                    <main class="modal-body" id="new-opp-dialog">
+                        <div class="form-group">
+                            <label for="employee_id">Employee</label>
+                            <br/>
+                            <select name="employee_id" class="form-control employee_select employee_id"
+                                    required="True" readonly="true">
+                                <option t-att-value="emp_id">
+                                    <t t-esc="emp_name"/>
+                                </option>
+                            </select>
+                        </div>
+                        <div class="row">
+
+                            <div class="form-group">
+                                <label class="col-form-label" for="type_id">Operation Type</label>
+                                <select name="type_id"
+                                        class="form-control type_id"
+                                        required="true">
+                                    <t t-foreach="operation_types" t-as="op_type">
+                                        <option t-att-value="op_type.id"
+                                                t-att-data-type="op_type.show_fields">
+                                            <t t-esc="op_type.name"/>
+                                        </option>
+                                    </t>
+                                </select>
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="date">Date</label>
+                                <div class="input-group date">
+                                    <input type="date" name="date"
+                                           id="datePicker"
+                                           class="form-control date_from date"
+                                           data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- start passport withdrowal fields-->
+                        <div class="row passport_withd_div" style="display:none"
+                             id="passport_delivery_date">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="passport_delivery_date">passport delivery
+                                    date
+                                </label>
+                                <div class="input-group date">
+                                    <input type="date" name="passport_delivery_date"
+                                           class="form-control date_from passport_delivery_date"
+                                           data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row passport_withd_div" style="display:none" id="passport_receive_date">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="passport_receive_date">passport Receive
+                                    date
+                                </label>
+                                <div class="input-group date">
+                                    <input type="date" name="passport_receive_date"
+                                           class="form-control date_from passport_receive_date"
+                                           data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row passport_withd_div" style="display:none"
+                             id="purpose_of_passport_withdrawal">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="purpose_of_passport_withdrawal">Purpose of
+                                    passport withdrowal
+                                </label>
+                                <div class="input-group date">
+                                    <input type="text" name="purpose_of_passport_withdrawal"
+                                           class="form-control date_from purpose_of_passport_withdrawal"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end passport withdrowal fields-->
+
+
+                        <!-- start procced_work fields-->
+
+                        <div class="row procced_work_div" style="display:none" id="procced_work">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="procced_work">To mr/miss</label>
+                                <div class="input-group date">
+                                    <input type="text" name="to_mr_miss"
+                                           class="form-control date_from to_mr_miss"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end procced_work fields-->
+
+                        <!-- start final_release fields-->
+
+                        <div class="row final_release_div" style="display:none" id="last_work_date">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="last_work_date">last work date</label>
+                                <div class="input-group date">
+                                    <input type="date" name="last_work_date"
+                                           class="form-control date_from last_work_date"
+                                           data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end final_release_div fields-->
+
+
+                        <!-- start procced_work_leave fields-->
+                        <div class="row procced_work_leave_div" style="display:none" id="date_resumes_duty">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="date_resumes_duty">Date Resumes Duty
+                                </label>
+                                <div class="input-group date">
+                                    <input type="date" name="date_resumes_duty"
+                                           class="form-control date_from date_resumes_duty"
+                                           data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row procced_work_leave_div" style="display:none"
+                             id="reason_change_resume_date">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="reason_change_resume_date">Reason Change
+                                    resume date
+                                </label>
+                                <div class="input-group date">
+                                    <input type="text" name="reason_change_resume_date"
+                                           class="form-control date_from reason_change_resume_date"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- end procced_work_leave fields-->
+
+
+                        <!-- start investigation_call fields-->
+                        <div class="row investigation_call_div" style="display:none" id="calling_date">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="calling_date">Calling date</label>
+                                <div class="input-group date">
+                                    <input type="date" name="calling_date"
+                                           class="form-control date_from calling_date"
+                                           data-date-format="YYYY-MM-DD" placeholder="YYYY-MM-DD"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row investigation_call_div" style="display:none" id="calling_time">
+                            <div class="form-group col-md-6">
+                                <label class="control-label" for="calling_time">Calling Time</label>
+                                <div class="input-group date">
+                                    <input type="text" name="calling_time"
+                                           class="form-control date_from calling_time"
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- end investigation_call fields-->
+
+
+                    </main>
+                    <footer class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button t-attf-class="btn btn-primary new_op_confirm">Confirm</button>
+                    </footer>
+                </div>
+            </form>
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                </t>-->
+            <!--            </t>-->
+        </t>
+    </template>
+
+
+</odoo>

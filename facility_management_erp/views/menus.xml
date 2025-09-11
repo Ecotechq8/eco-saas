@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+        <menuitem name="Facility" id="facility_root" sequence="10" web_icon="facility_management_erp,static/description/icon.png" />
+
+        <menuitem name="Facility" id="menu_facility" parent="facility_root" sequence="10" action="action_view_fm_management"/>
+        <menuitem name="Configuration" id="menu_configuration" parent="facility_root" sequence="20"/>
+        <menuitem name="Property" id="menu_property" parent="menu_configuration" sequence="15" action="action_view_fm_property"/>
+        <menuitem name="Unit" id="menu_unit" parent="menu_configuration" sequence="25" action="action_view_fm_unit"/>
+<!--        <menuitem name="Pricing" id="menu_pricing" parent="menu_configuration" sequence="45" action="action_view_fm_pricing"/>-->
+        <menuitem name="Owners" id="menu_owners" parent="menu_configuration" sequence="55" action="action_view_fm_owner"/>
+        <menuitem name="Customers" id="menu_customers" parent="menu_configuration" sequence="65" action="action_view_fm_customer"/>
+        <menuitem id="facility_config_settings_menu" name="Settings" parent="menu_configuration" action="facility_management_erp.facility_config_settings_action" groups="base.group_system" sequence="0"/>
+
+</odoo>

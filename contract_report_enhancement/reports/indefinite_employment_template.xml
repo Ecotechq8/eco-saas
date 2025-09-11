@@ -1,0 +1,424 @@
+<odoo>
+    <data>
+        <template id="template_indefinite_employment_document">
+            <t t-call="web.basic_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.employee_id.lang})"/>
+                <div class="page" dir="rtl">
+                    <div>
+                        <div class="text-center">
+                            <strong>
+                                <span style="font-size:18px;color:black;">
+                                    عقد عمل غير محدد المدة
+                                    <br/>
+                                    Indefinite Employment Contract
+                                </span>
+                            </strong>
+                        </div>
+                        <div class="row">
+                            <div class="col-6" dir="rtl" align="right" style="font-size:15px;">
+                                <div align="right">
+                                    <strong>
+                                        التاريخ
+                                    </strong>
+                                    <span t-field="o.date_start"/>
+                                </div>
+                                <p>
+                                    <strong>حرر هذا العقد بين كل من :</strong>
+                                </p>
+                                <br/>
+                                <span>
+                                    1-&#160;&#160; السادة/ شركة فوارس للخدمات البترولية
+                                </span>
+                                <br/>
+                                <span>
+                                    ويمثلها في التوقيع السيد/ بسيب شيب المذكور بصفته الرئيس
+                                        التنفيذي ويشار إليه في هذا العقد
+                                </span>
+                                <br/>
+                                <span>
+                                    <center>
+                                        <strong>"بالطرف اﻷول"</strong>
+                                    </center>
+                                </span>
+                                <br/>
+                                <br/>
+                                <span>
+                                    <strong>2- &#160;&#160;الاسم:</strong>
+                                    <span t-field="o.employee_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>الجنسية:</strong>
+                                    <span t-field="o.employee_id.country_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>و الذى يحمل بطاقة مدنية رقم</strong>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>ويشار إليه في هذا العقد</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <center>
+                                        <strong>"بالطرف الثاني"</strong>
+                                    </center>
+                                </span>
+                                <br/>
+                                <br/>
+                                <div align="center">
+                                    <strong>
+                                        <u>
+                                            أحكام العقد
+                                        </u>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <br/>
+                                <span class="text-right" style="font-weight:bold;">
+                                    <p>
+                                        * وذلك لمدة غير محددة بوظيفة
+                                        <strong>
+                                            <span t-field="o.job_id.name"/>
+                                        </strong>
+                                        براتب شهري وقدره
+                                        (
+                                        <strong> <span t-field="o.total_amount"/> 
+                                        </strong>
+                                        )
+                                        دينار كويتى
+                                    </p>
+                                    <p>
+                                        * يكون الطرف الثاني تحت التجربة لمدة ﻻتزيد عن100يوم عمل من تاريخ
+                                        استﻼمه العمل استﻼما ً فعليا ً ويحق لكﻼ الطرفين إنهاء العقد دون إخطار
+                                        في أي وقت خلال فترة التجربة
+                                    </p>
+                                    <p>
+                                        * يستحق الطرف الثاني إجازة سنوية مدفوعة اﻷجر مدتها (30) يوم عمل
+                                        عن كل سنة من تاريخ إستلامه العمل الفعلي، ويحدد الطرف اﻷول تاريخ
+                                        تمتع الطرف الثاني باﻹجازة وفقا ً لمقتضيات العمل
+                                    </p>
+                                    <p>
+                                        * يتعهد الطرف الثاني بإحترام أنظمة العمل المطبقة لدى الطرف اﻷول، كما
+                                        يتعهد بتنفيذ تعليمات وأوامر الطرف اﻷول ورؤساءه في العمل، كما يتعهد
+                                        الطرف الثاني باﻻلتزام بمواعيد الدوام الرسمية
+                                    </p>
+                                    <p>
+                                        * يتعهد الطرف الثاني أثناء فترة عمله لدى الطرف اﻷول بالمحافظة على
+                                        جميع اﻷسرار المهنية المتعلقة بالعمل وكافة اﻷسرار اﻷخرى التي من شأن
+                                        إفشائها اﻹضرار بمصلحة الطرف اﻷول، كما يتعهد بعد إنتهاء عﻼقته
+                                        التعاقدية مع الطرف اﻷول بعدم منافسته أو إفشاء أسراره
+                                        لدى أحد منافسيه أو العمل لدى أي منشأه تمارس نفس نشاط الطرف اﻷول
+                                        داخل دولة الكويت وذلك لمدة سنتين من تاريخ إنتهاء العلاقة التعاقدية
+                                    </p>
+                                    <p>
+                                        * إذا أخل الطرف الثاني بما يفرضه عليه العقد من إلتزامات أو بالتعليمات
+                                        الصادرة من الطرف اﻷول أو إذا لم يبذل العناية المطلوبة فى أدائه لعمله،
+                                        أو إذا إرتكب إحدى المخالفات المنصوص عليها لدى الطرف اﻷول أو
+                                        المنصوص عليه في قانون العمل بالقطاع اﻷهلي رقم6
+                                        لسنه2010، فيحق للطرف اﻷول إنهاء العقد
+                                    </p>
+                                    <p>
+                                        * ﻻ يحق للطرف الثاني العمل لدى أي جهة وﻻ حتى خارج أوقات الدوام
+                                        الرسمية سواء بشكل مباشر أو غير مباشر وسواء بأجر أو بدون أجر
+                                        طيلة فترة عمله لدى الطرف اﻷول إﻻ بعد الحصول على موافقة خطية من
+                                        قبل الطرف اﻷول
+                                    </p>
+                                    <p>
+                                        * ﻻ يجوز للطرف الثاني أن يكون لديه مصلحة أيا ً كانت نوعها سواء بشكل
+                                        مباشر أو غير مباشر مع شركة أو جهة أخرى تعمل في نفس المجال
+                                        وتتعارض مع مصلحة الطرف اﻷول أو كانت تؤثر على أداء الطرف الثاني
+                                        لمهام وظيفته ، وإن وجدت فيلتزم الطرف الثاني باﻹفصاح عن تلك المصلحة
+                                        إلى الطرف اﻷول
+                                    </p>
+                                    <p>
+                                        * يحق ﻷي من الطرفين فسخ العقد في أي وقت أثناء سريانه ، وإذا تم
+                                        الفسخ من قبل أحد الطرفين، يشترط إخطار الطرف اﻷخر بذلك قبل 3 أشهر
+                                        (فقط ثﻼثة أشهر) ، وهي تعد فترة إنذار للطرفين
+                                    </p>
+                                    <p>
+                                        * ما لم ينص عليه هذا العقد، تنطبق في شأنه أحكام قانون العمل الكويتي
+                                        بالقطاع اﻷهلى رقم (6) لسنه 2010 بما ﻻ يخالف أحكام الشريعة
+                                        اﻹسﻼمية الغراء، وكذلك اﻷحكام واللوائح التي صدرت أو سوف تصدر من
+                                        الطرف اﻷول
+                                    </p>
+                                    <p>
+                                        * خلاف ينشأ عن تفسير بنود هذا العقد أو عن اﻹخلال بأحد بنوده من أي
+                                        من الطرفين، يخضع ﻷحكام القانون الكويتي بما ﻻ يخالف أحكام الشريعة
+                                        اﻹسلامية الغراء و يقع اﻹختصاص المكاني لمحاكم دولة الكويت
+                                    </p>
+                                    <p>
+                                        حرر هذا العقد من نسختين أصليتين، يتسلم كل طرف نسخة للعمل بها
+                                        عند اللزوم
+                                    </p>
+                                </span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="text-center">
+                                    <strong>
+                                        الطرف الأول
+                                        <br/>
+                                        First Party
+                                        <br/>
+                                        الاسم
+                                        ____________________________________
+                                        Name
+                                        <br/>
+                                        <br/>
+                                        التاريخ
+                                        ____________________________________
+                                        Date
+                                        <br/>
+                                        <br/>
+                                        التوقيع
+                                        ____________________________________
+                                        Signature
+                                    </strong>
+                                </div>
+                            </div>
+                             
+                            <div class="col-6" dir="ltr" style="font-size:15px;">
+                                <div align="left">
+                                    <strong>
+                                        Date
+                                        <span t-field="o.date_start"/>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <span>
+                                    <strong>This contract is made between:</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>1- M/s Fawares Petrolum Services</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>Services Company (W.L.L), represented by Mr.
+                                        dfsdfasdfs - chief executive officer, hereinafter called
+                                    </strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <center>
+                                        <strong>"First Party"</strong>
+                                    </center>
+                                </span>
+                                <br/>
+                                <br/>
+                                <span>
+                                    <strong>2- Name</strong>
+                                    <span t-field="o.employee_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>Nationality:</strong>
+                                    <span t-field="o.employee_id.country_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>holder of Civil</strong>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>hereinafter called</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <center>
+                                        <strong>"Second Party"</strong>
+                                    </center>
+                                </span>
+                                <br/>
+                                <br/>
+                                <div align="center">
+                                    <strong>
+                                        <u>
+                                            Provisions of Contract
+                                        </u>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <br/>
+                                <span class="text-right" style="font-weight:bold;">
+                                    <p>
+                                        for indefinite period at the position of
+                                        <strong>
+                                            <span t-field="o.job_id.name"/>
+                                        </strong>
+                                        against monthly salary of K.D (
+                                        <strong> <span t-field="o.total_amount"/> 
+                                        </strong>
+                                        )
+                                    </p>
+                                    <p>
+                                        * The second party will be on probationary period for
+                                        100 days from the actual joining date. Both parties
+                                        eligible to terminate the contract without notice at any
+                                        time during the probationary period.
+                                    </p>
+                                    <p>
+                                        * The second party shall be entitled to (30) working
+                                        days paid annual leave each year with effect from the
+                                        date of actually reporting to his work. The first party
+                                        shall determine the date of the second party leave in
+                                        accordance with the work requirements
+                                    </p>
+                                    <p>
+                                        * The second party undertakes to observe the
+                                        applicable work regulations of the first party and to
+                                        execute the instructions and orders issued by the first
+                                        party and his seniors، He further undertakes to
+                                        observe the official working hours
+                                    </p>
+                                    <p>
+                                        * Second party during his employment with the first
+                                        party, undertakes to keep confidential all professional
+                                        secrets related to business as well as all other
+                                        secrets the disclosure of which would cause
+                                        damages to the first party’s interest He further undertakes that upon expiry of
+                                        his contractual relation with the first party he shall not
+                                        compete or disclose his secrets to a competitor or
+                                        work with any firm performing the same business of the first party in the State
+                                        of Kuwait for two years from the date of expiry of contractual relation
+                                    </p>
+                                    <p>
+                                        * If the second party violates any contract obligations
+                                        or instructions issued by the first party or does not
+                                        exert due diligence in the performance of his work or
+                                        commits any of the violations stated by the first party
+                                        or in the Kuwait labor law for private sector no. 6/2010, the first party shall
+                                        have the right to terminate this contract.
+                                    </p>
+                                    <p>
+                                        * The second party may not work directly or indirectly
+                                        with or without pay with any other entity even beyond
+                                        the official working hours throughout his employment
+                                        period with the first party, except under written
+                                        approval from the first party
+                                    </p>
+                                    <p>
+                                        * The second party may not have any interest of
+                                        whatever type, directly or indirectly, with another
+                                        company or entity working in the same field of
+                                        business and conflicting with the first party’s interest
+                                        or negatively affecting the second party performance
+                                        of his job duties. In case of any such interest, the
+                                        second party has to disclose the same to the first
+                                        party.
+                                    </p>
+                                    <p>
+                                        * Either party may terminate the contract at any time
+                                        during its term. In case of termination by either party,
+                                        the other party should be notified at least three (3)
+                                        months in advance which shall be deemed as notice
+                                        period for both parties
+                                    </p>
+                                    <p>
+                                        * All matters not stated herein shall be subject to the
+                                        provisions of Kuwait labor law for private sector no.
+                                        6/2010 subject to non-conflict to the provisions of
+                                        Islamic Sharia as well as any provisions or
+                                        regulations issued or to be issued by the first part
+                                    </p>
+                                    <p>
+                                        * Any dispute arising from the interpretation of this
+                                        contract terms or violation of its terms by either party
+                                        shall be subject to the provisions of Kuwait law
+                                        subject to non-conflict with the provisions of Islamic
+                                        Sharia. Kuwait courts shall have exclusive.
+                                    </p>
+                                    <p>
+                                        * This contract is made in duplicate; one copy for each party to act accordingly
+                                        when necessary.
+                                    </p>
+                                </span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="text-center">
+                                    <strong>
+                                        الطـرف الثانى
+                                        <br/>
+                                        Second Party
+                                        <br/>
+                                        Name
+                                        ____________________________________
+                                        الاسم
+                                        <br/>
+                                        <br/>
+                                        Date
+                                        ____________________________________
+                                        التاريخ
+                                        <br/>
+                                        <br/>
+                                        Signature
+                                        ____________________________________
+                                        التوقيع
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_indefinite_employment_contract_enh">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="contract_report_enhancement.template_indefinite_employment_document"
+                       t-lang="o.employee_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_indefinite_employment_enh_report" model="ir.actions.report">
+            <field name="name">عقد شركة فوارس</field>
+            <field name="model">hr.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">contract_report_enhancement.report_indefinite_employment_contract_enh</field>
+            <field name="report_file">contract_report_enhancement.report_indefinite_employment_contract_enh</field>
+            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paperformat_indefinite_employment_report" model="report.paperformat">
+            <field name="name">Indefinite Employment Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">10</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">5</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="contract_report_enhancement.action_indefinite_employment_enh_report"
+                model="ir.actions.report">
+            <field name="paperformat_id" ref="contract_report_enhancement.paperformat_indefinite_employment_report"/>
+        </record>
+    </data>
+</odoo>

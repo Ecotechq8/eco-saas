@@ -1,0 +1,14 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_config_rule,access.employee.config.rule,model_hr_config_rules,,1,1,1,1
+access_termination_rule,access.termination.rule,model_hr_termination_rules,,1,1,1,1
+access_resignation_rule,access.resignation.rule,model_hr_resignation_rules,,1,1,1,1
+access_termination_request,access.termination.request,model_hr_termination_request,,1,1,1,1
+access_resignation_request,access.resignation.request,model_hr_resignation_request,,1,1,1,1
+access_model_eos_recognition,access.model.eos.recognition,model_eos_recognition,hr.group_hr_user,1,1,1,1
+access_model_eos_recognition_indemnity,access.model.eos.recognition.indemnity,model_eos_recognition_indemnity,hr.group_hr_user,1,1,1,1
+
+
+
+
+
+

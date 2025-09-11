@@ -1,0 +1,842 @@
+<odoo>
+    <data>
+        <template id="template_work_recruitment_document">
+            <t t-call="web.basic_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.employee_id.lang})"/>
+                <div class="page" dir="rtl">
+                    <center>
+                        <img t-attf-src="/contract_report_enhancement/static/src/img/contract_ar_en_header.png"
+                             alt="Header"
+                             style="width:100%"/>
+                    </center>
+                    <br/>
+                    <div>
+                        <div class="row" style="padding-left:5px;padding-right:5px">
+                            <div class="col-6" dir="rtl" align="right"
+                                 style="font-size:14px;direction:rtl;border:1px solid black;">
+                                <div class="text-center">
+                                    <strong>
+                                        <span style="font-size:18px;color:black;">
+                                            <u>نموذج عقد عمل استرشادى في القطاع الأهلي</u>
+                                        </span>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <div align="right">
+                                    <strong>
+                                        دولة الكويت
+                                        <br></br>
+                                        الهيئة العامة للقوى العاملة / إدارة عمل العاصمة
+                                    </strong>
+                                </div>
+                                <br/>
+                                <div align="right">
+                                    <strong>إنه في يوم الموافق
+                                        <span t-field="o.date_start"/>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <span>
+                                    <strong>تحرر هذا العقد بين كل من :</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>1-شركة / فوارس للخدمات البترولية ويمثلها في التوقيع على العقد</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>رقم مدني :</strong>
+                                    <span t-field="o.company_id.company_registry"/>
+
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>طـرف أول</strong>
+                                </span>
+                                <br/>
+                                <br/>
+                                <span>
+                                    <strong>۲- الاسم:</strong>
+                                    <span t-field="o.employee_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>الجنسية:</strong>
+                                    <span t-field="o.employee_id.country_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>رقم مدني:</strong>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>الإقامة:</strong>
+                                    <span t-field="o.employee_id.private_street"/>,<span
+                                        t-field="o.employee_id.private_street2"/>,
+                                    <span t-field="o.employee_id.private_city"/>,<span
+                                        t-field="o.employee_id.private_state_id.name"/>,
+                                    <span t-field="o.employee_id.private_country_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>طرف ثانى</strong>
+                                </span>
+                                <br/>
+                                <div align="center">
+                                    <strong>
+                                        <u>
+                                            تمهيد
+                                        </u>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <span style="font-size:15px;">
+                                    يمتلك الطرف الأول منشأة باسم شركة فوارس للخدمات البترولية تعمل في مجال
+                                    البترول ويرغب فى التعاقد مع الطرف الثاني للعمل لديه بمهنة
+                                    <strong>
+                                        <span t-field="o.job_id.name"/>
+                                    </strong>
+                                    وبعد أن أقر الطرفان بأهليتهما في إبرام هذا العقد تم الاتفاق علي ما يلي:
+                                </span>
+                                <br/>
+                                <br/>
+                                <span class="text-right">
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>
+                                                    البند الأول:-
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يعتبر التمهيد السابق جزء لا يتجزأ من هذا العقد .
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الثاني</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " طبيعة العمل "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        تعاقد الطرف الأول مع الطرف الثاني للعمل لديه
+                                        <strong>
+                                            <span t-field="o.job_id.name"/>
+                                        </strong>
+                                        داخل دولة الكويت.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الثالث</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>" فترة التجربة "</u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يخضع الطرف الثاني لفترة تجربة لمدة لا تزيد عن 100 يوم عمل ، ويحق لكل طرف إنهاء
+                                        العقد خلال تلك الفترة دون إخطار .
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الرابع</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " قيمة الأجر "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يتقاضى الطرف الثاني عن تنفيذ هذا العقد أجرا مقداره
+                                        <strong> <span t-field="o.total_amount"/> 
+                                        </strong>
+                                        دينارا
+                                        يدفع في نهاية كل شهر . ولا يجوز للطرف الأول تخفيض الأجر أثناء سريان هذا العقد .
+                                        ولا يجوز نقل الطرف الثانى إلى الأجر اليومى دون موافقته .
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الخامس</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " نفاذ العقد "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يبدأ نفاذ العقد اعتبارا من
+                                        <strong> <span t-field="o.date_start"/> 
+                                        </strong>
+                                        ويلتزم الطرف الثانى بالقيام بأداء عمله طوال مدة نفاذه
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند السادس</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " مدة العقد ".
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        هذا العقد غير محدد المدة ويبدأ اعتبار من
+                                        <strong> <span t-field="o.date_start"/> 
+                                        </strong>
+                                        و لمدة سنة و يتجدد تلقائيا
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند السابع</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " الإجازة السنوية "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        للطرف الثاني الحق في إجازة سنوية مدفوعة الأجر مدتها 30 يوما ، ولا يستحقها عن
+                                        السنة الأولى إلا بعد انقضاء مدة تسعة أشهر تحسب من تاريخ نفاذ العقد .
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الثامن</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " عدد ساعات العمل "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        لا يجوز للطرف الأول تشغيل الطرف الثاني لمدة تزيد عن ثماني ساعات عمل يوميا
+                                        تتخللها فترة راحة لا تقل عن ساعة باستثناء الحالات المقررة قانونا .
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند التاسع</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " قيمة تذكرة السفر "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يتحمل الطرف الأول مصاريف عودة الطرف الثاني إلى بلده عند انتهاء علاقة العمل
+                                        ومغادرته نهائيا للبلاد في حالة تم احضاره من قبل الشركة شرط التزامه بانظمة الشركة
+                                        وقوانين البلاد.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند العاشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " التأمين ضد إصابات وأمراض العمل "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يلتزم الطرف الأول بالتأمين على الطرف الثانى ضد إصابات وأمراض العمل ، كما يلتزم
+                                        بقيمة التأمين الصحى طبقا للقانون رقم (1) لسنة 1999.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الحادى عشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " مكافأة نهاية الخدمة "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        يستحق الطرف الثانى مكافأة نهاية الخدمة المنصوص عليها بالقوانين المنظمة
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الثانى عشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " القانون الواجب التطبيق "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        تسري أحكام قانون العمل فى القطاع الأهلى رقم 6 لسنة 2010 والقرارات المنفذة له
+                                        فيما لم يرد بشأنه نص فى هذا العقد ، ويقع باطلا كل شرط تم الاتفاق عليه بالمخالفة
+                                        لأحكام القانون ، ما لم يكن فيه ميزة أفضل للعامل
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الثالث عشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " شروط خاصة "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <t t-set="i" t-value="0"/>
+                                        <t t-foreach="o.employee_id.company_id.notes_ids" t-as="note">
+                                            <t t-set="i" t-value="i+1"/>
+                                            <div class="text-right">
+                                                <br/>
+                                                <t t-esc="i"/>.
+                                                <t t-esc="note.special_notes_ar"/>
+                                                <br/>
+                                            </div>
+                                        </t>
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الرابع عشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " المحكمة المختصة "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        تختص المحكمة الكلية ودوائرها العمالية طبقا لأحكام القانون رقم 46 لسنة 1987 ،
+                                        بنظر كافة المنازعات الناشئة عن تطبيق أو تفسير هذا العقد.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند الخامس عشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " لغة العقد "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        حرر هذا العقد باللغتين العربية والانجليزية، ويعتد بنصوص اللغة العربية عند وقوع
+                                        أى تعارض بينهما .
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>البند السادس عشر</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    " نسخ العقد "
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        حرر هذا العقد من ثلاث نسخ بيد كل طرف نسخة للعمل بموجبها والثالثة تودع لدى الهيئة
+                                        العامة للقوى العاملة.
+                                    </p>
+                                </span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="text-center">
+                                    <strong>
+                                        الطرف الأول
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        الطرف الثاني
+                                        <br/>
+                                        <br/>
+                                        ----------------------------
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        ----------------------------
+                                    </strong>
+                                </div>
+                            </div>
+                             
+                            <div class="col-6" dir="ltr"
+                                 style="font-size:13px;border:1px solid black;text-align: justify;">
+                                <div class="text-center">
+                                    <strong>
+                                        <span style="font-size:18px;color:black;">
+                                            <u>Employment Contract in the Civil Sector</u>
+                                        </span>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <div align="left">
+                                    <strong>
+                                        State of Kuwait
+                                        <br></br>
+
+                                        Public Authority for Manpower /Capital
+                                        Labour Department.
+                                    </strong>
+                                </div>
+                                <br/>
+                                <div align="left">
+                                    <strong>On this day of
+                                        <span t-field="o.date_start"/>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <span>
+                                    <strong>the present contract was concluded by and between:
+                                    </strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>1. Company/ institution Fawares Petroleum Services represented in
+                                        signature in the present contract by:
+                                    </strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>Civil card:</strong>
+                                    <span t-field="o.company_id.company_registry"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>(First party)</strong>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>2. Name:</strong>
+                                    <span t-field="o.employee_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>Nationality:</strong>
+                                    <span t-field="o.employee_id.country_id.name"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>Civil card:</strong>
+                                    <span t-field="o.employee_id.identification_id"/>
+                                </span>
+                                <br/>
+                                <span>
+                                    <strong>Residence:</strong>
+                                    <span t-field="o.employee_id.private_street"/>,<span
+                                        t-field="o.employee_id.private_street2"/>,
+                                    <span t-field="o.employee_id.private_city"/>,<span
+                                        t-field="o.employee_id.private_state_id.name"/>,
+                                    <span t-field="o.employee_id.private_country_id.name"/>
+                                </span>
+                                <br/>
+
+                                <span>
+                                    <strong>(Second party)</strong>
+                                </span>
+                                <br/>
+                                <div align="center">
+                                    <strong>
+                                        <u>
+                                            Preamble
+                                        </u>
+                                    </strong>
+                                </div>
+                                <br/>
+                                <span style="font-size:15px;">
+                                    <strong>
+                                        The first party owns the facility entitled Sefeena . working in the field of
+                                        Rent Cars whereas it wishes to conclude a contract with the second party to work
+                                        for it in the profession of
+                                        <strong>
+                                            <span t-field="o.job_id.name"/>
+                                        </strong>
+                                        whereas the parties acknowledged their capacity to conclude this contract, they
+                                        agreed upon the following:
+                                    </strong>
+                                </span>
+                                <br/>
+                                <span class="text-left">
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>
+                                                    Article One
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The preamble above shall constitute an integral part of the present contract.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Two</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Nature of the Work"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The first party concluded a contract with the second party to work for it in the
+                                        profession of
+                                        <strong>
+                                            <span t-field="o.job_id.name"/>
+                                        </strong>
+                                        in the State of Kuwait.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Three</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>"Probation Period"</u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The second party shall be subject to a probation period for a term not exceeding
+                                        100 work days. Each party shall have the right to terminate the contract during
+                                        the said term without notification.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Four</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Lease Value"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        For executing the present contract, the second party shall receive the wage of (
+                                        <strong> <span t-field="o.total_amount"/> 
+                                        </strong>
+                                        )
+                                        dinars to be paid at the end of every month. The first party may not decrease
+                                        the wage during the term of the contract. It may not transfer the second party
+                                        to daily wage without his approval
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Five</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Contract Term"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The contract shall come into force on
+                                        <strong> <span t-field="o.date_start"/> 
+                                        </strong>
+                                        The second party shall execute his work during the entire execution term thereof
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Six</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Contract Term"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The present contract has an indefinite term
+                                        <strong> <span t-field="o.date_start"/> 
+                                        </strong>
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Seven</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Annual Leave"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The second party shall have the right to a paid annual leave with a term of 30
+                                        days. It shall not be due on the first year save after the expiration of nine
+                                        months to be calculated from the date of the contract coming into force.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Eight</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Number of Work Hours"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The first party may not require that the second party work for a term exceeding
+                                        eight daily work hours with rest periods not less than one hour, except for the
+                                        cases set forth in the law.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Nine</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Ticket Value"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The first party shall bear the expenses of the return of the second party to his
+                                        country after the expiration of the work relationship and his final departure
+                                        from the country In the case it was brought by the company Distasteful regimes
+                                        commitment to the company and the laws of the country condition.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Ten</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Insurance against Injuries and Work Maladies"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The first party shall insure the second party against injuries and work
+                                        maladies. It shall also commit to the health insurance value in accordance with
+                                        the law No. (1) of the year 1999.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Eleven</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "End of Service Benefit"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The second party shall be due the end of service benefit as set forth in the
+                                        regulating laws.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Twelve</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Applicable Law"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The provisions of the Labour code in the civil sector No. 6 of 2010 and the
+                                        decisions executing the same shall apply for all matters not provided for in the
+                                        present contract. Shall be considered null every condition agreed upon in
+                                        violation of the provisions of the law, unless the same has a better benefit for
+                                        the worker
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Thirteen</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Special Conditions"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <t t-set="i" t-value="0"/>
+                                        <t t-foreach="o.employee_id.company_id.notes_ids" t-as="note">
+                                            <t t-set="i" t-value="i+1"/>
+                                            <div class="text-left">
+                                                <br/>
+                                                <t t-esc="i"/>.
+                                                <t t-esc="note.special_notes_en"/>
+                                                <br/>
+                                            </div>
+                                        </t>
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Fourteen</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Specialized Court"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The court of first instance and its Labour departments, in accordance with the
+                                        provisions of the law No. 46 of the year 1987, shall be competent to peruse any
+                                        conflicts resulting from the execution or interpretation of the present
+                                        contract.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Fifteen</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Contract Language"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The present contract was made in Arabic and English. The Arabic texts shall
+                                        prevail in the case of any conflict between them.
+                                    </p>
+                                    <p>
+                                        <center>
+                                            <strong>
+                                                <u>Article Sixteen</u>
+                                            </strong>
+                                            <br/>
+                                            <strong>
+                                                <u>
+                                                    "Contract Copies"
+                                                </u>
+                                            </strong>
+                                        </center>
+                                        <br/>
+                                        The present contract was made in three copies, one for each party to work in
+                                        accordance therewith. The third copy shall be deposited at the Public Authority
+                                        for Manpower.
+                                    </p>
+                                </span>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div class="text-center">
+                                    <strong>
+                                        First Party
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        Second Party
+                                        <br/>
+                                        <br/>
+                                        ----------------------------
+                                        &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;
+                                        ----------------------------
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_employee_template_work_recruitment_enh">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="contract_report_enhancement.template_work_recruitment_document"
+                       t-lang="o.employee_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_employee_template_work_recruitment_enh_report" model="ir.actions.report">
+            <field name="name">عقد عمل عربي / انجليزى</field>
+            <field name="model">hr.contract</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">contract_report_enhancement.report_employee_template_work_recruitment_enh</field>
+            <field name="report_file">contract_report_enhancement.report_employee_template_work_recruitment_enh</field>
+            <field name="binding_model_id" ref="hr_contract.model_hr_contract"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <record id="paperformat_template_work_recruitment_report" model="report.paperformat">
+            <field name="name">Template Work Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">15</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">40</field>
+            <field name="dpi">90</field>
+        </record>
+
+
+        <record id="contract_report_enhancement.action_employee_template_work_recruitment_enh_report"
+                model="ir.actions.report">
+            <field name="paperformat_id"
+                   ref="contract_report_enhancement.paperformat_template_work_recruitment_report"/>
+        </record>
+    </data>
+</odoo>

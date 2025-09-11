@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_proceed_working_leave_document">
+        <t t-call="web.basic_layout">
+            <div class="header">
+                <div class="row" dir="rtl">
+                    <div class="col-4">
+                        <strong>
+                            <u>شركة فوارس للخدمات البترولية</u>
+                        </strong>
+                        <br/>
+                        التاريخ:
+                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                    </div>
+                    <div class="col-4" style="margin-top:40px;">
+                        <h4>
+                            <center>
+                                <u>
+                                    اشعار مباشرة عمل
+                                    <br/>
+                                    Notice Work Start
+                                </u>
+                            </center>
+                        </h4>
+                    </div>
+                    <div class="col-4">
+<!--                        <img t-attf-src="/hr_printouts/static/src/img/logo.png" alt="Header"-->
+<!--                             style="width:50%;"/>-->
+                    </div>
+                </div>
+            </div>
+            <div class="page" style="font-weight:bold;">
+                <table class="table" style="width:100%;border: 1px solid black;" dir="rtl">
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            <strong>بيانات طالب اﻷجازة</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black" class="text-center">
+                            الرقم الوظيفى:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.pin"/>
+                        </td>
+                        <td style="border: 1px solid black" class="text-center">
+                            الاسـم:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.employee_id.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black" class="text-center">
+                            الوظيفة:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.job_title.name"/>
+                        </td>
+                        <td style="border: 1px solid black" class="text-center">
+                            البطاقة المدنية:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.identification_no"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black" class="text-center">
+                            تاريخ التعيين:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.contract_start_date"/>
+                        </td>
+                        <td style="border: 1px solid black" class="text-center">
+                            مكان العمل:
+                        </td>
+                        <td style="border: 1px solid black;" class="text-center">
+                            <span t-field="doc.department_id.name"/>
+                        </td>
+                    </tr>
+                </table>
+                <br/>
+                <br/>
+                <table class="table" style="width:100%;border: 1px solid white;" dir="rtl">
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                تاريخ العودة للعمل:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span t-field="doc.date_resumes_duty"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                Date Resumes Duty:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                أسباب تغيير تاريخ العودة:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span t-field="doc.reason_change_resume_date"/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                Reasons for change in resume date:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:20px;" colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:20px;" colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                توقيع صاحب العلاقة:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                Employee's Signature:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                توقيع المسئول المباشر:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span/>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                Director Head's Signature:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:20px;" colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td style="border-bottom: 1px solid black;height:20px;" colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;background-color:#cccccc;" class="text-right">
+                            <strong>
+                                ﻹجراءات إدارة الموارد البشرية واﻹدارية
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid black;background-color:#cccccc;" colspan="2" dir="ltr">
+                            <strong>
+                                Action by Human Resources Admin Dept.
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid black;height:60px;" colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;height:20px;" colspan="3"/>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                موظف الموارد البشرية:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span>......................................................................................
+                            </span>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                HR Officer:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                اعتماد مدير إدارة الموارد البشرية واﻹدارية:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span>......................................................................................
+                            </span>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                H.R. Admin. Dept Approval:
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="border: 1px solid white;">
+                            <strong>
+                                التاريخ:
+                            </strong>
+                        </td>
+                        <td style="border: 1px solid white;">
+                            <span>......................................................................................
+                            </span>
+                        </td>
+                        <td style="border: 1px solid white;" dir="ltr">
+                            <strong>
+                                Date:
+                            </strong>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </t>
+    </template>
+
+    <template id="report_proceed_working_leave_printout">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="hr_printouts.report_proceed_working_leave_document"/>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_proceed_working_leave_report" model="ir.actions.report">
+        <field name="name">اشعار العودة من اجازة</field>
+        <field name="model">hr.operation</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hr_printouts.report_proceed_working_leave_printout</field>
+        <field name="report_file">hr_printouts.report_proceed_working_leave_printout</field>
+        <field name="binding_model_id" ref="eco_hr_operation.model_hr_operation"/>
+        <field name="binding_type">report</field>
+    </record>
+
+</odoo>

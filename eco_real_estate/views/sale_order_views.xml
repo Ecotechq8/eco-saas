@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_order_form_inherit_property" model="ir.ui.view">
+        <field name="name">sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_confirm'][1]" position="after">
+                <button name="action_property_delivered" type="object" string="Delivery"
+                        invisible="invoice_count == 0 or state in 'cancel,property_delivery'"/>
+                <button name="%(action_reservation_cancel_reason)d" string="Cancel"
+                        class="oe_edit_only btn-primary"
+                        invisible="state in 'cancel,property_delivery'"
+                        type="action"/>
+            </xpath>
+            <xpath expr="//field[@name='team_id']" position="after">
+                <field name="project_id"/>
+                <field name="property_id"/>
+                <field name="reservation_id"/>
+                <field name="invoice_ids" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@name='customer_signature']" position="after">
+                <page name="Cancel_reason" string="Cancel Reason">
+                    <group>
+                        <field name="cancel_payment_id" readonly="1"/>
+                        <field name="cancel_reason" readonly="1"/>
+                    </group>
+                </page>
+                <page name="payments" string="Payments">
+                    <field name="payment_strategy_line_ids" readonly="1">
+                        <list string="Payment Terms">
+                            <field name="description"/>
+                            <field name="value_amount" sum="Sum of Amount"/>
+                            <field name="payment_date"/>
+                            <field name="journal_id"/>
+                            <field name="check_no"/>
+                            <field name="type"/>
+                            <field name="payment_id"
+                                   options="{'no_open': False}"/>
+                            <button name="create_payment" type="object" string="PAY"
+                                    invisible="payment_id != False or type != 'deposit' or parent.state != 'draft'"/>
+                            <button name="create_payment" type="object" string="PAY"
+                                    invisible="payment_id != False  or parent.state != 'check' "/>
+                        </list>
+                        <form>
+                            <group>
+
+                                <field name="check_no"/>
+                                <field name="payment_id"
+                                       options="{'no_open': False, 'no_create': True, 'no_create_edit': True}"
+                                       readonly="1"/>
+                            </group>
+                        </form>
+
+                    </field>
+                </page>
+
+            </xpath>
+            <xpath expr="//button[@name='action_cancel']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- guarantee_letter/views/guarantee_letter_views.xml -->
+<odoo>
+    <!-- list View -->
+    <record id="view_guarantee_letter_list" model="ir.ui.view">
+        <field name="name">guarantee.letter.list</field>
+        <field name="model">guarantee.letter</field>
+        <field name="arch" type="xml">
+            <list string="Guarantee Letters">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="journal_bank_id"/>
+                <field name="journal_payment_id"/>
+                <field name="letter_account_id"/>
+                <field name="ref"/>
+                <field name="issued_date"/>
+                <field name="expiry_date"/>
+                <field name="project_id"/>
+<!--                <field name="analytic_account_id"/>-->
+                <field name="amount"/>
+                <field name="company_percent"/>
+                <field name="date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_guarantee_letter_form" model="ir.ui.view">
+        <field name="name">guarantee.letter.form</field>
+        <field name="model">guarantee.letter</field>
+        <field name="arch" type="xml">
+            <form string="Guarantee Letter">
+                <header>
+                    <field name="state" widget="statusbar"/>
+                    <button name="action_confirm" type="object" string="Confirm" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="action_expense" type="object" string="Confirm Expense" class="oe_highlight"
+                            invisible="state != 'confirmed'"/>
+                    <button name="action_return" type="object" string="Return" class="oe_highlight"
+                            invisible="state != 'expense'"/>
+                </header>
+
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button type="object" name="button_view_entries" class="oe_stat_button"
+                                icon="fa-book" invisible="entries_count == 0">
+                            <field name="entries_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title mb24">
+                        <h4>
+                            <strong>
+                                <field class="text-break" name="name" readonly="1"/>
+                            </strong>
+                        </h4>
+                    </div>
+
+                    <group>
+                        <group>
+                            <field name="type"/>
+                            <field name="journal_bank_id" domain="[('type','in',['bank'])]"/>
+                            <field name="journal_payment_id" domain="[('type','in',['bank','cash'])]"/>
+                            <field name="letter_account_id"/>
+                            <field name="ref"/>
+                        </group>
+                        <group>
+                            <field name="issued_date"/>
+                            <field name="expiry_date"/>
+                            <field name="project_id"/>
+<!--                            <field name="analytic_account_id"/>-->
+                            <field name="amount"/>
+                            <field name="company_percent"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page name="transaction" string="Transaction" invisible="state == 'draft'">
+                            <field name="transaction_ids">
+                                <list string="Transaction" editable="bottom">
+<!--                                    <field name="product_id" domain="[('detailed_type','=','service')]"/>-->
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="account_id"/>
+                                    <field name="project_id"/>
+<!--                                    <field name="analytic_account_id"/>-->
+                                    <field name="product_uom_qty"/>
+                                    <field name="product_uom"/>
+                                    <field name="price_unit"/>
+                                    <field name="taxes_ids"/>
+                                    <field name="subtotal"/>
+                                </list>
+                            </field>
+                            <group class="oe_subtotal_footer" colspan="2" name="total">
+                                <field name="total" colspan="2" readonly="1"/>
+                            </group>
+                        </page>
+                        <page name="extention_dates" string="Extention Dates">
+                            <field name="extension_ids">
+                                <list string="Extention Dates" editable="bottom">
+                                    <field name="name"/>
+                                    <field name="extension_date"/>
+                                </list>
+                            </field>
+
+                        </page>
+                        <page name="purpose" string="Purpose">
+                            <field name="purpose"/>
+                        </page>
+                        <page name="expenses_loss" string="Expenses/Loss">
+                            <group>
+                                <field name="is_deducted"/>
+                                <field name="expenses_loss_account_id" required="is_deducted"/>
+                            </group>
+
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_guarantee_letter" model="ir.actions.act_window">
+        <field name="name">Guarantee Letters</field>
+        <field name="res_model">guarantee.letter</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_guarantee_letter_form"/>
+        <field name="view_mode">form,list</field>
+        <field name="context">{
+            'default_project_id': active_id
+            <!--                'default_sale_ok':True,-->
+            <!--                'default_purchase_ok':False,-->
+            <!--                'default_detailed_type':'service',-->
+            }
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <menuitem id="rental_menu"
+              name="Rental"/>
+
+    <menuitem id="rental_order_menu"
+              name="Orders"
+              parent="rental_menu"/>
+
+    <menuitem id="rental_orders_submenu"
+              name="Orders"
+              parent="rental_order_menu"
+              action="sttl_sale_rental.sale_rental_order_action"/>
+
+    <menuitem id="rental_customers_menu"
+              name="Customers"
+              parent="rental_order_menu"
+              action="account.res_partner_action_customer"/>
+
+    <menuitem id="rental_to_do_today_menu"
+              name="To Do Today"
+              parent="rental_order_menu"/>
+
+    <menuitem id="rental_schedule_menu"
+              name="Schedule"
+              parent="rental_menu"
+              action="sttl_sale_rental.sol_rental_timeline_action"/>
+
+    <menuitem id="rental_products_menu"
+              name="Products"
+              parent="rental_menu"
+              action="sttl_sale_rental.sale_rental_product_template_action"/>
+
+    <menuitem id="rental_reporting_menu"
+              name="Reporting"
+              parent="rental_menu"
+              action="sttl_sale_rental.sale_report_inherited_rental_view_action"/>
+
+    <menuitem id="rental_configuration_menu"
+              name="Configuration"
+              parent="rental_menu"/>
+
+</odoo>

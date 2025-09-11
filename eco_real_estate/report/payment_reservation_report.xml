@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_reservation_payment">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.env.lang})"/>
+                <div class="page" style="font-size:16px; padding: 20px;" dir="rtl">
+                    <!-- Report Header -->
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h2 style=" display: inline">
+                            بيان بنظام السداد
+                        </h2>
+                    </div>
+
+                    <!-- Summary Section -->
+                    <div class="row" >
+                        <!-- Left Column -->
+                        <div class="col-6" style="width: 50%;margin-left: 10px;" dir="rtl">
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                                <tr>
+                                    <td style="background-color:#98919e; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        رقم الوحدة:
+                                    </td>
+                                    <td t-esc="o.property_id.default_code"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                                <tr>
+                                    <td style="background-color:#98919e; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        مساحه المبنى م2:
+                                    </td>
+                                    <td t-esc="o.property_id.total_area"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#98919e; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        مساحه الحديقه م2:
+                                    </td>
+                                    <td t-esc="o.property_id.total_open_area"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                                <tr>
+                                    <td style="background-color:#a0aee7; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        قيمة الوحدة:
+                                    </td>
+                                    <td t-esc="o.net_price"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+                                <tr>
+                                    <td style="background-color:#a0aee7; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        حجز:
+                                    </td>
+                                    <td t-esc="sum(o.payment_strategy_line_ids.filtered(lambda l: l.type == 'deposit').mapped('value_amount'))"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#a0aee7; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        تعاقد:
+                                    </td>
+                                    <td t-esc="o.net_price"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                                <tr>
+                                    <td style="background-color:#a0aee7; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        الاقساط:
+                                    </td>
+                                    <td t-esc="o.net_price"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                            </table>
+
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <tr>
+                                    <td style="background-color:#a0aee7; text-align: right; padding: 5px; border: 1px solid #000;">
+                                        وديعه الصيانه:
+                                    </td>
+                                    <td t-esc="sum(o.payment_strategy_line_ids.filtered(lambda l: l.type == 'maintenance').mapped('value_amount'))"
+                                        style="text-align: center; border: 1px solid #000; padding: 5px;"/>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <!-- Right Column -->
+                        <div class="col-6" style="width: 50%; margin-right: 10px;" dir="ltr">
+                            <h3 style="text-align: center; margin-bottom: 10px;">تفاصيل الأقساط:</h3>
+                            <table style="width: 100%; border-collapse: collapse; text-align: center; border: 1px solid #000;">
+                                <thead>
+                                    <tr style="background-color: #ddd;">
+                                        <th style="border: 1px solid #000; padding: 5px;">البيان</th>
+                                        <th style="border: 1px solid #000; padding: 5px;">قسط الوحدة</th>
+                                        <th style="border: 1px solid #000; padding: 5px;">النسبه</th>
+                                        <th style="border: 1px solid #000; padding: 5px;">التاريخ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.payment_strategy_line_ids" t-as="line">
+                                        <tr>
+                                            <td style="border: 1px solid #000; padding: 5px;" t-esc="line.description"/>
+                                            <td style="border: 1px solid #000; padding: 5px;"
+                                                t-esc="round(line.value_amount,2)"/>
+                                            <td style="border: 1px solid #000; padding: 5px;"
+                                                t-esc="round(line.all_percent,2)"/>
+                                            <td style="border: 1px solid #000; padding: 5px;"
+                                                t-esc="line.payment_date"/>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="margin-top: 30px; text-align: right;">
+                        <p>
+                            <strong>التاريخ :</strong>
+                            __________________
+                        </p>
+                        <p>
+                            <strong>أسم العميل:</strong>
+                            <span t-esc="o.customer_id.name"/>
+                        </p>
+                        <p>
+                            <strong>التوقيع:</strong>
+                            __________________
+                        </p>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="reservation_payment">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="eco_real_estate.report_reservation_payment" t-lang="o.env.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="reservation_payment_id" model="ir.actions.report">
+            <field name="name">تسويه ماليه</field>
+            <field name="model">property.reservation</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">eco_real_estate.reservation_payment</field>
+            <field name="report_file">eco_real_estate.reservation_payment</field>
+            <field name="binding_model_id" ref="model_property_reservation"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

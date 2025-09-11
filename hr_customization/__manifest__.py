@@ -1,0 +1,33 @@
+# -*- coding: utf-8 -*-
+{
+    'name': "Hr Customization",
+    'summary': """""",
+    'description': """""",
+    'category': 'hr',
+    'version': '1.0.0',
+    'depends': ['base', 'hr', 'hr_holidays', 'om_hr_payroll', 'om_account_accountant', 'rm_hr_attendance_sheet',
+                'oh_employee_documents_expiry', 'hr_eos',
+                # 'custom_portal_account_page',
+                # 'l10n_au_hr_payroll'
+                ],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/hr_leave_type_inherit.xml',
+        'views/hr_employee_inherit.xml',
+        'views/employee_leaves_report.xml',
+        'views/hr_leave_request_inherit.xml',
+        # 'views/hr_payslip_view.xml',
+        # 'views/hr_payslip_run_view.xml',
+        'views/check_employee_expiry_date_report.xml',
+        'views/employee_check_list_view.xml',
+        # 'views/employee_document_view.xml',
+        'views/hr_contract_views.xml',
+        'views/time_off_policy_view.xml',
+        'wizard/payslip_mass_mailing.xml',
+        'wizard/check_employee_leaves.xml',
+        'wizard/check_document_expiry_date.xml',
+        'data/annual_leave_schedule_action.xml',
+        'data/payslip_mail_template.xml',
+        'data/payslip_emailtemplate.xml',
+    ],
+}

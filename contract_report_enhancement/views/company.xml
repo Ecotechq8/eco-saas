@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_company_inherit_form" model="ir.ui.view">
+        <field name="name">res.company.loan.inherited.form</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="arch" type="xml">
+            <page name="branches" position="after">
+                <page name="special" string="Special Notes">
+                    <field name="notes_ids">
+                        <list string="Special Notes" editable="bottom">
+                            <field name="special_notes_ar"/>
+                            <field name="special_notes_en"/>
+                        </list>
+                    </field>
+                </page>
+            </page>
+        </field>
+    </record>
+</odoo>

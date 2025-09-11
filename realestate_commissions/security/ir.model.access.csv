@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sales_commission_user,access_sales_commission_user,model_sales_commission,,1,1,1,1
+access_sales_commission_line_user,access_sales_commission_line_user,model_sales_commission_line,,1,1,1,1
+access_commission_range_user,access_commission_range_user,model_commission_range,,1,1,1,1
+access_commission_range_sales_team,access_commission_range_sales_team,model_commission_range_sales_team,,1,1,1,1
+access_commission_range_sales_agent,access_commission_range_sales_agent,model_commission_range_sales_agent,,1,1,1,1
+
+

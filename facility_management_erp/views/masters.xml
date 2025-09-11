@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_fm_property_tree" model="ir.ui.view">
+        <field name="model">fm.property</field>
+        <field name="name">fm.property.tree</field>
+        <field name="priority" eval="1" />
+        <field name="arch" type="xml">
+            <list string="Property">
+                <field name="name" />
+                <field name="owner_id" />
+            </list>
+        </field>
+    </record>
+
+     <record id="view_fm_unit_tree" model="ir.ui.view">
+        <field name="model">fm.unit</field>
+        <field name="name">fm.unit.tree</field>
+        <field name="priority" eval="1" />
+        <field name="arch" type="xml">
+            <list string="Unit">
+                <field name="name" />
+                <field name="property_id" />
+                <field name="owner_id" />
+                <field name="sqft"/>
+                <field name="product_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_fm_property_kanban" model="ir.ui.view">
+        <field name="name">fm.property.kanban</field>
+        <field name="model">fm.property</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" sample="1">
+                <field name="id" />
+                <field name="name"/>
+                <field name="owner_id" />
+
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click o_kanban_record_has_image_fill">
+                            <div class="o_kanban_record_top mb16">
+                                <div class="o_kanban_record_headings mt4">
+                                    <strong class="o_kanban_record_title">
+                                        <span>
+                                            <t t-esc="record.name.value"/>
+                                        </span>
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_fm_property_form" model="ir.ui.view">
+        <field name="name">fm.property.form</field>
+        <field name="model">fm.property</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Property">
+                <sheet string="Property">
+                    <div name="button_box" class="oe_button_box">
+                        <button name="open_related_units" class="oe_stat_button" icon="fa-bars" type="object">
+                             <field string="Units" name="unit_count" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name of the Property" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                           <field name="owner_id" placeholder="Name of the Owner"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+     <record id="view_fm_unit_form" model="ir.ui.view">
+        <field name="name">fm.unit.form</field>
+        <field name="model">fm.unit</field>
+        <field name="priority" eval="8" />
+        <field name="arch" type="xml">
+            <form string="Unit">
+                <sheet string="Unit">
+                     <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Name of the Unit" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="owner_id" placeholder="Unit Owner"/>
+                            <field name="property_id" placeholder="Name of the Property"/>
+
+                        </group>
+                        <group>
+                            <label for="product_id"/>
+                            <div class="o_row">
+                                <field name="product_id" readonly="1"/>
+                                <button invisible="product_id != False" name="create_product" type="object" class="btn-sm btn-link mb4 fa fa-plus" aria-label="Reload" />
+                            </div>
+                            <field name="sqft" placeholder="Squarefeet"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!--    Search Filters..........................-->
+
+
+     <record id="fm_property_view_search" model="ir.ui.view">
+        <field name="name">fm.property.view.search</field>
+        <field name="model">fm.property</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="owner_id" />
+            </search>
+        </field>
+    </record>
+
+     <record id="fm_unit_view_search" model="ir.ui.view">
+        <field name="name">fm.unit.view.search</field>
+        <field name="model">fm.unit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="property_id" />
+                <field name="owner_id" />
+                <field name="sqft" />
+                <field name="product_id" />
+            </search>
+        </field>
+    </record>
+
+
+<!--    Actions...........................-->
+
+    <record id="action_view_fm_property" model="ir.actions.act_window">
+        <field name="name">Property</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fm.property</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Click to create a new Property
+            </p>
+        </field>
+    </record>
+    <record id="action_view_fm_unit" model="ir.actions.act_window">
+        <field name="name">Unit</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">fm.unit</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            Click to create a new Unit
+            </p>
+        </field>
+    </record>
+
+     <record id="action_view_fm_owner" model="ir.actions.act_window">
+        <field name="name">Owners</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+         <field name="view_mode">kanban,list,form</field>
+         <field name="context">{'default_owner_boolean': True, 'default_is_company': True}</field>
+        <field name="domain">[('owner_boolean', '=', True)]</field>
+        <field name="view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+     <record id="action_view_fm_customer" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+         <field name="view_mode">kanban,list,form</field>
+         <field name="context">{'default_customer_boolean': True, 'default_is_company': True}</field>
+        <field name="domain">[('customer_boolean', '=', True)]</field>
+        <field name="view_id" ref="base.res_partner_kanban_view"/>
+    </record>
+
+</odoo>

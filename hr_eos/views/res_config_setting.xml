@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="res_config_settings_view_form_eos" model="ir.ui.view">
+            <field name="name">res.config.settings.eos</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="hr.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@name='employees_setting_container']" position="after">
+                    <block title="Employee EOS Calculation" name="employee_eos_calculation_container">
+                        <div class="content-group" name="hr_eos_calculation">
+                            <div class="d-flex">
+                                <field name="eos_with_wage" class="ml16"/>
+                                <label for="eos_with_wage" class="o_light_label"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="eos_with_allow1" class="ml16"/>
+                                <label for="eos_with_allow1" class="o_light_label"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="eos_with_allow2" class="ml16"/>
+                                <label for="eos_with_allow2" class="o_light_label"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="eos_with_allow3" class="ml16"/>
+                                <label for="eos_with_allow3" class="o_light_label"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="eos_with_allow4" class="ml16"/>
+                                <label for="eos_with_allow4" class="o_light_label"/>
+                            </div>
+                            <div class="d-flex">
+                                <field name="eos_with_allow5" class="ml16"/>
+                                <label for="eos_with_allow5" class="o_light_label"/>
+                            </div>
+                        </div>
+                    </block>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
