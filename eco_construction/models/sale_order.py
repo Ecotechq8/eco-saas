@@ -87,22 +87,14 @@ class SaleOrder(models.Model):
         self.con_project_id = project_obj.create(vals)
 
     def action_confirm(self):
-        for order in self:
-            if order.state not in ('draft', 'sent'):
-                order.state = 'draft'
-
-        # Call the original confirm logic from sale.order
         res = super(SaleOrder, self).action_confirm()
-
-        # Your custom logic to create a project if needed
-        for order in self:
-            if order.create_project and not order.con_project_id:
-                order._prepare_project_vals()
+        if self.create_project and not self.con_project_id:
+            self._prepare_project_vals()
         return res
 
     def _can_be_confirmed(self):
         self.ensure_one()
-        return self.state in {'draft', 'sent', 'approved'}
+        return True
 
 
 class SaleOrderLine(models.Model):
@@ -113,9 +105,7 @@ class SaleOrderLine(models.Model):
         if not invoices:
             return 0.0
         last_invoice = invoices[0]
-        last_qty = last_invoice.invoice_line_ids.filtered(
-            lambda x: x.product_id.id == product_id.id and x.display_type not in (
-            'line_section', 'line_note')).quantity or 0.0
+        last_qty = last_invoice.invoice_line_ids.filtered(lambda x: x.product_id.id == product_id.id  and x.display_type not in ('line_section', 'line_note')).quantity or 0.0
         return last_qty
 
     # def get_total_invoice_quantity(self, product_id):
