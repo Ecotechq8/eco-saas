@@ -94,7 +94,7 @@ class SaleOrder(models.Model):
 
     def _can_be_confirmed(self):
         self.ensure_one()
-        return self.state in {'draft', 'sent', 'approved'}
+        return self.state in {'draft', 'sent', 'approved', 'om_approve', 'sm_approve', 'gm_approve'}
 
 
 class SaleOrderLine(models.Model):
