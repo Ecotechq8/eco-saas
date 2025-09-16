@@ -87,11 +87,11 @@ class SaleOrder(models.Model):
         self.con_project_id = project_obj.create(vals)
 
     def action_confirm(self):
-        self.write({'state': 'sale'})
-        res = super(SaleOrder, self).action_confirm()
-        if self.create_project and not self.con_project_id:
-            self._prepare_project_vals()
-        return res
+        if self._can_be_confirmed():
+            res = super(SaleOrder, self).action_confirm()
+            if self.create_project and not self.con_project_id:
+                self._prepare_project_vals()
+            return res
 
     def _can_be_confirmed(self):
         self.ensure_one()
