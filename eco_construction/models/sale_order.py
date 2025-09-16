@@ -108,7 +108,7 @@ class SaleOrder(models.Model):
         ):
             return _("A line on these orders missing a product, you cannot confirm it.")
 
-        return False
+        return True
 
 
 class SaleOrderLine(models.Model):
