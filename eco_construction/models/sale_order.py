@@ -1,16 +1,10 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-
 import odoo.addons.sale.models.sale as sale_model
-from odoo import _
-
 
 def patched_confirmation_error_message(self):
-    """Allow confirmation from ANY state (skip state validation completely)."""
     self.ensure_one()
-
-    # Only keep the missing product check
     if any(
             not line.display_type
             and not line.is_downpayment
@@ -18,11 +12,10 @@ def patched_confirmation_error_message(self):
             for line in self.order_line
     ):
         return _("A line on these orders is missing a product, you cannot confirm it.")
-
     return False
 
 
-# Apply the monkey patch
+# Apply the patch
 sale_model.SaleOrder._confirmation_error_message = patched_confirmation_error_message
 
 
@@ -130,7 +123,7 @@ class SaleOrderLine(models.Model):
         last_invoice = invoices[0]
         last_qty = last_invoice.invoice_line_ids.filtered(
             lambda x: x.product_id.id == product_id.id and x.display_type not in (
-            'line_section', 'line_note')).quantity or 0.0
+                'line_section', 'line_note')).quantity or 0.0
         return last_qty
 
     # def get_total_invoice_quantity(self, product_id):
