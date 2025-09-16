@@ -33,7 +33,7 @@
                 <attribute name="invisible">state != 'approved'</attribute>
             </xpath>
             <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
-
+                <attribute name="invisible">state != 'approved'</attribute>
             </xpath>
             <!--                        <xpath expr="//field[@name='state']" position="attributes">-->
             <!--                            <attribute name="statusbar_visible">"om_approve,om_reject,sm_approve,sm_reject,gm_approve,gm_reject,draft,sent,sale"</attribute>-->
