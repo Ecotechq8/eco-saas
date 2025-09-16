@@ -1,22 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-import odoo.addons.sale.models.sale as sale_model
-
-def patched_confirmation_error_message(self):
-    self.ensure_one()
-    if any(
-            not line.display_type
-            and not line.is_downpayment
-            and not line.product_id
-            for line in self.order_line
-    ):
-        return _("A line on these orders is missing a product, you cannot confirm it.")
-    return False
-
-
-# Apply the patch
-sale_model.SaleOrder._confirmation_error_message = patched_confirmation_error_message
 
 
 class SaleOrder(models.Model):
@@ -123,7 +107,7 @@ class SaleOrderLine(models.Model):
         last_invoice = invoices[0]
         last_qty = last_invoice.invoice_line_ids.filtered(
             lambda x: x.product_id.id == product_id.id and x.display_type not in (
-                'line_section', 'line_note')).quantity or 0.0
+            'line_section', 'line_note')).quantity or 0.0
         return last_qty
 
     # def get_total_invoice_quantity(self, product_id):
@@ -142,3 +126,25 @@ class SaleOrderLine(models.Model):
 
         })
         return res
+
+    def _confirmation_error_message(self):
+        """Allow confirmation from custom states as well."""
+        self.ensure_one()
+
+        # ✅ Allow these states instead of only draft/sent
+        allowed_states = {
+            'draft', 'sent',
+            'approved', 'om_approve', 'sm_approve', 'gm_approve'
+        }
+
+        # Call original logic to preserve checks (like missing products)
+        msg = super(SaleOrder, self)._confirmation_error_message()
+
+        # If original logic blocks because of state, skip our allowed states
+        if msg == _("Some orders are not in a state requiring confirmation."):
+            if self.state in allowed_states:
+                return False  # no error
+            return msg
+
+        # Otherwise return whatever error came from original
+        return msg
