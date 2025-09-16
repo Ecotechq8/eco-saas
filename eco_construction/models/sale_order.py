@@ -25,7 +25,7 @@ class SaleOrder(models.Model):
     is_need_gm_approve = fields.Boolean(
         string='Need GM Approve',
         required=False)
-    state = fields.Selection(selection_add=[
+    state2 = fields.Selection(selection_add=[
         ('approved', 'Approved'),
         ('om_approve', 'OM Approved'),
         ('om_reject', 'OM Rejected'),
@@ -55,25 +55,25 @@ class SaleOrder(models.Model):
         return res
 
     def action_om_approve(self):
-        self.write({'state': 'om_approve'})
+        self.write({'state2': 'om_approve'})
 
     def action_om_reject(self):
-        self.write({'state': 'om_reject'})
+        self.write({'state2': 'om_reject'})
 
     def action_sm_approve(self):
         if self.is_need_gm_approve:
-            self.write({'state': 'sm_approve'})
+            self.write({'state2': 'sm_approve'})
         else:
-            self.write({'state': 'approved'})
+            self.write({'state2': 'approved'})
 
     def action_sm_reject(self):
-        self.write({'state': 'sm_reject'})
+        self.write({'state2': 'sm_reject'})
 
     def action_gm_approve(self):
-        self.write({'state': 'approved'})
+        self.write({'state2': 'approved'})
 
     def action_gm_reject(self):
-        self.write({'state': 'gm_reject'})
+        self.write({'state2': 'gm_reject'})
 
     def _prepare_project_vals(self):
 
@@ -86,7 +86,7 @@ class SaleOrder(models.Model):
         }
         self.con_project_id = project_obj.create(vals)
 
-    def _action_confirm(self):
+    def action_confirm(self):
         res = super(SaleOrder, self).action_confirm()
         if self.create_project and not self.con_project_id:
             self._prepare_project_vals()
@@ -94,21 +94,7 @@ class SaleOrder(models.Model):
 
     def _can_be_confirmed(self):
         self.ensure_one()
-        return self.state in {'draft', 'sent', 'approved'}
-    def _confirmation_error_message(self):
-        """ Return whether order can be confirmed or not if not then returm error message. """
-        self.ensure_one()
-        if self.state not in {'draft', 'sent','approved'}:
-            return _("Some orders are not in a state requiring confirmation.")
-        if any(
-            not line.display_type
-            and not line.is_downpayment
-            and not line.product_id
-            for line in self.order_line
-        ):
-            return _("A line on these orders missing a product, you cannot confirm it.")
-
-        return False
+        return self.state2 in {'draft', 'sent', 'approved'}
 
 
 class SaleOrderLine(models.Model):
