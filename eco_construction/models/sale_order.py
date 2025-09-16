@@ -96,6 +96,18 @@ class SaleOrder(models.Model):
         self.ensure_one()
         return self.state in {'draft', 'sent', 'approved'}
 
+    def _confirmation_error_message(self):
+        self.ensure_one()
+        if not self._can_be_confirmed():
+            return _("Some orders are not in a state requiring confirmation.")
+        if any(
+                not line.display_type
+                and not line.is_downpayment
+                and not line.product_id
+                for line in self.order_line
+        ):
+            return _("A line on these orders is missing a product, you cannot confirm it.")
+        return False
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
