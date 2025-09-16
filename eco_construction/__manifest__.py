@@ -10,7 +10,7 @@
         This module allows you to manage the Construction projects .
     """,
     "author": "Ahmed Elkhadrawy",
-    "depends": ['base', 'project', 'crm','sale_crm','check_management'],
+    "depends": ['base', 'project', 'crm','sale_crm','check_management','sale'],
     "license": "OPL-1",
     "data": [
         'security/ir.model.access.csv',
