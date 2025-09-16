@@ -54,13 +54,23 @@ class SaleOrder(models.Model):
         })
         return res
 
+    def action_om_approve(self):
+        self.write({'state': 'om_approve'})
 
     def action_om_reject(self):
         self.write({'state': 'om_reject'})
 
+    def action_sm_approve(self):
+        if self.is_need_gm_approve:
+            self.write({'state': 'sm_approve'})
+        else:
+            self.write({'state': 'approved'})
 
     def action_sm_reject(self):
         self.write({'state': 'sm_reject'})
+
+    def action_gm_approve(self):
+        self.write({'state': 'approved'})
 
     def action_gm_reject(self):
         self.write({'state': 'gm_reject'})
@@ -82,28 +92,10 @@ class SaleOrder(models.Model):
             self._prepare_project_vals()
         return res
 
-
-    # Keep the original _can_be_confirmed method as is:
     def _can_be_confirmed(self):
         self.ensure_one()
         return self.state in {'draft', 'sent', 'approved'}
 
-    # But ensure your approval workflow always ends in 'approved' state
-    def action_om_approve(self):
-        # Check if this order needs further approval
-        if self.is_need_gm_approve:
-            self.write({'state': 'om_approve'})
-        else:
-            self.write({'state': 'approved'})  # Go directly to approved if no further approval needed
-
-    def action_sm_approve(self):
-        if self.is_need_gm_approve:
-            self.write({'state': 'sm_approve'})
-        else:
-            self.write({'state': 'approved'})
-
-    def action_gm_approve(self):
-        self.write({'state': 'approved'})
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
@@ -113,9 +105,7 @@ class SaleOrderLine(models.Model):
         if not invoices:
             return 0.0
         last_invoice = invoices[0]
-        last_qty = last_invoice.invoice_line_ids.filtered(
-            lambda x: x.product_id.id == product_id.id and x.display_type not in (
-            'line_section', 'line_note')).quantity or 0.0
+        last_qty = last_invoice.invoice_line_ids.filtered(lambda x: x.product_id.id == product_id.id  and x.display_type not in ('line_section', 'line_note')).quantity or 0.0
         return last_qty
 
     # def get_total_invoice_quantity(self, product_id):
