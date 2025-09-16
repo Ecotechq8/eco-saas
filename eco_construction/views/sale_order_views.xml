@@ -1,41 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
     <record id="view_order_form_inherit" model="ir.ui.view">
         <field name="name">sale.order.form.approval</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+
+            <!-- Add approval_state in header like statusbar -->
             <xpath expr="//field[@name='state']" position="before">
-                <!-- Approval buttons based on approval_state -->
+                <field name="approval_state"
+                       widget="statusbar"
+                       statusbar_visible="waiting_om,waiting_sm,waiting_gm,approved,rejected"
+                       statusbar_colors="{
+                           'waiting_om':'blue',
+                           'waiting_sm':'blue',
+                           'waiting_gm':'blue',
+                           'approved':'green',
+                           'rejected':'red'
+                       }"/>
+            </xpath>
+
+            <!-- Replace button visibility to depend on approval_state -->
+            <xpath expr="//field[@name='state']" position="before">
                 <button string="OM Approve" type="object" name="action_om_approve"
-                        invisible="approval_state != 'draft'" class="oe_highlight"
+                        invisible="approval_state != 'waiting_om'" class="oe_highlight"
                         groups="eco_construction.group_so_operation_manager_approval"/>
                 <button string="OM Reject" type="object" name="action_om_reject"
-                        invisible="approval_state != 'draft'" class="oe_highlight"
+                        invisible="approval_state != 'waiting_om'" class="oe_highlight"
                         groups="eco_construction.group_so_operation_manager_approval"/>
 
                 <button string="SM Approve" type="object" name="action_sm_approve"
-                        invisible="approval_state != 'om_approve'" class="oe_highlight"
+                        invisible="approval_state != 'waiting_sm'" class="oe_highlight"
                         groups="eco_construction.group_so_Sales_manager_approval"/>
                 <button string="SM Reject" type="object" name="action_sm_reject"
-                        invisible="approval_state != 'om_approve'" class="oe_highlight"
+                        invisible="approval_state != 'waiting_sm'" class="oe_highlight"
                         groups="eco_construction.group_so_Sales_manager_approval"/>
 
                 <button string="GM Approve" type="object" name="action_gm_approve"
-                        invisible="not is_need_gm_approve or approval_state != 'sm_approve'" class="oe_highlight"
+                        invisible="not is_need_gm_approve or approval_state != 'waiting_gm'" class="oe_highlight"
                         groups="eco_construction.group_so_general_manager_approval"/>
                 <button string="GM Reject" type="object" name="action_gm_reject"
-                        invisible="not is_need_gm_approve or approval_state != 'sm_approve'" class="oe_highlight"
+                        invisible="not is_need_gm_approve or approval_state != 'waiting_gm'" class="oe_highlight"
                         groups="eco_construction.group_so_general_manager_approval"/>
+
+                <button string="Create Payment" name="%(action_create_so_payment)d" type="action"
+                        class="oe_highlight"/>
             </xpath>
 
-            <!-- Confirmation only visible if fully approved -->
+            <!-- Confirmation and send email should depend on approved -->
+            <xpath expr="//button[@id='send_by_email_primary']" position="attributes">
+                <attribute name="invisible">approval_state != 'approved'</attribute>
+            </xpath>
             <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
                 <attribute name="invisible">approval_state != 'approved'</attribute>
             </xpath>
 
+            <!-- Other fields same as before -->
             <xpath expr="//field[@name='partner_id']" position="after">
-                <field name="approval_state" readonly="1"/>
                 <field name="move_boq" invisible="1"/>
                 <field name="create_project" invisible="not opportunity_id"/>
                 <field name="con_project_name" invisible="not opportunity_id" required="create_project"/>
@@ -46,8 +68,8 @@
             </xpath>
 
             <xpath expr="//field[@name='country_code']" position="after">
-                <field name="adv_percent" readonly="state == 'sale'"/>
-                <field name="retention_percent" readonly="state == 'sale'"/>
+                <field name="adv_percent" readonly="approval_state == 'approved'"/>
+                <field name="retention_percent" readonly="approval_state == 'approved'"/>
             </xpath>
 
             <xpath expr="//page[@name='order_lines']" position="after">
@@ -57,6 +79,8 @@
                            context="{'tree_view_ref': 'eco_construction.request_quota_view_tree'}"/>
                 </page>
             </xpath>
+
         </field>
     </record>
+
 </odoo>
