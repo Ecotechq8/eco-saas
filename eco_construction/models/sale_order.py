@@ -88,6 +88,7 @@ class SaleOrder(models.Model):
 
     def action_confirm(self):
         if self._can_be_confirmed():
+            self.write({'state': 'sale'})
             res = super(SaleOrder, self).action_confirm()
             if self.create_project and not self.con_project_id:
                 self._prepare_project_vals()
