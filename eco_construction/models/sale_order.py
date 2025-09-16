@@ -56,34 +56,24 @@ class SaleOrder(models.Model):
 
     def action_om_approve(self):
         self.write({'state': 'om_approve'})
-        self.write({'state': 'draft'})
-
 
     def action_om_reject(self):
         self.write({'state': 'om_reject'})
-        self.write({'state': 'draft'})
-
 
     def action_sm_approve(self):
         if self.is_need_gm_approve:
             self.write({'state': 'sm_approve'})
-            self.write({'state': 'draft'})
-
         else:
             self.write({'state': 'approved'})
-        self.write({'state': 'draft'})
 
     def action_sm_reject(self):
         self.write({'state': 'sm_reject'})
-        self.write({'state': 'draft'})
 
     def action_gm_approve(self):
         self.write({'state': 'approved'})
-        self.write({'state': 'draft'})
 
     def action_gm_reject(self):
         self.write({'state': 'gm_reject'})
-        self.write({'state': 'draft'})
 
     def _prepare_project_vals(self):
 
@@ -96,16 +86,18 @@ class SaleOrder(models.Model):
         }
         self.con_project_id = project_obj.create(vals)
 
-    # def action_confirm(self):
-    #     res = super(SaleOrder, self).action_confirm()
-    #     if self.create_project and not self.con_project_id:
-    #         self._prepare_project_vals()
-    #     return res
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        if self.create_project and not self.con_project_id:
+            self._prepare_project_vals()
+        return res
 
     def _can_be_confirmed(self):
         self.ensure_one()
         return self.state in {'draft', 'sent', 'approved'}
 
+    def _confirmation_error_message(self):
+        return True
 
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
