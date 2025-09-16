@@ -2,7 +2,31 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
+import odoo.addons.sale.models.sale as sale_model
 
+
+def patched_confirmation_error_message(self):
+    """Allow confirmation from any custom states (skip default restriction)."""
+    self.ensure_one()
+    allowed_states = {'draft', 'sent', 'approved', 'om_approve', 'sm_approve', 'gm_approve'}
+
+    if self.state not in allowed_states:
+        # remove this check if you want to allow *any* state
+        return _("Some orders are not in a state requiring confirmation.")
+
+    if any(
+            not line.display_type
+            and not line.is_downpayment
+            and not line.product_id
+            for line in self.order_line
+    ):
+        return _("A line on these orders is missing a product, you cannot confirm it.")
+
+    return False
+
+
+# 🐒 Monkey patch the method
+sale_model.SaleOrder._confirmation_error_message = patched_confirmation_error_message
 class SaleOrder(models.Model):
     _inherit = "sale.order"
 
@@ -92,25 +116,6 @@ class SaleOrder(models.Model):
             self._prepare_project_vals()
         return res
 
-    def _confirmation_error_message(self):
-        """Allow confirmation from custom states as well."""
-        self.ensure_one()
-        # Add your allowed states
-        allowed_states = {'draft', 'sent', 'approved', 'om_approve', 'sm_approve', 'gm_approve'}
-
-        if self.state not in allowed_states:
-            return _("Some orders are not in a state requiring confirmation.")
-
-        if any(
-                not line.display_type
-                and not line.is_downpayment
-                and not line.product_id
-                for line in self.order_line
-        ):
-            return _("A line on these orders is missing a product, you cannot confirm it.")
-
-        return False
-
     def _can_be_confirmed(self):
         self.ensure_one()
         return self.state in {'draft', 'sent', 'approved'}
@@ -124,9 +129,7 @@ class SaleOrderLine(models.Model):
         if not invoices:
             return 0.0
         last_invoice = invoices[0]
-        last_qty = last_invoice.invoice_line_ids.filtered(
-            lambda x: x.product_id.id == product_id.id and x.display_type not in (
-            'line_section', 'line_note')).quantity or 0.0
+        last_qty = last_invoice.invoice_line_ids.filtered(lambda x: x.product_id.id == product_id.id  and x.display_type not in ('line_section', 'line_note')).quantity or 0.0
         return last_qty
 
     # def get_total_invoice_quantity(self, product_id):
