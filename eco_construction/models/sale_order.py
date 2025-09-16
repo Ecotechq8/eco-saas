@@ -86,11 +86,11 @@ class SaleOrder(models.Model):
         }
         self.con_project_id = project_obj.create(vals)
 
-    # def action_confirm(self):
-    #     res = super(SaleOrder, self).action_confirm()
-    #     if self.create_project and not self.con_project_id:
-    #         self._prepare_project_vals()
-    #     return res
+    def _action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        if self.create_project and not self.con_project_id:
+            self._prepare_project_vals()
+        return res
 
     def _can_be_confirmed(self):
         self.ensure_one()
@@ -108,7 +108,7 @@ class SaleOrder(models.Model):
         ):
             return _("A line on these orders missing a product, you cannot confirm it.")
 
-        return True
+        return False
 
 
 class SaleOrderLine(models.Model):
