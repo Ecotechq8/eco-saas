@@ -26,11 +26,11 @@ $o-form-view-sheet-max-width: 2560px;
 }
 
 /* Primary Button */
-.btn-primary {
-    background-color: #0d6efd !important;
-    border-color: #0d6efd !important;
-    color: #fff !important;
-}
+// .btn-primary {
+//     background-color: #0d6efd !important;
+//     border-color: #0d6efd !important;
+//     color: #fff !important;
+// }
 
 /* Danger Button */
 .btn-danger {
@@ -309,6 +309,8 @@ $o-form-view-sheet-max-width: 2560px;
 //     padding-bottom: 10px !important;
 //     vertical-align: top !important;
 // }
+
+// change the color of the buttons
 .btn.btn-primary,
 .o_list_button_add.btn-primary {
     background-color: #ff5102 !important;
@@ -320,4 +322,9 @@ $o-form-view-sheet-max-width: 2560px;
 .o_list_button_add.btn-primary:hover {
     background-color: #e44a00 !important; /* a darker orange */
     border-color: #e44a00 !important;
+}
+.btn-primary {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
+    color: #fff !important;
 }
