@@ -208,3 +208,16 @@ button.o-dropdown.dropdown-toggle.dropdown > i.fa-clock-o {
 button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
+
+.btn.btn-primary,
+.o_list_button_add.btn-primary {
+    background-color: #ff5102 !important;
+    border-color: #ff5102 !important;
+}
+
+/* Optional: change hover color */
+.btn.btn-primary:hover,
+.o_list_button_add.btn-primary:hover {
+    background-color: #e44a00 !important; /* a darker orange */
+    border-color: #e44a00 !important;
+}
