@@ -353,21 +353,21 @@ $o-form-view-sheet-max-width: 2560px;
 //     color: #fff !important;
 // }
 
-// * 🔸 Force "Activate" and similar buttons to Orange */
-// .btn.btn-primary,
-// .btn.btn-primary.oe_kanban_action {
-//     background-color: #ff5102 !important; /* Orange */
-//     border-color: #ff5102 !important;
-//     color: #fff !important;
-// }
-//
-// /* 🔸 Hover → Darker Orange */
-// .btn.btn-primary:hover,
-// .btn.btn-primary.oe_kanban_action:hover {
-//     background-color: #e44a00 !important; /* Darker Orange */
-//     border-color: #e44a00 !important;
-//     color: #fff !important;
-// }
+* 🔸 Force "Activate" and similar buttons to Orange */
+.btn.btn-primary,
+.btn.btn-primary.oe_kanban_action {
+    background-color: #ff5102 !important; /* Orange */
+    border-color: #ff5102 !important;
+    color: #fff !important;
+}
+
+/* 🔸 Hover → Darker Orange */
+.btn.btn-primary:hover,
+.btn.btn-primary.oe_kanban_action:hover {
+    background-color: #e44a00 !important; /* Darker Orange */
+    border-color: #e44a00 !important;
+    color: #fff !important;
+}
 
 
 // /* 🔸 Force "Activate" and similar buttons to Black */
