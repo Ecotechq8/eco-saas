@@ -353,35 +353,35 @@ $o-form-view-sheet-max-width: 2560px;
 //     color: #fff !important;
 // }
 
-* 🔸 Force "Activate" and similar buttons to Orange */
+// * 🔸 Force "Activate" and similar buttons to Orange */
+// .btn.btn-primary,
+// .btn.btn-primary.oe_kanban_action {
+//     background-color: #ff5102 !important; /* Orange */
+//     border-color: #ff5102 !important;
+//     color: #fff !important;
+// }
+//
+// /* 🔸 Hover → Darker Orange */
+// .btn.btn-primary:hover,
+// .btn.btn-primary.oe_kanban_action:hover {
+//     background-color: #e44a00 !important; /* Darker Orange */
+//     border-color: #e44a00 !important;
+//     color: #fff !important;
+// }
+
+
+/* 🔸 Force "Activate" and similar buttons to Black */
 .btn.btn-primary,
 .btn.btn-primary.oe_kanban_action {
-    background-color: #ff5102 !important; /* Orange */
+    background-color: #ff5102 !important; /* Black */
     border-color: #ff5102 !important;
-    color: #fff !important;
+    color: #fff !important; /* White text */
 }
 
-/* 🔸 Hover → Darker Orange */
+/* 🔸 Hover → Dark Gray */
 .btn.btn-primary:hover,
 .btn.btn-primary.oe_kanban_action:hover {
-    background-color: #e44a00 !important; /* Darker Orange */
+    background-color: #e44a00  !important; /* Dark Gray */
     border-color: #e44a00 !important;
     color: #fff !important;
 }
-
-
-// /* 🔸 Force "Activate" and similar buttons to Black */
-// .btn.btn-primary,
-// .btn.btn-primary.oe_kanban_action {
-//     background-color: #000000 !important; /* Black */
-//     border-color: #000000 !important;
-//     color: #ffffff !important; /* White text */
-// }
-//
-// /* 🔸 Hover → Dark Gray */
-// .btn.btn-primary:hover,
-// .btn.btn-primary.oe_kanban_action:hover {
-//     background-color: #333333 !important; /* Dark Gray */
-//     border-color: #333333 !important;
-//     color: #ffffff !important;
-// }
