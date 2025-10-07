@@ -6,5 +6,9 @@
                   name="Remove Signup Link from Login">
             <xpath expr="//p[@class='mt-2 text-center']" position="replace"/>
         </template>
+
+        <template id="remove_res_config_edition" inherit_id="web.res_config_edition" name="Remove Edition Footer">
+            <xpath expr="//div[@t-name='res_config_edition']" position="replace"/>
+        </template>
     </data>
 </odoo>
