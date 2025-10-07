@@ -24,7 +24,8 @@
         'web',
         'crm',
         'stock',
-        'web_tour'
+        'web_tour',
+        'auth_signup'
 
     ],
     'excludes': [
@@ -34,7 +35,7 @@
         'security/ir.model.access.csv',
         'templates/web_layout.xml',
         'views/res_config_settings.xml',
-        # 'views/remove.xml',
+        'views/remove_odoo_templates.xml',
         # 'wizard/wizard.xml',
     ],
     'assets': {

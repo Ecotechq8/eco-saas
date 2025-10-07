@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="auth_signup_login_remove_signup" inherit_id="auth_signup.login"
+                  name="Remove Signup Link from Login">
+            <xpath expr="//p[@class='mt-2 text-center']" position="replace"/>
+        </template>
+    </data>
+</odoo>
