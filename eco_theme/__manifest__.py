@@ -25,7 +25,8 @@
         'crm',
         'stock',
         'web_tour',
-        'auth_signup'
+        'auth_signup',
+        'base_setup'
 
     ],
     'excludes': [
