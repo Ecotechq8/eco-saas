@@ -18,13 +18,5 @@
             </field>
         </record>
 
-        <record id="remove_db_logo" model="ir.ui.view">
-            <field name="name">remove database manager logo</field>
-            <field name="model">ir.ui.view</field>
-            <field name="inherit_id" ref="web.login_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//img[@src='/web/static/img/logo2.png']" position="replace"/>
-            </field>
-        </record>
     </data>
 </odoo>
