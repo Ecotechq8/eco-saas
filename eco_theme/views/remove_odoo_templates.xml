@@ -18,10 +18,11 @@
             </field>
         </record>
 
-        <templates id="template" xml:space="preserve">
-            <t t-extend="DatabaseSelector">
-                <t t-jquery="img[src='/web/static/img/logo2.png']" t-operation="remove"/>
-            </t>
-        </templates>
+        <template id="database_manager_no_logo" inherit_id="web.database_manager">
+            <xpath expr="//img[@src='/web/static/img/logo2.png']" position="replace">
+                <!-- Removed logo, you can add your own image if needed -->
+                <!-- Example: <img src="/your_module/static/src/img/custom_logo.png" class="img-fluid d-block mx-auto"/> -->
+            </xpath>
+        </template>
     </data>
 </odoo>
