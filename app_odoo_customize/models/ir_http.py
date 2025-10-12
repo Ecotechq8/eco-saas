@@ -16,7 +16,7 @@ class IrHttp(models.AbstractModel):
         result['app_system_name'] = config_parameter.get_param('app_system_name', 'EcoPro')
         # result['app_documentation_url'] = config_parameter.get_param('app_documentation_url')
         # result['app_documentation_dev_url'] = config_parameter.get_param('app_documentation_dev_url')
-        # result['app_support_url'] = config_parameter.get_param('app_support_url')
+        result['app_support_url'] = config_parameter.get_param('app_support_url')
         # result['app_account_title'] = config_parameter.get_param('app_account_title')
         # result['app_account_url'] = config_parameter.get_param('app_account_url')
         # result['app_show_lang'] = config_parameter.get_param('app_show_lang')
