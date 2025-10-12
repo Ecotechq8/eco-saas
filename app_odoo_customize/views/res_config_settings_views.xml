@@ -1,213 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!--        <record id="view_app_theme_config_settings" model="ir.ui.view">-->
-<!--            <field name="name">res.config.settings.view.form.inherit.app_odoo_customize</field>-->
-<!--            <field name="model">res.config.settings</field>-->
-<!--            <field name="priority">20</field>-->
-<!--            <field name="inherit_id" ref="base.res_config_settings_view_form"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--&lt;!&ndash;                <xpath expr="//div[@name='app_odooai_link']" position="before">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <label class="h2 bg-warning text-white" for="app_system_name"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <field name="app_system_name"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                </xpath>&ndash;&gt;-->
-<!--&lt;!&ndash;				<xpath expr="//div[@id='app_slot2']" position="before">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <h2 name="app_security_boost_begin">Security and Boost</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="row mt16 o_settings_container" name="app_security_boost">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_debug_only_admin"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_stop_subscribe"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <h2>Extra Feature</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="row mt16 o_settings_container" name="app_modules">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-lg-6 col-md-6 o_setting_box">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div class="o_setting_left_pane">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="module_app_odoo_doc"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div class="o_setting_right_pane">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <label for="module_app_odoo_doc"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a href="https://apps.odoo.com/apps/modules/17.0/app_odoo_doc"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   title="Get Help Documentation on current odoo operation or topic. Click to get " class="o_doc_link ml8"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   target="_blank"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <div class="">Get Help Documentation on current odoo operation or topic.</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-lg-6 col-md-6 o_setting_box">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div class="o_setting_left_pane">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="module_app_chatgpt"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div class="o_setting_right_pane">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <label for="module_app_chatgpt"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <a href="https://apps.odoo.com/apps/modules/17.0/app_chatgpt" class="o_doc_link ml8"&ndash;&gt;-->
-<!--&lt;!&ndash;                                   target="_blank"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <div class="">Use Ai to make odoo more powerful.</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+        <record id="view_app_theme_config_settings" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.app_odoo_customize</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority">20</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='app_odooai_link']" position="before">
+                    <label class="h2 bg-warning text-white" for="app_system_name"/>
+                    <field name="app_system_name"/>
+                </xpath>
+				<xpath expr="//div[@id='app_slot2']" position="before">
+                    <h2 name="app_security_boost_begin">Security and Boost</h2>
+                    <div class="row mt16 o_settings_container" name="app_security_boost">
+                        <group>
+                            <group>
+                                <field name="app_debug_only_admin"/>
+                            </group>
+                            <group>
+                                <field name="app_stop_subscribe"/>
+                            </group>
+                        </group>
+                    </div>
+                    <h2>Extra Feature</h2>
+                    <div class="row mt16 o_settings_container" name="app_modules">
+                        <div class="col-lg-6 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_app_odoo_doc"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_app_odoo_doc"/>
+                                <a href="https://apps.odoo.com/apps/modules/17.0/app_odoo_doc"
+                                   title="Get Help Documentation on current odoo operation or topic. Click to get " class="o_doc_link ml8"
+                                   target="_blank"/>
+                                <div class="">Get Help Documentation on current odoo operation or topic.</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 o_setting_box">
+                            <div class="o_setting_left_pane">
+                                <field name="module_app_chatgpt"/>
+                            </div>
+                            <div class="o_setting_right_pane">
+                                <label for="module_app_chatgpt"/>
+                                <a href="https://apps.odoo.com/apps/modules/17.0/app_chatgpt" class="o_doc_link ml8"
+                                   target="_blank"/>
+                                <div class="">Use Ai to make odoo more powerful.</div>
+                            </div>
+                        </div>
+                    </div>
 
-<!--&lt;!&ndash;                    <h2>UI Config</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="row mt16 o_settings_container" name="app_ui_config">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <group string="Navigator">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_navbar_pos_pc"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_navbar_pos_mobile"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <group string="User Menu">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_lang"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_debug"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_documentation"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_support"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_account"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_enterprise"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_share"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_poweredby"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="group_show_author_in_apps"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="module_odoo_referral"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <group string="User Menu Content">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_documentation_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_documentation_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_documentation_dev_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_documentation_dev_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_support_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_support_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_account_title"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_account_title"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_account_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_account_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_ribbon_name"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_ribbon_name"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <span>Set to False to hide</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_enterprise_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_enterprise_url" class="oe_inline"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <button string="Click to set" type="object" name="set_module_url" class="ml8 oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+                    <h2>UI Config</h2>
+                    <div class="row mt16 o_settings_container" name="app_ui_config">
+                        <group string="Navigator">
+                            <group>
+                                <field name="app_navbar_pos_pc"/>
+                            </group>
+                            <group>
+                                <field name="app_navbar_pos_mobile"/>
+                            </group>
+                        </group>
+                        <group string="User Menu">
+                            <group>
+                                <field name="app_show_lang"/>
+                                <field name="app_show_debug"/>
+                                <field name="app_show_documentation"/>
+                                <field name="app_show_support"/>
+                                <field name="app_show_account"/>
+                            </group>
+                            <group>
+                                <field name="app_show_enterprise"/>
+                                <field name="app_show_share"/>
+                                <field name="app_show_poweredby"/>
+                                <field name="group_show_author_in_apps"/>
+                                <field name="module_odoo_referral"/>
+                            </group>
+                        </group>
+                        <group string="User Menu Content">
+                            <label for="app_documentation_url"/>
+                            <div>
+                                <field name="app_documentation_url"/>
+                            </div>
+                            <label for="app_documentation_dev_url"/>
+                            <div>
+                                <field name="app_documentation_dev_url"/>
+                            </div>
+                            <label for="app_support_url"/>
+                            <div>
+                                <field name="app_support_url"/>
+                            </div>
+                            <label for="app_account_title"/>
+                            <div>
+                                <field name="app_account_title"/>
+                            </div>
+                            <label for="app_account_url"/>
+                            <div>
+                                <field name="app_account_url"/>
+                            </div>
+                            <label for="app_ribbon_name"/>
+                            <div>
+                                <field name="app_ribbon_name"/>
+                                <div>
+                                    <span>Set to False to hide</span>
+                                </div>
+                            </div>
+                            <label for="app_enterprise_url"/>
+                            <div>
+                                <field name="app_enterprise_url" class="oe_inline"/>
+                                <button string="Click to set" type="object" name="set_module_url" class="ml8 oe_highlight"/>
+                            </div>
+                        </group>
+                    </div>
 
-<!--&lt;!&ndash;                    <h2 name="data-clean" class="o_horizontal_separator">Data Cleaning (Be careful to do that!)</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="mt16 o_settings_container" name="data-clean">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Sale</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Sales Order" type="object" name="remove_sales"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">POS</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All POS Order" type="object" name="remove_pos" confirm="Please confirm to delete the select data?"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Purchase</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Purchase Order and Requisition" type="object" name="remove_purchase"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Expense</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Expense and Sheet" type="object" name="remove_expense"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">MRP</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Manufacturing Order" type="object" name="remove_mrp"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All BOM" type="object" name="remove_mrp_bom"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Inventory</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Move/Picking/Package/Lot" type="object" name="remove_inventory"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">&ndash;&gt;-->
-<!--&lt;!&ndash;                                Accounting&ndash;&gt;-->
-<!--&lt;!&ndash;                            </span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Voucher/Invoice/Bill" type="object" name="remove_account"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Clean and reset Account Chart" type="object" name="remove_account_chart"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Project</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Project/Task/Forecast" type="object" name="remove_project"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Event</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Event" type="object" name="remove_event"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Quality</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Quality" type="object" name="remove_quality"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Quality Setting" type="object" name="remove_quality_setting"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Website And Blog</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Blog" type="object" name="remove_website_blog"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">Base Models</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Product" type="object" name="remove_product"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Product Attribute" type="object" name="remove_product_attribute"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Message" type="object" name="remove_message"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All Workflow" type="object" name="remove_workflow"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            |&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Reset Category And Location Complete Name" type="object" name="reset_cat_loc_name" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-12 col-lg-12 mb4">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <span class="col-3 col-lg-2 text-left">All Business</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <button string="Delete All MRP/Sale/Purchase/Account/MRP/Inventory/Project/Message/Workflow" type="object" name="remove_all_biz"&ndash;&gt;-->
-<!--&lt;!&ndash;                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </xpath>&ndash;&gt;-->
+                    <h2 name="data-clean" class="o_horizontal_separator">Data Cleaning (Be careful to do that!)</h2>
+                    <div class="mt16 o_settings_container" name="data-clean">
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Sale</span>
+                            <button string="Delete All Sales Order" type="object" name="remove_sales"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">POS</span>
+                            <button string="Delete All POS Order" type="object" name="remove_pos" confirm="Please confirm to delete the select data?"
+                                    class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Purchase</span>
+                            <button string="Delete All Purchase Order and Requisition" type="object" name="remove_purchase"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Expense</span>
+                            <button string="Delete All Expense and Sheet" type="object" name="remove_expense"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">MRP</span>
+                            <button string="Delete All Manufacturing Order" type="object" name="remove_mrp"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Delete All BOM" type="object" name="remove_mrp_bom"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Inventory</span>
+                            <button string="Delete All Move/Picking/Package/Lot" type="object" name="remove_inventory"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">
+                                Accounting
+                            </span>
+                            <button string="Delete All Voucher/Invoice/Bill" type="object" name="remove_account"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Clean and reset Account Chart" type="object" name="remove_account_chart"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Project</span>
+                            <button string="Delete All Project/Task/Forecast" type="object" name="remove_project"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Event</span>
+                            <button string="Delete All Event" type="object" name="remove_event"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Quality</span>
+                            <button string="Delete All Quality" type="object" name="remove_quality"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Delete All Quality Setting" type="object" name="remove_quality_setting"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Website And Blog</span>
+                            <button string="Delete All Blog" type="object" name="remove_website_blog"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">Base Models</span>
+                            <button string="Delete All Product" type="object" name="remove_product"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Delete All Product Attribute" type="object" name="remove_product_attribute"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Delete All Message" type="object" name="remove_message"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Delete All Workflow" type="object" name="remove_workflow"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                            |
+                            <button string="Reset Category And Location Complete Name" type="object" name="reset_cat_loc_name" class="oe_highlight"/>
+                        </div>
+                        <div class="col-12 col-lg-12 mb4">
+                            <span class="col-3 col-lg-2 text-left">All Business</span>
+                            <button string="Delete All MRP/Sale/Purchase/Account/MRP/Inventory/Project/Message/Workflow" type="object" name="remove_all_biz"
+                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>
+                        </div>
+                    </div>
+                </xpath>
 <!--				<xpath expr="//block[@name='about_setting_container']//widget[@name='mobile_apps_funnel']" position="attributes">-->
 <!--                    <attribute name="invisible">1</attribute>-->
 <!--                </xpath>-->
-<!--            </field>-->
-<!--        </record>-->
+            </field>
+        </record>
 
         <record id="action_app_theme_config" model="ir.actions.act_window">
             <field name="name">OEM and Boost</field>
