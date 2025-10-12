@@ -42,12 +42,12 @@
                 parent="base.menu_administration"
                 sequence="1"
                 groups="base.group_system"/>
-        <menuitem
-                id="menu_odooai_cloud_config"
-                parent="menu_app_group"
-                sequence="1"
-                action="app_common.action_odooai_cloud_config"
-                groups="base.group_system"/>
+<!--        <menuitem-->
+<!--                id="menu_odooai_cloud_config"-->
+<!--                parent="menu_app_group"-->
+<!--                sequence="1"-->
+<!--                action="app_common.action_odooai_cloud_config"-->
+<!--                groups="base.group_system"/>-->
         <menuitem
                 id="menu_ir_cron"
                 name="Scheduled Actions"
