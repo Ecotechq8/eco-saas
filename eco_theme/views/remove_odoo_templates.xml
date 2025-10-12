@@ -17,34 +17,5 @@
             </field>
         </record>
 
-        <template id="webclient_title_change" inherit_id="web.webclient_bootstrap">
-        <!-- Replace the title variable instead of the <title> tag -->
-        <xpath expr="//t[@t-set='title']" position="replace">
-            <t t-set="title">Ecopro</t>
-        </xpath>
-    </template>
-
-    <!-- 2️⃣ Login page -->
-    <template id="login_title_change" inherit_id="web.login">
-        <xpath expr="//title" position="replace">
-            <title>Ecopro</title>
-        </xpath>
-    </template>
-
-    <!-- 3️⃣ Database manager -->
-    <template id="db_title_change" inherit_id="web.database_manager">
-        <xpath expr="//title" position="replace">
-            <title>Ecopro</title>
-        </xpath>
-    </template>
-
-    <!-- 4️⃣ Global web layout (fallback for all pages) -->
-    <template id="web_layout_title_change" inherit_id="web.layout">
-        <xpath expr="//title" position="replace">
-            <title>Ecopro</title>
-        </xpath>
-    </template>
-
-
     </data>
 </odoo>
