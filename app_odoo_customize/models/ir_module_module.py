@@ -95,7 +95,7 @@ class IrModuleModule(models.Model):
         author = terp.get('author')
         if author:
             author = author.lower()
-        if author and author in ['odooai.cn', 'sunpop.cn', 'odooapp.cn', 'www.odooai.cn', 'www.sunpop.cn', 'www.odooapp.cn']:
+        if author and author in ['odooai.cn', 'sunpop.cn', 'odooapp.cn', 'odoo.ecotech-mena.com', 'www.sunpop.cn', 'www.odooapp.cn']:
             self.module_type = 'odooapp.cn'
         return res
 
