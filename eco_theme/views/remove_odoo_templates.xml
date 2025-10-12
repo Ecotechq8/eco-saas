@@ -17,8 +17,30 @@
             </field>
         </record>
 
-        <template id="custom_webclient_title" inherit_id="web.webclient_bootstrap">
-            <xpath expr="//title" position="replace">
+        <!-- 1️⃣ Change title for the main web client interface -->
+        <template id="webclient_title_change" inherit_id="web.webclient_bootstrap">
+            <xpath expr="//head/title" position="replace">
+                <title>Ecopro</title>
+            </xpath>
+        </template>
+
+        <!-- 2️⃣ Change title for the login page -->
+        <template id="login_title_change" inherit_id="web.login">
+            <xpath expr="//head/title" position="replace">
+                <title>Ecopro</title>
+            </xpath>
+        </template>
+
+        <!-- 3️⃣ Change title for the database selector page -->
+        <template id="db_title_change" inherit_id="web.database_manager">
+            <xpath expr="//head/title" position="replace">
+                <title>Ecopro</title>
+            </xpath>
+        </template>
+
+        <!-- 4️⃣ Change title for global web layout (fallback template) -->
+        <template id="web_layout_title_change" inherit_id="web.layout">
+            <xpath expr="//head/title" position="replace">
                 <title>Ecopro</title>
             </xpath>
         </template>
