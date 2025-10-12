@@ -17,10 +17,5 @@
 
             </field>
         </record>
-        <template id="remove_db_logo" inherit_id="web.database_manager_template">
-            <xpath expr="//img[@src='/web/static/img/logo2.png']" position="replace"/>
-        </template>
-
-
     </data>
 </odoo>

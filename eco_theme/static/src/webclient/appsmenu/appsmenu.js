@@ -73,4 +73,16 @@ unwantedKeys.forEach(key => {
 });
 
 
+    const DatabaseManager = require('web.DatabaseManager');
+
+    DatabaseManager.include({
+        start: function () {
+            this._super.apply(this, arguments);
+            const logo = document.querySelector('.o_database_list img');
+            if (logo) {
+                logo.remove();
+            }
+        },
+    });
+});
 
