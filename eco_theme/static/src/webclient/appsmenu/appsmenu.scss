@@ -214,8 +214,8 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
 
-
-/* Hide the default Odoo logo on the database selector page */
 img[src="/web/static/img/logo2.png"] {
     display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
 }
