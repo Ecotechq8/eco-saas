@@ -51,7 +51,7 @@
 <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
 
 <!--                    <h2>UI Config</h2>-->
-                    <div class="row mt16 o_settings_container" name="app_ui_config">
+<!--                    <div class="row mt16 o_settings_container" name="app_ui_config">-->
 <!--                        <group string="Navigator">-->
 <!--                            <group>-->
 <!--                                <field name="app_navbar_pos_pc"/>-->
@@ -110,7 +110,7 @@
 <!--                                <button string="Click to set" type="object" name="set_module_url" class="ml8 oe_highlight"/>-->
 <!--                            </div>-->
                         </group>
-                    </div>
+<!--                    </div>-->
 
 <!--                    <h2 name="data-clean" class="o_horizontal_separator">Data Cleaning (Be careful to do that!)</h2>-->
 <!--                    <div class="mt16 o_settings_container" name="data-clean">-->
