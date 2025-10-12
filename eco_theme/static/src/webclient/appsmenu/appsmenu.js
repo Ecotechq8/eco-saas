@@ -3,7 +3,10 @@ import { url } from "@web/core/utils/urls";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
 import { Dropdown } from "@web/core/dropdown/dropdown";
-
+import { WebClient } from "@web/webclient/webclient";
+import { patch } from "@web/core/utils/patch";
+import { session } from "@web/session";
+import rpc from 'web.rpc';
 
 export class AppsMenu extends Dropdown {
     setup() {
@@ -73,4 +76,22 @@ unwantedKeys.forEach(key => {
 });
 
 
+patch(WebClient.prototype, "eco_theme.WebClient", {
+    setup() {
+            this._super.apply(this, arguments);
+            var domain = session.user_companies.allowed_companies;
+            this.title.setParts({ zopenerp: "EcoPro" }); // zopenerp is easy to grep
+            var obj = this;
+            var def = rpc.query({
+                fields: ['name','id',],
+                model: 'res.config.settings',
+                method: 'current_company_id',
+                args: [domain, domain],
+            })
+                .then(function (result) {
+                const app_system_name = session.app_system_name || 'EcoPro';
+                obj.title.setParts({ zopenerp: result }); // zopenerp is easy to grep
+            });
+    }
+});
 
