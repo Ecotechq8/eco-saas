@@ -65,7 +65,7 @@ class ResConfigSettings(models.TransientModel):
     module_app_chatgpt = fields.Boolean("Ai Center", help='Use Ai to boost you business.')
     
     # 应用帮助文档
-    app_doc_root_url = fields.Char('Help of topic domain', config_parameter='app_doc_root_url', default='https://odooai.cn')
+    app_doc_root_url = fields.Char('Help of topic domain', config_parameter='app_doc_root_url', default='https://odoo.ecotech-mena.com')
 
     @api.model
     def set_module_url(self, rec=None):
