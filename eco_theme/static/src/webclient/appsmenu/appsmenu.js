@@ -25,13 +25,13 @@ export class AppsMenu extends Dropdown {
             	if (isOpen) {
             		const openMainPalette = (ev) => {
             	    	if (
-            	    		!this.commandServiceOpen && 
+            	    		!this.commandServiceOpen &&
             	    		ev.key.length === 1 &&
             	    		!ev.ctrlKey &&
             	    		!ev.altKey
             	    	) {
 	            	        this.commandService.openMainPalette(
-            	        		{ searchValue: `/${ev.key}` }, 
+            	        		{ searchValue: `/${ev.key}` },
             	        		() => { this.commandPaletteOpen = false; }
             	        	);
 	            	    	this.commandPaletteOpen = true;
@@ -84,5 +84,5 @@ unwantedKeys.forEach(key => {
             }
         },
     });
-});
+
 
