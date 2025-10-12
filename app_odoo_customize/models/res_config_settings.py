@@ -72,7 +72,7 @@ class ResConfigSettings(models.TransientModel):
         if not self._app_check_sys_op():
             raise UserError(_('Not allow.'))
         config_parameter = self.env['ir.config_parameter'].sudo()
-        app_enterprise_url = config_parameter.get_param('app_enterprise_url', 'https://www.odooai.cn')
+        app_enterprise_url = config_parameter.get_param('app_enterprise_url', 'https://odoo.ecotech-mena.com')
         modules = self.env['ir.module.module'].search([('license', 'like', 'OEEL%'), ('website', '!=', False)])
         if modules:
             sql = "UPDATE ir_module_module SET website = '%s' WHERE id IN %s" % (app_enterprise_url, tuple(modules.ids))
