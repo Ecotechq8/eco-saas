@@ -11,7 +11,7 @@
                     <label class="h2 bg-warning text-white" for="app_system_name"/>
                     <field name="app_system_name"/>
                 </xpath>
-<!--				<xpath expr="//div[@id='app_slot2']" position="before">-->
+				<xpath expr="//div[@id='app_slot2']" position="before">
 <!--                    <h2 name="app_security_boost_begin">Security and Boost</h2>-->
 <!--                    <div class="row mt16 o_settings_container" name="app_security_boost">-->
 <!--                        <group>-->
@@ -24,31 +24,31 @@
 <!--                        </group>-->
 <!--                    </div>-->
 <!--                    <h2>Extra Feature</h2>-->
-<!--&lt;!&ndash;                    <div class="row mt16 o_settings_container" name="app_modules">&ndash;&gt;-->
-<!--&lt;!&ndash;                        <div class="col-lg-6 col-md-6 o_setting_box">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div class="o_setting_left_pane">&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="module_app_odoo_doc"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                            <div class="o_setting_right_pane">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <label for="module_app_odoo_doc"/>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <a href="https://apps.odoo.com/apps/modules/17.0/app_odoo_doc"&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                   title="Get Help Documentation on current odoo operation or topic. Click to get " class="o_doc_link ml8"&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                   target="_blank"/>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <div class="">Get Help Documentation on current odoo operation or topic.</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                            </div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                        <div class="col-lg-6 col-md-6 o_setting_box">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                            <div class="o_setting_left_pane">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <field name="module_app_chatgpt"/>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                            </div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                            <div class="o_setting_right_pane">&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <label for="module_app_chatgpt"/>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <a href="https://apps.odoo.com/apps/modules/17.0/app_chatgpt" class="o_doc_link ml8"&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                   target="_blank"/>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                                <div class="">Use Ai to make odoo more powerful.</div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;                            </div>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                    <div class="row mt16 o_settings_container" name="app_modules">-->
+<!--                        <div class="col-lg-6 col-md-6 o_setting_box">-->
+<!--                            <div class="o_setting_left_pane">-->
+<!--                                <field name="module_app_odoo_doc"/>-->
+<!--                            </div>-->
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <label for="module_app_odoo_doc"/>-->
+<!--                                <a href="https://apps.odoo.com/apps/modules/17.0/app_odoo_doc"-->
+<!--                                   title="Get Help Documentation on current odoo operation or topic. Click to get " class="o_doc_link ml8"-->
+<!--                                   target="_blank"/>-->
+<!--                                <div class="">Get Help Documentation on current odoo operation or topic.</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="col-lg-6 col-md-6 o_setting_box">-->
+<!--                            <div class="o_setting_left_pane">-->
+<!--                                <field name="module_app_chatgpt"/>-->
+<!--                            </div>-->
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <label for="module_app_chatgpt"/>-->
+<!--                                <a href="https://apps.odoo.com/apps/modules/17.0/app_chatgpt" class="o_doc_link ml8"-->
+<!--                                   target="_blank"/>-->
+<!--                                <div class="">Use Ai to make odoo more powerful.</div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
 <!--                    <h2>UI Config</h2>-->
 <!--                    <div class="row mt16 o_settings_container" name="app_ui_config">-->
@@ -67,7 +67,7 @@
 <!--                                <field name="app_show_documentation"/>-->
                                 <field name="app_show_support"/>
 <!--                                <field name="app_show_account"/>-->
-<!--                            </group>-->
+                            </group>
 <!--                            <group>-->
 <!--                                <field name="app_show_enterprise"/>-->
 <!--                                <field name="app_show_share"/>-->
@@ -109,7 +109,7 @@
 <!--                                <field name="app_enterprise_url" class="oe_inline"/>-->
 <!--                                <button string="Click to set" type="object" name="set_module_url" class="ml8 oe_highlight"/>-->
 <!--                            </div>-->
-                        </group>
+<!--                        </group>-->
 <!--                    </div>-->
 
 <!--                    <h2 name="data-clean" class="o_horizontal_separator">Data Cleaning (Be careful to do that!)</h2>-->
@@ -202,7 +202,7 @@
 <!--                                    confirm="Please confirm to delete the select data?" class="oe_highlight"/>-->
 <!--                        </div>-->
 <!--                    </div>-->
-<!--                </xpath>-->
+                </xpath>
 <!--				<xpath expr="//block[@name='about_setting_container']//widget[@name='mobile_apps_funnel']" position="attributes">-->
 <!--                    <attribute name="invisible">1</attribute>-->
 <!--                </xpath>-->
