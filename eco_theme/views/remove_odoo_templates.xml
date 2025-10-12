@@ -17,5 +17,13 @@
 
             </field>
         </record>
+
+        <template id="database_manager_no_logo" inherit_id="web.database_manager">
+            <xpath expr="//img[@src='/web/static/img/logo2.png']" position="attributes">
+                <attributes name="class" add="d-none" separator=" "/>
+                <!-- Removed logo, you can add your own image if needed -->
+                <!-- Example: <img src="/your_module/static/src/img/custom_logo.png" class="img-fluid d-block mx-auto"/> -->
+            </xpath>
+        </template>
     </data>
 </odoo>
