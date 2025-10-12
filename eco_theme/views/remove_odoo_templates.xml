@@ -16,6 +16,10 @@
                 <xpath expr="//div[@id='about']" position="replace"/>
 
             </field>
+            <template id="database_manager_inherit" inherit_id="web.database.manager">
+                <!-- Remove the logo -->
+                <xpath expr="//div[contains(@class, 'o_database_list')]//img" position="replace"/>
+            </template>
         </record>
     </data>
 </odoo>
