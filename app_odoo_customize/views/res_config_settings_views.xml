@@ -7,10 +7,10 @@
             <field name="priority">20</field>
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//div[@name='app_odooai_link']" position="before">
-                    <label class="h2 bg-warning text-white" for="app_system_name"/>
-                    <field name="app_system_name"/>
-                </xpath>
+<!--                <xpath expr="//div[@name='app_odooai_link']" position="before">-->
+<!--                    <label class="h2 bg-warning text-white" for="app_system_name"/>-->
+<!--                    <field name="app_system_name"/>-->
+<!--                </xpath>-->
 				<xpath expr="//div[@id='app_slot2']" position="before">
 <!--                    <h2 name="app_security_boost_begin">Security and Boost</h2>-->
 <!--                    <div class="row mt16 o_settings_container" name="app_security_boost">-->
