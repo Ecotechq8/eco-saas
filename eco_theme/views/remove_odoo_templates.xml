@@ -16,7 +16,11 @@
                 <xpath expr="//div[@id='about']" position="replace"/>
 
             </field>
-
+            <template id="custom_webclient_title" inherit_id="web.webclient_bootstrap">
+                <xpath expr="//title" position="replace">
+                    <title>Ecopro</title>
+                </xpath>
+            </template>
         </record>
     </data>
 </odoo>
