@@ -15,11 +15,11 @@
 								<div class="o_setting_right_pane border-start-0 ms-0 ps-0">
 									<div class="content-group">
 										<div class="row mt8">
-											<div name="app_odooai_link">
-												<a href="https://www.odooai.cn" target="_blank">Visit our website for more apps and Support.
-													https://www.odooai.cn
-												</a>
-											</div>
+<!--											<div name="app_odooai_link">-->
+<!--												<a href="https://www.odooai.cn" target="_blank">Visit our website for more apps and Support.-->
+<!--													https://www.odooai.cn-->
+<!--												</a>-->
+<!--											</div>-->
                                         </div>
                                     </div>
                                 </div>
@@ -36,15 +36,15 @@
                             <setting id="odooai_cloud_saas_ok" string="Enable CN SaaS" documentation="https://www.odooapp.cn/faq">
                                 <field name="app_saas_ok"/>
                                 <div class="content-group">
-                                    <div>
-                                        <p class="text-warning">Checked and Save to Enable odoo China cloud service.</p>
-                                        <p class="ml4">
-                                            Easy Get Odoo Chinese App, Theme, and industry solution. You can get the SaaS client from<br/>
-                                            <a href="https://www.odooapp.cn/apps/modules/app_saas" class="o_doc_link ml8"
-                                               target="_blank">https://www.odooapp.cn/apps/modules/app_saas
-                                            </a>
-                                        </p>
-                                    </div>
+<!--                                    <div>-->
+<!--                                        <p class="text-warning">Checked and Save to Enable odoo China cloud service.</p>-->
+<!--                                        <p class="ml4">-->
+<!--                                            Easy Get Odoo Chinese App, Theme, and industry solution. You can get the SaaS client from<br/>-->
+<!--                                            <a href="https://www.odooapp.cn/apps/modules/app_saas" class="o_doc_link ml8"-->
+<!--                                               target="_blank">https://www.odooapp.cn/apps/modules/app_saas-->
+<!--                                            </a>-->
+<!--                                        </p>-->
+<!--                                    </div>-->
                                 </div>
                             </setting>
                         </block>
