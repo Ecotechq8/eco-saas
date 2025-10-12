@@ -23,7 +23,7 @@ class IrHttp(models.AbstractModel):
         # result['app_show_debug'] = config_parameter.get_param('app_show_debug')
         # result['app_show_documentation'] = config_parameter.get_param('app_show_documentation')
         # result['app_show_documentation_dev'] = config_parameter.get_param('app_show_documentation_dev')
-        # result['app_show_support'] = config_parameter.get_param('app_show_support')
+        result['app_show_support'] = config_parameter.get_param('app_show_support')
         # result['app_show_account'] = config_parameter.get_param('app_show_account')
         # result['app_show_poweredby'] = config_parameter.get_param('app_show_poweredby')
         # # 增加多语言

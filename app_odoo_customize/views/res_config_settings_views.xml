@@ -51,7 +51,7 @@
 <!--&lt;!&ndash;                    </div>&ndash;&gt;-->
 
 <!--                    <h2>UI Config</h2>-->
-<!--                    <div class="row mt16 o_settings_container" name="app_ui_config">-->
+                    <div class="row mt16 o_settings_container" name="app_ui_config">
 <!--                        <group string="Navigator">-->
 <!--                            <group>-->
 <!--                                <field name="app_navbar_pos_pc"/>-->
@@ -60,57 +60,57 @@
 <!--                                <field name="app_navbar_pos_mobile"/>-->
 <!--                            </group>-->
 <!--                        </group>-->
-<!--&lt;!&ndash;                        <group string="User Menu">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_lang"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_debug"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_documentation"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_support"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_account"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <group>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_enterprise"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_share"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_show_poweredby"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="group_show_author_in_apps"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="module_odoo_referral"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
-<!--&lt;!&ndash;                        <group string="User Menu Content">&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_documentation_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_documentation_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_documentation_dev_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_documentation_dev_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_support_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_support_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_account_title"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_account_title"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_account_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_account_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_ribbon_name"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_ribbon_name"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                    <span>Set to False to hide</span>&ndash;&gt;-->
-<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <label for="app_enterprise_url"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            <div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <field name="app_enterprise_url" class="oe_inline"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                                <button string="Click to set" type="object" name="set_module_url" class="ml8 oe_highlight"/>&ndash;&gt;-->
-<!--&lt;!&ndash;                            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                        </group>&ndash;&gt;-->
-<!--                    </div>-->
+                        <group string="User Menu">
+<!--                            <group>-->
+<!--                                <field name="app_show_lang"/>-->
+<!--                                <field name="app_show_debug"/>-->
+<!--                                <field name="app_show_documentation"/>-->
+                                <field name="app_show_support"/>
+<!--                                <field name="app_show_account"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="app_show_enterprise"/>-->
+<!--                                <field name="app_show_share"/>-->
+<!--                                <field name="app_show_poweredby"/>-->
+<!--                                <field name="group_show_author_in_apps"/>-->
+<!--                                <field name="module_odoo_referral"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <group string="User Menu Content">-->
+<!--                            <label for="app_documentation_url"/>-->
+<!--                            <div>-->
+<!--                                <field name="app_documentation_url"/>-->
+<!--                            </div>-->
+<!--                            <label for="app_documentation_dev_url"/>-->
+<!--                            <div>-->
+<!--                                <field name="app_documentation_dev_url"/>-->
+<!--                            </div>-->
+                            <label for="app_support_url"/>
+                            <div>
+                                <field name="app_support_url"/>
+                            </div>
+<!--                            <label for="app_account_title"/>-->
+<!--                            <div>-->
+<!--                                <field name="app_account_title"/>-->
+<!--                            </div>-->
+<!--                            <label for="app_account_url"/>-->
+<!--                            <div>-->
+<!--                                <field name="app_account_url"/>-->
+<!--                            </div>-->
+<!--                            <label for="app_ribbon_name"/>-->
+<!--                            <div>-->
+<!--                                <field name="app_ribbon_name"/>-->
+<!--                                <div>-->
+<!--                                    <span>Set to False to hide</span>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                            <label for="app_enterprise_url"/>-->
+<!--                            <div>-->
+<!--                                <field name="app_enterprise_url" class="oe_inline"/>-->
+<!--                                <button string="Click to set" type="object" name="set_module_url" class="ml8 oe_highlight"/>-->
+<!--                            </div>-->
+                        </group>
+                    </div>
 
 <!--                    <h2 name="data-clean" class="o_horizontal_separator">Data Cleaning (Be careful to do that!)</h2>-->
 <!--                    <div class="mt16 o_settings_container" name="data-clean">-->

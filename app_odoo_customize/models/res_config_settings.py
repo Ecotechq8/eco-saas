@@ -23,8 +23,8 @@ class ResConfigSettings(models.TransientModel):
     # # 停用
     # app_show_documentation_dev = fields.Boolean('Show Developer Documentation',
     #                                             help="When enable,User can visit development documentation")
-    # app_show_support = fields.Boolean('Show Support', help="When enable,User can vist your support site",
-    #                                   config_parameter='app_show_support')
+    app_show_support = fields.Boolean('Show Support', help="When enable,User can vist your support site",
+                                      config_parameter='app_show_support')
     # app_show_account = fields.Boolean('Show My Account', help="When enable,User can login to your website",
     #                                   config_parameter='app_show_account')
     # app_show_enterprise = fields.Boolean('Show Enterprise Tag', help="Uncheck to hide the Enterprise tag",
@@ -39,7 +39,7 @@ class ResConfigSettings(models.TransientModel):
     #
     # app_documentation_url = fields.Char('Documentation Url', config_parameter='app_documentation_url')
     # app_documentation_dev_url = fields.Char('Developer Documentation Url', config_parameter='app_documentation_dev_url')
-    # app_support_url = fields.Char('Support Url', config_parameter='app_support_url')
+    app_support_url = fields.Char('Support Url', config_parameter='app_support_url')
     # app_account_title = fields.Char('My Odoo.com Account Title', config_parameter='app_account_title')
     # app_account_url = fields.Char('My Odoo.com Account Url', config_parameter='app_account_url')
     # app_enterprise_url = fields.Char('Customize Module Url(eg. Enterprise)', config_parameter='app_enterprise_url')
