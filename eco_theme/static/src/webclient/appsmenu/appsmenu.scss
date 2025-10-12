@@ -214,7 +214,8 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
 
-img[src="/web/static/img/logo2.png"] {
+body.web_database_selector img.img-fluid.d-block.mx-auto,
+body.o_web_client img[src*="/web/static/img/logo2.png"] {
     display: none !important;
     visibility: hidden !important;
     opacity: 0 !important;
