@@ -210,9 +210,6 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
 }
 
 
-.o_setting_container .settings_tab[data-key="purchase"] .icon {
-  background-image: url("/eco_theme/static/description/purchase.png") !important;
+.o_base_settings_view .o_form_renderer .o_setting_container .settings_tab {
+    display: none !important;
 }
-// .o_setting_container .settings_tab[data-key="crm"] .icon {
-//   background-image: url("/eco_theme/static/description/crm_icon.png") !important;
-// }
