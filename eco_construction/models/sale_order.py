@@ -25,18 +25,28 @@ class SaleOrder(models.Model):
     is_need_gm_approve = fields.Boolean(
         string='Need GM Approve',
         required=False)
-    state = fields.Selection(selection_add=[
-        ('approved', 'Approved'),
-        ('om_approve', 'OM Approved'),
-        ('om_reject', 'OM Rejected'),
-        ('sm_approve', 'SM Approved'),
-        ('sm_reject', 'SM Rejected'),
-        ('gm_approve', 'GM Approved'),
-        ('gm_reject', 'GM Rejected'),
-    ], string='Status', readonly=True, copy=False, index=True,
-        default='draft', help="Status of quotation.")
+    state = fields.Selection(selection=lambda self: self._sale_order_status(), string='Status', readonly=True,
+                             copy=False, index=True,
+                             default='draft', help="Status of quotation.")
+
     adv_percent = fields.Float(string='Advanced Percent %', )
     retention_percent = fields.Float(string='Retention Percent %')
+
+    @api.model
+    def _sale_order_status(self):
+        return [
+            ('draft', "Quotation"),
+            ('sent', "Quotation Sent"),
+            ('sale', "Sales Order"),
+            ('cancel', "Cancelled"),
+            ('approved', 'Approved'),
+            ('om_approve', 'OM Approved'),
+            ('om_reject', 'OM Rejected'),
+            ('sm_approve', 'SM Approved'),
+            ('sm_reject', 'SM Rejected'),
+            ('gm_approve', 'GM Approved'),
+            ('gm_reject', 'GM Rejected'),
+        ]
 
     @api.constrains('adv_percent', 'retention_percent', 'adv_amount', 'retention_amount', 'amount_total')
     def check_total_percent(self):
@@ -98,15 +108,15 @@ class SaleOrder(models.Model):
 
     def _confirmation_error_message(self):
         self.ensure_one()
-        if not self._can_be_confirmed():
-            return _("Some orders are not in a state requiring confirmation.")
+
         if any(
                 not line.display_type
                 and not line.is_downpayment
                 and not line.product_id
                 for line in self.order_line
         ):
-            return _("A line on these orders is missing a product, you cannot confirm it.")
+            return _("A line on these orders missing a product, you cannot confirm it.")
+
         return False
 
 class SaleOrderLine(models.Model):
@@ -117,7 +127,9 @@ class SaleOrderLine(models.Model):
         if not invoices:
             return 0.0
         last_invoice = invoices[0]
-        last_qty = last_invoice.invoice_line_ids.filtered(lambda x: x.product_id.id == product_id.id  and x.display_type not in ('line_section', 'line_note')).quantity or 0.0
+        last_qty = last_invoice.invoice_line_ids.filtered(
+            lambda x: x.product_id.id == product_id.id and x.display_type not in (
+                'line_section', 'line_note')).quantity or 0.0
         return last_qty
 
     # def get_total_invoice_quantity(self, product_id):
