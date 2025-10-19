@@ -123,12 +123,3 @@ class ResConfigSettings(models.TransientModel):
         if self._detect_theme_color_change():
             self._replace_theme_color_values()
         return res
-
-
-class ResUsers(models.Model):
-    _inherit = 'res.users'
-
-    notification_type = fields.Selection(selection_add=[], selection=[
-        ('email', 'Handle by Emails'),
-        ('inbox', 'Handle in System'),
-    ], string='Notification')
