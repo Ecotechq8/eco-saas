@@ -6,6 +6,7 @@
                   name="Remove Signup Link from Login">
             <xpath expr="//p[@class='mt-2 text-center']" position="replace"/>
         </template>
+
         <record id="view_res_config_settings_hide_about" model="ir.ui.view">
             <field name="name">res.config.settings.hide.about.section</field>
             <field name="model">res.config.settings</field>
@@ -17,26 +18,17 @@
             </field>
         </record>
 
-
-        <record id="translation_handle_in_odoo" model="ir.translation">
-            <field name="src">Handle in Odoo</field>
-            <field name="value">Handle in System</field>
-            <field name="name">res.users,notification_type</field>
-            <field name="lang">en_US</field>
-            <field name="type">selection</field>
+        <record id="view_users_form_inherit_notification" model="ir.ui.view">
+            <field name="name">res.users.form.notification.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='notification_type']" position="replace">
+                    <field name="notification_type" widget="radio"
+                           selection="[('email', 'Handle by Emails'), ('inbox', 'Handle in System')]"/>
+                </xpath>
+            </field>
         </record>
-
-<!--        <record id="view_users_form_inherit_notification" model="ir.ui.view">-->
-<!--            <field name="name">res.users.form.notification.inherit</field>-->
-<!--            <field name="model">res.users</field>-->
-<!--            <field name="inherit_id" ref="base.view_users_form"/>-->
-<!--            <field name="arch" type="xml">-->
-<!--                <xpath expr="//field[@name='notification_type']" position="replace">-->
-<!--                    <field name="notification_type" widget="radio"-->
-<!--                           selection="[('email', 'Handle by Emails'), ('inbox', 'Handle in System')]"/>-->
-<!--                </xpath>-->
-<!--            </field>-->
-<!--        </record>-->
 
     </data>
 </odoo>
