@@ -214,25 +214,24 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
 
-./* ✅ Hide only truly empty app boxes */
-.mk_app_menu .o_app:empty,
-.mk_app_menu .o_app:not(:has(a)) {
+./* ✅ Hide app boxes with no content */
+.mk_app_menu .o_app:empty {
     display: none !important;
 }
 
-/* ✅ Keep visible app boxes intact */
-.mk_app_menu .o_app:has(a) {
+/* ✅ Hide app boxes where the anchor exists but has no visible text or icon */
+.mk_app_menu .o_app a:empty {
+    display: none !important;
+}
+
+/* ✅ Ensure visible app boxes appear correctly */
+.mk_app_menu .o_app a {
     display: inline-block !important;
     visibility: visible !important;
     opacity: 1 !important;
 }
 
-/* ✅ Hide cases where the <a> tag exists but has no content (no icon or text) */
-.mk_app_menu .o_app a:empty {
-    display: none !important;
-}
-
-/* ✅ Ensure icons and labels inside app boxes display properly */
+/* ✅ Ensure icons and labels inside app boxes show */
 .mk_app_menu .o_app a .o_app_icon,
 .mk_app_menu .o_app a span {
     display: inline-block !important;
