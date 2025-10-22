@@ -214,30 +214,27 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
 
-.alert.alert-primary.text-center {
+./* ✅ Hide only truly empty app boxes */
+.mk_app_menu .o_app:empty,
+.mk_app_menu .o_app:not(:has(a)) {
     display: none !important;
 }
 
-
-/* 🔹 Hide blank/empty boxes in the Apps menu safely */
-.mk_app_menu .o_app {
-    display: inline-flex !important;
-    justify-content: center;
-    align-items: center;
+/* ✅ Keep visible app boxes intact */
+.mk_app_menu .o_app:has(a) {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-/* Hide apps that have no icon and no name (true blanks) */
-.mk_app_menu .o_app:not(:has(.mk_app_icon)):not(:has(.mk_app_name)) {
+/* ✅ Hide cases where the <a> tag exists but has no content (no icon or text) */
+.mk_app_menu .o_app a:empty {
     display: none !important;
 }
 
-/* Optional: hide apps with invisible or empty anchors */
-.mk_app_menu .o_app:has(> a:empty),
-.mk_app_menu .o_app:not(:has(> a)) {
-    display: none !important;
-}
-
-/* Ensure valid apps are visible */
-.mk_app_menu .o_app:has(.mk_app_icon, .mk_app_name) {
-    display: inline-flex !important;
+/* ✅ Ensure icons and labels inside app boxes display properly */
+.mk_app_menu .o_app a .o_app_icon,
+.mk_app_menu .o_app a span {
+    display: inline-block !important;
+    visibility: visible !important;
 }
