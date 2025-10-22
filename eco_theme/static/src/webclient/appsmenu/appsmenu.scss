@@ -217,3 +217,21 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
 .alert.alert-primary.text-center {
     display: none !important;
 }
+
+
+/* 🔹 Hide empty app boxes in the Apps menu */
+.mk_app_menu .o_app:empty,
+.mk_app_menu .o_app:has(:not(a)) {
+    display: none !important;
+}
+
+/* 🔹 Also handle cases where the element has no visible children */
+.mk_app_menu .o_app:has(a:empty) {
+    display: none !important;
+}
+
+/* 🔹 Remove empty boxes from list or kanban views (if exist) */
+.o_list_view tbody tr:empty,
+.o_kanban_view .o_kanban_record:empty {
+    display: none !important;
+}
