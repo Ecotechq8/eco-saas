@@ -219,25 +219,25 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
 }
 
 
-/* ✅ Only hide truly empty app placeholders */
+/* 🔹 Hide blank/empty boxes in the Apps menu safely */
 .mk_app_menu .o_app {
     display: inline-flex !important;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Hide completely empty app elements (no <a> inside, no icon, no name) */
+/* Hide apps that have no icon and no name (true blanks) */
+.mk_app_menu .o_app:not(:has(.mk_app_icon)):not(:has(.mk_app_name)) {
+    display: none !important;
+}
+
+/* Optional: hide apps with invisible or empty anchors */
 .mk_app_menu .o_app:has(> a:empty),
 .mk_app_menu .o_app:not(:has(> a)) {
     display: none !important;
 }
 
-/* Keep visible apps showing normally */
-.mk_app_menu .o_app > a {
-    display: flex !important;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Extra safety: don’t affect actual app cards */
-.mk_app_menu .o_app > a .mk_app_icon {
-    display: block !important;
+/* Ensure valid apps are visible */
+.mk_app_menu .o_app:has(.mk_app_icon, .mk_app_name) {
+    display: inline-flex !important;
 }
