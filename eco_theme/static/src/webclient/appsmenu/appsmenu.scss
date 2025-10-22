@@ -219,21 +219,4 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
 
-/* ✅ Hide app boxes where the anchor exists but has no visible text or icon */
-.mk_app_menu .o_app a:empty {
-    display: none !important;
-}
 
-/* ✅ Ensure visible app boxes appear correctly */
-.mk_app_menu .o_app a {
-    display: inline-block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-}
-
-/* ✅ Ensure icons and labels inside app boxes show */
-.mk_app_menu .o_app a .o_app_icon,
-.mk_app_menu .o_app a span {
-    display: inline-block !important;
-    visibility: visible !important;
-}
