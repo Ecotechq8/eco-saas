@@ -219,19 +219,25 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
 }
 
 
-/* 🔹 Hide empty app boxes in the Apps menu */
-.mk_app_menu .o_app:empty,
-.mk_app_menu .o_app:has(:not(a)) {
+/* ✅ Only hide truly empty app placeholders */
+.mk_app_menu .o_app {
+    display: inline-flex !important;
+}
+
+/* Hide completely empty app elements (no <a> inside, no icon, no name) */
+.mk_app_menu .o_app:has(> a:empty),
+.mk_app_menu .o_app:not(:has(> a)) {
     display: none !important;
 }
 
-/* 🔹 Also handle cases where the element has no visible children */
-.mk_app_menu .o_app:has(a:empty) {
-    display: none !important;
+/* Keep visible apps showing normally */
+.mk_app_menu .o_app > a {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* 🔹 Remove empty boxes from list or kanban views (if exist) */
-.o_list_view tbody tr:empty,
-.o_kanban_view .o_kanban_record:empty {
-    display: none !important;
+/* Extra safety: don’t affect actual app cards */
+.mk_app_menu .o_app > a .mk_app_icon {
+    display: block !important;
 }
