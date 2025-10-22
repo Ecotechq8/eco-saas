@@ -214,23 +214,26 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
     display: none !important;
 }
 
-.alert.alert-primary.text-center {
-    display: none !important;
-}
-/* 🔹 Hide empty app boxes in the Apps menu */
-.mk_app_menu .o_app:empty,
-.mk_app_menu .o_app:has(:not(a)) {
+./* ✅ Hide app boxes with no content */
+.mk_app_menu .o_app:empty {
     display: none !important;
 }
 
-/* 🔹 Also handle cases where the element has no visible children */
-.mk_app_menu .o_app:has(a:empty) {
+/* ✅ Hide app boxes where the anchor exists but has no visible text or icon */
+.mk_app_menu .o_app a:empty {
     display: none !important;
 }
 
-/* 🔹 Remove empty boxes from list or kanban views (if exist) */
-.o_list_view tbody tr:empty,
-.o_kanban_view .o_kanban_record:empty {
-    display: none !important;
+/* ✅ Ensure visible app boxes appear correctly */
+.mk_app_menu .o_app a {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
+/* ✅ Ensure icons and labels inside app boxes show */
+.mk_app_menu .o_app a .o_app_icon,
+.mk_app_menu .o_app a span {
+    display: inline-block !important;
+    visibility: visible !important;
+}
