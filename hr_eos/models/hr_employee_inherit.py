@@ -377,6 +377,8 @@ class Contract(models.Model):
     rule_id = fields.Many2one('hr.config.rules', string="Indemnity Rule Name")
     eos_amount = fields.Float(compute='get_eos_amount')
     pin = fields.Char(related='employee_id.pin', string='Employee PIN', store=True, readonly=True)
+    e_insurance_number = fields.Char(string='Employee Insurance Number')
+
 
     def get_eos_amount(self):
         eos_amount = 0.0
