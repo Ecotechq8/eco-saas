@@ -154,24 +154,50 @@ class HrEmployeeInherit(models.Model):
 
     def get_leave_balance(self):
         for line in self:
+            # defaults
             line.leave_balance = 0.0
-            salary_per_day = line.contract_id.total_amount / 26
-            allocations = self.env['hr.leave.allocation'].search([('employee_ids', 'in', line.id),
-                                                                  ('state', '=', 'validate'),
-                                                                  ('holiday_status_id.annual_leave', '=', True)])
-            total_number_of_days = sum(allocations.mapped('number_of_days_display'))
+            line.total_leave_provision = 0.0
+            line.remaining_leave_provision = 0.0
+
+            # make sure we have a contract and a sensible total_amount
+            if not line.contract_id:
+                continue
+            salary_per_day = 0.0
+            try:
+                salary_per_day = (line.contract_id.total_amount or 0.0) / 26.0
+            except Exception:
+                salary_per_day = 0.0
+
+            # allocations: use employee_id (single M2O) not employee_ids
+            allocations = self.env['hr.leave.allocation'].search([
+                ('employee_id', '=', line.id),
+                ('state', '=', 'validate'),
+                ('holiday_status_id.annual_leave', '=', True),
+            ])
+
+            # use the display field if available, fallback to number_of_days
+            total_number_of_days = sum(allocations.mapped('number_of_days_display')) if allocations else 0.0
+            # if number_of_days_display not present or zero, fallback
+            if not total_number_of_days:
+                total_number_of_days = sum(allocations.mapped('number_of_days'))
+
             line.total_leave_provision = total_number_of_days
-            if allocations:
-                taken_leaves = self.env['hr.leave'].search([('employee_id', '=', line.id),
-                                                            ('state', '=', 'validate'),
-                                                            ('holiday_status_id.annual_leave', '=', True)])
-                if taken_leaves:
-                    line.total_leave_provision -= sum(taken_leaves.mapped('number_of_days'))
-                    line.remaining_leave_provision = total_number_of_days - sum(taken_leaves.mapped('number_of_days'))
-                    line.leave_balance = (total_number_of_days - sum(
-                        taken_leaves.mapped('number_of_days'))) * salary_per_day
-                else:
-                    line.leave_balance = total_number_of_days * salary_per_day
+
+            # taken leaves
+            taken_leaves = self.env['hr.leave'].search([
+                ('employee_id', '=', line.id),
+                ('state', '=', 'validate'),
+                ('holiday_status_id.annual_leave', '=', True),
+            ])
+
+            taken_days = sum(taken_leaves.mapped('number_of_days')) if taken_leaves else 0.0
+
+            # compute remaining and monetary balance
+            line.remaining_leave_provision = total_number_of_days - taken_days
+            if line.remaining_leave_provision < 0:
+                line.remaining_leave_provision = 0.0
+
+            line.leave_balance = (total_number_of_days - taken_days) * salary_per_day if salary_per_day else 0.0
 
     @api.model
     def get_employee_annual_leave(self):
