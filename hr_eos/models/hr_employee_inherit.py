@@ -31,8 +31,6 @@ class HrEmployeeInherit(models.Model):
     related_leave_balance = fields.Float(related='leave_balance', string='Leave Provision', digits=(12, 3))
     total_leave_provision = fields.Float(string='Net Leave Days', digits=(12, 3))
     remaining_leave_provision = fields.Float(string='Remaining Leave Provision', digits=(12, 3))
-    pin = fields.Char(related='employee_id.pin', string='Employee PIN', store=True, readonly=True)
-
 
     def get_resignation_amount(self):
         for item in self:
@@ -378,6 +376,7 @@ class Contract(models.Model):
 
     rule_id = fields.Many2one('hr.config.rules', string="Indemnity Rule Name")
     eos_amount = fields.Float(compute='get_eos_amount')
+    pin = fields.Char(related='employee_id.pin', string='Employee PIN', store=True, readonly=True)
 
     def get_eos_amount(self):
         eos_amount = 0.0
