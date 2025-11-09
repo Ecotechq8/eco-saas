@@ -9,6 +9,7 @@ class HrContract(models.Model):
     _description = 'Employee Contract'
 
     att_policy_id = fields.Many2one('hr.attendance.policy', string='Attendance Policy')
+    pin = fields.Char(related='employee_id.pin', string='Employee PIN', store=True, readonly=True)
 
     def _get_work_hours(self, date_from, date_to, domain=None):
         date_from = datetime.combine(date_from, datetime.min.time())
