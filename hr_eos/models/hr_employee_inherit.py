@@ -31,6 +31,8 @@ class HrEmployeeInherit(models.Model):
     related_leave_balance = fields.Float(related='leave_balance', string='Leave Provision', digits=(12, 3))
     total_leave_provision = fields.Float(string='Net Leave Days', digits=(12, 3))
     remaining_leave_provision = fields.Float(string='Remaining Leave Provision', digits=(12, 3))
+    pin = fields.Char(related='employee_id.pin', string='Employee PIN', store=True, readonly=True)
+
 
     def get_resignation_amount(self):
         for item in self:
@@ -159,7 +161,6 @@ class HrEmployeeInherit(models.Model):
             line.total_leave_provision = 0.0
             line.remaining_leave_provision = 0.0
 
-            # make sure we have a contract and a sensible total_amount
             if not line.contract_id:
                 continue
             salary_per_day = 0.0
@@ -168,22 +169,18 @@ class HrEmployeeInherit(models.Model):
             except Exception:
                 salary_per_day = 0.0
 
-            # allocations: use employee_id (single M2O) not employee_ids
             allocations = self.env['hr.leave.allocation'].search([
                 ('employee_id', '=', line.id),
                 ('state', '=', 'validate'),
                 ('holiday_status_id.annual_leave', '=', True),
             ])
 
-            # use the display field if available, fallback to number_of_days
             total_number_of_days = sum(allocations.mapped('number_of_days_display')) if allocations else 0.0
-            # if number_of_days_display not present or zero, fallback
             if not total_number_of_days:
                 total_number_of_days = sum(allocations.mapped('number_of_days'))
 
             line.total_leave_provision = total_number_of_days
 
-            # taken leaves
             taken_leaves = self.env['hr.leave'].search([
                 ('employee_id', '=', line.id),
                 ('state', '=', 'validate'),
