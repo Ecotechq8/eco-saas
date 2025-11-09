@@ -6,10 +6,9 @@
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='employee_id']" position="after">
-<!--                    <field name="contract_start_training"/>-->
-<!--                    <field name="contract_end_training"/>-->
-<!--                    <field name="payment_type"/>-->
-                    <field name="pin"/>
+                    <field name="contract_start_training"/>
+                    <field name="contract_end_training"/>
+                    <field name="payment_type"/>
                 </xpath>
 
                 <xpath expr="//div[@name='wage']" position="after">
@@ -79,7 +78,6 @@
                 <xpath expr="//group[@name='salary']" position="after">
                     <group string="Social Insurance">
                         <field name="has_social_insurance"/>
-                        <field name="e_insurance_number"/>
                         <field name="employee_social_insurance" invisible="not has_social_insurance"/>
                         <field name="company_social_insurance" invisible="not has_social_insurance"/>
                         <field name="company_employee_social_insurance" invisible="not has_social_insurance"/>

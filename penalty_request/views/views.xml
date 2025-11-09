@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="penalty_request_form" model="ir.ui.view">
+            <field name="name">penalty.request.form</field>
+            <field name="model">penalty.request</field>
+            <field name="arch" type="xml">
+                <form string="Penalty Request">
+                    <header>
+                        <button name="confirm_button" string="Confirm" class="oe_highlight" invisible="state != 'draft'"
+                                type="object"/>
+                        <button name="reject_button" string="Reject" class="oe_highlight"
+                                invisible="state not in ('draft', 'confirmed')" type="object"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Request Name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" readonly="state=='approved'"/>
+                                <field name="contract_id" invisible="1" readonly="state=='approved'"/>
+                                <field name="request_date" readonly="state=='approved'"/>
+                            </group>
+                            <group>
+                                <field name="penalty_type" readonly="state=='approved'"/>
+                                <field name="penalty_amount_amount" readonly="state=='approved'"
+                                       invisible="penalty_type != 'amount'" groups="hr.group_hr_user"/>
+                                <field name="penalty_amount_days" readonly="state=='approved'"
+                                       invisible="penalty_type != 'days'"/>
+                                <field name="day_value" readonly="1" invisible="penalty_type != 'days'"/>
+
+                                <field name="penalty_amount_hours" readonly="state=='approved'"
+                                       invisible="penalty_type != 'hours'" widget="float_time"/>
+                                <field name="hour_value" readonly="1" invisible="penalty_type != 'hours'"/>
+                                <field name="num_lines" invisible="penalty_type != 'amount'"/>
+                                <field name="reason" readonly="state=='approved'"/>
+                            </group>
+                            <group>
+                            </group>
+                            <group>
+                                <button name="generate_payment_date" type="object" invisible="state=='approved'"
+                                        string="Generate Penalty Lines" groups="base.group_system"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Employee Penalty">
+                                <field name="penalty_ids">
+                                    <list editable="bottom">
+                                        <field name="employee_id" readonly="1"/>
+                                        <field name="date" readonly="1"/>
+                                        <field name="days" readonly="1"/>
+                                        <field name="hrs" widget="float_time" readonly="1"/>
+                                        <field name="amount" readonly="1"/>
+                                        <field name="name" readonly="1"/>
+                                        <field name="paid" readonly="1"/>
+                                        <field name="create_date" widget="date" invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="penalty_request_tree" model="ir.ui.view">
+            <field name="name">penalty.request.list</field>
+            <field name="model">penalty.request</field>
+            <field name="arch" type="xml">
+                <list string="Penalty Request">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="request_date"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="penalty_request_action" model="ir.actions.act_window">
+            <field name="name">Penalty Request</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">penalty.request</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Create your First Penalty Request.
+                </p>
+            </field>
+        </record>
+
+        <!-- This Menu Item must have a parent and an action -->
+        <menuitem id="penalty_request_menu" name="Penalty Request" parent="hr.menu_hr_employee_payroll"
+                  action="penalty_request_action" sequence="7"/>
+
+    </data>
+</odoo>

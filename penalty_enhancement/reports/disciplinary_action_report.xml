@@ -1,0 +1,300 @@
+<odoo>
+    <data>
+        <template id="template_disciplinary_document">
+            <t t-call="web.basic_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.env.lang})"/>
+<!--                <div class="header">-->
+<!--                    <center>-->
+<!--                        <img src="/penalty_enhancement/static/src/description/header.png"-->
+<!--                             style="width:100%"/>-->
+<!--                    </center>-->
+<!--                </div>-->
+                <div class="page" dir="rtl">
+                    <table style="width:100%;border: 1px solid white;">
+                        <tr>
+                            <td style="border: 1px solid white;" colspan="6">
+                                <center>
+                                    <strong>
+                                        طلب توقيع جزاء
+                                        <br/>
+                                        DISCIPLINARY ACTION FORM
+                                    </strong>
+                                </center>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" colspan="6" class="text-right">
+                                <strong>
+                                    إستعمال مديرالقسم / اﻹدارة فقط
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" colspan="6" class="text-left" dir="ltr">
+                                <strong>
+                                    Date:
+                                </strong>
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%d-%m-%Y')"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-center">
+                                اسم الموظف:
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <span t-field="o.employee_id.name"/>
+                            </td>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-left" dir="ltr">
+                                Employee Name:
+                            </td>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-center">
+                                رقم الموظف:
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <span t-field="o.employee_id.pin"/>
+                            </td>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-left" dir="ltr">
+                                Employee No.:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-center">
+                                الوظيفة:
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <span t-field="o.employee_id.job_id.name"/>
+                            </td>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-left" dir="ltr">
+                                Position:
+                            </td>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-center">
+                                تاريخ التعيين:
+                            </td>
+                            <td class="text-center">
+                                <span t-field="o.employee_id.contract_id.date_start"/>
+                            </td>
+                            <td style="border: 1px solid white;font-weight:bold;" class="text-left" dir="ltr">
+                                Hire Date:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom: 1px solid white;font-weight:bold;" class="text-center">
+                                القسم / اﻹدارة:
+                            </td>
+                            <td style="border-bottom: 1px solid white;" class="text-center">
+                                <span t-field="o.employee_id.department_id.name"/>
+                            </td>
+                            <td style="border-bottom: 1px solid white;font-weight:bold;" class="text-left" dir="ltr">
+                                Dept. / Unit:
+                            </td>
+                            <td class="text-center" colspan="3"/>
+                        </tr>
+                        <tr>
+                            <td style="border-bottom: 1px solid white;" class="text-right">
+                                <strong>نوع المخالفة</strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                قصور فى اﻷداء
+                                <br/>
+                                Non Compliance
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                قصور فى السلوك
+                                <br/>
+                                Misconduct
+                            </td>
+                            <td style="border: 1px solid white;" class="text-left" dir="ltr">
+                                <strong>Performed act of:</strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <strong>تاريخ المخالفة</strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-left">
+                                <span t-field="o.request_date"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-right">
+                                <strong>وصـف المخالفة</strong>
+                            </td>
+                            <td style="border: 1px solid white;height:60px;" colspan="5">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-right" colspan="2">
+                                <strong>
+                                    هل تم التحذير شفاهة مسبقا
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                نـعـم
+                                <br/>
+                                YES
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                لا
+                                <br/>
+                                NO
+                            </td>
+                            <td style="border: 1px solid white;" class="text-left" colspan="2" dir="ltr">
+                                <strong>
+                                    Was a verbal warning given earlier?
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid white;height:30px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-right" colspan="3">
+                                <strong>
+                                    الجزاء المقترح
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-left" dir="ltr" colspan="3">
+                                <strong>
+                                    Was a verbal warning given earlier?
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="2">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                إنذار نهائى
+                                <br/>
+                                Final Warning
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                ثـانى إنذار كتابى
+                                <br/>
+                                2nd Written Warning
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center" colspan="2">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                أول إنذار كتابى
+                                <br/>
+                                1st Written Warning
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid white;height:7px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="2">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                إنهاء خدمات
+                                <br/>
+                                Termination
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                يوم
+                                &#160;&#160;&#160;&#160;
+                                قيمة
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center" colspan="2">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                خصم من الراتب
+                                <br/>
+                                Salary Deduction
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid white;height:30px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-right" colspan="3">
+                                <strong>
+                                    إجراء إضافى أخر
+                                </strong>
+                            </td>
+                            <td style="border: 1px solid white;" class="text-left" colspan="3" dir="ltr">
+                                <strong>
+                                    Additional Action Recommended:
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="2">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                يرجى التحقيق
+                                <br/>
+                                Please Investigate
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                وقف عن العمل
+                                <br/>
+                                Suspension
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                وقف الراتب
+                                <br/>
+                                Hold Salary
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center">
+                                <img t-att-src="'/penalty_enhancement/static/src/description/circle.png'"
+                                     style="max-height: 21px;"/>
+                                وقف العمولة
+                                <br/>
+                                Hold Commission
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="border: 1px solid white;height:30px;"/>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid white;" class="text-center" colspan="3">
+                                HR Admin
+                                <br/>
+                                <br/>
+                                __________________________________________
+                            </td>
+                            <td style="border: 1px solid white;" class="text-center" colspan="3">
+                                HR Manager
+                                <br/>
+                                <br/>
+                                __________________________________________
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_disciplinary_request">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="penalty_enhancement.template_disciplinary_document" t-lang="o.env.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="action_disciplinary_report" model="ir.actions.report">
+            <field name="name">طلب توقيع جزاء</field>
+            <field name="model">penalty.request</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">penalty_enhancement.report_disciplinary_request</field>
+            <field name="report_file">penalty_enhancement.report_disciplinary_request</field>
+            <field name="binding_model_id" ref="penalty_request.model_penalty_request"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+</odoo>

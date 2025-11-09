@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_category_form2" model="ir.ui.view">
+        <field name="name">company.document.type.form</field>
+        <field name="model">company.document.type</field>
+        <field name="arch" type="xml">
+            <form string="Company Tags">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="notification_type"/>
+                        <field name="before_days"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model='ir.ui.view' id='company_document_tree_view'>
+        <field name="name">company.document.type.tree</field>
+        <field name="model">company.document.type</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="notification_type"/>
+                <field name="before_days"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="hr_company_document_type_action" model="ir.actions.act_window">
+        <field name="name">Company Document Types</field>
+        <field name="res_model">company.document.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="document_types_menuitem" name="Company Document Types"
+              parent="hr.menu_human_resources_configuration"
+              sequence="7" action="company_documents_expiry.hr_company_document_type_action"/>
+</odoo>

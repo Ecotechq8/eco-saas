@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_employee_salary_data,employee.salary.data,model_employee_salary_data,,1,1,1,1
+access_main_salary_wiz,main.salary.wiz,model_main_salary_wiz,,1,1,1,1
+
+
+
+
+
+

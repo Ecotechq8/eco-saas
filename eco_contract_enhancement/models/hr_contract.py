@@ -21,10 +21,7 @@ class HrContract(models.Model):
     employee_social_insurance = fields.Float(string='Employee Social Insurance %')
     company_social_insurance = fields.Float(string='Company Social Insurance %')
     company_employee_social_insurance = fields.Float(string='Company Employee Social Insurance %')
-    e_insurance_number = fields.Char('الرقم التأمينى')
     fixed_amount = fields.Float(string='Fixed Amount')
-
-    pin = fields.Char(related='employee_id.pin')
 
     @api.depends('wage', 'housing_allowance', 'fuel_allowance', 'food_allowance', 'transportation_allowance',
                  'other_allowances', 'refunded_salary')

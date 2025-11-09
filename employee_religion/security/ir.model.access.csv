@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_religion_hr.group_hr_manager,hr.religion Employees Administrator,employee_religion.model_hr_religion,hr.group_hr_manager,1,1,1,1
+access_hr_religion_public,hr.religion Public User,employee_religion.model_hr_religion,,1,0,0,0

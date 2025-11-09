@@ -1,0 +1,48 @@
+<odoo>
+    <record id="main_salary_wiz_form" model="ir.ui.view">
+        <field name="name">main.salary.wiz.form.view</field>
+        <field name="model">main.salary.wiz</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Salary Report">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                    </group>
+                    <group>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="employees_ids" widget="many2many_tags"/>
+                        <field name="departments_ids" widget="many2many_tags"/>
+                        <field name="job_positions_ids" widget="many2many_tags"/>
+                    </group>
+                    <group invisible="1">
+                        <field name="salary_data_ids" nolabel="1">
+                            <list editable="bottom">
+                                <field name="employee_name"/>
+                                <field name="department_id"/>
+                            </list>
+                        </field>
+                    </group>
+                </group>
+                <footer>
+                    <button name="print_excel_report" string="Xlsx Report" type="object" class="oe_highlight"/>
+                    Or
+                    <button string="Cancel" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_main_salary_wiz">
+        <field name="name">Main Salary Report</field>
+        <field name="res_model">main.salary.wiz</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="main_salary_report_menu" parent="hr_payroll.menu_hr_payroll_report"
+              sequence="100" name="Salary Report" action="action_main_salary_wiz"/>
+
+</odoo>

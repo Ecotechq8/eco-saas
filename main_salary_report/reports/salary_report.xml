@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="main_salary_report_xlsx" model="ir.actions.report">
+            <field name="name">كـشـف رواتـب</field>
+            <field name="model">main.salary.wiz</field>
+            <field name="report_type">xlsx</field>
+            <field name="report_name">main_salary_report.main_salary_report_xlsx</field>
+            <field name="report_file">main_salary_report.main_salary_report_xlsx</field>
+        </record>
+    </data>
+</odoo>

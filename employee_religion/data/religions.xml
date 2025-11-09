@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <data noupdate="1">
+
+        <record id="data_religion_islam" model="hr.religion">
+            <field name="name">Islam</field>
+        </record>
+
+        <record id="data_religion_christianity" model="hr.religion">
+            <field name="name">Christian</field>
+        </record>
+
+        <record id="data_religion_judaism" model="hr.religion">
+            <field name="name">Jewish</field>
+        </record>
+
+
+    </data>
+
+
+</odoo>
