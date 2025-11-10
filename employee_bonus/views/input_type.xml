@@ -1,16 +1,15 @@
 <odoo>
     <data>
-        <record id="hr_payslip_input_type_bonus" model="ir.ui.view">
-            <field name="name">hr.payslip.input.type.bonus.form</field>
-            <field name="model">hr.payslip.input.type</field>
-            <field name="inherit_id" ref="om_hr_payroll.hr_payslip_input_type_view_form"/>
-            <field name="arch" type="xml">
-                <field name="code" position="after">
-                    <field name="is_bonus"/>
-                </field>
-            </field>
-        </record>
+<!--        <record id="hr_payslip_input_type_bonus" model="ir.ui.view">-->
+<!--            <field name="name">hr.payslip.input.type.bonus.form</field>-->
+<!--            <field name="model">hr.payslip.input.type</field>-->
+<!--            <field name="inherit_id" ref="hr_payroll.hr_payslip_input_type_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <field name="code" position="after">-->
+<!--                    <field name="is_bonus"/>-->
+<!--                </field>-->
+<!--            </field>-->
+<!--        </record>-->
     </data>
 </odoo>
 
-    
