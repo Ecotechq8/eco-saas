@@ -2,7 +2,7 @@
     'name': 'Eco: Main Salary Report',
     'version': '18.0',
     'author': "Eco-Tech, Omnya Rashwan",
-    'depends': ['base', 'hr', 'report_xlsx', 'hr_payroll'],
+    'depends': ['base', 'hr', 'report_xlsx', 'om_hr_payroll'],
     'data': [
         'security/ir.model.access.csv',
         'reports/salary_report.xml',
