@@ -14,7 +14,7 @@
                                 <field name="number_of_days"/>
                                 <field name="penalty_type"/>
                                 <field name="type_of_approval"/>
-                                <field name="input_type_id"/>
+<!--                                <field name="input_type_id"/>-->
                             </group>
                         </group>
                         <group string="Penalty Times"/>

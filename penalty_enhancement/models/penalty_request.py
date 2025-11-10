@@ -11,7 +11,7 @@ class PenaltyRequest(models.Model):
     penalty_type_of_approve = fields.Selection(related='penalty_rule_id.type_of_approval')
     contract_id = fields.Many2one(required=False, related="employee_id.contract_id")
     month = fields.Char(compute='get_month')
-    input_type_id = fields.Many2one(related='penalty_rule_id.input_type_id')
+    # input_type_id = fields.Many2one(related='penalty_rule_id.input_type_id')
 
     state = fields.Selection(selection_add=[
         ('emp_mang_submit', 'Manager Submit'),
