@@ -5,7 +5,7 @@
     'website': "https://ecotech.com",
     'category': 'HR',
     'version': '0.1',
-    'depends': ['base', 'hr', 'hr_contract', 'hr_payroll'],
+    'depends': ['base', 'hr', 'hr_contract', 'om_hr_payroll'],
 
     'data': [
         'data/ir_cron.xml',
