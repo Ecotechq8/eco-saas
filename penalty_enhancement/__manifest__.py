@@ -16,7 +16,7 @@
         'views/hr_employee_inh_view.xml',
         'views/penalty_rule_view.xml',
         'views/penalty_request_inh_view.xml',
-        'views/hr_input_type.xml',
+        # 'views/hr_input_type.xml',
         'reports/penalty_request_template.xml',
         'reports/disciplinary_action_report.xml'
     ],
