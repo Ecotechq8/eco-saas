@@ -1,10 +1,10 @@
 from odoo import fields, models, api, _
 
 
-# class HrPayslipInputType(models.Model):
-#     _inherit = 'hr.payslip.input.type'
-#
-#     is_bonus = fields.Boolean()
+class HrPayslipInputType(models.Model):
+    _inherit = 'hr.payslip.input.type'
+
+    is_bonus = fields.Boolean()
 
 
 class HrPayslipInput(models.Model):
