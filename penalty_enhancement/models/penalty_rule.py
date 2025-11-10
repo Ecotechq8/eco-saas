@@ -12,9 +12,9 @@ class PenaltyRle(models.Model):
                                inverse_name='penalty_id',
                                string='Penalty In Periods')
     type_of_approval = fields.Selection(selection=[('normal', 'Normal'), ('portal', 'Portal')], default='normal')
-    input_type_id = fields.Many2one(comodel_name='hr.payslip.input.type', domain="[('is_penalty','=',True)]",
-                                    string='Input Type', required=True)
-
+    # input_type_id = fields.Many2one(comodel_name='hr.payslip.input.type', domain="[('is_penalty','=',True)]",
+    #                                 string='Input Type', required=True)
+    #
 
 class HrPenaltyRule(models.Model):
     _name = 'hr.penalty.rule'
