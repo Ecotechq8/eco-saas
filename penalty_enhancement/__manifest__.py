@@ -6,7 +6,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'hr', 'penalty_request', 'hr_payroll'],
+    'depends': ['base', 'hr', 'penalty_request', 'om_hr_payroll'],
 
     # always loaded
     'data': [
