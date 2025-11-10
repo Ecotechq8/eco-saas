@@ -12,7 +12,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'hr', 'eco_contract_enhancement'],
+    'depends': ['base', 'hr', 'eco_contract_enhancement','mail'],
 
     # always loaded
     'data': [
