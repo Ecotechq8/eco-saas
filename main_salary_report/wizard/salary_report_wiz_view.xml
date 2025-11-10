@@ -42,7 +42,7 @@
         <field name="target">new</field>
     </record>
 
-    <menuitem id="main_salary_report_menu" parent="om_hr_payroll.menu_hr_payroll_report"
+    <menuitem id="main_salary_report_menu" parent="om_hr_payroll.menu_payroll_employee"
               sequence="100" name="Salary Report" action="action_main_salary_wiz"/>
 
 </odoo>
