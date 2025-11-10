@@ -5,7 +5,7 @@
         <field name="model">hr.payroll.structure</field>
         <field name="inherit_id" ref="om_hr_payroll.view_hr_employee_grade_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='schedule_pay']" position="after">
+            <xpath expr="//field[@name='name']" position="after">
                 <field name="use_in_report"/>
             </xpath>
         </field>
