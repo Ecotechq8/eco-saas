@@ -49,8 +49,8 @@ class HrContract(models.Model):
             'fuel_allowance'
         ]
 
-        if any(field in vals for field in tracked_fields):
-            for contract in self:
+        # if any(field in vals for field in tracked_fields):
+            # for contract in self:
                 # contract._update_related_comp_requests()
 
         return result
@@ -65,7 +65,7 @@ class HrContract(models.Model):
             'food_allowance',
             'fuel_allowance'
         ]
-        if any(field in vals for field in tracked_fields):
+        # if any(field in vals for field in tracked_fields):
             # contract._update_related_comp_requests()
         return contract
 
