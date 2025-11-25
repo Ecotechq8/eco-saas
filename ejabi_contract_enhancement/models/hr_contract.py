@@ -16,28 +16,28 @@ class HrContract(models.Model):
     flat_bonus = fields.Monetary()
     total_amount = fields.Monetary(compute='get_total_amount', string='Total Salary ')
 
-    def _update_related_comp_requests(self):
-        config = self.env['ir.config_parameter'].sudo()
-
-        for contract in self:
-            requests = self.env['compensation.request'].search([
-                ('employee_id', '=', contract.employee_id.id)
-            ])
-
-            for req in requests:
-                total = 0.0
-                if config.get_param('eos_with_allow1') == 'True':
-                    total += contract.housing_allowance or 0.0
-                if config.get_param('eos_with_allow2') == 'True':
-                    total += contract.transportation_allowance or 0.0
-                if config.get_param('eos_with_allow3') == 'True':
-                    total += contract.other_allowance or 0.0
-                if config.get_param('eos_with_allow4') == 'True':
-                    total += contract.food_allowance or 0.0
-                if config.get_param('eos_with_allow5') == 'True':
-                    total += contract.fuel_allowance or 0.0
-
-                req.allowances = total
+    # def _update_related_comp_requests(self):
+    #     config = self.env['ir.config_parameter'].sudo()
+    #
+    #     for contract in self:
+    #         requests = self.env['compensation.request'].search([
+    #             ('employee_id', '=', contract.employee_id.id)
+    #         ])
+    #
+    #         for req in requests:
+    #             total = 0.0
+    #             if config.get_param('eos_with_allow1') == 'True':
+    #                 total += contract.housing_allowance or 0.0
+    #             if config.get_param('eos_with_allow2') == 'True':
+    #                 total += contract.transportation_allowance or 0.0
+    #             if config.get_param('eos_with_allow3') == 'True':
+    #                 total += contract.other_allowance or 0.0
+    #             if config.get_param('eos_with_allow4') == 'True':
+    #                 total += contract.food_allowance or 0.0
+    #             if config.get_param('eos_with_allow5') == 'True':
+    #                 total += contract.fuel_allowance or 0.0
+    #
+    #             req.allowances = total
 
     def write(self, vals):
         result = super().write(vals)

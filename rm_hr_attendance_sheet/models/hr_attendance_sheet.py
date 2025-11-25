@@ -512,15 +512,18 @@ class AttendanceSheet(models.Model):
                                     if float_overtime <= overtime_policy['ph_after']:
                                         act_float_overtime = 0
                                     else:
-                                        act_float_overtime = (float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
+                                        act_float_overtime = (
+                                                                         float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
                                                              overtime_policy['ph_rate']
 
                                 if attendance_interval[1] and attendance_interval[0]:
                                     if float_overtime <= overtime_policy['we_after']:
                                         act_float_overtime = 0
                                     else:
-                                        print(float_overtime,  att_sheet.att_policy_id.number_of_hours_per_day, overtime_policy['we_rate'])
-                                        act_float_overtime = (float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
+                                        print(float_overtime, att_sheet.att_policy_id.number_of_hours_per_day,
+                                              overtime_policy['we_rate'])
+                                        act_float_overtime = (
+                                                                         float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
                                                              overtime_policy['we_rate']
 
                                 ac_sign_in = pytz.utc.localize(attendance_interval[0]).astimezone(tz)
@@ -932,3 +935,17 @@ class AttendanceSheetLine(models.Model):
                                          ('leave', 'Leave'), ],
                               required=False, readonly=True)
     note = fields.Text("Note", readonly=True)
+
+    @api.model
+    def create(self, vals):
+        if 'att_policy_id' not in vals or not vals['att_policy_id']:
+            default_policy = self.env['hr.attendance.policy'].search([], limit=1)
+            if default_policy:
+                vals['att_policy_id'] = default_policy.id
+        return super().create(vals)
+
+    def write(self, vals):
+        # Prevent accidentally clearing it
+        if 'att_policy_id' in vals and not vals['att_policy_id']:
+            vals['att_policy_id'] = self.att_policy_id.id
+        return super().write(vals)

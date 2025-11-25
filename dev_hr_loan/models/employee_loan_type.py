@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 class EmployeeLoanType(models.Model):
     _name = 'employee.loan.type'
-
+    _inherit = ['mail.thread', 'mail.activity.mixin']
     def _compute_loan_done(self):
         for record in self:
             emp_loan = self.env['employee.loan'].search([('state', '=', 'done'), ('loan_type_id', '=', record.id)])
