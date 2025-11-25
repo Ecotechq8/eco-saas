@@ -12,7 +12,6 @@ class HrContract(models.Model):
     pin = fields.Char(related='employee_id.pin', string='Employee PIN', store=True, readonly=True)
     e_insurance_number = fields.Char(string='Employee Insurance Number')
 
-
     def _get_work_hours(self, date_from, date_to, domain=None):
         date_from = datetime.combine(date_from, datetime.min.time())
         date_to = datetime.combine(date_to, datetime.max.time())
@@ -44,3 +43,16 @@ class HrContract(models.Model):
                 dt = date_stop - date_start
                 work_data[work_entry.work_entry_type_id.id] += dt.days * 24 + dt.seconds / 3600  # Number of hours
         return work_data
+
+    @api.model
+    def create(self, vals):
+        if 'att_policy_id' not in vals or not vals['att_policy_id']:
+            default_policy = self.env['hr.attendance.policy'].search([], limit=1)
+            if default_policy:
+                vals['att_policy_id'] = default_policy.id
+        return super().create(vals)
+
+    def write(self, vals):
+        if 'att_policy_id' in vals and not vals['att_policy_id']:
+            vals['att_policy_id'] = self.att_policy_id.id
+        return super().write(vals)
