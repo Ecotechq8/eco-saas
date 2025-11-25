@@ -945,7 +945,6 @@ class AttendanceSheetLine(models.Model):
         return super().create(vals)
 
     def write(self, vals):
-        # Prevent accidentally clearing it
         if 'att_policy_id' in vals and not vals['att_policy_id']:
             vals['att_policy_id'] = self.att_policy_id.id
         return super().write(vals)
