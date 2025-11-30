@@ -213,7 +213,7 @@ class HrPayslipInherit(models.Model):
                 for line in input_lines:
                     line.unlink()
 
-                sick_leave_rules = self.env['hr.leave.type'].search([('holiday_status_id.sick_leave', '=', True)])
+                sick_leave_rules = self.env['hr.leave.type'].search([('sick_leave', '=', True)])
                 sick_leave_lines = self.env['employee.sick.leave'].search([('employee_id', '=', item.employee_id.id),
                                                                            ('date', '>=', item.date_from),
                                                                            ('date', '<=', item.date_to)])
@@ -299,3 +299,15 @@ class HrPayslipInherit(models.Model):
                                         'amount': item.contract_id.day_value * line.rule_5 *
                                                   sick_leave_rules.mapped('sick_leave_rules_ids')[4].deduction,
                                     })]
+
+
+class PayslipWorkedDays(models.Model):
+    _inherit = 'hr.payslip.worked_days'
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('contract_id') and vals.get('payslip_id'):
+            slip = self.env['hr.payslip'].browse(vals['payslip_id'])
+            if slip.contract_id:
+                vals['contract_id'] = slip.contract_id.id
+        return super().create(vals)
