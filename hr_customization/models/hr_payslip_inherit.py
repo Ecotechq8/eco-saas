@@ -142,68 +142,101 @@ class HrPayslipInherit(models.Model):
     @api.depends('date_from', 'date_to', 'employee_id', 'worked_days_line_ids')
     def _calc_sick_deduction_amount(self):
         for rec in self:
+            # safety check
+            if not rec.employee_id or not rec.contract_id:
+                rec.total_sick_leave_amount = 0.0
+                continue
+
+            # Prepare dates
             first_day_in_year = datetime.now().date().replace(month=1, day=1)
             last_day_in_year = datetime.now().date().replace(month=12, day=31)
+
+            # Calculations
             total_sick_leave_days = self.get_sick_leave_days(first_day_in_year, last_day_in_year)
-            salary_per_day = rec.contract_id.total_amount / 26
+            salary_per_day = rec.contract_id.total_amount / 26 if rec.contract_id.total_amount else 0
+
             before_total_sick_leave_days = self.get_sick_leave_days(first_day_in_year, rec.date_from)
             total_sick_leave_days_in_period = self.get_sick_leave_days(rec.date_from, rec.date_to)
+
             sick_leave_value = 0.0
             diff_days = total_sick_leave_days - total_sick_leave_days_in_period
-            sick_leave_obj = self.env['hr.leave'].search(
-                [('employee_id', '=', rec.employee_id.id), ('holiday_status_id.sick_leave', '=', True),
-                 ('holiday_type', '=', 'employee'), ('state', '=', 'validate')])
+
+            # FIXED SEARCH DOMAIN
+            sick_leave_obj = self.env['hr.leave'].search([
+                ('employee_id', '=', rec.employee_id.id),
+                ('holiday_status_id.sick_leave', '=', True),  # your custom field
+                ('mode', '=', 'employee'),  # FIX HERE
+                ('state', '=', 'validate')
+            ])
+
             sick_days = total_sick_leave_days
+
             if sick_leave_obj:
                 diff_days = abs(diff_days)
-                for i in sick_leave_obj[0].holiday_status_id.sick_leave_rules_ids:
+
+                # iterate on sick leave rules
+                for rule in sick_leave_obj[0].holiday_status_id.sick_leave_rules_ids:
+
                     if diff_days != 0 and sick_days >= 0:
-                        if i.days_from <= diff_days <= i.days_to and total_sick_leave_days <= i.days_to:
-                            rate = salary_per_day * i.deduction
-                            sick_days = sick_days - i.days_to
-                            if diff_days == i.days_from:
-                                current_days = int(total_sick_leave_days - i.days_from + 1)
-                            elif diff_days > i.days_from and diff_days <= i.days_to:
+                        if rule.days_from <= diff_days <= rule.days_to and total_sick_leave_days <= rule.days_to:
+                            rate = salary_per_day * rule.deduction
+                            sick_days -= rule.days_to
+
+                            if diff_days == rule.days_from:
+                                current_days = int(total_sick_leave_days - rule.days_from + 1)
+                            elif rule.days_from < diff_days <= rule.days_to:
                                 current_days = int(total_sick_leave_days - diff_days)
                             else:
-                                current_days = int(i.days_to - diff_days)
+                                current_days = int(rule.days_to - diff_days)
+
                             sick_leave_value += rate * current_days
-                            sick_days = sick_days - i.days_to
-                    elif i.days_from <= diff_days <= i.days_to and total_sick_leave_days >= i.days_to:
-                        if diff_days == i.days_from:
-                            current_days = i.days_to - diff_days + 1
+                            sick_days -= rule.days_to
+
+                    elif rule.days_from <= diff_days <= rule.days_to and total_sick_leave_days >= rule.days_to:
+                        rate = salary_per_day * rule.deduction
+
+                        if diff_days == rule.days_from:
+                            current_days = rule.days_to - diff_days + 1
                         else:
-                            current_days = i.days_to - diff_days
-                        rate = salary_per_day * i.deduction
+                            current_days = rule.days_to - diff_days
+
                         sick_leave_value += rate * current_days
-                        diff_days = i.days_to + 1
+                        diff_days = rule.days_to + 1
+
                     elif diff_days == 0:
-                        if i.days_from <= total_sick_leave_days_in_period <= i.days_to and total_sick_leave_days <= i.days_to:
-                            rate = salary_per_day * i.deduction
-                            if total_sick_leave_days_in_period == i.days_from:
-                                current_days = int(total_sick_leave_days - i.days_from + 1)
-                            elif i.days_from == 0 and total_sick_leave_days_in_period > i.days_from and total_sick_leave_days_in_period <= i.days_to:
-                                current_days = int(total_sick_leave_days - i.days_from)
-                            elif total_sick_leave_days_in_period > i.days_from and total_sick_leave_days_in_period <= i.days_to:
-                                current_days = int(total_sick_leave_days - i.days_from + 1)
+                        if rule.days_from <= total_sick_leave_days_in_period <= rule.days_to and total_sick_leave_days <= rule.days_to:
+                            rate = salary_per_day * rule.deduction
+
+                            if total_sick_leave_days_in_period == rule.days_from:
+                                current_days = int(total_sick_leave_days - rule.days_from + 1)
+                            elif rule.days_from == 0 and rule.days_from < total_sick_leave_days_in_period <= rule.days_to:
+                                current_days = int(total_sick_leave_days - rule.days_from)
+                            elif rule.days_from < total_sick_leave_days_in_period <= rule.days_to:
+                                current_days = int(total_sick_leave_days - rule.days_from + 1)
                             else:
-                                current_days = int(i.days_to - total_sick_leave_days_in_period)
+                                current_days = int(rule.days_to - total_sick_leave_days_in_period)
+
                             sick_leave_value += rate * current_days
                             break
-                        elif i.days_from <= total_sick_leave_days_in_period <= i.days_to and total_sick_leave_days >= i.days_to:
-                            if total_sick_leave_days_in_period == i.days_from:
-                                current_days = i.days_to - total_sick_leave_days_in_period + 1
+
+                        elif rule.days_from <= total_sick_leave_days_in_period <= rule.days_to and total_sick_leave_days >= rule.days_to:
+                            rate = salary_per_day * rule.deduction
+
+                            if total_sick_leave_days_in_period == rule.days_from:
+                                current_days = rule.days_to - total_sick_leave_days_in_period + 1
                             else:
-                                current_days = i.days_to - total_sick_leave_days_in_period
-                            rate = salary_per_day * i.deduction
+                                current_days = rule.days_to - total_sick_leave_days_in_period
+
                             sick_leave_value += rate * current_days
-                            total_sick_leave_days_in_period = i.days_to + 1
-                        elif i.days_from <= total_sick_leave_days_in_period >= i.days_to:
-                            current_days = i.days_to - i.days_from
-                            rate = salary_per_day * i.deduction
+                            total_sick_leave_days_in_period = rule.days_to + 1
+
+                        elif rule.days_from <= total_sick_leave_days_in_period >= rule.days_to:
+                            current_days = rule.days_to - rule.days_from
+                            rate = salary_per_day * rule.deduction
                             sick_leave_value += rate * current_days
-                            total_sick_leave_days_in_period = i.days_to + 1
-                rec.total_sick_leave_amount = sick_leave_value
+                            total_sick_leave_days_in_period = rule.days_to + 1
+
+            rec.total_sick_leave_amount = sick_leave_value
 
     @api.onchange('employee_id', 'date_from', 'date_to')
     def onchange_sick_leave_employee(self):
