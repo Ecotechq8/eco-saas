@@ -49,7 +49,7 @@ class HrPayslip(models.Model):
                     ('state', '=', 'validate')
                 ])
                 _logger.info("all_leaves:{}".format(all_leaves))
-                rec.number_of_leave_days = sum(all_leaves.mapped("number_of_days_display"))
+                sum(all_leaves.mapped("number_of_days"))
                 _logger.info("number_of_leave_days:{}".format(rec.number_of_leave_days))
                 if rec.contract_id.number_of_month_days > 0:
                     rec.normal_work_days = rec.total_num_of_days - rec.number_of_leave_days
