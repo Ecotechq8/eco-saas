@@ -128,11 +128,15 @@ class HrPayslip(models.Model):
     total_deduction_wage = fields.Monetary(compute='_compute_basic_net', store=True, string='Total Deduction',
                                            currency_field='currency_id')
 
-    @api.depends('line_ids.total')
+    @api.depends('line_ids.total', 'line_ids.category_id')
     def _compute_basic_net(self):
         for payslip in self:
+            total_allowance = 0.0
+            total_deduction = 0.0
             for line in payslip.line_ids:
-                if line.category_id.code == 'TALL':
-                    payslip.total_allowance_wage = line.total
-                elif line.category_id.code == 'TDN':
-                    payslip.total_deduction_wage = line.total
+                if line.category_id.code in ['HRA', 'DA', 'Travel', 'Meal', 'Medical', 'BONUS']:
+                    total_allowance += line.total
+                elif line.category_id.code in []:  # add any deduction codes if needed
+                    total_deduction += line.total
+            payslip.total_allowance_wage = total_allowance
+            payslip.total_deduction_wage = total_deduction
