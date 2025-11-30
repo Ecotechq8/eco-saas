@@ -164,8 +164,7 @@ class HrPayslipInherit(models.Model):
             # FIXED SEARCH DOMAIN
             sick_leave_obj = self.env['hr.leave'].search([
                 ('employee_id', '=', rec.employee_id.id),
-                ('holiday_status_id.sick_leave', '=', True),  # your custom field
-                ('mode', '=', 'employee'),  # FIX HERE
+                ('holiday_status_id.sick_leave', '=', True),
                 ('state', '=', 'validate')
             ])
 
