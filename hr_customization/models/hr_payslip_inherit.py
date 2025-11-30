@@ -213,7 +213,7 @@ class HrPayslipInherit(models.Model):
                 for line in input_lines:
                     line.unlink()
 
-                sick_leave_rules = self.env['hr.leave.type'].search([('sick_leave', '=', True)])
+                sick_leave_rules = self.env['hr.leave.type'].search([('holiday_status_id.sick_leave', '=', True)])
                 sick_leave_lines = self.env['employee.sick.leave'].search([('employee_id', '=', item.employee_id.id),
                                                                            ('date', '>=', item.date_from),
                                                                            ('date', '<=', item.date_to)])
