@@ -21,9 +21,7 @@ class HrPayslipEmployees(models.TransientModel):
             raise UserError(_("You must select employee(s) to generate payslip(s)."))
         for employee in self.env['hr.employee'].browse(data['employee_ids']):
             slip_data = self.env['hr.payslip'].onchange_employee_id(
-                employee_id=employee.id,
-                date_from=from_date,
-                date_to=to_date
+                from_date, to_date, employee.id
             )
             res = {
                 'employee_id': employee.id,
