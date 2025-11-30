@@ -64,7 +64,7 @@ class HrPayslip(models.Model):
                 ])
                 _logger.info("sick_leave_days:{}".format(sick_leave_days))
 
-                rec.number_of_sick_days = sum(sick_leave_days.mapped("number_of_days_display"))
+                sum(sick_leave_days.mapped("number_of_days"))
 
     def action_payslip_send(self):
         '''
