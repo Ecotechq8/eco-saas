@@ -235,44 +235,28 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
 
 
 
-/* ================================
-   FIXED ENTERPRISE-LIKE APP LAYOUT
-   ================================ */
-
-/* Each app box gets a stable size */
+/* Prevent icons from shrinking or collapsing when zooming */
 .mk_app_menu .o_app {
-    width: 140px !important;     /* FIXED width — prevents collapse */
-    min-width: 140px !important; /* Zoom-proof */
+    flex-shrink: 0 !important;         /* stops collapse */
+    min-width: 130px !important;       /* stable width so text never overlaps */
+    max-width: 160px !important;       /* keeps same look */
     text-align: center;
-    padding: 8px 0 !important;   /* Keep items close (not far apart) */
-    flex-grow: 0 !important;
-    flex-shrink: 0 !important;   /* Prevent shrinking on zoom */
 }
 
-/* Icon stays stable, zoom does NOT increase spacing */
+/* Icon stays same size at all zoom levels */
 .mk_app_menu .o_app > a .mk_app_icon {
-    width: 70px !important;      /* Enterprise-like size */
-    height: 70px !important;
-    padding: 6px !important;
-    border-radius: 0.75rem !important;
-    object-fit: contain;
+    width: 100% !important;
+    max-width: 150px !important;       /* your original size */
+    height: auto !important;
+    object-fit: contain !important;
 }
 
-/* App name behaves like enterprise */
+/* App name wraps correctly instead of overlapping */
 .mk_app_menu .o_app > a .mk_app_name {
-    font-size: 0.95rem !important;
+    font-size: 1.2rem !important;      /* still big, but stable */
     line-height: 1.2 !important;
-    max-width: 120px;
-    white-space: normal !important;  /* allow wrapping */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-top: 6px;
-}
-
-/* The container keeps items tight (not spaced far away) */
-.mk_app_menu.dropdown-menu {
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    gap: 8px !important;         /* small spacing similar to enterprise */
+    white-space: normal !important;    /* text wraps on 2 lines */
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 140px !important;       /* matches the icon size */
 }
