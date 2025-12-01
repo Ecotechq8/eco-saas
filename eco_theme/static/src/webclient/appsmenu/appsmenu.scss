@@ -235,55 +235,44 @@ button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
 
 
 
+/* ================================
+   FIXED ENTERPRISE-LIKE APP LAYOUT
+   ================================ */
 
-
-/* ============= APP ICON SIZE ============= */
-.mk_app_menu.dropdown-menu .o_app > a .mk_app_icon {
-    max-width: 60px !important;   /* Icon size reduced */
-    padding: 6px !important;      /* Smaller padding */
-    border-radius: 0.75rem !important;
-}
-
-/* Smaller icons on small screens */
-@media (max-width: 768px) {
-    .mk_app_menu.dropdown-menu .o_app > a .mk_app_icon {
-        max-width: 50px !important;
-        padding: 4px !important;
-    }
-}
-
-/* ============= APP NAME SIZE ============= */
-.mk_app_menu.dropdown-menu .o_app > a .mk_app_name {
-    font-size: 0.85rem !important;     /* Smaller text */
-    line-height: 1.1 !important;       /* Prevent overlap */
-    max-width: 90px;                   /* Prevent text stretching */
-    text-wrap: wrap;                   /* Enable wrapping */
-    white-space: normal !important;    /* Allow two lines */
-    text-align: center !important;
-}
-
-/* Even smaller text on small screens */
-@media (max-width: 768px) {
-    .mk_app_menu.dropdown-menu .o_app > a .mk_app_name {
-        font-size: 0.78rem !important;
-        max-width: 70px !important;
-    }
-}
-
-/* ============= PREVENT TEXT OVERLAP WHEN ZOOMING ============= */
+/* Each app box gets a stable size */
 .mk_app_menu .o_app {
-    min-width: 95px; /* Prevents items from collapsing too small */
+    width: 140px !important;     /* FIXED width — prevents collapse */
+    min-width: 140px !important; /* Zoom-proof */
+    text-align: center;
+    padding: 8px 0 !important;   /* Keep items close (not far apart) */
+    flex-grow: 0 !important;
+    flex-shrink: 0 !important;   /* Prevent shrinking on zoom */
 }
 
-.mk_app_menu.dropdown-menu a {
-    overflow: hidden !important;
-    text-overflow: ellipsis; /* Dots instead of overlap */
+/* Icon stays stable, zoom does NOT increase spacing */
+.mk_app_menu .o_app > a .mk_app_icon {
+    width: 70px !important;      /* Enterprise-like size */
+    height: 70px !important;
+    padding: 6px !important;
+    border-radius: 0.75rem !important;
+    object-fit: contain;
 }
 
-/* Ensure icons + names stay centered and stable */
-.mk_app_menu.dropdown-menu a {
+/* App name behaves like enterprise */
+.mk_app_menu .o_app > a .mk_app_name {
+    font-size: 0.95rem !important;
+    line-height: 1.2 !important;
+    max-width: 120px;
+    white-space: normal !important;  /* allow wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 6px;
+}
+
+/* The container keeps items tight (not spaced far away) */
+.mk_app_menu.dropdown-menu {
     display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
+    flex-wrap: wrap !important;
     justify-content: center !important;
+    gap: 8px !important;         /* small spacing similar to enterprise */
 }
