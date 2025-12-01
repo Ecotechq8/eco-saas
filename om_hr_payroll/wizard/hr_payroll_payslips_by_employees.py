@@ -17,7 +17,6 @@ class HrPayslipEmployees(models.TransientModel):
         active_id = self.env.context.get('active_id')
         if not data['employee_ids']:
             raise UserError(_("You must select employee(s) to generate payslip(s)."))
-
         if not active_id:
             raise UserError(_("No active payslip run found."))
 
