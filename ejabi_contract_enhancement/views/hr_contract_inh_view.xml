@@ -61,19 +61,19 @@
                         <div class="mb-3" name="wage_period_label">/ month</div>
                     </div>
                 </xpath>
-<!--                <xpath expr="//page[@name='other']" position="after">-->
-<!--                    <page string="Days &amp; Hours">-->
-<!--                        <group>-->
-<!--                            <group>-->
-<!--                                <field name="workdays_hour"/>-->
-<!--                                <field name="number_of_month_days"/>-->
-<!--                            </group>-->
-<!--                            <group>-->
-<!--                                <field name="hour_value"/>-->
-<!--                                <field name="day_value"/>-->
-<!--                            </group>-->
-<!--                        </group>-->
-<!--                    </page>-->
+                <xpath expr="//page[@name='other']" position="after">
+                    <page string="Days &amp; Hours">
+                        <group>
+                            <group>
+                                <field name="workdays_hour"/>
+                                <field name="number_of_month_days"/>
+                            </group>
+                            <group>
+                                <field name="hour_value"/>
+                                <field name="day_value"/>
+                            </group>
+                        </group>
+                    </page>
 <!--                    &lt;!&ndash;                    <page string="Medical Insurance">&ndash;&gt;-->
 <!--                    &lt;!&ndash;                        <group>&ndash;&gt;-->
 <!--                    &lt;!&ndash;                            <group>&ndash;&gt;-->
@@ -86,7 +86,7 @@
 <!--                    &lt;!&ndash;                            <group></group>&ndash;&gt;-->
 <!--                    &lt;!&ndash;                        </group>&ndash;&gt;-->
 <!--                    &lt;!&ndash;                    </page>&ndash;&gt;-->
-<!--                </xpath>-->
+                </xpath>
             </field>
         </record>
     </data>

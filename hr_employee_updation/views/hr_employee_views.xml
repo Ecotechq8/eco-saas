@@ -29,22 +29,22 @@
             </xpath>
             <field name="identification_id" position="replace"/>
             <field name="passport_id" position="replace"/>
-            <xpath expr="//page[@name='personal_information']/group/group[1]" position="after">
-                <group name="identification_id" string="Identification ID">
-                    <field name="identification_id"/>
-                    <field name="id_expiry_date" groups="hr.group_hr_user"
-                           invisible="identification_id in [None,False]"/>
-                    <field name="identification_attachment_ids" groups="hr.group_hr_user" widget="many2many_binary"
-                           class="oe_inline" invisible="identification_id in [None,False]"/>
-                </group>
-                <group name="passport_id" string="Passport ID">
-                    <field name="passport_id"/>
-                    <field name="passport_expiry_date" groups="hr.group_hr_user"
-                           invisible="passport_id in [None,False]"/>
-                    <field name="passport_attachment_ids" groups="hr.group_hr_user" widget="many2many_binary"
-                           class="oe_inline" invisible="passport_id in [None,False]"/>
-                </group>
-            </xpath>
+<!--            <xpath expr="//page[@name='personal_information']/group/group[1]" position="after">-->
+<!--                <group name="identification_id" string="Identification ID">-->
+<!--                    <field name="identification_id"/>-->
+<!--                    <field name="id_expiry_date" groups="hr.group_hr_user"-->
+<!--                           invisible="identification_id in [None,False]"/>-->
+<!--                    <field name="identification_attachment_ids" groups="hr.group_hr_user" widget="many2many_binary"-->
+<!--                           class="oe_inline" invisible="identification_id in [None,False]"/>-->
+<!--                </group>-->
+<!--                <group name="passport_id" string="Passport ID">-->
+<!--                    <field name="passport_id"/>-->
+<!--                    <field name="passport_expiry_date" groups="hr.group_hr_user"-->
+<!--                           invisible="passport_id in [None,False]"/>-->
+<!--                    <field name="passport_attachment_ids" groups="hr.group_hr_user" widget="many2many_binary"-->
+<!--                           class="oe_inline" invisible="passport_id in [None,False]"/>-->
+<!--                </group>-->
+<!--            </xpath>-->
         </field>
     </record>
 
