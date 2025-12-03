@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 
 class HrPayslip(models.Model):
     _inherit = ['hr.payslip', 'mail.thread']
-    _name = 'hr.payslip'
 
     def compute_sheet(self):
         for rec in self:
@@ -30,7 +29,7 @@ class HrPayslip(models.Model):
             if rec.contract_id:
                 if rec.contract_id.number_of_month_days > 0:
                     # _logger.info("contract_id.number_of_month_days:{}".format(rec.contract_id.number_of_month_days))
-                    # day_rate = 30 / rec.contract_id.number_of_month_days 
+                    # day_rate = 30 / rec.contract_id.number_of_month_days
                     # _logger.info("day_rate:{}".format(day_rate))
                     # days_diff = rec.date_to - rec.date_from
                     # _logger.info("days_diff.days:{}".format(days_diff.days))
@@ -49,7 +48,7 @@ class HrPayslip(models.Model):
                     ('state', '=', 'validate')
                 ])
                 _logger.info("all_leaves:{}".format(all_leaves))
-                rec.number_of_leave_days = sum(all_leaves.mapped("number_of_days_display"))
+                sum(all_leaves.mapped("number_of_days"))
                 _logger.info("number_of_leave_days:{}".format(rec.number_of_leave_days))
                 if rec.contract_id.number_of_month_days > 0:
                     rec.normal_work_days = rec.total_num_of_days - rec.number_of_leave_days
@@ -64,7 +63,7 @@ class HrPayslip(models.Model):
                 ])
                 _logger.info("sick_leave_days:{}".format(sick_leave_days))
 
-                rec.number_of_sick_days = sum(sick_leave_days.mapped("number_of_days_display"))
+                sum(sick_leave_days.mapped("number_of_days"))
 
     def action_payslip_send(self):
         '''
@@ -129,18 +128,15 @@ class HrPayslip(models.Model):
     total_deduction_wage = fields.Monetary(compute='_compute_basic_net', store=True, string='Total Deduction',
                                            currency_field='currency_id')
 
-    @api.depends('line_ids.total')
+    @api.depends('line_ids.total', 'line_ids.category_id')
     def _compute_basic_net(self):
-        # line_values = (self._origin)._get_line_values(['BASIC', 'GROSS', 'NET'])
         for payslip in self:
+            total_allowance = 0.0
+            total_deduction = 0.0
             for line in payslip.line_ids:
-                if line.category_id.code == 'BASIC':
-                    payslip.basic_wage = line.total
-                if line.category_id.code == 'GROSS':
-                    payslip.gross_wage = line.total
-                if line.category_id.code == 'NET':
-                    payslip.net_wage = line.total
-                if line.category_id.code == 'TALL':
-                    payslip.total_allowance_wage = line.total
-                if line.category_id.code == 'TDN':
-                    payslip.total_deduction_wage = line.total
+                if line.category_id.code in ['HRA', 'DA', 'Travel', 'Meal', 'Medical', 'BONUS']:
+                    total_allowance += line.total
+                elif line.category_id.code in []:  # add any deduction codes if needed
+                    total_deduction += line.total
+            payslip.total_allowance_wage = total_allowance
+            payslip.total_deduction_wage = total_deduction
