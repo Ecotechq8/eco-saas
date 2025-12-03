@@ -26,10 +26,10 @@
 
                 </xpath>
 
-                <field name="day_value" position="after">
-                    <field name="leave_monthly_value"/>
-                    <field name="leave_monthly"/>
-                </field>
+<!--                <field name="day_value" position="after">-->
+<!--                    <field name="leave_monthly_value"/>-->
+<!--                    <field name="leave_monthly"/>-->
+<!--                </field>-->
             </field>
         </record>
     </data>
