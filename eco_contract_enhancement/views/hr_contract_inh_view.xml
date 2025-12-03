@@ -5,11 +5,11 @@
             <field name="model">hr.contract</field>
             <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
             <field name="arch" type="xml">
-                <xpath expr="//field[@name='employee_id']" position="after">
-                    <field name="contract_start_training"/>
-                    <field name="contract_end_training"/>
-                    <field name="payment_type"/>
-                </xpath>
+                <!--                <xpath expr="//field[@name='employee_id']" position="after">-->
+                <!--                    <field name="contract_start_training"/>-->
+                <!--                    <field name="contract_end_training"/>-->
+                <!--                    <field name="payment_type"/>-->
+                <!--                </xpath>-->
 
                 <xpath expr="//div[@name='wage']" position="after">
                     <label for="housing_allowance"/>
@@ -61,20 +61,20 @@
                     </div>
                 </xpath>
 
-                <xpath expr="//page[@name='other']" position="after">
-                    <page string="Days &amp; Hours">
-                        <group>
-                            <group>
-                                <field name="workdays_hour"/>
-                                <field name="number_of_month_days"/>
-                            </group>
-                            <group>
-                                <field name="hour_value"/>
-                                <field name="day_value"/>
-                            </group>
-                        </group>
-                    </page>
-                </xpath>
+                <!--                <xpath expr="//page[@name='other']" position="after">-->
+                <!--                    <page string="Days &amp; Hours">-->
+                <!--                        <group>-->
+                <!--                            <group>-->
+                <!--                                <field name="workdays_hour"/>-->
+                <!--                                <field name="number_of_month_days"/>-->
+                <!--                            </group>-->
+                <!--                            <group>-->
+                <!--                                <field name="hour_value"/>-->
+                <!--                                <field name="day_value"/>-->
+                <!--                            </group>-->
+                <!--                        </group>-->
+                <!--                    </page>-->
+                <!--                </xpath>-->
                 <xpath expr="//group[@name='salary']" position="after">
                     <group string="Social Insurance">
                         <field name="has_social_insurance"/>
