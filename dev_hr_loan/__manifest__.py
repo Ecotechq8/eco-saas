@@ -38,7 +38,7 @@ Manage Employee Loan and Integrated with Payroll
     """,
     'summary': 'odoo app will add Hr Employee Loan functionality for employee',
     'depends': ['base', 'web', 'om_hr_payroll', 'om_hr_payroll_account', 'account',
-                'rm_hr_attendance_sheet', 'mail' ],
+                'rm_hr_attendance_sheet', ],
 
     'data': [
         'security/ir.model.access.csv',
