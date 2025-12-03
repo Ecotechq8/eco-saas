@@ -1,6 +1,5 @@
 from odoo import api, fields, models
 from odoo import api, SUPERUSER_ID
-import base64
 
 
 class ResConfigSettings(models.TransientModel):
@@ -133,28 +132,3 @@ class ResUsers(models.Model):
         ('email', 'Handle by Emails'),
         ('inbox', 'Handle in System'),
     ], string='Notification')
-
-
-class BaseLanguageExport(models.TransientModel):
-    _inherit = 'base.language.export'
-
-    def act_getfile(self):
-        """Override to ensure data is base64 encoded before download"""
-        result = super(BaseLanguageExport, self).act_getfile()
-
-        for wizard in self:
-            if wizard.data:
-                # Check if data needs encoding
-                if isinstance(wizard.data, bytes):
-                    # Convert bytes to base64 encoded string
-                    wizard.data = base64.b64encode(wizard.data).decode('utf-8')
-                elif isinstance(wizard.data, str):
-                    # Check if it's already valid base64
-                    try:
-                        base64.b64decode(wizard.data, validate=True)
-                        # Already valid base64, do nothing
-                    except Exception:
-                        # Not valid base64, encode it
-                        wizard.data = base64.b64encode(wizard.data.encode('utf-8')).decode('utf-8')
-
-        return result

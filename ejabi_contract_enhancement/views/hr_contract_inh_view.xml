@@ -7,9 +7,9 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='employee_id']" position="after">
                     <!-- <field name="contract_join_date"/> -->
-<!--                    <field name="contract_start_training"/>-->
-<!--                    <field name="contract_end_training"/>-->
-<!--                    <field name="payment_type"/>-->
+                    <field name="contract_start_training"/>
+                    <field name="contract_end_training"/>
+                    <field name="payment_type"/>
                 </xpath>
                 <xpath expr="//div[@name='wage']" position="after">
                     <label for="housing_allowance"/>
