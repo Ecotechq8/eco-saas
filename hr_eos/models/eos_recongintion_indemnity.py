@@ -27,6 +27,7 @@ class EOSRecognitionIndemnity(models.Model):
     def get_period(self):
         leaves_obj = self.env['hr.leave']
         for rec in self:
+            rec.period = ''
             if rec.contract_start_date:
                 first_date = rec.contract_start_date
                 current_date = date.today()
