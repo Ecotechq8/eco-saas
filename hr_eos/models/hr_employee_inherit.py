@@ -31,7 +31,6 @@ class HrEmployeeInherit(models.Model):
     related_leave_balance = fields.Float(related='leave_balance', string='Leave Provision', digits=(12, 3))
     total_leave_provision = fields.Float(string='Net Leave Days', digits=(12, 3))
     remaining_leave_provision = fields.Float(string='Remaining Leave Provision', digits=(12, 3))
-
     def get_resignation_amount(self):
         for item in self:
             item.resignation_amount = 0.0
@@ -255,14 +254,16 @@ class HrEmployeeInherit(models.Model):
         rule_obj = self.env['hr.config.rules'].search([])
         for rec in employee_obj:
             hr_contract_obj = self.env['hr.contract'].search(
-                [('employee_id', '=', rec.id), ('state', 'not in', ['close', 'cancel'])])
+                [('employee_id', '=', rec.id), ('state', 'not in', ['close', 'cancel'])],
+    order='date_start desc',
+    limit=1)
             if rule_obj:
                 rule_obj = self.env['hr.config.rules'].search([])[0]
             if hr_contract_obj:
                 contract_start_year = (hr_contract_obj.date_start).year
                 contract_start_month = (hr_contract_obj.date_start).month
-                current_year = datetime.datetime.now().year
-                current_month = datetime.datetime.now().month
+                current_year = datetime.now().year
+                current_month = datetime.now().month
                 diff_years = current_year - contract_start_year
                 diff_month = current_month - contract_start_month
                 diff_years += diff_month / 12
@@ -279,7 +280,7 @@ class HrEmployeeInherit(models.Model):
                             second_rule_value += total
 
                             hr_contract_obj.employee_id.update({'termination_amount': second_rule_value})
-                            rec.state = 'terminated'
+                            # rec.state = 'terminated'
                         else:
                             diff += (termination.termination_rang_end - termination.termination_rang_start)
                             diff2 = (termination.termination_rang_end - termination.termination_rang_start)
@@ -296,7 +297,7 @@ class HrEmployeeInherit(models.Model):
                             second_regis_value += total_regis
                             final_regis_value = second_regis_value * salary_per_day * resignation.deduction_amount
                             hr_contract_obj.employee_id.update({'resignation_amount': final_regis_value})
-                            rec.state = 'resigned'
+                            # rec.state = 'resigned'
                             break
                         else:
                             if counter > 0:
