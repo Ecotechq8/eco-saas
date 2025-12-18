@@ -201,13 +201,13 @@ span.o-dropdown-item[data-menu="install_pwa"] {
   display: none !important;
 }
 
-button.o-dropdown.dropdown-toggle.dropdown > i.fa-clock-o {
-  display: none !important;
-}
+// button.o-dropdown.dropdown-toggle.dropdown > i.fa-clock-o {
+//   display: none !important;
+// }
 
-button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
-    display: none !important;
-}
+// button.o-dropdown.dropdown-toggle.dropdown:has(i.fa-clock-o) {
+//     display: none !important;
+// }
 
 
 .o_base_settings_view .o_form_renderer .o_setting_container .settings_tab {
