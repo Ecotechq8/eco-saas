@@ -169,7 +169,7 @@ $o-form-view-sheet-max-width: 2560px;
     background-color: #ffffff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     border-radius: 8px;
-    padding: 6px;
+    // padding: 6px; removed extra padding
 }
 
 /********** Editable Popup (One2many) **********/
