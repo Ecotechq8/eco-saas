@@ -14,7 +14,9 @@ def _setup_module(env):
             env.ref('base.main_company').write({
                 'background_image': base64.b64encode(file.read())
             })
-
+    bot_user = env.ref('base.user_root', raise_if_not_found=False)
+    if bot_user:
+        bot_user.sudo().write({'name': 'EcoPro Assistant'})
 
 def _uninstall_cleanup(env):
     env['res.config.settings']._reset_theme_color_assets()
