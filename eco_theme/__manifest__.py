@@ -16,7 +16,7 @@
     ],
     'depends': [
         'base',
-        'mail',
+        'mail','mail_bot',
         'muk_web_chatter',
         'muk_web_dialog',
         'muk_web_appsbar',
