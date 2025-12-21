@@ -14,7 +14,7 @@
                     <field name="expected_leave"/>
                 </xpath>
 
-                <xpath expr="//div[hasclass('o_hr_leave_content')]" position="after">
+                <!-- <xpath expr="//div[hasclass('o_hr_leave_content')]" position="after">
                     <notebook> 
                         <page string="Flight Details ">
                             <field name="flight_details_ids">
@@ -58,7 +58,7 @@
                             </group>
                         </page>
                     </notebook>
-                </xpath>
+                </xpath> -->
 
             </field>
         </record>
