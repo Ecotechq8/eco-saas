@@ -37,6 +37,8 @@
         'templates/web_layout.xml',
         'views/res_config_settings.xml',
         'views/remove_odoo_templates.xml',
+        'views/menu_overrides.xml',
+        # 'data/module_icons.xml',
         # 'wizard/wizard.xml',
     ],
     'assets': {
