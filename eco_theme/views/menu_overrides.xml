@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="crm.crm_menu_root" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_CRM.png</field>
+    </record>
+    <record id="account.menu_finance" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_ACCOUNTING.png</field>
+    </record>
+    <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_CALENDAR.png</field>
+    </record>
+    <!-- <record id="account.account_menu_root" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_ACCOUNTING.png</field>
+    </record>
+     -->
+
+</odoo>
