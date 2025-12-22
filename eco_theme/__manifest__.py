@@ -26,7 +26,8 @@
         'stock',
         'web_tour',
         'auth_signup',
-        'base_setup','account'
+        'base_setup','account','purchase','sale','purchase_request','stock','project','utm',
+        'spreadsheet_dashboard'
 
     ],
     'excludes': [
