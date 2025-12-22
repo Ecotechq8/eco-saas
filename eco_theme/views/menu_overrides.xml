@@ -23,9 +23,9 @@
     <record id="purchase.menu_purchase_root" model="ir.ui.menu">
         <field name="web_icon">eco_theme,static/src/img/icons/SVG_Purchase.png</field>
     </record>
-    <record id="project_todo.menu_todo_todos" model="ir.ui.menu">
+    <!-- <record id="project_todo.menu_todo_todos" model="ir.ui.menu">
         <field name="web_icon">eco_theme,static/src/img/icons/SVG_To-do.png</field>
-    </record>
+    </record> -->
     <record id="base.menu_administration" model="ir.ui.menu">
         <field name="web_icon">eco_theme,static/src/img/icons/SVG_Settings.png</field>
     </record>
