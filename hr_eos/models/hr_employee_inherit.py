@@ -252,62 +252,61 @@ class HrEmployeeInherit(models.Model):
     def get_employee_termination_and_resignation_amount(self):
         employee_obj = self.env['hr.employee'].search([])
         rule_obj = self.env['hr.config.rules'].search([])
+        if rule_obj:
+            rule_obj = self.env['hr.config.rules'].search([])[0]
         for rec in employee_obj:
-            hr_contract_obj = self.env['hr.contract'].search(
-                [('employee_id', '=', rec.id), ('state', 'not in', ['close', 'cancel'])],
-    order='date_start desc',
-    limit=1)
-            if rule_obj:
-                rule_obj = self.env['hr.config.rules'].search([])[0]
-            if hr_contract_obj:
-                contract_start_year = (hr_contract_obj.date_start).year
-                contract_start_month = (hr_contract_obj.date_start).month
-                current_year = datetime.now().year
-                current_month = datetime.now().month
-                diff_years = current_year - contract_start_year
-                diff_month = current_month - contract_start_month
-                diff_years += diff_month / 12
-                salary_per_day = hr_contract_obj.eos_amount / 26
-                total = 0
-                diff = 0
-                total_regis = 0
-                if rule_obj:
-                    for termination in rule_obj.terminations_rule_ids:
-                        if termination.termination_rang_start <= diff_years < termination.termination_rang_end:
-                            newdiff = diff_years - diff
-                            second_rule_value = (
-                                                        termination.termination_days_per_year * newdiff * salary_per_day) * termination.deduction_amount
-                            second_rule_value += total
+            hr_contract_objs = self.env['hr.contract'].search(
+                [('employee_id', '=', rec.id), ('state', 'not in', ['close', 'cancel'])])
+            for hr_contract_obj in hr_contract_objs:
+                if hr_contract_obj:
+                    contract_start_year = (hr_contract_obj.date_start).year
+                    contract_start_month = (hr_contract_obj.date_start).month
+                    current_year = datetime.now().year
+                    current_month = datetime.now().month
+                    diff_years = current_year - contract_start_year
+                    diff_month = current_month - contract_start_month
+                    diff_years += diff_month / 12
+                    salary_per_day = hr_contract_obj.eos_amount / 26
+                    total = 0
+                    diff = 0
+                    total_regis = 0
+                    if rule_obj:
+                        for termination in rule_obj.terminations_rule_ids:
+                            if termination.termination_rang_start <= diff_years < termination.termination_rang_end:
+                                newdiff = diff_years - diff
+                                second_rule_value = (
+                                                            termination.termination_days_per_year * newdiff * salary_per_day) * termination.deduction_amount
+                                second_rule_value += total
 
-                            hr_contract_obj.employee_id.update({'termination_amount': second_rule_value})
-                            # rec.state = 'terminated'
-                        else:
-                            diff += (termination.termination_rang_end - termination.termination_rang_start)
-                            diff2 = (termination.termination_rang_end - termination.termination_rang_start)
-                            total += (
-                                             termination.termination_days_per_year * diff2 * salary_per_day) * termination.deduction_amount
-                if rule_obj:
-                    counter = 0
-                    diff_regis22 = 0
-                    for resignation in rule_obj.resignation_rule_ids:
-                        if resignation.resignation_rang_start <= diff_years < resignation.resignation_rang_end:
-
-                            newdiff = diff_years - diff_regis22
-                            second_regis_value = (resignation.resignation_days_per_year * newdiff)
-                            second_regis_value += total_regis
-                            final_regis_value = second_regis_value * salary_per_day * resignation.deduction_amount
-                            hr_contract_obj.employee_id.update({'resignation_amount': final_regis_value})
-                            # rec.state = 'resigned'
-                            break
-                        else:
-                            if counter > 0:
-                                diff_regis = resignation.resignation_rang_end
-                                diff_regis2 = resignation.resignation_rang_end
-                                diff_regis22 += resignation.resignation_rang_end
-                                total_regis += (resignation.resignation_days_per_year * diff_regis)
-
+                                hr_contract_obj.employee_id.update({'termination_amount': second_rule_value})
+                                # rec.state = 'terminated'
                             else:
-                                counter += 1
+                                diff += (termination.termination_rang_end - termination.termination_rang_start)
+                                diff2 = (termination.termination_rang_end - termination.termination_rang_start)
+                                total += (
+                                                termination.termination_days_per_year * diff2 * salary_per_day) * termination.deduction_amount
+                    if rule_obj:
+                        counter = 0
+                        diff_regis22 = 0
+                        for resignation in rule_obj.resignation_rule_ids:
+                            if resignation.resignation_rang_start <= diff_years < resignation.resignation_rang_end:
+
+                                newdiff = diff_years - diff_regis22
+                                second_regis_value = (resignation.resignation_days_per_year * newdiff)
+                                second_regis_value += total_regis
+                                final_regis_value = second_regis_value * salary_per_day * resignation.deduction_amount
+                                hr_contract_obj.employee_id.update({'resignation_amount': final_regis_value})
+                                # rec.state = 'resigned'
+                                break
+                            else:
+                                if counter > 0:
+                                    diff_regis = resignation.resignation_rang_end
+                                    diff_regis2 = resignation.resignation_rang_end
+                                    diff_regis22 += resignation.resignation_rang_end
+                                    total_regis += (resignation.resignation_days_per_year * diff_regis)
+
+                                else:
+                                    counter += 1
 
     @api.model
     def get_employee_indemnity_liability(self):
