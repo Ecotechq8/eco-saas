@@ -10,8 +10,18 @@
     <record id="calendar.mail_menu_calendar" model="ir.ui.menu">
         <field name="web_icon">eco_theme,static/src/img/icons/SVG_Calendar.png</field>
     </record>
-    <!-- <record id="account.account_menu_root" model="ir.ui.menu">
-        <field name="web_icon">eco_theme,static/src/img/icons/SVG_ACCOUNTING.png</field>
+    <record id="mail.menu_root_discuss" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_Discus.png</field>
+    </record>
+    <!-- <record id="sale.sale_menu_root" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_Sales.png</field>
+    </record>
+    
+    <record id="purchase_request.parent_menu_purchase_request" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/SVG_Purchase_Requests.png</field>
+    </record>
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/logo.png</field>
     </record>
      -->
 

@@ -26,7 +26,7 @@
         'stock',
         'web_tour',
         'auth_signup',
-        'base_setup'
+        'base_setup','account'
 
     ],
     'excludes': [
