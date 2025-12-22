@@ -172,7 +172,7 @@
     justify-content: center;
 }
 
-.mk_app_menu.dropdown-menu a:hover {
+.mk_app_menu.dropdown-menu > a:hover {
     color: #0d6efd;
     transform: translateY(-4px) scale(1.05);
     box-shadow: 0 8px 20px rgba(13, 110, 253, 0.2); /* subtle floating effect */
