@@ -18,7 +18,7 @@
     </record>
     
     <record id="purchase_request.parent_menu_purchase_request" model="ir.ui.menu">
-        <field name="web_icon">eco_theme,static/src/img/icons/purchase_requests.png</field>
+        <field name="web_icon">eco_theme,static/src/img/icons/purchase_request.png</field>
     </record>
     <record id="purchase.menu_purchase_root" model="ir.ui.menu">
         <field name="web_icon">eco_theme,static/src/img/icons/purchase.png</field>
