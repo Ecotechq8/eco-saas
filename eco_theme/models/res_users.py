@@ -57,7 +57,6 @@ class Users(models.Model):
                 _logger.info(f"Checking icon path: {path_exist}")
                 if path_exist:
                     activity['icon'] = icon_path
-                return activities
         return activities
 
        
