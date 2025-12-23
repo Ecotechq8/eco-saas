@@ -50,9 +50,10 @@ class Users(models.Model):
                 eco_module,
                 'static', 'src', 'img', 'icons',f'{original_module}.png'
             )
-            if icon_path:
-                icon = f'/{eco_module}/static/src/img/icons/{original_module}.png'
-                activity['icon'] = icon
+                if icon_path:
+                    icon = f'/{eco_module}/static/src/img/icons/{original_module}.png'
+                    activity['icon'] = icon
+                return activities
         return activities
 
        
