@@ -46,7 +46,10 @@ class Users(models.Model):
             eco_modules = ['eco_theme','eco_advanced']
             for eco_module in eco_modules:
                 icon_file = f'{eco_module}/static/src/img/icons/{original_module}.png'
-                path_exist = file_path(icon_file)
+                try:
+                    path_exist = file_path(icon_file)
+                except Exception:
+                    path_exist = False
                 icon_path = "/"+icon_file
                 print(f"Checking icon path: {path_exist}")
                 if path_exist:
