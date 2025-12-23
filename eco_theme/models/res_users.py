@@ -1,7 +1,7 @@
-from odoo import api, models, fields
+from odoo import api, models
 from markupsafe import Markup
 
-from odoo.modules import get_resource_path
+from odoo.tools.misc import file_path
 from odoo.tools import _
 
 
@@ -45,15 +45,12 @@ class Users(models.Model):
             original_module = Model._original_module
             eco_modules = ['eco_theme','eco_advanced']
             for eco_module in eco_modules:
-
-                icon_path = get_resource_path(
-                eco_module,
-                'static', 'src', 'img', 'icons',f'{original_module}.png'
-            )
-                print(f"Checking icon path: {icon_path}")
-                if icon_path:
-                    icon = f'/{eco_module}/static/src/img/icons/{original_module}.png'
-                    activity['icon'] = icon
+                icon_file = f'{eco_module}/static/src/img/icons/{original_module}.png'
+                path_exist = file_path(icon_file)
+                icon_path = "/"+icon_file
+                print(f"Checking icon path: {path_exist}")
+                if path_exist:
+                    activity['icon'] = icon_path
                 return activities
         return activities
 
