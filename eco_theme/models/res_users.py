@@ -46,10 +46,11 @@ class Users(models.Model):
         activities = super()._get_activity_groups()
         for activity in activities:
             custom_icon = self._find_custom_icon(activity)
+            default_icon = icon_file = f"/eco_theme/static/src/img/icons/timesheet.png"
             if custom_icon:
                 activity["icon"] = custom_icon
             else:
-                activity["icon"] = ""
+                activity["icon"] = default_icon
         return activities
 
     def _find_custom_icon(self, activity):
