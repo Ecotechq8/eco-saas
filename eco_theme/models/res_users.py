@@ -3,7 +3,10 @@ from markupsafe import Markup
 
 from odoo.tools.misc import file_path
 from odoo.tools import _
+import logging
 
+
+_logger = logging.getLogger(__name__)
 
 class Users(models.Model):
     _inherit = 'res.users'
@@ -51,7 +54,7 @@ class Users(models.Model):
                 except Exception:
                     path_exist = False
                 icon_path = "/"+icon_file
-                print(f"Checking icon path: {path_exist}")
+                _logger.info(f"Checking icon path: {path_exist}")
                 if path_exist:
                     activity['icon'] = icon_path
                 return activities
