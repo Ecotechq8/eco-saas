@@ -1,6 +1,7 @@
-from odoo import models, fields
+from odoo import api, models, fields
 from markupsafe import Markup
 
+from odoo.modules import get_module_resource
 from odoo.tools import _
 
 
@@ -33,4 +34,25 @@ class Users(models.Model):
 
         self.sudo().odoobot_state = 'onboarding_emoji'
         return channel
-        
+    
+
+    @api.model
+    def _get_activity_groups(self):
+        activities = super()._get_activity_groups()
+        for activity in activities:
+            module_name = activity.get('model','')
+            Model = self.env[module_name]
+            original_module = Model._original_module
+            eco_modules = ['eco_theme','eco_advanced']
+            for eco_module in eco_modules:
+
+                icon_path = get_module_resource(
+                eco_module,
+                'static', 'src', 'img', 'icons',f'{original_module}.png'
+            )
+            if icon_path:
+                icon = f'/{eco_module}/static/src/img/icons/{original_module}.png'
+                activity['icon'] = icon
+        return activities
+
+       
