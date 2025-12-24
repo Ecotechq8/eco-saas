@@ -10,7 +10,8 @@
     'author': 'Ahmed Ismail (EcoTech.co)',
 
     'depends': [
-        'eco_theme',
+        'eco_theme','mrp','hr','hr_holidays','hr_recruitment','employee_religion','hr_attendance',
+        'hr_skills','hr_contract','eco_hr_custom','dev_hr_loan','check_management'
     ],
     'excludes': [
         'web_enterprise',
