@@ -47,6 +47,9 @@
     <record id="utm.menu_link_tracker_root" model="ir.ui.menu">
         <field name="web_icon">eco_theme,static/src/img/icons/utm.png</field>
     </record>
+    <record id="project_todo.menu_todo_todos" model="ir.ui.menu">
+        <field name="web_icon">eco_theme,static/src/img/icons/utm.png</field>
+    </record>
     
 
 </odoo>

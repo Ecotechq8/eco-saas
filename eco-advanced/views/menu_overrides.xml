@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <odoo>
-
+<record id="mrp.menu_mrp_root" model="ir.ui.menu">
+        <field name="web_icon">eco-advanced,static/src/img/icons/mrp.png</field>
+</record>
 </odoo>

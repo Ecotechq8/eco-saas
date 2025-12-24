@@ -57,7 +57,7 @@ class Users(models.Model):
         module_name = activity.get("model", "")
         Model = self.env[module_name]
         original_module = Model._original_module
-        eco_modules = ["eco_theme", "eco_advanced"]
+        eco_modules = ["eco_theme", "eco-advanced"]
         icon_path = False
         for eco_module in eco_modules:
             icon_file = f"{eco_module}/static/src/img/icons/{original_module}.png"
