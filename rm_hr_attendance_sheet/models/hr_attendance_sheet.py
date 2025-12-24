@@ -936,15 +936,17 @@ class AttendanceSheetLine(models.Model):
                               required=False, readonly=True)
     note = fields.Text("Note", readonly=True)
 
-    @api.model
-    def create(self, vals):
-        if 'att_policy_id' not in vals or not vals['att_policy_id']:
-            default_policy = self.env['hr.attendance.policy'].search([], limit=1)
-            if default_policy:
-                vals['att_policy_id'] = default_policy.id
-        return super().create(vals)
 
-    def write(self, vals):
-        if 'att_policy_id' in vals and not vals['att_policy_id']:
-            vals['att_policy_id'] = self.att_policy_id.id
-        return super().write(vals)
+    # Attendance Policy belongs to Attendance Sheet, NOT the line
+    # @api.model
+    # def create(self, vals):
+    #     if 'att_policy_id' not in vals or not vals['att_policy_id']:
+    #         default_policy = self.env['hr.attendance.policy'].search([], limit=1)
+    #         if default_policy:
+    #             vals['att_policy_id'] = default_policy.id
+    #     return super().create(vals)
+
+    # def write(self, vals):
+    #     if 'att_policy_id' in vals and not vals['att_policy_id']:
+    #         vals['att_policy_id'] = self.att_policy_id.id
+    #     return super().write(vals)
