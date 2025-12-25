@@ -717,7 +717,7 @@ class AttendanceSheet(models.Model):
                 'date_from': sheet.date_from,
                 'date_to': sheet.date_to,
                 'contract_id': contracts[0].id,
-                'struct_id': contracts[0].structure_type_id.default_struct_id.id
+                'struct_id': contracts[0].structure_type_id
             })
             # new_payslip._onchange_employee()
             payslip_dict = new_payslip._convert_to_write({
@@ -781,6 +781,7 @@ class AttendanceSheet(models.Model):
             'sequence': 30,
             'number_of_days': self.no_overtime,
             'number_of_hours': self.tot_overtime,
+            'contract_id': self.contract_id.id
         }]
         absence = [{
             'name': "Absence",
@@ -789,6 +790,7 @@ class AttendanceSheet(models.Model):
             'sequence': 35,
             'number_of_days': self.no_absence,
             'number_of_hours': self.tot_absence,
+            'contract_id': self.contract_id.id
         }]
         late = [{
             'name': "Late In",
@@ -797,6 +799,7 @@ class AttendanceSheet(models.Model):
             'sequence': 40,
             'number_of_days': self.no_late,
             'number_of_hours': self.tot_late,
+            'contract_id': self.contract_id.id
         }]
         difftime = [{
             'name': "Difference time",
@@ -805,6 +808,7 @@ class AttendanceSheet(models.Model):
             'sequence': 45,
             'number_of_days': self.no_difftime,
             'number_of_hours': self.tot_difftime,
+            'contract_id': self.contract_id.id
         }]
         worked_days_lines = overtime + late + absence + difftime
         print("worked_days_lines ===", worked_days_lines)
