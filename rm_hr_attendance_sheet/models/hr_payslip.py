@@ -47,6 +47,8 @@ class Payslip(models.Model):
 
     @api.onchange('employee_id')
     def onchange_employee_id(self):
+        if not self.employee_id:
+            return
         work_entry_obj = self.env['hr.work.entry.type']
         overtime_work_entry = work_entry_obj.search([('code', '=', 'ATTSHOT')])
         latin_work_entry = work_entry_obj.search([('code', '=', 'ATTSHLI')])
