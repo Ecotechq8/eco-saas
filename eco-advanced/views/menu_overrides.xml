@@ -16,4 +16,7 @@
 <record id="hr_recruitment.menu_hr_recruitment_root" model="ir.ui.menu">
         <field name="web_icon">eco-advanced,static/src/img/icons/hr_recruitment.png</field>
 </record>
+<record id="om_hr_payroll.menu_hr_payroll_root" model="ir.ui.menu">
+        <field name="web_icon">eco-advanced,static/src/img/icons/om_hr_payroll.png</field>
+</record>
 </odoo>
