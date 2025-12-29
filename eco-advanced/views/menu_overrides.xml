@@ -4,8 +4,11 @@
 <record id="mrp.menu_mrp_root" model="ir.ui.menu">
         <field name="web_icon">eco-advanced,static/src/img/icons/mrp.png</field>
 </record>
-<record id="hr_holidays.menu_hr_attendance_root" model="ir.ui.menu">
+<record id="hr_attendance.menu_hr_attendance_root" model="ir.ui.menu">
         <field name="web_icon">eco-advanced,static/src/img/icons/hr_attendance.png</field>
+</record>
+<record id="hr_holidays.menu_hr_holidays_root" model="ir.ui.menu">
+        <field name="web_icon">eco-advanced,static/src/img/icons/hr_holidays.png</field>
 </record>
 <record id="hr.menu_hr_root" model="ir.ui.menu">
         <field name="web_icon">eco-advanced,static/src/img/icons/hr.png</field>
