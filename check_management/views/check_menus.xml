@@ -4,8 +4,8 @@
 
         <menuitem name="Checks" id="native_check_main_menu"
                   sequence="20"
-                  groups="account.group_account_manager"/>
-
+                  groups="account.group_account_manager" web_icon="check_management,static/icons/checks.png"/>
+                    
         <menuitem
             name="Check Books"
             id="check_book_menuitem"

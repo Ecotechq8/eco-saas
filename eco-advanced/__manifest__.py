@@ -11,7 +11,7 @@
 
     'depends': [
         'eco_theme','mrp','hr','hr_holidays','hr_recruitment','employee_religion','hr_attendance',
-        'hr_skills','hr_contract','om_hr_payroll','check_management'
+        'hr_skills','hr_contract','om_hr_payroll','check_management','om_hr_payroll'
     ],
     'excludes': [
         'web_enterprise',
