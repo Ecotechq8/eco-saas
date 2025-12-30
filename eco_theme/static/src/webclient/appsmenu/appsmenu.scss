@@ -75,6 +75,7 @@
 }
 
 .mk_app_menu {
+  top: 0 !important;
   &.dropdown-menu {
     display: flex !important;
     flex-direction: row !important;
@@ -230,7 +231,13 @@ span.o-dropdown-item[data-menu="install_pwa"] {
     display: none !important;
 }
 
+.o_menu_systray {
+  z-index: 99999;
+}
 
+.o_navbar_apps_menu{
+  z-index: 99999;
+}
 
 
 
