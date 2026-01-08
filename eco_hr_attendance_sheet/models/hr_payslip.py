@@ -45,62 +45,62 @@ class Payslip(models.Model):
             res.append(attendance_line)
         return res
 
-    @api.onchange('employee_id')
-    def onchange_employee_id(self):
-        if not self.employee_id:
-            return
-        work_entry_obj = self.env['hr.work.entry.type']
-        overtime_work_entry = work_entry_obj.search([('code', '=', 'ATTSHOT')])
-        latin_work_entry = work_entry_obj.search([('code', '=', 'ATTSHLI')])
-        absence_work_entry = work_entry_obj.search([('code', '=', 'ATTSHAB')])
-        difftime_work_entry = work_entry_obj.search([('code', '=', 'ATTSHDT')])
-        if not overtime_work_entry:
-            raise ValidationError(_(
-                'Please Add Work Entry Type For Attendance Sheet Overtime With Code ATTSHOT'))
-        if not latin_work_entry:
-            raise ValidationError(_(
-                'Please Add Work Entry Type For Attendance Sheet Late In With Code ATTSHLI'))
-        if not absence_work_entry:
-            raise ValidationError(_(
-                'Please Add Work Entry Type For Attendance Sheet Absence With Code ATTSHAB'))
-        if not difftime_work_entry:
-            raise ValidationError(_(
-                'Please Add Work Entry Type For Attendance Sheet Diff Time With Code ATTSHDT'))
+    # @api.onchange('employee_id')
+    # def onchange_employee_id(self):
+    #     if not self.employee_id:
+    #         return
+    #     work_entry_obj = self.env['hr.work.entry.type']
+    #     overtime_work_entry = work_entry_obj.search([('code', '=', 'ATTSHOT')])
+    #     latin_work_entry = work_entry_obj.search([('code', '=', 'ATTSHLI')])
+    #     absence_work_entry = work_entry_obj.search([('code', '=', 'ATTSHAB')])
+    #     difftime_work_entry = work_entry_obj.search([('code', '=', 'ATTSHDT')])
+    #     if not overtime_work_entry:
+    #         raise ValidationError(_(
+    #             'Please Add Work Entry Type For Attendance Sheet Overtime With Code ATTSHOT'))
+    #     if not latin_work_entry:
+    #         raise ValidationError(_(
+    #             'Please Add Work Entry Type For Attendance Sheet Late In With Code ATTSHLI'))
+    #     if not absence_work_entry:
+    #         raise ValidationError(_(
+    #             'Please Add Work Entry Type For Attendance Sheet Absence With Code ATTSHAB'))
+    #     if not difftime_work_entry:
+    #         raise ValidationError(_(
+    #             'Please Add Work Entry Type For Attendance Sheet Diff Time With Code ATTSHDT'))
 
-        overtime = [{
-            'name': "Overtime",
-            'code': 'OVT',
-            'work_entry_type_id': overtime_work_entry[0].id,
-            'sequence': 30,
-            'number_of_days': 0.0,
-            'number_of_hours': 0.0,
-        }]
-        absence = [{
-            'name': "Absence",
-            'code': 'ABS',
-            'work_entry_type_id': absence_work_entry[0].id,
-            'sequence': 35,
-            'number_of_days': 0.0,
-            'number_of_hours': 0.0,
-        }]
-        late = [{
-            'name': "Late In",
-            'code': 'LATE',
-            'work_entry_type_id': latin_work_entry[0].id,
-            'sequence': 40,
-            'number_of_days': 0.0,
-            'number_of_hours': 0.0,
-        }]
-        difftime = [{
-            'name': "Difference time",
-            'code': 'DIFFT',
-            'work_entry_type_id': difftime_work_entry[0].id,
-            'sequence': 45,
-            'number_of_days': 0.0,
-            'number_of_hours': 0.0,
-        }]
-        worked_days_lines = overtime + late + absence + difftime
-        self.worked_days_line_ids = [(0, 0, x) for x in worked_days_lines]
+    #     overtime = [{
+    #         'name': "Overtime",
+    #         'code': 'OVT',
+    #         'work_entry_type_id': overtime_work_entry[0].id,
+    #         'sequence': 30,
+    #         'number_of_days': 0.0,
+    #         'number_of_hours': 0.0,
+    #     }]
+    #     absence = [{
+    #         'name': "Absence",
+    #         'code': 'ABS',
+    #         'work_entry_type_id': absence_work_entry[0].id,
+    #         'sequence': 35,
+    #         'number_of_days': 0.0,
+    #         'number_of_hours': 0.0,
+    #     }]
+    #     late = [{
+    #         'name': "Late In",
+    #         'code': 'LATE',
+    #         'work_entry_type_id': latin_work_entry[0].id,
+    #         'sequence': 40,
+    #         'number_of_days': 0.0,
+    #         'number_of_hours': 0.0,
+    #     }]
+    #     difftime = [{
+    #         'name': "Difference time",
+    #         'code': 'DIFFT',
+    #         'work_entry_type_id': difftime_work_entry[0].id,
+    #         'sequence': 45,
+    #         'number_of_days': 0.0,
+    #         'number_of_hours': 0.0,
+    #     }]
+    #     worked_days_lines = overtime + late + absence + difftime
+    #     self.worked_days_line_ids = [(0, 0, x) for x in worked_days_lines]
 
 
 class HrPayrollStructure(models.Model):
