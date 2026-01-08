@@ -4,7 +4,7 @@
     'category': 'Human Resources',
     'summary': 'HR Custom  ',
     'description': 'HR Custom ',
-    'depends': ['base', 'hr','hr_enhancement','hr_contract','rm_hr_attendance_sheet','om_hr_payroll'],
+    'depends': ['base', 'hr','hr_enhancement','hr_contract'],
     'author': "Eco-Tech, Zaynab Ibrahim",
     'website': "https://ecotech.com",
     'data': [
