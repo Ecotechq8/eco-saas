@@ -1,17 +1,3 @@
-# -*- coding: utf-8 -*-
-
-##############################################################################
-#
-#
-#    Copyright (C) 2020-TODAY .
-#    Author: Eng.Ramadan Khalil (<rkhalil1990@gmail.com>)
-#
-#    It is forbidden to publish, distribute, sublicense, or sell copies
-#    of the Software or modified copies of the Software.
-#
-##############################################################################
-
-
 from . import hr_attendance_sheet
 from . import hr_attendance_policy
 from . import hr_holidays
@@ -21,3 +7,4 @@ from . import att_sheet_batch
 from . import Payslip_worked_days
 from . import hr_payslip
 from . import hr_employee
+from . import hr_work_entry_type

@@ -47,7 +47,7 @@
             <field name="round_days_type">DOWN</field>
         </record>
 
-        <record id="structure_attendance_sheet" model="hr.payroll.structure">
+        <!-- <record id="structure_attendance_sheet" model="hr.payroll.structure">
             <field name="name">Attendance Sheet Salary Structure</field>
             <field name="type_id"
                    ref="eco_hr_attendance_sheet.structure_type_attendance_sheet"/>
@@ -64,7 +64,7 @@
         <record id="eco_hr_attendance_sheet.structure_type_attendance_sheet"
                 model="hr.payroll.structure.type">
             <field name="default_struct_id" ref="eco_hr_attendance_sheet.structure_attendance_sheet"/>
-        </record>
+        </record> -->
 
         <record id="holiday_status_per" model="hr.leave.type">
             <field name="name">Permission</field>
@@ -89,7 +89,7 @@
 
 
         <!-- Hr Salary Rules for Absence Deduction-->
-        <record id="hr_salary_rule_att_absence" model="hr.salary.rule">
+        <!-- <record id="hr_salary_rule_att_absence" model="hr.salary.rule">
             <field name="code">ABS</field>
             <field name="name">Absence</field>
             <field name="category_id" ref="hr_payroll.DED"/>
@@ -100,9 +100,9 @@
             <field name="amount_python_compute">result=-(worked_days['ATTSHAB'].number_of_hours * (contract.wage /(9*26)))</field>
             <field name="sequence" eval="60"/>
             <field name="note">deduction of absence days</field>
-        </record>
+        </record> -->
 
-        <record id="hr_salary_rule_att_late" model="hr.salary.rule">
+        <!-- <record id="hr_salary_rule_att_late" model="hr.salary.rule">
             <field name="code">LATE</field>
             <field name="name">Late In</field>
             <field name="category_id" ref="hr_payroll.DED"/>
@@ -114,9 +114,9 @@
             <field name="amount_python_compute">result=-worked_days['ATTSHLI'].number_of_hours * contract.wage / (9*26)</field>
             <field name="sequence" eval="65"/>
             <field name="note">deduction of late in</field>
-        </record>
+        </record> -->
 
-        <record id="hr_salary_rule_att_diff" model="hr.salary.rule">
+        <!-- <record id="hr_salary_rule_att_diff" model="hr.salary.rule">
             <field name="code">DIFF</field>
             <field name="name">Difference time</field>
             <field name="category_id" ref="hr_payroll.DED"/>
@@ -127,10 +127,10 @@
             <field name="amount_python_compute">result=-worked_days['ATTSHDT'].number_of_hours * contract.wage / (9*26)</field>
             <field name="sequence" eval="70"/>
             <field name="note">deduction of Difference time</field>
-        </record>
+        </record> -->
 
         <!-- Hr Salary Rules for Absence Deduction-->
-        <record id="hr_salary_rule_att_overtime" model="hr.salary.rule">
+        <!-- <record id="hr_salary_rule_att_overtime" model="hr.salary.rule">
             <field name="code">OVT</field>
             <field name="name">overtime</field>
             <field name="category_id" ref="hr_payroll.ALW"/>
@@ -141,6 +141,6 @@
             <field name="amount_python_compute">result = (contract.wage /(9*26)) * worked_days['ATTSHOT'].number_of_hours or 0</field>
             <field name="sequence" eval="30"/>
             <field name="note">Over time</field>
-        </record>
+        </record> -->
     </data>
 </odoo>

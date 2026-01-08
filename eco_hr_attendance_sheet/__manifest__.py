@@ -14,10 +14,10 @@
                 'hr',
                 'om_hr_payroll',
                 'hr_holidays',
-                'hr_attendance','hr_work_entry'],
+                'hr_attendance','hr_work_entry','hr_work_entry_contract'],
     'data': [
         'data/ir_sequence.xml',
-        # 'data/data.xml',
+        'data/data.xml',
         'data/cron.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
