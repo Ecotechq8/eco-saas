@@ -49,10 +49,16 @@ class ResourceMixin(models.AbstractModel):
             day_hours[start.date()] += (stop - start).total_seconds() / 3600
 
         # compute number of days as quarters
-        days = sum(
-            float_utils.round(ROUNDING_FACTOR * day_hours[day] / day_total[day]) / ROUNDING_FACTOR
-            for day in day_hours
-        )
+        days = 0
+        for day, hours in day_hours.items():
+            total = day_total.get(day, 0)
+            if total <= 0:
+                continue  # skip days with no attendance defined
+            
+            days += float_utils.round(
+                ROUNDING_FACTOR * hours / total
+            ) / ROUNDING_FACTOR
+
         return {
             'days': days,
             'hours': sum(day_hours.values()),
