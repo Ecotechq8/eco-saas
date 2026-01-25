@@ -1,4 +1,5 @@
 from . import models
+from . import controllers
 import base64
 # from . import wizard
 from odoo.tools import file_open
