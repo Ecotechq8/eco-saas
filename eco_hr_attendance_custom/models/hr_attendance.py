@@ -4,7 +4,9 @@
 
 from odoo import fields, models, api, _
 import pytz
-
+from odoo import models, api
+from odoo.http import request
+import requests
 
 
 class HrAttendance(models.Model):
@@ -30,3 +32,61 @@ class HrAttendance(models.Model):
                 naive_utc = updated_utc.replace(tzinfo=None)
                 rec.check_in = naive_utc
 
+    def _get_ip_location(self):
+        try:
+            if not request:
+                return {}
+
+            ip = request.httprequest.remote_addr
+
+            response = requests.get(
+                f"http://ip-api.com/json/{ip}",
+                timeout=3
+            )
+
+            data = response.json()
+
+            if data.get("status") == "success":
+                return {
+                    "latitude": data.get("lat"),
+                    "longitude": data.get("lon"),
+                    "city": data.get("city"),
+                    "country": data.get("country"),
+                }
+
+        except Exception:
+            pass
+
+        return {}
+
+
+    @api.model
+    def create(self, vals):
+        location = self._get_ip_location()
+
+        if location:
+            vals.update({
+                "in_latitude": location.get("latitude"),
+                "in_longitude": location.get("longitude"),
+                "in_city": location.get("city"),
+                "in_country_name": location.get("country"),
+            })
+
+        return super().create(vals)
+
+
+    def write(self, vals):
+
+        # Detect if checkout is being written
+        if "check_out" in vals:
+            location = self._get_ip_location()
+
+            if location:
+                vals.update({
+                    "out_latitude": location.get("latitude"),
+                    "out_longitude": location.get("longitude"),
+                    "out_city": location.get("city"),
+                    "out_country_name": location.get("country"),
+                })
+
+        return super().write(vals)
