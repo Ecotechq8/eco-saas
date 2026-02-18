@@ -59,7 +59,6 @@ class HrAttendance(models.Model):
 
         return {}
 
-
     @api.model
     def create(self, vals):
         location = self._get_ip_location()
@@ -73,7 +72,6 @@ class HrAttendance(models.Model):
             })
 
         return super().create(vals)
-
 
     def write(self, vals):
 
