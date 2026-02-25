@@ -1,34 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <record id="res_config_settings_view_form_location" model="ir.ui.view">
-        <field name="name">res.config.settings.view.form.inherit.hr.attendance.location</field>
-        <field name="model">res.config.settings</field>
-        <field name="priority" eval="82"/>
-        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//block[@name='overtime_settings']" position="after">
-                <div class="app_settings_block"
-                     data-string="Attendance Locations">
+<record id="res_config_settings_view_form_location" model="ir.ui.view">
+    <field name="name">res.config.settings.view.form.inherit.hr.attendance.location</field>
+    <field name="model">res.config.settings</field>
+    <field name="priority" eval="82"/>
+    <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+    <field name="arch" type="xml">
 
-                    <block title="Allowed Attendance Locations"
-                           name="company_locations">
+        <xpath expr="//block[@name='overtime_settings']" position="after">
 
-                        <setting string="Locations"
-                                 help="Define all allowed locations for employee check-in and check-out.">
+            <block title="Allowed Attendance Locations"
+                   name="company_locations">
 
-                            <field name="attendance_location_ids">
-                                <tree editable="bottom">
-                                    <field name="name"/>
-                                    <field name="latitude"/>
-                                    <field name="longitude"/>
-                                </tree>
-                            </field>
+                <setting string="Locations"
+                         help="Define allowed locations for employee check-in and check-out."
+                         company_dependent="1">
 
-                        </setting>
+                    <field name="attendance_location_ids"
+                           context="{'default_company_id': company_id}">
 
-                    </block>
-                </div>
-            </xpath>
-        </field>
-    </record>
-</odoo>
+                        <list editable="bottom">
+                            <field name="name"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                        </list>
+
+                    </field>
+
+                </setting>
+
+            </block>
+
+        </xpath>
+
+    </field>
+</record>

@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_attendance_location_attendance_location,attendance_location.attendance_location,model_attendance_location_attendance_location,base.group_user,1,1,1,1
+access_company_attendance_location,company.attendance.location,model_company_attendance_location,hr_attendance.group_hr_attendance_manager,1,1,1,1
