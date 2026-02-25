@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        
-        $END$
-    
-    </data>
+
+    <!-- ============================== -->
+    <!-- Remove Taxes Column - Sale Order -->
+    <!-- ============================== -->
+    <template id="report_saleorder_remove_tax"
+              inherit_id="sale.report_saleorder_document">
+
+        <!-- Remove Taxes Header -->
+        <xpath expr="//th[normalize-space()='Taxes']" position="replace"/>
+
+        <!-- Remove Taxes Column in Lines -->
+        <xpath expr="//td[contains(@class,'text-end')][.//span[@t-field='line.tax_id']]" position="replace"/>
+
+    </template>
+
+
+    <!-- ============================== -->
+    <!-- Remove Taxes Column - Invoice -->
+    <!-- ============================== -->
+    <template id="report_invoice_remove_tax"
+              inherit_id="account.report_invoice_document">
+
+        <!-- Remove Taxes Header -->
+        <xpath expr="//th[normalize-space()='Taxes']" position="replace"/>
+
+        <!-- Remove Taxes Column in Lines -->
+        <xpath expr="//td[contains(@class,'text-end')][.//span[@t-field='line.tax_ids']]" position="replace"/>
+
+    </template>
+
 </odoo>
