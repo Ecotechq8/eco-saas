@@ -13,8 +13,7 @@
                        name="company_locations">
 
                     <setting string="Locations"
-                             help="Define allowed locations for employee check-in and check-out."
-                             company_dependent="1">
+                             help="Define allowed locations for employee check-in and check-out.">
 
                         <field name="attendance_location_ids"
                                context="{'default_company_id': company_id}">
