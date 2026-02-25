@@ -22,7 +22,7 @@
     'images': ['static/description/thumbnail.gif'],
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'hr_attendance'],
+    'depends': ['base', 'hr_attendance','sale','account'],
 
     # always loaded
     'data': [
