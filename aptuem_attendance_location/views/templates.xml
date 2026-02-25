@@ -86,7 +86,7 @@
     <!-- ============================= -->
     <menuitem id="menu_company_attendance_location"
               name="Attendance Locations"
-              parent="hr_attendance.menu_hr_attendance_settings"
+              parent="hr_attendance.menu_hr_attendance_root"
               action="action_company_attendance_location"
               sequence="50"/>
 </odoo>
