@@ -1,35 +1,38 @@
-<record id="res_config_settings_view_form_location" model="ir.ui.view">
-    <field name="name">res.config.settings.view.form.inherit.hr.attendance.location</field>
-    <field name="model">res.config.settings</field>
-    <field name="priority" eval="82"/>
-    <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
-    <field name="arch" type="xml">
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_location" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.attendance.location</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="82"/>
+        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
 
-        <xpath expr="//block[@name='overtime_settings']" position="after">
+            <xpath expr="//block[@name='overtime_settings']" position="after">
 
-            <block title="Allowed Attendance Locations"
-                   name="company_locations">
+                <block title="Allowed Attendance Locations"
+                       name="company_locations">
 
-                <setting string="Locations"
-                         help="Define allowed locations for employee check-in and check-out."
-                         company_dependent="1">
+                    <setting string="Locations"
+                             help="Define allowed locations for employee check-in and check-out."
+                             company_dependent="1">
 
-                    <field name="attendance_location_ids"
-                           context="{'default_company_id': company_id}">
+                        <field name="attendance_location_ids"
+                               context="{'default_company_id': company_id}">
 
-                        <list editable="bottom">
-                            <field name="name"/>
-                            <field name="latitude"/>
-                            <field name="longitude"/>
-                        </list>
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="latitude"/>
+                                <field name="longitude"/>
+                            </list>
 
-                    </field>
+                        </field>
 
-                </setting>
+                    </setting>
 
-            </block>
+                </block>
 
-        </xpath>
+            </xpath>
 
-    </field>
-</record>
+        </field>
+    </record>
+</odoo>
