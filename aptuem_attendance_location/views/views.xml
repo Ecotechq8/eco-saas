@@ -7,21 +7,29 @@
         <field name="inherit_id" ref="base.res_config_settings_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//form" position="inside">
-                <app data-string="Attendances" string="Attendances" name="hr_attendance" groups="hr_attendance.group_hr_attendance_manager">
-                    <block title="company Location" name="company_location">
-                        <setting string="company latitude" company_dependent="1" help="Define accuerd company location by set lattiude and Longtude from maps.">
-                            <field name="company_latitude"/>
+                <app data-string="Attendances"
+                     string="Attendances"
+                     name="hr_attendance"
+                     groups="hr_attendance.group_hr_attendance_manager">
+
+                    <block title="Allowed Attendance Locations"
+                           name="company_locations">
+
+                        <setting string="Locations"
+                                 help="Define all allowed locations for employee check-in and check-out.">
+
+                            <field name="attendance_location_ids">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="latitude"/>
+                                    <field name="longitude"/>
+                                </tree>
+                            </field>
+
                         </setting>
-                        <setting string="company longitude" company_dependent="1" help="Define accuerd company location by set lattiude and Longtude from maaps.">
-                            <field name="company_longitude"/>
-                        </setting>
-                        <setting string="Allowed Distance" company_dependent="1" help="Define accuerd company location by set lattiude and Longtude from maaps.">
-                        <div class="d-flex align-items-center">
-                            <field name="allowed_distance"/>
-                            <span>km</span>
-                        </div>
-                        </setting>
+
                     </block>
+
                 </app>
             </xpath>
         </field>

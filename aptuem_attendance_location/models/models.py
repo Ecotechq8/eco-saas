@@ -5,6 +5,7 @@ import logging
 
 _logger = logging.getLogger(__name__)
 
+
 class HrAttendance(models.Model):
     _inherit = 'hr.attendance'
 
@@ -31,7 +32,7 @@ class HrAttendance(models.Model):
         dlat = lat2 - lat1
 
         # Apply Haversine formula
-        a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+        a = sin(dlat / 2) ** 2 + cos(lat1) * cos(lat2) * sin(dlon / 2) ** 2
         c = 2 * atan2(sqrt(a), sqrt(1 - a))
         distance = R * c
 
@@ -39,25 +40,27 @@ class HrAttendance(models.Model):
 
     def _check_company_range(self):
         company = self.env.company
-        company_latitude = company.company_latitude or 0.000000
-        company_longitude = company.company_longitude or 0.0000000
-        allowed_distance_meters = company.allowed_distance or 1100  # Default allowed distance is 1100 meters
-
-        _logger.info(f'company Latitude: {company_latitude}, company Longitude: {company_longitude}, Allowed Distance: {allowed_distance_meters} meters')
 
         for attendance in self:
             if not (attendance.in_latitude and attendance.in_longitude):
-                raise UserError(_("Oops! It seems we're missing your location information. Could you please allow us to access your location so we can proceed?"))
-
-            # Compute the distance between company and attendance location
-            distance_meters = self._compute_distance(
-                company_latitude, company_longitude,
-                attendance.in_latitude, attendance.in_longitude
-            ) * 1000  # Convert kilometers to meters
-
-            if distance_meters > allowed_distance_meters:
                 raise UserError(_(
-                    "You are outside the allowed range of the company location. "
-                    "Please ensure that you are within the company Location. "
-                    "The distance exceeds the allowed distance."
+                    "Location access is required to check in/out."
+                ))
+
+            employee_lat = round(attendance.in_latitude, 6)
+            employee_lon = round(attendance.in_longitude, 6)
+
+            match_found = False
+
+            for location in company.attendance_location_ids:
+                if (
+                        round(location.latitude, 6) == employee_lat and
+                        round(location.longitude, 6) == employee_lon
+                ):
+                    match_found = True
+                    break
+
+            if not match_found:
+                raise UserError(_(
+                    "You are not in an allowed company location."
                 ))
