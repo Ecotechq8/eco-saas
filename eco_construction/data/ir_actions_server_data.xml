@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_recompute_taxes_force" model="ir.actions.server">
+        <field name="name">Recompute Taxes (Force)</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="state">code</field>
+        <field name="code">
+for order in records:
+    # 1. Ensure Company is set to Round Globally (Safety Check)
+    if order.company_id.tax_calculation_rounding_method != 'round_globally':
+        order.company_id.sudo().write({'tax_calculation_rounding_method': 'round_globally'})
+
+    # 2. Force recomputation of order lines first
+    # We invalidate cache to ensure fresh read of tax settings and amounts
+    for line in order.order_line:
+        line.invalidate_recordset(['price_tax', 'price_total', 'price_subtotal', 'price_unit'])
+        line._compute_amount()
+
+    # 3. Then force order recomputation
+    order.invalidate_recordset(['amount_untaxed', 'amount_tax', 'amount_total'])
+    order._compute_amounts()
+        </field>
+    </record>
+</odoo>

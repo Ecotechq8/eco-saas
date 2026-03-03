@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<odoo>
+    <data>
+        <template id="report_contracting_business">
+            <t t-call="web.html_container">
+                <t t-call="web.basic_layout">
+                    <div class="header">
+                        <div class="row">
+                            <div class="col-9">
+                                <t t-if="request.env.company.logo">
+                                    <img t-if="request.env.company.logo" class="o_company_logo_big"
+                                         t-att-src="image_data_uri(request.env.company.logo)"/>
+                                </t>
+                            </div>
+                            <div class="col-5">
+                                <strong style="font-size:19px;">
+                                    <t t-if="request.env.company.street">
+                                        <span t-esc="request.env.company.street"/>,
+                                    </t>
+                                    <br/>
+                                    <t t-if="request.env.company.city">
+                                        <span t-esc="request.env.company.city"/>&#160;
+                                    </t>
+                                    <t t-if="request.env.company.zip">
+                                        <span t-esc="request.env.company.zip"/>
+                                    </t>
+                                    <br/>
+                                    <t t-if="request.env.company.state_id">
+                                        <span t-esc="request.env.company.state_id.name"/>
+                                    </t>
+                                    <br/>
+                                    <t t-if="request.env.company.country_id">
+                                        <span t-esc="request.env.company.country_id.name"/>
+                                    </t>
+                                </strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="page" dir="rtl" style="font-size:14px!important;font-weight: normal!important;">
+                        <style>
+                            .td{
+                            padding:5px;
+                            }
+                        </style>
+                        <!-- Invoice Details -->
+                        <table style="width:100%; border-collapse:collapse; text-align:center;">
+                            <tr>
+                                <td style="background-color:#cccccc;border:1px solid black;">
+                                    <b>التاريخ</b>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="o.invoice_date"/>
+                                </td>
+                                <td style="width:5%;"/>
+                                <td>
+                                    <b>مستخلص رقم</b>
+                                </td>
+                                <td style="background-color:#cccccc;border:1px solid black;">
+                                    <span t-field="o.name"/>
+                                </td>
+                                <td/>
+                                <td style="width:5%;">
+                                    <b>نوعه</b>
+                                </td>
+                                <td style="background-color:#cccccc;border:1px solid black;width:5%;">--</td>
+                                <td style="width:5%;"/>
+                                <td style="border:1px solid black;width:10%;">
+                                    <b>الفترة من</b>
+                                </td>
+                                <td style="border:1px solid black;width:10%;">---</td>
+                                <td style="border:1px solid black;width:10%;">
+                                    <b>الى</b>
+                                </td>
+                                <td style="border:1px solid black;width:10%;">---</td>
+                            </tr>
+                        </table>
+
+                        <br/>
+
+                        <!-- Project & Client Details -->
+                        <table style="width:100%; border-collapse:collapse; text-align:center;">
+                            <tr>
+                                <td style="background-color:#cccccc;border:1px solid black;">
+                                    <b>مشروع</b>
+                                </td>
+                                <td style="border:1px solid black;">Project Test 999</td>
+                                <td style="width:10%;"/>
+                                <td style="background-color:#cccccc;border:1px solid black;">
+                                    <b>اسم</b>
+                                </td>
+                                <td style="border:1px solid black;" colspan="3"><span t-field="o.partner_id"/></td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#cccccc;border:1px solid black;">
+                                    <b>كود المشروع</b>
+                                </td>
+                                <td style="border:1px solid black;">999</td>
+                                <td style="width:10%;"/>
+                                <td style="border:1px solid black;">
+                                    <b>رقم الملف الضريبي</b>
+                                </td>
+                                <td style="border:1px solid black;">2112343434</td>
+                                <td style="border:1px solid black;">
+                                    <b>بطاقة ضريبية</b>
+                                </td>
+                                <td style="border:1px solid black;">------</td>
+                            </tr>
+                        </table>
+
+                        <br/>
+
+                        <!-- Work Details -->
+                        <table style="width:100%; border-collapse:collapse; text-align:center;">
+                            <tr>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>م</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>البند</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>الوحدة</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>الكمية
+                                        التعاقدية
+                                    </b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>الفئة</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>الانجاز%</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" colspan="3">
+                                    <b>الكميات
+                                        المنفذة
+                                    </b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" colspan="2">
+                                    <b>قيمة الأعمال</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;" rowspan="2">
+                                    <b>ملاحـظـات</b>
+                                </th>
+                            </tr>
+                            <tr>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>سابقة</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>حالية</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>الاجمالى</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>الحالية</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>الاجمالى</b>
+                                </th>
+                            </tr>
+                            <t t-set="i" t-value="0"/>
+                            <tr t-foreach="o.invoice_line_ids.filtered(lambda l: l.display_type == 'product')" t-as="inv_line">
+
+                                <t t-set="i" t-value="i + 1"/>
+                                <td style="border:1px solid black;">
+                                    <span t-esc="i"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.product_id"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.product_uom_id"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.contract_qty"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.price_unit"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.progeres"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.last_qty"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.quantity"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.total_qty"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-field="inv_line.price_subtotal"/>
+                                </td>
+                                <td style="border:1px solid black;">
+                                    <span t-esc="inv_line.total_qty * inv_line.price_unit "/>
+                                </td>
+                                <td style="border:1px solid black;">
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="background-color:#cccccc;border:1px solid black;" colspan="9">
+                                    <b>الاجـمـالى</b>
+                                </td>
+                                <td style="border:1px solid black;">
+
+                                </td>
+                                <td style="border:1px solid black;">
+
+                                </td>
+                                <td style="border:1px solid black;"/>
+                            </tr>
+                        </table>
+
+                        <br/>
+
+                        <!-- Financial Summary -->
+                        <table style="width:100%; border-collapse:collapse; text-align:center;">
+                            <tr>
+                                <th style="background-color:#cccccc;border:1px solid black;vertical-align: middle"
+                                    rowspan="7">
+                                    <b>تسوية مالية</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>البـيـان</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>المبلغ</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;vertical-align: middle"
+                                    rowspan="7">
+                                    <b>بالخصم</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>البـيـان</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>المبلغ</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;width:5%;" rowspan="7">
+                                    <b></b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>البـيـان</b>
+                                </th>
+                                <th style="background-color:#cccccc;border:1px solid black;">
+                                    <b>المبلغ</b>
+                                </th>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    اجمالى الاعمال من بدء العمل حتى تاريخه
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;">
+                                    قيمة الاعمال الحالية
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;" rowspan="2">
+                                    اجمالى الاستقطاعات
+                                </td>
+                                <td style="border:1px solid black;" rowspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    يضاف ضريبة القيمة المضافة
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;">
+                                    ضريبة الخصم (قبل القيمة المضافة)
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    الاجمالى شامل الضريبة
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;">
+                                    تأمينات اجتماعية (قبل القيمة المضافة)
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;" rowspan="2">
+                                    المستحق للصرف
+                                </td>
+                                <td style="border:1px solid black;" rowspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    يخصم منه
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;">
+                                    تأمين أبتدائى
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    اجمالى المستحقات السابقة قبل الضريبة
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;">
+                                    تأمين نهائى
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;" rowspan="2">
+                                    يخصم ما تم صرفه
+                                </td>
+                                <td style="border:1px solid black;" rowspan="2">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border:1px solid black;">
+                                    اجمالى ضريبة المستخلصات السابقة
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                                <td style="border:1px solid black;">
+                                    دفعات مقدمة
+                                </td>
+                                <td style="border:1px solid black;">
+                                </td>
+                            </tr>
+                        </table>
+
+                        <br/>
+
+                        <!-- Signature Section -->
+                        <table class="table" border="1"
+                               style="width:100%; border-collapse:collapse; text-align:center;">
+                            <tr>
+                                <td>
+                                    <b>مكتب فني المشروع</b>
+                                </td>
+                                <td>
+                                    <b>محاسب المشروع</b>
+                                </td>
+                                <td>
+                                    <b>مدير الموقع</b>
+                                </td>
+                                <td>
+                                    <b>المكتب الفنى</b>
+                                </td>
+                                <td>
+                                    <b>الحسابات</b>
+                                </td>
+                                <td>
+                                    <b>مدير المشروعات</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>_________________</td>
+                                <td>_________________</td>
+                                <td>_________________</td>
+                                <td>_________________</td>
+                                <td>_________________</td>
+                                <td>_________________</td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="contracting_business">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="eco_construction.report_contracting_business" t-lang="o.env.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <record id="paperformat_contracting_business" model="report.paperformat">
+            <field name="name">Contracting Business Paper Format</field>
+            <field name="format">A4</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">40</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+            <field name="default" eval="True"/>
+            <field name="dpi">90</field>
+        </record>
+
+        <record id="action_report_contracting_business" model="ir.actions.report">
+            <field name="name">contracting business</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">eco_construction.contracting_business</field>
+            <field name="report_file">eco_construction.contracting_business</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="eco_construction.paperformat_contracting_business"/>
+        </record>
+    </data>
+</odoo>

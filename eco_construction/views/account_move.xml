@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_move_form_inherited_view" model="ir.ui.view">
+            <field name="name">account.move.form.inherited.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <field name="is_subcontracting" invisible="1"/>
+                    <field name="allow_construction" invisible="1"/>
+                    <field name="adv_percent" readonly="1"
+                           invisible="move_type != 'out_invoice' or not allow_construction"/>
+                    <field name="retention_percent" readonly="1"
+                           invisible="move_type != 'out_invoice' or not allow_construction"/>
+                    <field name="adv_customer" required="move_type == 'out_invoice' and allow_construction"
+                           invisible="move_type != 'out_invoice' or not allow_construction"/>
+                    <field name="customer_retention" required="move_type == 'out_invoice' and allow_construction"
+                           invisible="move_type != 'out_invoice' or not allow_construction"/>
+                    <field name="from_date"/>
+                    <field name="to_date"/>
+                </field>
+                <xpath expr="//field[@name='invoice_line_ids']/list/field[@name='quantity']" position="after">
+                    <field name="contract_qty" readonly="1"
+                           column_invisible="not parent.allow_construction or parent.move_type == 'in_invoice'"/>
+                    <field name="progeres"
+                           column_invisible="not parent.allow_construction or parent.move_type == 'in_invoice'"/>
+                    <field name="last_qty" readonly="1"
+                           column_invisible="not parent.allow_construction or parent.move_type == 'in_invoice'"/>
+                    <field name="last_progeres"
+                           column_invisible="not parent.allow_construction or parent.move_type == 'in_invoice'"/>
+                    <field name="total_qty" readonly="1"
+                           column_invisible="not parent.allow_construction or parent.move_type == 'in_invoice'"/>
+                    <field name="total_progeres"
+                           column_invisible="not parent.allow_construction or parent.move_type == 'in_invoice'"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_move_form_add_taskss" model="ir.ui.view">
+            <field name="name">account.move.form.add.task</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='line_ids']/list/field[@name='analytic_distribution']" position="after">
+                    <field name="task_id" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/form/group/field[@name='analytic_distribution']"
+                       position="after">
+                    <field name="task_id" optional="show"/>
+                </xpath>
+            </field>
+        </record>
+        <template id="report_journal_entry_document">
+            <t t-call="web.external_layout">
+                <main>
+                    <t t-foreach="docs" t-as="o">
+                        <div class="page">
+
+                            <h3 class="text-center">
+                                Journal Entry / قيد يومية
+                            </h3>
+
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <strong>Entry:</strong>
+                                    <span t-field="o.name"/>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <strong>Date:</strong>
+                                    <span t-field="o.date"/>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <strong>Reference:</strong>
+                                <span t-field="o.ref"/>
+                            </div>
+
+                            <table class="table table-sm mt-3" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Account</th>
+                                        <th>Partner</th>
+                                        <th class="text-end">Debit</th>
+                                        <th class="text-end">Credit</th>
+                                        <th>Label</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.line_ids" t-as="l">
+                                        <tr>
+                                            <td>
+                                                <span t-field="l.account_id"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="l.partner_id"/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-field="l.debit"/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-field="l.credit"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="l.name"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <strong>Total Debit:</strong>
+                                    <span t-esc="sum(o.line_ids.mapped('debit'))"/>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <strong>Total Credit:</strong>
+                                    <span t-esc="sum(o.line_ids.mapped('credit'))"/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </t>
+                </main>
+            </t>
+        </template>
+        <record id="action_report_journal_entry" model="ir.actions.report">
+            <field name="name">Journal Entry (PDF)</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">eco_construction.report_journal_entry_document</field>
+            <field name="report_file">eco_construction.report_journal_entry_document</field>
+            <field name="print_report_name">'Journal Entry - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="domain">[('move_type','=','entry')]</field>
+        </record>
+    </data>
+</odoo>
