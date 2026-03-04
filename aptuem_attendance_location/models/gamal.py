@@ -48,3 +48,7 @@ class CompanyAttendanceLocation(models.Model):
     latitude = fields.Float(digits=(16, 6), required=True)
     longitude = fields.Float(digits=(16, 6), required=True)
     company_id = fields.Many2one('res.company', required=True, ondelete='cascade')
+    allowed_distance = fields.Float(
+        string="Allowed Radius (km)",
+        help="Maximum distance allowed from this location in kilometers."
+    )

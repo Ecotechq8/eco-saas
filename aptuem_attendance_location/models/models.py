@@ -42,25 +42,31 @@ class HrAttendance(models.Model):
         company = self.env.company
 
         for attendance in self:
-            if not (attendance.in_latitude and attendance.in_longitude):
-                raise UserError(_(
-                    "Location access is required to check in/out."
-                ))
 
-            employee_lat = round(attendance.in_latitude, 6)
-            employee_lon = round(attendance.in_longitude, 6)
+            if not (attendance.in_latitude and attendance.in_longitude):
+                raise UserError(_("Location access is required to check in/out."))
+
+            employee_lat = attendance.in_latitude
+            employee_lon = attendance.in_longitude
 
             match_found = False
 
             for location in company.attendance_location_ids:
-                if (
-                        round(location.latitude, 6) == employee_lat and
-                        round(location.longitude, 6) == employee_lon
-                ):
+
+                distance = self._compute_distance(
+                    employee_lat,
+                    employee_lon,
+                    location.latitude,
+                    location.longitude
+                )
+
+                _logger.info(f"Distance from {location.name}: {distance} km")
+
+                if distance <= location.allowed_distance:
                     match_found = True
                     break
 
             if not match_found:
                 raise UserError(_(
-                    "You are not in an allowed company location."
+                    "You are outside the allowed range for attendance."
                 ))
