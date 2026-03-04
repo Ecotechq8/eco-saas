@@ -23,6 +23,8 @@
                                     <field name="name"/>
                                     <field name="latitude"/>
                                     <field name="longitude"/>
+                                    <field name="allowed_distance"/>
+
                                 </list>
                             </field>
 
