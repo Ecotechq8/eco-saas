@@ -48,6 +48,7 @@
                 <field name="latitude"/>
                 <field name="longitude"/>
                 <field name="company_id"/>
+                <field name="allowed_distance"/>
             </list>
         </field>
     </record>
@@ -66,6 +67,7 @@
                         <field name="latitude"/>
                         <field name="longitude"/>
                         <field name="company_id"/>
+                        <field name="allowed_distance"/>
                     </group>
                 </sheet>
             </form>
