@@ -6,7 +6,7 @@
     'summary': '',
     "description": """ Add some fields on contract form view """,
     "author": "Eco-Tech, Omnya Rashwan",
-    "depends": ['hr_contract','hr_attendance'],
+    "depends": ['hr_contract','hr_attendance','hr'],
     "data": [
         'security/ir.model.access.csv',
         'views/hr_contract_inh_view.xml',

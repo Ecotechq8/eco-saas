@@ -7,7 +7,6 @@ class HrContract(models.Model):
     att_policy_id = fields.Many2one(
         comodel_name='hr.attendance.policy',
         string="Attendance Policy ",
-        required=True
     )
     contract_join_date = fields.Date()
     contract_start_training = fields.Date()
