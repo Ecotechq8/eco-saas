@@ -6,9 +6,9 @@
         <field name="model">hr.contract</field>
         <field name="inherit_id" ref="om_hr_payroll.hr_contract_form_inherit"/>
         <field name="arch" type="xml">
-<!--            <xpath expr="//field[@name='structure_type_id']" position="after">-->
-<!--                <field name="att_policy_id" required="1"/>-->
-<!--            </xpath>-->
+            <xpath expr="//field[@name='structure_type_id']" position="after">
+                <field name="att_policy_id" required="1"/>
+            </xpath>
         </field>
     </record>
 
