@@ -3,7 +3,10 @@ from odoo import fields, models, api, _
 
 class HrContract(models.Model):
     _inherit = 'hr.contract'
-
+    att_policy_id = fields.Many2one(
+        "attendance.policy",
+        string="Attendance Policy"
+    )
     contract_join_date = fields.Date()
     contract_start_training = fields.Date()
     contract_end_training = fields.Date()
