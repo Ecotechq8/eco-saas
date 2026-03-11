@@ -4,11 +4,10 @@ from odoo import fields, models, api, _
 class HrContract(models.Model):
     _inherit = 'hr.contract'
 
-
-
     att_policy_id = fields.Many2one(
-        "attendance.policy",
-        string="Attendance Policy"
+        comodel_name='hr.attendance.policy',
+        string="Attendance Policy ",
+        required=True
     )
     contract_join_date = fields.Date()
     contract_start_training = fields.Date()
@@ -56,8 +55,8 @@ class HrContract(models.Model):
         ]
 
         # if any(field in vals for field in tracked_fields):
-            # for contract in self:
-                # contract._update_related_comp_requests()
+        # for contract in self:
+        # contract._update_related_comp_requests()
 
         return result
 
@@ -72,7 +71,7 @@ class HrContract(models.Model):
             'fuel_allowance'
         ]
         # if any(field in vals for field in tracked_fields):
-            # contract._update_related_comp_requests()
+        # contract._update_related_comp_requests()
         return contract
 
     @api.depends('wage', 'housing_allowance', 'fuel_allowance', 'food_allowance', 'transportation_allowance',
