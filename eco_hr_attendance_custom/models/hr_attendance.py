@@ -37,9 +37,6 @@ class HrEmployee(models.Model):
     _inherit = 'hr.employee'
 
     def _attendance_action_change(self, geo_information=None):
-        """
-        Accurate Check In / Check Out using provided GPS coordinates
-        """
         self.ensure_one()
         action_date = fields.Datetime.now()
 
@@ -48,45 +45,39 @@ class HrEmployee(models.Model):
                 'employee_id': self.id,
                 'check_in': action_date,
             }
-
             if geo_information:
                 vals.update({
                     'in_latitude': geo_information.get('latitude'),
                     'in_longitude': geo_information.get('longitude'),
                     'in_city': geo_information.get('city'),
-                    'in_country_name': geo_information.get('country'),
+                    'in_country_name': geo_information.get('country_name'),
                     'in_ip_address': geo_information.get('ip_address'),
                     'in_browser': geo_information.get('browser'),
                     'in_mode': geo_information.get('mode'),
                 })
-
             return self.env['hr.attendance'].create(vals)
 
         attendance = self.env['hr.attendance'].search([
             ('employee_id', '=', self.id),
-            ('check_out', '=', False)
+            ('check_out', '=', False),
         ], limit=1)
 
-        if attendance:
-
-            vals = {'check_out': action_date}
-
-            if geo_information:
-                vals.update({
-                    'out_latitude': geo_information.get('latitude'),
-                    'out_longitude': geo_information.get('longitude'),
-                    'out_city': geo_information.get('city'),
-                    'out_country_name': geo_information.get('country'),
-                    'out_ip_address': geo_information.get('ip_address'),
-                    'out_browser': geo_information.get('browser'),
-                    'out_mode': geo_information.get('mode'),
-                })
-
-            attendance.write(vals)
-
-        else:
+        if not attendance:
             raise exceptions.UserError(_(
-                "Cannot perform check out because corresponding check in was not found."
+                'Cannot perform check out on %(empl_name)s, could not find corresponding check in.',
+                empl_name=self.sudo().name
             ))
 
+        vals = {'check_out': action_date}
+        if geo_information:
+            vals.update({
+                'out_latitude': geo_information.get('latitude'),
+                'out_longitude': geo_information.get('longitude'),
+                'out_city': geo_information.get('city'),
+                'out_country_name': geo_information.get('country_name'),
+                'out_ip_address': geo_information.get('ip_address'),
+                'out_browser': geo_information.get('browser'),
+                'out_mode': geo_information.get('mode'),
+            })
+        attendance.write(vals)
         return attendance
