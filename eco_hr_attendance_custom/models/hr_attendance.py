@@ -32,74 +32,61 @@ class HrAttendance(models.Model):
                 naive_utc = updated_utc.replace(tzinfo=None)
                 rec.check_in = naive_utc
 
-    def _get_ip_location(self):
-        try:
-            if not request:
-                return {}
 
-            ip = request.httprequest.remote_addr
+class HrEmployee(models.Model):
+    _inherit = 'hr.employee'
 
-            response = requests.get(
-                f"http://ip-api.com/json/{ip}",
-                timeout=3
-            )
+    def _attendance_action_change(self, geo_information=None):
+        """
+        Accurate Check In / Check Out using provided GPS coordinates
+        """
+        self.ensure_one()
+        action_date = fields.Datetime.now()
 
-            data = response.json()
+        if self.attendance_state != 'checked_in':
+            vals = {
+                'employee_id': self.id,
+                'check_in': action_date,
+            }
 
-            if data.get("status") == "success":
-                return {
-                    "latitude": data.get("lat"),
-                    "longitude": data.get("lon"),
-                    "city": data.get("city"),
-                    "country": data.get("country"),
-                }
-
-        except Exception:
-            pass
-
-        return {}
-
-        # -------------------------------------------------------
-        # Create attendance (check-in)
-        # -------------------------------------------------------
-
-    @api.model
-    def create(self, vals):
-
-        # If GPS was not provided by browser
-        if not vals.get("in_latitude") or not vals.get("in_longitude"):
-
-            location = self._get_ip_location()
-
-            if location:
+            if geo_information:
                 vals.update({
-                    "in_latitude": location.get("latitude"),
-                    "in_longitude": location.get("longitude"),
-                    "in_city": location.get("city"),
-                    "in_country_name": location.get("country"),
+                    'in_latitude': geo_information.get('latitude'),
+                    'in_longitude': geo_information.get('longitude'),
+                    'in_city': geo_information.get('city'),
+                    'in_country_name': geo_information.get('country'),
+                    'in_ip_address': geo_information.get('ip_address'),
+                    'in_browser': geo_information.get('browser'),
+                    'in_mode': geo_information.get('mode'),
                 })
 
-        return super().create(vals)
+            return self.env['hr.attendance'].create(vals)
 
-    # -------------------------------------------------------
-    # Update attendance (check-out)
-    # -------------------------------------------------------
-    def write(self, vals):
+        attendance = self.env['hr.attendance'].search([
+            ('employee_id', '=', self.id),
+            ('check_out', '=', False)
+        ], limit=1)
 
-        # If user is checking out
-        if "check_out" in vals:
+        if attendance:
 
-            # If GPS not provided
-            if not vals.get("out_latitude") or not vals.get("out_longitude"):
+            vals = {'check_out': action_date}
 
-                location = self._get_ip_location()
+            if geo_information:
+                vals.update({
+                    'out_latitude': geo_information.get('latitude'),
+                    'out_longitude': geo_information.get('longitude'),
+                    'out_city': geo_information.get('city'),
+                    'out_country_name': geo_information.get('country'),
+                    'out_ip_address': geo_information.get('ip_address'),
+                    'out_browser': geo_information.get('browser'),
+                    'out_mode': geo_information.get('mode'),
+                })
 
-                if location:
-                    vals.update({
-                        "out_latitude": location.get("latitude"),
-                        "out_longitude": location.get("longitude"),
-                        "out_city": location.get("city"),
-                        "out_country_name": location.get("country"),
-                    })
+            attendance.write(vals)
 
-        return super().write(vals)
+        else:
+            raise exceptions.UserError(_(
+                "Cannot perform check out because corresponding check in was not found."
+            ))
+
+        return attendance
