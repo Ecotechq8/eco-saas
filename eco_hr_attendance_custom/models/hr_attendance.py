@@ -59,32 +59,47 @@ class HrAttendance(models.Model):
 
         return {}
 
+        # -------------------------------------------------------
+        # Create attendance (check-in)
+        # -------------------------------------------------------
+
     @api.model
     def create(self, vals):
-        location = self._get_ip_location()
 
-        if location:
-            vals.update({
-                "in_latitude": location.get("latitude"),
-                "in_longitude": location.get("longitude"),
-                "in_city": location.get("city"),
-                "in_country_name": location.get("country"),
-            })
+        # If GPS was not provided by browser
+        if not vals.get("in_latitude") or not vals.get("in_longitude"):
 
-        return super().create(vals)
-
-    def write(self, vals):
-
-        # Detect if checkout is being written
-        if "check_out" in vals:
             location = self._get_ip_location()
 
             if location:
                 vals.update({
-                    "out_latitude": location.get("latitude"),
-                    "out_longitude": location.get("longitude"),
-                    "out_city": location.get("city"),
-                    "out_country_name": location.get("country"),
+                    "in_latitude": location.get("latitude"),
+                    "in_longitude": location.get("longitude"),
+                    "in_city": location.get("city"),
+                    "in_country_name": location.get("country"),
                 })
+
+        return super().create(vals)
+
+    # -------------------------------------------------------
+    # Update attendance (check-out)
+    # -------------------------------------------------------
+    def write(self, vals):
+
+        # If user is checking out
+        if "check_out" in vals:
+
+            # If GPS not provided
+            if not vals.get("out_latitude") or not vals.get("out_longitude"):
+
+                location = self._get_ip_location()
+
+                if location:
+                    vals.update({
+                        "out_latitude": location.get("latitude"),
+                        "out_longitude": location.get("longitude"),
+                        "out_city": location.get("city"),
+                        "out_country_name": location.get("country"),
+                    })
 
         return super().write(vals)
