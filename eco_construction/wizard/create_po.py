@@ -110,4 +110,17 @@ class PurchaseOrder(models.Model):
     def action_general_approve(self):
         for rec in self:
             rec.state = 'general'
-            rec.button_confirm()
+
+    def button_confirm(self):
+        for rec in self:
+            if rec.state != 'general':
+                raise ValidationError("You must get General Manager approval first.")
+
+        res = super().button_confirm()
+
+        # 👇 ensure state is purchase
+        for rec in self:
+            if rec.state != 'purchase':
+                rec.button_approve()
+
+        return res
