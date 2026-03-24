@@ -114,3 +114,5 @@ class PurchaseOrderLine(models.Model):
                         'message': f"Max allowed quantity is {line.max_qty}"
                     }
                 }
+
+
