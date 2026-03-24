@@ -75,11 +75,6 @@
                         invisible="state != 'operation'"/>
 
             </xpath>
-
-            <xpath expr="//button[@name='button_confirm']" position="attributes">
-                <attribute name="invisible">state != 'general'</attribute>
-            </xpath>
-
         </field>
     </record>
 
