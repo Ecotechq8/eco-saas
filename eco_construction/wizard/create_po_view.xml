@@ -83,15 +83,15 @@
         </field>
     </record>
 
-    <record id="budget_line_form_inherit_remaining" model="ir.ui.view">
-        <field name="name">budget.line.form.remaining</field>
-        <field name="model">crossovered.budget.lines</field>
-        <field name="inherit_id" ref="om_account_budget.crossovered_budget_line_view_form"/>
+    <record id="budget_line_tree_inherit_remaining" model="ir.ui.view">
+        <field name="name">budget.line.tree.remaining</field>
+        <field name="model">crossovered.budget</field>
+        <field name="inherit_id" ref="om_account_budget.crossovered_budget_view_form"/>
         <field name="arch" type="xml">
 
-            <!-- Add after practical amount -->
+            <!-- Add Remaining in tree -->
             <xpath expr="//field[@name='practical_amount']" position="after">
-                <field name="remaining_amount" readonly="1"/>
+                <field name="remaining_amount"/>
             </xpath>
 
         </field>
