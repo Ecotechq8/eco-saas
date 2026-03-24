@@ -44,4 +44,43 @@
         </field>
     </record>
 
+
+    <record id="purchase_order_form_inherit_approval" model="ir.ui.view">
+        <field name="name">purchase.order.form.approval</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//header" position="inside">
+
+                <!-- Planning Manager -->
+                <button name="action_planning_approve"
+                        string="Planning Manager Approve"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'draft'"/>
+
+                <!-- Operation Manager -->
+                <button name="action_operation_approve"
+                        string="Operation Manager Approve"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'planning'"/>
+
+                <!-- General Manager -->
+                <button name="action_general_approve"
+                        string="General Manager Approve"
+                        type="object"
+                        class="btn-primary"
+                        invisible="state != 'operation'"/>
+
+            </xpath>
+
+            <xpath expr="//button[@name='button_confirm']" position="attributes">
+                <attribute name="invisible">state != 'general'</attribute>
+            </xpath>
+
+        </field>
+    </record>
+
 </odoo>

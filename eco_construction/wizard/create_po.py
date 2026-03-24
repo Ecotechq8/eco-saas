@@ -81,3 +81,38 @@ class PurchaseOrderLine(models.Model):
                 raise ValidationError(
                     f"Quantity cannot exceed BOQ quantity.\nAllowed: {line.max_qty}"
                 )
+
+
+class PurchaseOrder(models.Model):
+    _inherit = 'purchase.order'
+
+    state = fields.Selection(
+        selection_add=[
+            ('planning', 'Planning Approval'),
+            ('operation', 'Operation Approval'),
+            ('general', 'General Manager Approval'),
+        ],
+        ondelete={
+            'planning': 'set default',
+            'operation': 'set default',
+            'general': 'set default',
+        }
+    )
+
+    def action_planning_approve(self):
+        for rec in self:
+            rec.state = 'planning'
+
+    def action_operation_approve(self):
+        for rec in self:
+            rec.state = 'operation'
+
+    def action_general_approve(self):
+        for rec in self:
+            rec.state = 'general'
+
+    def button_confirm(self):
+        for rec in self:
+            if rec.state != 'general':
+                raise ValidationError("You must get General Manager approval first.")
+        return super().button_confirm()
