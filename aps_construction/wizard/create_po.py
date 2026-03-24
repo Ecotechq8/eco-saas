@@ -123,3 +123,19 @@ class PurchaseOrder(models.Model):
                 rec.button_approve()
 
         return res
+
+
+class BudgetLine(models.Model):
+    _inherit = 'crossovered.budget.lines'
+
+    remaining_amount = fields.Monetary(
+        string="Remaining",
+        compute="_compute_remaining_amount",
+        store=True,
+        currency_field='company_currency_id'
+    )
+
+    @api.depends('planned_amount', 'practical_amount')
+    def _compute_remaining_amount(self):
+        for rec in self:
+            rec.remaining_amount = rec.planned_amount - rec.practical_amount
