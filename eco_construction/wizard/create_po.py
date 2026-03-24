@@ -30,9 +30,9 @@ class LoanRejectReason(models.TransientModel):
                     if not line.display_type:
                         po_line.append((0, 0, {
                             'product_id': line.product_id.id,
-                            'name': line.product_id.name,  # ✅ IMPORTANT
+                            'name': line.product_id.name,
                             'product_qty': line.product_uom_qty,
-                            'max_qty': line.product_uom_qty,  # ✅ store BOQ
+                            'max_qty': line.product_uom_qty,
                             'product_uom': line.product_uom.id,
                             'price_unit': line.price_unit,
                         }))
@@ -46,7 +46,7 @@ class LoanRejectReason(models.TransientModel):
                 'partner_id': self.partner_id.id,
                 'is_subcontracting': True,
                 'project_id': active_id.con_project_id.id,
-                'order_line': po_line,  # ✅ FIX
+                'order_line': po_line,
             }
 
             purchase_order = self.env['purchase.order'].create(po_dict)
@@ -60,9 +60,9 @@ class LoanRejectReason(models.TransientModel):
                     if not line.display_type:
                         po_line.append((0, 0, {
                             'product_id': line.product_id.id,
-                            'name': line.product_id.name,  # ✅ IMPORTANT
+                            'name': line.product_id.name,
                             'product_qty': line.product_uom_qty,
-                            'max_qty': line.product_uom_qty,  # ✅ store BOQ
+                            'max_qty': line.product_uom_qty,
                             'product_uom': line.product_uom.id,
                             'price_unit': line.price_unit,
                         }))
@@ -76,7 +76,7 @@ class LoanRejectReason(models.TransientModel):
                 'partner_id': self.partner_id.id,
                 'is_subcontracting': True,
                 'project_id': active_id.id,
-                'order_line': po_line,  # ✅ FIX
+                'order_line': po_line,
             }
 
             purchase_order = self.env['purchase.order'].create(po_dict)
