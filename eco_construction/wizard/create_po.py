@@ -118,7 +118,6 @@ class PurchaseOrder(models.Model):
 
         res = super().button_confirm()
 
-        # 👇 ensure state is purchase
         for rec in self:
             if rec.state != 'purchase':
                 rec.button_approve()
