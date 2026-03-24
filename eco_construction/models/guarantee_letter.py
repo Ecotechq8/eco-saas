@@ -51,7 +51,7 @@ class GuaranteeLetter(models.Model):
     #     return result
 
     def action_confirm(self):
-        invoice = False  # ✅ FIX
+        invoice = False
 
         if self.company_percent > 0 and self.amount > 0:
             amount = (self.company_percent / 100) * self.amount
