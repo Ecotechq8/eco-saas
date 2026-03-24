@@ -128,11 +128,10 @@ class PurchaseOrder(models.Model):
 class BudgetLine(models.Model):
     _inherit = 'crossovered.budget.lines'
 
-    remaining_amount = fields.Monetary(
+    remaining_amount = fields.Float(
         string="Remaining",
         compute="_compute_remaining_amount",
-        store=True,
-        currency_field='company_currency_id'
+        store=True
     )
 
     @api.depends('planned_amount', 'practical_amount')
