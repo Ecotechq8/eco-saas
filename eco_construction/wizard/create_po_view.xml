@@ -75,6 +75,11 @@
                         invisible="state != 'operation'"/>
 
             </xpath>
+
+            <xpath expr="//button[@name='button_confirm']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
         </field>
     </record>
 
