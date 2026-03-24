@@ -51,6 +51,8 @@ class GuaranteeLetter(models.Model):
     #     return result
 
     def action_confirm(self):
+        invoice = False  # ✅ FIX
+
         if self.company_percent > 0 and self.amount > 0:
             amount = (self.company_percent / 100) * self.amount
             account_move_obj = self.env["account.move"]
@@ -61,23 +63,21 @@ class GuaranteeLetter(models.Model):
                 "guarantee_letter_id": self.id,
                 "line_ids": [
                     (0, 0, {
-                        # "name": rec.name,
-                        # "partner_id": rec.partner_id.id,
                         "account_id": self.journal_bank_id.default_account_id.id,
                         "debit": 0.0,
                         "credit": amount,
                     }),
                     (0, 0, {
-                        # "name": rec.name,
-                        # "partner_id": rec.partner_id.id,
                         "account_id": self.letter_account_id.id,
                         "debit": amount,
                         "credit": 0.0,
                     }),
                 ],
             })
+
         if invoice:
             invoice.action_post()
+
         self.state = 'confirmed'
 
     def action_expense(self):
@@ -115,7 +115,7 @@ class GuaranteeLetter(models.Model):
                     "journal_id": self.journal_bank_id.id,
                     "move_type": 'entry',
                     "guarantee_letter_id": self.id, }
-            data.update( {
+            data.update({
 
                 "line_ids": [
                     (0, 0, {
