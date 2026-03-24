@@ -38,7 +38,7 @@
         <field name="arch" type="xml">
             <!-- FORM VIEW -->
             <xpath expr="//field[@name='order_line']/form//field[@name='product_qty']" position="after">
-                <field name="max_qty" readonly="1"/>
+                <field name="max_qty" readonly="1" invisible="1"/>
             </xpath>
 
         </field>
