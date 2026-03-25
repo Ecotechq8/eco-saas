@@ -77,11 +77,11 @@
             </xpath>
 
             <xpath expr="//button[@id='bid_confirm']" position="attributes">
-                <attribute name="invisible">1</attribute>
+                <attribute name="invisible">state != 'general'</attribute>
             </xpath>
 
             <xpath expr="//button[@id='draft_confirm']" position="attributes">
-                <attribute name="invisible">state != 'general'</attribute>
+                <attribute name="invisible">1</attribute>
             </xpath>
 
         </field>
