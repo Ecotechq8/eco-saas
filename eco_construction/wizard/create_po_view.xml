@@ -58,6 +58,7 @@
                         string="Planning Manager Approve"
                         type="object"
                         class="btn-primary"
+                        groups="your_module.group_planning_manager"
                         invisible="state != 'draft'"/>
 
                 <!-- Operation Manager -->
@@ -65,6 +66,7 @@
                         string="Operation Manager Approve"
                         type="object"
                         class="btn-primary"
+                        groups="your_module.group_operation_manager"
                         invisible="state != 'planning'"/>
 
                 <!-- General Manager -->
@@ -72,6 +74,7 @@
                         string="General Manager Approve"
                         type="object"
                         class="btn-primary"
+                        groups="your_module.group_general_manager"
                         invisible="state != 'operation'"/>
 
             </xpath>
