@@ -65,6 +65,7 @@
                         string="Operation Manager Approve"
                         type="object"
                         class="btn-primary"
+                        groups="eco_construction.group_operation_manager"
                         invisible="state != 'planning'"/>
 
                 <!-- General Manager -->
@@ -72,6 +73,7 @@
                         string="General Manager Approve"
                         type="object"
                         class="btn-primary"
+                        groups="eco_construction.group_general_manager"
                         invisible="state != 'operation'"/>
 
             </xpath>
