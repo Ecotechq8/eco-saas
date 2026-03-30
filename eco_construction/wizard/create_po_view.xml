@@ -65,7 +65,7 @@
                         type="object"
                         class="btn-primary"
                         groups="eco_construction.group_planning_manager"
-                        invisible="state != 'draft'"/>
+                        invisible="state != 'submit'"/>
 
 
 
