@@ -88,16 +88,22 @@ class PurchaseOrder(models.Model):
 
     state = fields.Selection(
         selection_add=[
+            ('submit', 'Submit to Planning Manager'),
             ('planning', 'Planning Approval'),
             ('operation', 'Operation Approval'),
             ('general', 'General Manager Approval'),
         ],
         ondelete={
+            'submit': 'set default',
             'planning': 'set default',
             'operation': 'set default',
             'general': 'set default',
         }
     )
+
+    def action_submit_approve(self):
+        for rec in self:
+            rec.state = 'submit'
 
     def action_planning_approve(self):
         for rec in self:

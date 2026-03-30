@@ -53,12 +53,21 @@
 
             <xpath expr="//header" position="inside">
 
-                <!-- Planning Manager -->
-                <button name="action_planning_approve"
-                        string="Submit"
+                 <button name="action_planning_approve"
+                        string=" Submit to Planning Manager Approve"
                         type="object"
                         class="btn-primary"
                         invisible="state != 'draft'"/>
+
+                <!-- Planning Manager -->
+                <button name="action_planning_approve"
+                        string="Planning Manager Approve"
+                        type="object"
+                        class="btn-primary"
+                        groups="eco_construction.group_planning_manager"
+                        invisible="state != 'draft'"/>
+
+
 
                 <!-- Operation Manager -->
                 <button name="action_operation_approve"
