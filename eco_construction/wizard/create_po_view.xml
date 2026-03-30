@@ -55,7 +55,7 @@
 
                 <!-- Planning Manager -->
                 <button name="action_planning_approve"
-                        string="Planning Manager Approve"
+                        string="Submit"
                         type="object"
                         class="btn-primary"
                         invisible="state != 'draft'"/>
