@@ -53,7 +53,7 @@
 
             <xpath expr="//header" position="inside">
 
-                 <button name="action_planning_approve"
+                 <button name="action_submit_approve"
                         string=" Submit to Planning Manager Approve"
                         type="object"
                         class="btn-primary"
