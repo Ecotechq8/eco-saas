@@ -513,7 +513,7 @@ class AttendanceSheet(models.Model):
                                         act_float_overtime = 0
                                     else:
                                         act_float_overtime = (
-                                                                         float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
+                                                                     float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
                                                              overtime_policy['ph_rate']
 
                                 if attendance_interval[1] and attendance_interval[0]:
@@ -523,7 +523,7 @@ class AttendanceSheet(models.Model):
                                         print(float_overtime, att_sheet.att_policy_id.number_of_hours_per_day,
                                               overtime_policy['we_rate'])
                                         act_float_overtime = (
-                                                                         float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
+                                                                     float_overtime - att_sheet.att_policy_id.number_of_hours_per_day) * \
                                                              overtime_policy['we_rate']
 
                                 ac_sign_in = pytz.utc.localize(attendance_interval[0]).astimezone(tz)
@@ -935,6 +935,11 @@ class AttendanceSheetLine(models.Model):
                                          ('leave', 'Leave'), ],
                               required=False, readonly=True)
     note = fields.Text("Note", readonly=True)
+    att_policy_id = fields.Many2one(
+        comodel_name='hr.attendance.policy',
+        string='Attendance Policy',
+        readonly=True
+    )
 
     @api.model
     def create(self, vals):
