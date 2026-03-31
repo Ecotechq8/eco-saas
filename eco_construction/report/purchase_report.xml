@@ -9,68 +9,72 @@
                 <!-- ================= SIGNATURE SECTION ================= -->
                 <div style="margin-top:60px;">
 
-                    <table style="width:100%; border-collapse:collapse; text-align:center;">
+                    <table style="width:100%; text-align:center; border-collapse:collapse;">
 
                         <tr>
 
-                            <!-- PURCHASE ADMIN (STATIC) -->
-                            <td style="width:20%;">
+                            <!-- PURCHASE ADMIN -->
+                            <td>
                                 <strong>Purchase Admin</strong>
                                 <div style="margin-top:30px;">
-                                    ____________________
+                                    <t t-if="o.purchase_approved_by and o.state in ['purchase_admin','planning','operation','general']">
+                                        <span t-esc="o.purchase_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
+                                    </t>
                                 </div>
                             </td>
 
-                            <!-- PROJECT MANAGER (CREATOR USER) -->
-                            <td style="width:20%;">
+                            <!-- PROJECT MANAGER (ALWAYS) -->
+                            <td>
                                 <strong>Project Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <span t-esc="o.create_uid.name"/>
+                                    <t t-if="o.project_id and o.project_id.user_id">
+                                        <span t-esc="o.project_id.user_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
+                                    </t>
                                 </div>
                             </td>
 
                             <!-- PLANNING -->
-                            <td style="width:20%;">
+                            <td>
                                 <strong>Planning Manager</strong>
                                 <div style="margin-top:30px;">
-
-                                    <t t-if="o.state == 'planning'">
+                                    <t t-if="o.planning_approved_by and o.state in ['planning','operation','general']">
                                         <span t-esc="o.planning_approved_by.name"/>
                                     </t>
                                     <t t-else="">
                                         ____________________
                                     </t>
-
                                 </div>
                             </td>
 
                             <!-- OPERATION -->
-                            <td style="width:20%;">
+                            <td>
                                 <strong>Operation Manager</strong>
                                 <div style="margin-top:30px;">
-
-                                    <t t-if="o.state == 'operation'">
+                                    <t t-if="o.operation_approved_by and o.state in ['operation','general']">
                                         <span t-esc="o.operation_approved_by.name"/>
                                     </t>
                                     <t t-else="">
                                         ____________________
                                     </t>
-
                                 </div>
                             </td>
 
                             <!-- GENERAL -->
-                            <td style="width:20%;">
+                            <td>
                                 <strong>General Manager</strong>
                                 <div style="margin-top:30px;">
-
-                                    <t t-if="o.state == 'general'">
+                                    <t t-if="o.general_approved_by and o.state == 'general'">
                                         <span t-esc="o.general_approved_by.name"/>
                                     </t>
                                     <t t-else="">
                                         ____________________
                                     </t>
-
                                 </div>
                             </td>
 
@@ -79,7 +83,6 @@
                     </table>
 
                 </div>
-
             </xpath>
 
         </template>

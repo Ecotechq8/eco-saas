@@ -717,7 +717,7 @@ class AttendanceSheet(models.Model):
                 'date_from': sheet.date_from,
                 'date_to': sheet.date_to,
                 'contract_id': contracts[0].id,
-                'struct_id': contracts[0].structure_id.id if contracts[0].structure_id else False
+                'struct_id': contracts[0].struct_id.id if contracts[0].struct_id else False
             })
             # new_payslip._onchange_employee()
             payslip_dict = new_payslip._convert_to_write({

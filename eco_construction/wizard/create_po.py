@@ -88,12 +88,14 @@ class PurchaseOrder(models.Model):
 
     state = fields.Selection(
         selection_add=[
-            ('submit', 'Submit to Planning Manager'),
+            ('submit', 'Submit to Purchase Manager'),
+            ('purchase_admin', 'Purchase Admin Approval'),
             ('planning', 'Planning Approval'),
             ('operation', 'Operation Approval'),
             ('general', 'General Manager Approval'),
         ],
         ondelete={
+            'purchase_admin': 'set default',
             'submit': 'set default',
             'planning': 'set default',
             'operation': 'set default',
@@ -101,6 +103,7 @@ class PurchaseOrder(models.Model):
         }
     )
 
+    purchase_approved_by = fields.Many2one('res.users', string="Purchase Admin")
     planning_approved_by = fields.Many2one('res.users', string="Planning Manager")
     operation_approved_by = fields.Many2one('res.users', string="Operation Manager")
     general_approved_by = fields.Many2one('res.users', string="General Manager")
@@ -108,6 +111,14 @@ class PurchaseOrder(models.Model):
     def action_submit_approve(self):
         for rec in self:
             rec.state = 'submit'
+
+
+    def action_purchase_admin(self):
+        for rec in self:
+            rec.purchase_approved_by = self.env.user
+            rec.state = 'purchase_admin'
+
+
 
     def action_planning_approve(self):
         for rec in self:

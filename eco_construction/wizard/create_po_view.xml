@@ -53,11 +53,19 @@
 
             <xpath expr="//header" position="inside">
 
-                 <button name="action_submit_approve"
-                        string=" Submit to Planning Manager Approve"
+                <button name="action_submit_approve"
+                        string=" Submit to Purchase Admin Approve"
                         type="object"
                         class="btn-primary"
                         invisible="state != 'draft'"/>
+
+
+                <button name="action_purchase_admin"
+                        string=" Submit to Purchase Admin Approve"
+                        type="object"
+                        class="btn-primary"
+                        groups="eco_construction.group_purchase_admin"
+                        invisible="state != 'submit'"/>
 
                 <!-- Planning Manager -->
                 <button name="action_planning_approve"
@@ -65,8 +73,7 @@
                         type="object"
                         class="btn-primary"
                         groups="eco_construction.group_planning_manager"
-                        invisible="state != 'submit'"/>
-
+                        invisible="state != 'purchase_admin'"/>
 
 
                 <!-- Operation Manager -->

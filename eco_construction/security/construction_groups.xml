@@ -38,6 +38,10 @@
         </record>
 
 
+        <record id="group_purchase_admin" model="res.groups">
+            <field name="name">Purchase Admin</field>
+            <field name="category_id" ref="base.module_category_purchase_management"/>
+        </record>
         <record id="group_planning_manager" model="res.groups">
             <field name="name">Planning Manager</field>
             <field name="category_id" ref="base.module_category_purchase_management"/>
