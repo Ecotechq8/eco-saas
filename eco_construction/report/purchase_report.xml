@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="report_purchaseorder_signature_inherit"
+                  inherit_id="purchase.report_purchaseorder_document">
+
+            <xpath expr="//div[@class='page']" position="inside">
+
+                <!-- ================= SIGNATURE SECTION ================= -->
+                <div style="margin-top:60px;">
+
+                    <table style="width:100%; border-collapse:collapse; text-align:center;">
+
+                        <tr>
+
+                            <!-- PURCHASE ADMIN (STATIC) -->
+                            <td style="width:20%;">
+                                <strong>Purchase Admin</strong>
+                                <div style="margin-top:30px;">
+                                    ____________________
+                                </div>
+                            </td>
+
+                            <!-- PROJECT MANAGER (CREATOR USER) -->
+                            <td style="width:20%;">
+                                <strong>Project Manager</strong>
+                                <div style="margin-top:30px;">
+                                    <span t-esc="o.create_uid.name"/>
+                                </div>
+                            </td>
+
+                            <!-- PLANNING -->
+                            <td style="width:20%;">
+                                <strong>Planning Manager</strong>
+                                <div style="margin-top:30px;">
+
+                                    <t t-if="o.state == 'planning'">
+                                        <span t-esc="o.planning_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
+                                    </t>
+
+                                </div>
+                            </td>
+
+                            <!-- OPERATION -->
+                            <td style="width:20%;">
+                                <strong>Operation Manager</strong>
+                                <div style="margin-top:30px;">
+
+                                    <t t-if="o.state == 'operation'">
+                                        <span t-esc="o.operation_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
+                                    </t>
+
+                                </div>
+                            </td>
+
+                            <!-- GENERAL -->
+                            <td style="width:20%;">
+                                <strong>General Manager</strong>
+                                <div style="margin-top:30px;">
+
+                                    <t t-if="o.state == 'general'">
+                                        <span t-esc="o.general_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
+                                    </t>
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </xpath>
+
+        </template>
+
+    </data>
+</odoo>

@@ -10,7 +10,8 @@
         This module allows you to manage the Construction projects .
     """,
     "author": "Ahmed Elkhadrawy",
-    "depends": ['base', 'project', 'crm','sale_crm','check_management','purchase','account','sale','om_account_budget'],
+    "depends": ['base', 'project', 'crm', 'sale_crm', 'check_management', 'purchase', 'account', 'sale',
+                'om_account_budget'],
     "license": "OPL-1",
     "data": [
         'security/ir.model.access.csv',
@@ -18,6 +19,7 @@
         "wizard/create_po_view.xml",
         "wizard/so_payment_view.xml",
         "report/report_contracting_business.xml",
+        "report/purchase_report.xml",
         "views/crm_lead_view.xml",
         "views/request_quoation_view.xml",
         "views/project_views.xml",
@@ -29,7 +31,6 @@
         "views/guarantee_letter_views.xml",
         "data/res_company_data.xml",
         "data/ir_actions_server_data.xml",
-
 
     ],
 

@@ -101,20 +101,27 @@ class PurchaseOrder(models.Model):
         }
     )
 
+    planning_approved_by = fields.Many2one('res.users', string="Planning Manager")
+    operation_approved_by = fields.Many2one('res.users', string="Operation Manager")
+    general_approved_by = fields.Many2one('res.users', string="General Manager")
+
     def action_submit_approve(self):
         for rec in self:
             rec.state = 'submit'
 
     def action_planning_approve(self):
         for rec in self:
+            rec.planning_approved_by = self.env.user
             rec.state = 'planning'
 
     def action_operation_approve(self):
         for rec in self:
+            rec.operation_approved_by = self.env.user
             rec.state = 'operation'
 
     def action_general_approve(self):
         for rec in self:
+            rec.general_approved_by = self.env.user
             rec.state = 'general'
 
     def button_confirm(self):
