@@ -115,3 +115,5 @@ class HrAttendance(models.Model):
                     raise UserError(_("No valid attendance locations are configured."))
 
         return True
+
+
