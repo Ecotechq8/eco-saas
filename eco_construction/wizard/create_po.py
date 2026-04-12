@@ -112,13 +112,10 @@ class PurchaseOrder(models.Model):
         for rec in self:
             rec.state = 'submit'
 
-
     def action_purchase_admin(self):
         for rec in self:
             rec.purchase_approved_by = self.env.user
             rec.state = 'purchase_admin'
-
-
 
     def action_planning_approve(self):
         for rec in self:
@@ -154,8 +151,7 @@ class BudgetLine(models.Model):
 
     remaining_amount = fields.Float(
         string="Remaining",
-        compute="_compute_remaining_amount",
-        store=True
+        compute="_compute_remaining_amount"
     )
 
     @api.depends('planned_amount', 'practical_amount')
