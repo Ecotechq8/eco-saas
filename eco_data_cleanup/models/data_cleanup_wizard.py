@@ -150,22 +150,20 @@ class DataCleanupWizard(models.TransientModel):
             tasks.unlink()
             _logger.info('Deleted %d tasks', len(tasks))
         
-        # Delete project analytic accounts before deleting projects
-        analytic_account_obj = self.env['account.analytic.account'].sudo()
-        # Get analytic accounts linked to projects
-        project_analytic_accounts = analytic_account_obj.search([
-            ('project_id', '!=', False)
-        ])
-        if project_analytic_accounts:
-            project_analytic_accounts.unlink()
-            _logger.info('Deleted %d project analytic accounts', len(project_analytic_accounts))
-        
-        # Delete projects
+        # Get analytic accounts linked to projects before deleting projects
         project_obj = self.env['project.project'].sudo()
         projects = project_obj.search([])
+        project_analytic_account_ids = projects.mapped('account_id').filtered(lambda x: x)
+        
+        # Delete projects
         if projects:
             projects.unlink()
             _logger.info('Deleted %d projects', len(projects))
+        
+        # Delete the project-related analytic accounts
+        if project_analytic_account_ids:
+            project_analytic_account_ids.unlink()
+            _logger.info('Deleted %d project analytic accounts', len(project_analytic_account_ids))
         
         # Delete project stages (custom ones only)
         # Keep default stages from base data
