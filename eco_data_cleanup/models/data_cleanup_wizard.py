@@ -30,23 +30,26 @@ class DataCleanupWizard(models.TransientModel):
         try:
             # Delete in proper order to respect foreign key constraints
             
-            # 1. Accounting (depends on sales/purchase)
+            # 1. Analytic Lines (referenced by many modules)
+            self._delete_analytic_lines()
+            
+            # 2. Accounting (depends on sales/purchase)
             if self.delete_accounting or self.delete_all:
                 self._delete_accounting()
             
-            # 2. Projects & Tasks
+            # 3. Projects & Tasks
             if self.delete_projects or self.delete_all:
                 self._delete_projects()
             
-            # 3. Sales Orders
+            # 4. Sales Orders
             if self.delete_sales or self.delete_all:
                 self._delete_sales()
             
-            # 4. Purchase Orders
+            # 5. Purchase Orders
             if self.delete_purchase or self.delete_all:
                 self._delete_purchase()
             
-            # 5. Inventory (should be last as it may be linked to other modules)
+            # 6. Inventory (should be last as it may be linked to other modules)
             if self.delete_inventory or self.delete_all:
                 self._delete_inventory()
             
@@ -70,6 +73,19 @@ class DataCleanupWizard(models.TransientModel):
             self.env.cr.rollback()
             _logger.error('DATA CLEANUP FAILED: %s', str(e), exc_info=True)
             raise UserError(_('Data cleanup failed: %s') % str(e))
+
+    def _delete_analytic_lines(self):
+        """Delete analytic lines first (they reference many other tables)"""
+        _logger.info('Deleting analytic lines...')
+        
+        # Delete all analytic lines
+        analytic_line_obj = self.env['account.analytic.line'].sudo()
+        analytic_lines = analytic_line_obj.search([])
+        if analytic_lines:
+            analytic_lines.unlink()
+            _logger.info('Deleted %d analytic lines', len(analytic_lines))
+        
+        _logger.info('Analytic lines deleted')
 
     def _delete_accounting(self):
         """Delete accounting transactions"""
@@ -134,6 +150,16 @@ class DataCleanupWizard(models.TransientModel):
             tasks.unlink()
             _logger.info('Deleted %d tasks', len(tasks))
         
+        # Delete project analytic accounts before deleting projects
+        analytic_account_obj = self.env['account.analytic.account'].sudo()
+        # Get analytic accounts linked to projects
+        project_analytic_accounts = analytic_account_obj.search([
+            ('project_id', '!=', False)
+        ])
+        if project_analytic_accounts:
+            project_analytic_accounts.unlink()
+            _logger.info('Deleted %d project analytic accounts', len(project_analytic_accounts))
+        
         # Delete projects
         project_obj = self.env['project.project'].sudo()
         projects = project_obj.search([])
@@ -165,11 +191,14 @@ class DataCleanupWizard(models.TransientModel):
             sales.unlink()
             _logger.info('Deleted %d sales orders', len(sales))
         
-        # Delete quotations (draft/cancelled sales)
+        # Delete any remaining quotations (draft/cancelled sales)
         quotations = sale_obj.search([], order='id DESC')
         if quotations:
             quotations.unlink()
             _logger.info('Deleted %d remaining quotations', len(quotations))
+        
+        # Delete sale-related analytic lines
+        self._delete_analytic_lines()
         
         _logger.info('Sales orders deleted')
 
@@ -186,6 +215,9 @@ class DataCleanupWizard(models.TransientModel):
             # Then delete them
             pos.unlink()
             _logger.info('Deleted %d purchase orders', len(pos))
+        
+        # Delete purchase-related analytic lines
+        self._delete_analytic_lines()
         
         _logger.info('Purchase orders deleted')
 
