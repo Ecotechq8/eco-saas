@@ -37,21 +37,22 @@ class DataCleanupWizard(models.TransientModel):
             if self.delete_accounting or self.delete_all:
                 self._delete_accounting()
             
-            # 3. Projects & Tasks
+            # 3. Inventory - MUST be deleted before purchase orders
+            # because POs with done receipts can't be cancelled/deleted
+            if self.delete_inventory or self.delete_all:
+                self._delete_inventory()
+            
+            # 4. Projects & Tasks
             if self.delete_projects or self.delete_all:
                 self._delete_projects()
             
-            # 4. Sales Orders
+            # 5. Sales Orders
             if self.delete_sales or self.delete_all:
                 self._delete_sales()
             
-            # 5. Purchase Orders
+            # 6. Purchase Orders (after inventory is deleted)
             if self.delete_purchase or self.delete_all:
                 self._delete_purchase()
-            
-            # 6. Inventory (should be last as it may be linked to other modules)
-            if self.delete_inventory or self.delete_all:
-                self._delete_inventory()
             
             self.env.cr.commit()
             
