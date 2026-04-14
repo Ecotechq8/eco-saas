@@ -19,7 +19,7 @@ class DataCleanupWizard(models.TransientModel):
     delete_all = fields.Boolean(string='Delete All Transactions', default=True)
 
     def action_delete_all_transactions(self):
-        """Delete all transactions based on selected options"""
+        """Delete all transactions using direct SQL (aggressive cleanup)"""
         self.ensure_one()
         
         # Log the cleanup action
@@ -28,31 +28,40 @@ class DataCleanupWizard(models.TransientModel):
         _logger.warning('=' * 80)
 
         try:
-            # Delete in proper order to respect foreign key constraints
+            # Use direct SQL to bypass all ORM constraints
+            self.env.cr.execute("""
+                -- Disable triggers temporarily
+                SET session_replication_role = replica;
+            """)
             
             # 1. Analytic Lines (referenced by many modules)
-            self._delete_analytic_lines()
+            if self.delete_projects or self.delete_sales or self.delete_purchase or self.delete_all:
+                self._delete_analytic_lines_sql()
             
-            # 2. Accounting (depends on sales/purchase)
+            # 2. Accounting (depends on sales/purchase invoices)
             if self.delete_accounting or self.delete_all:
-                self._delete_accounting()
+                self._delete_accounting_sql()
             
-            # 3. Inventory - MUST be deleted before purchase orders
-            # because POs with done receipts can't be cancelled/deleted
+            # 3. Inventory (stock moves, pickings)
             if self.delete_inventory or self.delete_all:
-                self._delete_inventory()
+                self._delete_inventory_sql()
             
-            # 4. Projects & Tasks
-            if self.delete_projects or self.delete_all:
-                self._delete_projects()
-            
-            # 5. Sales Orders
+            # 4. Sales Orders
             if self.delete_sales or self.delete_all:
-                self._delete_sales()
+                self._delete_sales_sql()
             
-            # 6. Purchase Orders (after inventory is deleted)
+            # 5. Purchase Orders
             if self.delete_purchase or self.delete_all:
-                self._delete_purchase()
+                self._delete_purchase_sql()
+            
+            # 6. Projects & Tasks
+            if self.delete_projects or self.delete_all:
+                self._delete_projects_sql()
+            
+            # Re-enable triggers
+            self.env.cr.execute("""
+                SET session_replication_role = DEFAULT;
+            """)
             
             self.env.cr.commit()
             
@@ -71,209 +80,205 @@ class DataCleanupWizard(models.TransientModel):
             }
             
         except Exception as e:
+            # Re-enable triggers even on error
+            self.env.cr.execute("""
+                SET session_replication_role = DEFAULT;
+            """)
             self.env.cr.rollback()
             _logger.error('DATA CLEANUP FAILED: %s', str(e), exc_info=True)
             raise UserError(_('Data cleanup failed: %s') % str(e))
 
-    def _delete_analytic_lines(self):
-        """Delete analytic lines first (they reference many other tables)"""
+    def _delete_analytic_lines_sql(self):
+        """Delete analytic lines using direct SQL"""
         _logger.info('Deleting analytic lines...')
-        
-        # Delete all analytic lines
-        analytic_line_obj = self.env['account.analytic.line'].sudo()
-        analytic_lines = analytic_line_obj.search([])
-        if analytic_lines:
-            analytic_lines.unlink()
-            _logger.info('Deleted %d analytic lines', len(analytic_lines))
-        
-        _logger.info('Analytic lines deleted')
+        self.env.cr.execute("DELETE FROM account_analytic_line")
+        _logger.info('Deleted %d analytic lines', self.env.cr.rowcount)
 
-    def _delete_accounting(self):
-        """Delete accounting transactions"""
+    def _delete_accounting_sql(self):
+        """Delete accounting transactions using direct SQL"""
         _logger.info('Deleting accounting transactions...')
         
-        # Delete payments
-        payment_obj = self.env['account.payment'].sudo()
-        payments = payment_obj.search([])
-        if payments:
-            payments.action_draft()
-            payments.unlink()
-            _logger.info('Deleted %d payments', len(payments))
+        # Delete in order to avoid FK constraints
         
-        # Delete partial reconciliations
-        self.env['account.partial.reconcile'].sudo().search([]).unlink()
+        # 1. Delete payment lines
+        self.env.cr.execute("DELETE FROM account_payment_line")
+        _logger.info('Deleted %d payment lines', self.env.cr.rowcount)
         
-        # Delete full reconciliations
-        self.env['account.full.reconcile'].sudo().search([]).unlink()
+        # 2. Delete payments
+        self.env.cr.execute("DELETE FROM account_payment")
+        _logger.info('Deleted %d payments', self.env.cr.rowcount)
         
-        # Delete bank statements
-        bank_stmt_obj = self.env['account.bank.statement'].sudo()
-        bank_stmts = bank_stmt_obj.search([])
-        if bank_stmts:
-            bank_stmts.button_draft()
-            bank_stmts.unlink()
-            _logger.info('Deleted %d bank statements', len(bank_stmts))
+        # 3. Delete partial reconciliations
+        self.env.cr.execute("DELETE FROM account_partial_reconcile")
+        _logger.info('Deleted %d partial reconciliations', self.env.cr.rowcount)
         
-        # Delete moves (journal entries) - exclude locked entries
-        move_obj = self.env['account.move'].sudo()
-        moves = move_obj.search([
-            ('state', '=', 'posted')
-        ])
-        if moves:
-            moves.button_draft()
-            moves.unlink()
-            _logger.info('Deleted %d posted moves', len(moves))
+        # 4. Delete full reconciliations  
+        self.env.cr.execute("DELETE FROM account_full_reconcile")
+        _logger.info('Deleted %d full reconciliations', self.env.cr.rowcount)
         
-        # Delete draft moves
-        draft_moves = move_obj.search([
-            ('state', '=', 'draft')
-        ])
-        if draft_moves:
-            draft_moves.unlink()
-            _logger.info('Deleted %d draft moves', len(draft_moves))
+        # 5. Delete bank statement lines
+        self.env.cr.execute("DELETE FROM account_bank_statement_line")
+        _logger.info('Deleted %d bank statement lines', self.env.cr.rowcount)
         
-        # Delete move lines (should be empty now, but just in case)
-        self.env['account.move.line'].sudo().search([]).unlink()
+        # 6. Delete bank statements
+        self.env.cr.execute("DELETE FROM account_bank_statement")
+        _logger.info('Deleted %d bank statements', self.env.cr.rowcount)
         
-        # Delete payment registers
-        self.env['account.payment.register'].sudo().search([]).unlink()
+        # 7. Delete move lines (account_move_line)
+        self.env.cr.execute("DELETE FROM account_move_line")
+        _logger.info('Deleted %d move lines', self.env.cr.rowcount)
+        
+        # 8. Delete move lines from account_move_rel (many2many)
+        self.env.cr.execute("DELETE FROM account_move_line_account_tax_rel")
+        self.env.cr.execute("DELETE FROM account_move_line__tax__account_move_line_rel")
+        
+        # 9. Delete account moves
+        self.env.cr.execute("DELETE FROM account_move")
+        _logger.info('Deleted %d account moves', self.env.cr.rowcount)
+        
+        # 10. Delete payment register transients (if any exist in DB)
+        self.env.cr.execute("DELETE FROM account_payment_register")
+        
+        # 11. Delete analytic distributions
+        self.env.cr.execute("DELETE FROM account_analytic_distribution_mixin")
         
         _logger.info('Accounting transactions deleted')
 
-    def _delete_projects(self):
-        """Delete projects and tasks"""
-        _logger.info('Deleting projects and tasks...')
+    def _delete_inventory_sql(self):
+        """Delete inventory transactions using direct SQL"""
+        _logger.info('Deleting inventory transactions...')
         
-        # Delete tasks first (they may have dependencies)
-        task_obj = self.env['project.task'].sudo()
-        tasks = task_obj.search([])
-        if tasks:
-            tasks.unlink()
-            _logger.info('Deleted %d tasks', len(tasks))
+        # Delete in order to avoid FK constraints
         
-        # Get analytic accounts linked to projects before deleting projects
-        project_obj = self.env['project.project'].sudo()
-        projects = project_obj.search([])
-        project_analytic_account_ids = projects.mapped('account_id').filtered(lambda x: x)
+        # 1. Delete stock move lines first
+        self.env.cr.execute("DELETE FROM stock_move_line")
+        _logger.info('Deleted %d stock move lines', self.env.cr.rowcount)
         
-        # Delete projects
-        if projects:
-            projects.unlink()
-            _logger.info('Deleted %d projects', len(projects))
+        # 2. Delete stock package lots
+        self.env.cr.execute("DELETE FROM stock_package_level")
+        _logger.info('Deleted %d package levels', self.env.cr.rowcount)
         
-        # Delete the project-related analytic accounts
-        if project_analytic_account_ids:
-            project_analytic_account_ids.unlink()
-            _logger.info('Deleted %d project analytic accounts', len(project_analytic_account_ids))
+        # 3. Delete stock lots (optional - comment out if you want to keep lots)
+        # self.env.cr.execute("DELETE FROM stock_lot")
         
-        # Do NOT delete project stages - Odoo requires at least one personal stage per user
-        # and they are typically default data that should be preserved
+        # 4. Delete stock moves
+        self.env.cr.execute("DELETE FROM stock_move")
+        _logger.info('Deleted %d stock moves', self.env.cr.rowcount)
         
-        _logger.info('Projects and tasks deleted')
+        # 5. Delete stock move entries from many2many relations
+        self.env.cr.execute("DELETE FROM stock_move_rule_repair_rel")
+        self.env.cr.execute("DELETE FROM mrp_production_workcenter_move_rel")
+        
+        # 6. Delete stock scrap
+        self.env.cr.execute("DELETE FROM stock_scrap")
+        _logger.info('Deleted %d scraps', self.env.cr.rowcount)
+        
+        # 7. Delete stock inventory adjustments
+        self.env.cr.execute("DELETE FROM stock_inventory_adjustment_name")
+        self.env.cr.execute("DELETE FROM stock_quant")  # This will reset quants, but keeps locations
+        
+        # 8. Delete stock pickings
+        self.env.cr.execute("DELETE FROM stock_picking")
+        _logger.info('Deleted %d stock pickings', self.env.cr.rowcount)
+        
+        # 9. Delete stock inventory
+        self.env.cr.execute("DELETE FROM stock_inventory")
+        _logger.info('Deleted %d inventory adjustments', self.env.cr.rowcount)
+        
+        # 10. Delete procurement groups related to stock
+        self.env.cr.execute("""
+            DELETE FROM procurement_group 
+            WHERE id IN (
+                SELECT procurement_group_id 
+                FROM stock_picking 
+                WHERE procurement_group_id IS NOT NULL
+            )
+        """)
+        
+        # Note: We DO NOT delete stock_location, stock_warehouse, stock_quant_package
+        # as these are master data that should be preserved
+        
+        _logger.info('Inventory transactions deleted')
 
-    def _delete_sales(self):
-        """Delete sales orders"""
+    def _delete_sales_sql(self):
+        """Delete sales orders using direct SQL"""
         _logger.info('Deleting sales orders...')
         
-        sale_obj = self.env['sale.order'].sudo()
-        sales = sale_obj.search([])
+        # 1. Delete sale order lines
+        self.env.cr.execute("DELETE FROM sale_order_line")
+        _logger.info('Deleted %d sale order lines', self.env.cr.rowcount)
         
-        if sales:
-            # Cancel all sales first
-            sales.action_cancel()
-            # Then delete them
-            sales.unlink()
-            _logger.info('Deleted %d sales orders', len(sales))
+        # 2. Delete sale order many2many relations
+        self.env.cr.execute("DELETE FROM sale_order_team_member_rel")
+        self.env.cr.execute("DELETE FROM sale_order_crm_tracking_sale_order_rel")
         
-        # Delete any remaining quotations (draft/cancelled sales)
-        quotations = sale_obj.search([], order='id DESC')
-        if quotations:
-            quotations.unlink()
-            _logger.info('Deleted %d remaining quotations', len(quotations))
+        # 3. Delete sale orders
+        self.env.cr.execute("DELETE FROM sale_order")
+        _logger.info('Deleted %d sale orders', self.env.cr.rowcount)
         
-        # Delete sale-related analytic lines
-        self._delete_analytic_lines()
+        # 4. Delete sale-related analytic lines (already done above)
         
         _logger.info('Sales orders deleted')
 
-    def _delete_purchase(self):
-        """Delete purchase orders"""
+    def _delete_purchase_sql(self):
+        """Delete purchase orders using direct SQL"""
         _logger.info('Deleting purchase orders...')
         
-        po_obj = self.env['purchase.order'].sudo()
-        pos = po_obj.search([])
+        # 1. Delete purchase order lines
+        self.env.cr.execute("DELETE FROM purchase_order_line")
+        _logger.info('Deleted %d purchase order lines', self.env.cr.rowcount)
         
-        if pos:
-            # Try to cancel purchase orders first (will skip those with done receipts)
-            for po in pos:
-                try:
-                    po.button_cancel()
-                except Exception as e:
-                    _logger.warning('Could not cancel PO %s: %s', po.name, str(e))
-            
-            # Now delete all POs (including cancelled and uncancellable ones)
-            pos.unlink()
-            _logger.info('Deleted %d purchase orders', len(pos))
+        # 2. Delete purchase order many2many relations
+        self.env.cr.execute("DELETE FROM purchase_order_invoice_plan_rel")
+        self.env.cr.execute("DELETE FROM purchase_order_blanket_order_rel")
         
-        # Delete purchase-related analytic lines
-        self._delete_analytic_lines()
+        # 3. Delete purchase orders
+        self.env.cr.execute("DELETE FROM purchase_order")
+        _logger.info('Deleted %d purchase orders', self.env.cr.rowcount)
+        
+        # 4. Delete purchase-related analytic lines (already done above)
         
         _logger.info('Purchase orders deleted')
 
-    def _delete_inventory(self):
-        """Delete inventory transactions"""
-        _logger.info('Deleting inventory transactions...')
+    def _delete_projects_sql(self):
+        """Delete projects and tasks using direct SQL"""
+        _logger.info('Deleting projects and tasks...')
         
-        # Delete stock moves first
-        move_obj = self.env['stock.move'].sudo()
-        moves = move_obj.search([
-            ('state', 'in', ('done', 'cancel'))
-        ])
-        if moves:
-            moves._action_cancel()
-            moves.unlink()
-            _logger.info('Deleted %d done/cancelled stock moves', len(moves))
+        # 1. Delete project task entries from many2many
+        self.env.cr.execute("DELETE FROM project_task_project_tag_rel")
+        self.env.cr.execute("DELETE FROM project_task_user_rel")
+        self.env.cr.execute("DELETE FROM project_task_mail_message_rel")
         
-        # Delete remaining stock moves
-        remaining_moves = move_obj.search([])
-        if remaining_moves:
-            remaining_moves._action_cancel()
-            remaining_moves.unlink()
-            _logger.info('Deleted %d remaining stock moves', len(remaining_moves))
+        # 2. Delete project tasks
+        self.env.cr.execute("DELETE FROM project_task")
+        _logger.info('Deleted %d tasks', self.env.cr.rowcount)
         
-        # Delete stock move lines
-        move_line_obj = self.env['stock.move.line'].sudo()
-        move_lines = move_line_obj.search([])
-        if move_lines:
-            move_lines.unlink()
-            _logger.info('Deleted %d stock move lines', len(move_lines))
+        # 3. Delete task recurrence rules
+        self.env.cr.execute("DELETE FROM project_task_recurrence")
+        _logger.info('Deleted %d task recurrences', self.env.cr.rowcount)
         
-        # Delete pickings
-        picking_obj = self.env['stock.picking'].sudo()
-        pickings = picking_obj.search([])
-        if pickings:
-            pickings.action_cancel()
-            pickings.unlink()
-            _logger.info('Deleted %d pickings', len(pickings))
+        # 4. Get analytic accounts linked to projects before deleting
+        self.env.cr.execute("""
+            DELETE FROM account_analytic_account
+            WHERE id IN (
+                SELECT account_id FROM project_project WHERE account_id IS NOT NULL
+            )
+        """)
+        _logger.info('Deleted project-related analytic accounts')
         
-        # Delete scrap orders
-        scrap_obj = self.env['stock.scrap'].sudo()
-        scraps = scrap_obj.search([])
-        if scraps:
-            scraps.unlink()
-            _logger.info('Deleted %d scraps', len(scraps))
+        # 5. Delete project many2many relations
+        self.env.cr.execute("DELETE FROM project_project_project_tag_rel")
+        self.env.cr.execute("DELETE FROM project_project_user_rel")
+        self.env.cr.execute("DELETE FROM project_project_partner_rel")
         
-        # Delete inventory adjustments
-        inventory_obj = self.env['stock.inventory'].sudo()
-        inventories = inventory_obj.search([])
-        if inventories:
-            inventories.action_cancel()
-            inventories.unlink()
-            _logger.info('Deleted %d inventory adjustments', len(inventories))
+        # 6. Delete projects
+        self.env.cr.execute("DELETE FROM project_project")
+        _logger.info('Deleted %d projects', self.env.cr.rowcount)
         
-        # Delete quant packages (optional - keep this if you want to preserve packaging)
-        # self.env['stock.quant.package'].sudo().search([]).unlink()
+        # 7. Delete project updates
+        self.env.cr.execute("DELETE FROM project_update")
+        _logger.info('Deleted %d project updates', self.env.cr.rowcount)
         
-        # DO NOT delete stock quants - they represent current physical inventory
-        # If user wants to reset quantities, they should do inventory adjustments
-        _logger.info('Inventory transactions deleted')
+        # Note: We DO NOT delete project_task_type (stages) as Odoo requires at least one per user
+        
+        _logger.info('Projects and tasks deleted')
