@@ -91,206 +91,180 @@ class DataCleanupWizard(models.TransientModel):
             _logger.error('DATA CLEANUP FAILED: %s', str(e), exc_info=True)
             raise UserError(_('Data cleanup failed: %s') % str(e))
 
-    def _safe_execute(self, query, params=None):
-        """Execute SQL safely, handling missing tables"""
+    def _get_existing_tables(self):
+        """Get list of all existing tables in the database"""
+        self.env.cr.execute("""
+            SELECT tablename FROM pg_tables 
+            WHERE schemaname = 'public'
+        """)
+        return [row[0] for row in self.env.cr.fetchall()]
+
+    def _delete_table_data_safe(self, table_name, existing_tables, savepoint_name='sp'):
+        """Delete data from a table using savepoints to prevent transaction abortion"""
+        if table_name not in existing_tables:
+            return 0
+        
         try:
-            self.env.cr.execute(query, params)
-            return self.env.cr.rowcount
+            # Create a savepoint before each DELETE
+            self.env.cr.execute(f"SAVEPOINT {savepoint_name}")
+            
+            # Try the delete
+            self.env.cr.execute(f"DELETE FROM {table_name}")
+            count = self.env.cr.rowcount
+            
+            # Release the savepoint if successful
+            self.env.cr.execute(f"RELEASE SAVEPOINT {savepoint_name}")
+            
+            if count > 0:
+                _logger.info('Deleted %d records from %s', count, table_name)
+            return count
+            
         except Exception as e:
-            if 'does not exist' in str(e):
-                _logger.debug('Table not found, skipping: %s', str(e))
-                return 0
-            raise
+            # Rollback to savepoint on error
+            try:
+                self.env.cr.execute(f"ROLLBACK TO SAVEPOINT {savepoint_name}")
+            except:
+                pass
+            _logger.warning('Could not delete from %s: %s', table_name, str(e))
+            return 0
 
     def _delete_analytic_lines_sql(self):
         """Delete analytic lines using direct SQL"""
         _logger.info('Deleting analytic lines...')
-        self._safe_execute("DELETE FROM account_analytic_line")
-        _logger.info('Deleted %d analytic lines', self.env.cr.rowcount)
+        existing_tables = self._get_existing_tables()
+        self._delete_table_data_safe('account_analytic_line', existing_tables, 'sp_analytic')
 
     def _delete_accounting_sql(self):
         """Delete accounting transactions using direct SQL"""
         _logger.info('Deleting accounting transactions...')
+        existing_tables = self._get_existing_tables()
+        sp_counter = [0]
+        
+        def next_sp():
+            sp_counter[0] += 1
+            return f'sp_acct_{sp_counter[0]}'
         
         # Delete in order to avoid FK constraints
-        
-        # 1. Delete payments (with their related records)
-        self._safe_execute("DELETE FROM account_payment_register")
-        count = self._safe_execute("DELETE FROM account_payment")
-        _logger.info('Deleted %d payments', count)
-        
-        # 2. Delete partial reconciliations
-        count = self._safe_execute("DELETE FROM account_partial_reconcile")
-        _logger.info('Deleted %d partial reconciliations', count)
-        
-        # 3. Delete full reconciliations  
-        count = self._safe_execute("DELETE FROM account_full_reconcile")
-        _logger.info('Deleted %d full reconciliations', count)
-        
-        # 4. Delete bank statement lines
-        count = self._safe_execute("DELETE FROM account_bank_statement_line")
-        _logger.info('Deleted %d bank statement lines', count)
-        
-        # 5. Delete bank statements
-        count = self._safe_execute("DELETE FROM account_bank_statement")
-        _logger.info('Deleted %d bank statements', count)
-        
-        # 6. Delete tax adjustments and distributions
-        self._safe_execute("DELETE FROM account_tax_report_data")
-        self._safe_execute("DELETE FROM account_reconcile_model")
-        self._safe_execute("DELETE FROM account_reconcile_model_line")
-        
-        # 7. Delete move lines (account_move_line)
-        count = self._safe_execute("DELETE FROM account_move_line")
-        _logger.info('Deleted %d move lines', count)
-        
-        # 8. Delete many2many relations for moves
-        self._safe_execute("DELETE FROM account_move_line_account_tax_rel")
-        self._safe_execute("DELETE FROM account_move_line__tax__account_move_line_rel")
-        self._safe_execute("DELETE FROM account_analytic_tag_account_move_line_rel")
-        
-        # 9. Delete account moves
-        count = self._safe_execute("DELETE FROM account_move")
-        _logger.info('Deleted %d account moves', count)
-        
-        # 10. Delete analytic distributions
-        self._safe_execute("DELETE FROM account_analytic_distribution_mixin")
+        self._delete_table_data_safe('account_payment_register', existing_tables, next_sp())
+        self._delete_table_data_safe('account_payment', existing_tables, next_sp())
+        self._delete_table_data_safe('account_partial_reconcile', existing_tables, next_sp())
+        self._delete_table_data_safe('account_full_reconcile', existing_tables, next_sp())
+        self._delete_table_data_safe('account_bank_statement_line', existing_tables, next_sp())
+        self._delete_table_data_safe('account_bank_statement', existing_tables, next_sp())
+        self._delete_table_data_safe('account_tax_report_data', existing_tables, next_sp())
+        self._delete_table_data_safe('account_reconcile_model', existing_tables, next_sp())
+        self._delete_table_data_safe('account_reconcile_model_line', existing_tables, next_sp())
+        self._delete_table_data_safe('account_move_line', existing_tables, next_sp())
+        self._delete_table_data_safe('account_move_line_account_tax_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('account_move_line__tax__account_move_line_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('account_analytic_tag_account_move_line_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('account_move', existing_tables, next_sp())
+        self._delete_table_data_safe('account_analytic_distribution_mixin', existing_tables, next_sp())
         
         _logger.info('Accounting transactions deleted')
 
     def _delete_inventory_sql(self):
         """Delete inventory transactions using direct SQL"""
         _logger.info('Deleting inventory transactions...')
+        existing_tables = self._get_existing_tables()
+        sp_counter = [0]
+        
+        def next_sp():
+            sp_counter[0] += 1
+            return f'sp_inv_{sp_counter[0]}'
         
         # Delete in order to avoid FK constraints
-        
-        # 1. Delete stock move lines first
-        count = self._safe_execute("DELETE FROM stock_move_line")
-        _logger.info('Deleted %d stock move lines', count)
-        
-        # 2. Delete stock package levels
-        count = self._safe_execute("DELETE FROM stock_package_level")
-        _logger.info('Deleted %d package levels', count)
-        
-        # 3. Delete stock lots (optional - comment out if you want to keep lots)
-        # count = self._safe_execute("DELETE FROM stock_lot")
-        # _logger.info('Deleted %d stock lots', count)
-        
-        # 4. Delete stock moves
-        count = self._safe_execute("DELETE FROM stock_move")
-        _logger.info('Deleted %d stock moves', count)
-        
-        # 5. Delete many2many relations
-        self._safe_execute("DELETE FROM stock_move_rule_repair_rel")
-        self._safe_execute("DELETE FROM mrp_production_workcenter_move_rel")
-        self._safe_execute("DELETE FROM stock_move_project_tag_rel")
-        
-        # 6. Delete stock scrap
-        count = self._safe_execute("DELETE FROM stock_scrap")
-        _logger.info('Deleted %d scraps', count)
-        
-        # 7. Delete stock lots (if needed - preserves serial numbers)
-        # count = self._safe_execute("DELETE FROM stock_lot")
-        
-        # 8. Delete stock pickings
-        count = self._safe_execute("DELETE FROM stock_picking")
-        _logger.info('Deleted %d stock pickings', count)
-        
-        # 9. Delete stock inventory
-        count = self._safe_execute("DELETE FROM stock_inventory")
-        _logger.info('Deleted %d inventory adjustments', count)
-        
-        # 10. Delete stock quants (resets physical inventory count)
-        count = self._safe_execute("DELETE FROM stock_quant")
-        _logger.info('Deleted %d stock quants', count)
-        
-        # Note: We DO NOT delete stock_location, stock_warehouse, stock_quant_package
-        # as these are master data that should be preserved
+        self._delete_table_data_safe('stock_move_line', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_package_level', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_move', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_move_rule_repair_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('mrp_production_workcenter_move_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_move_project_tag_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_scrap', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_picking', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_inventory', existing_tables, next_sp())
+        self._delete_table_data_safe('stock_quant', existing_tables, next_sp())
         
         _logger.info('Inventory transactions deleted')
 
     def _delete_sales_sql(self):
         """Delete sales orders using direct SQL"""
         _logger.info('Deleting sales orders...')
+        existing_tables = self._get_existing_tables()
+        sp_counter = [0]
         
-        # 1. Delete sale order lines
-        count = self._safe_execute("DELETE FROM sale_order_line")
-        _logger.info('Deleted %d sale order lines', count)
+        def next_sp():
+            sp_counter[0] += 1
+            return f'sp_sale_{sp_counter[0]}'
         
-        # 2. Delete sale order many2many relations
-        self._safe_execute("DELETE FROM sale_order_team_member_rel")
-        self._safe_execute("DELETE FROM sale_order_crm_tracking_sale_order_rel")
-        self._safe_execute("DELETE FROM sale_order_project_project_rel")
-        self._safe_execute("DELETE FROM sale_order_tag_rel")
-        
-        # 3. Delete sale orders
-        count = self._safe_execute("DELETE FROM sale_order")
-        _logger.info('Deleted %d sale orders', count)
+        self._delete_table_data_safe('sale_order_line', existing_tables, next_sp())
+        self._delete_table_data_safe('sale_order_team_member_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('sale_order_crm_tracking_sale_order_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('sale_order_project_project_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('sale_order_tag_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('sale_order', existing_tables, next_sp())
         
         _logger.info('Sales orders deleted')
 
     def _delete_purchase_sql(self):
         """Delete purchase orders using direct SQL"""
         _logger.info('Deleting purchase orders...')
+        existing_tables = self._get_existing_tables()
+        sp_counter = [0]
         
-        # 1. Delete purchase order lines
-        count = self._safe_execute("DELETE FROM purchase_order_line")
-        _logger.info('Deleted %d purchase order lines', count)
+        def next_sp():
+            sp_counter[0] += 1
+            return f'sp_po_{sp_counter[0]}'
         
-        # 2. Delete purchase order many2many relations
-        self._safe_execute("DELETE FROM purchase_order_invoice_plan_rel")
-        self._safe_execute("DELETE FROM purchase_order_blanket_order_rel")
-        self._safe_execute("DELETE FROM purchase_order_tag_rel")
-        
-        # 3. Delete purchase orders
-        count = self._safe_execute("DELETE FROM purchase_order")
-        _logger.info('Deleted %d purchase orders', count)
+        self._delete_table_data_safe('purchase_order_line', existing_tables, next_sp())
+        self._delete_table_data_safe('purchase_order_invoice_plan_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('purchase_order_blanket_order_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('purchase_order_tag_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('purchase_order', existing_tables, next_sp())
         
         _logger.info('Purchase orders deleted')
 
     def _delete_projects_sql(self):
         """Delete projects and tasks using direct SQL"""
         _logger.info('Deleting projects and tasks...')
+        existing_tables = self._get_existing_tables()
+        sp_counter = [0]
         
-        # 1. Delete project task entries from many2many
-        self._safe_execute("DELETE FROM project_task_project_tag_rel")
-        self._safe_execute("DELETE FROM project_task_user_rel")
-        self._safe_execute("DELETE FROM project_task_mail_message_rel")
-        self._safe_execute("DELETE FROM project_task_stage_project_tag_rel")
+        def next_sp():
+            sp_counter[0] += 1
+            return f'sp_proj_{sp_counter[0]}'
         
-        # 2. Delete project tasks
-        count = self._safe_execute("DELETE FROM project_task")
-        _logger.info('Deleted %d tasks', count)
+        self._delete_table_data_safe('project_task_project_tag_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_task_user_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_task_mail_message_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_task_stage_project_tag_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_task', existing_tables, next_sp())
+        self._delete_table_data_safe('project_task_recurrence', existing_tables, next_sp())
+        self._delete_table_data_safe('project_task_description', existing_tables, next_sp())
         
-        # 3. Delete task recurrence rules
-        count = self._safe_execute("DELETE FROM project_task_recurrence")
-        _logger.info('Deleted %d task recurrences', count)
+        # Delete project-related analytic accounts
+        if 'project_project' in existing_tables and 'account_analytic_account' in existing_tables:
+            try:
+                self.env.cr.execute("SAVEPOINT sp_proj_analytic")
+                self.env.cr.execute("""
+                    DELETE FROM account_analytic_account
+                    WHERE id IN (
+                        SELECT account_id FROM project_project WHERE account_id IS NOT NULL
+                    )
+                """)
+                self.env.cr.execute("RELEASE SAVEPOINT sp_proj_analytic")
+                _logger.info('Deleted project-related analytic accounts')
+            except Exception as e:
+                try:
+                    self.env.cr.execute("ROLLBACK TO SAVEPOINT sp_proj_analytic")
+                except:
+                    pass
+                _logger.warning('Could not delete project analytic accounts: %s', str(e))
         
-        # 4. Delete task descriptions (rich text fields)
-        self._safe_execute("DELETE FROM project_task_description")
-        
-        # 5. Get analytic accounts linked to projects before deleting
-        count = self._safe_execute("""
-            DELETE FROM account_analytic_account
-            WHERE id IN (
-                SELECT account_id FROM project_project WHERE account_id IS NOT NULL
-            )
-        """)
-        _logger.info('Deleted project-related analytic accounts')
-        
-        # 6. Delete project many2many relations
-        self._safe_execute("DELETE FROM project_project_project_tag_rel")
-        self._safe_execute("DELETE FROM project_project_user_rel")
-        self._safe_execute("DELETE FROM project_project_partner_rel")
-        
-        # 7. Delete projects
-        count = self._safe_execute("DELETE FROM project_project")
-        _logger.info('Deleted %d projects', count)
-        
-        # 8. Delete project updates
-        count = self._safe_execute("DELETE FROM project_update")
-        _logger.info('Deleted %d project updates', count)
-        
-        # Note: We DO NOT delete project_task_type (stages) as Odoo requires at least one per user
+        self._delete_table_data_safe('project_project_project_tag_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_project_user_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_project_partner_rel', existing_tables, next_sp())
+        self._delete_table_data_safe('project_project', existing_tables, next_sp())
+        self._delete_table_data_safe('project_update', existing_tables, next_sp())
         
         _logger.info('Projects and tasks deleted')
