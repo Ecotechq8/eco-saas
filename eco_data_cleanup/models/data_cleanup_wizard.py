@@ -165,13 +165,8 @@ class DataCleanupWizard(models.TransientModel):
             project_analytic_account_ids.unlink()
             _logger.info('Deleted %d project analytic accounts', len(project_analytic_account_ids))
         
-        # Delete project stages (custom ones only)
-        # Keep default stages from base data
-        stage_obj = self.env['project.task.type'].sudo()
-        custom_stages = stage_obj.search([('user_id', '!=', False)])
-        if custom_stages:
-            custom_stages.unlink()
-            _logger.info('Deleted %d custom project stages', len(custom_stages))
+        # Do NOT delete project stages - Odoo requires at least one personal stage per user
+        # and they are typically default data that should be preserved
         
         _logger.info('Projects and tasks deleted')
 
