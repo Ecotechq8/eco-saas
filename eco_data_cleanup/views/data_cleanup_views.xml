@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <!-- Wizard View -->
     <record id="view_data_cleanup_wizard_form" model="ir.ui.view">
         <field name="name">data.cleanup.wizard.form</field>
         <field name="model">data.cleanup.wizard</field>
@@ -36,10 +37,26 @@
         </field>
     </record>
 
+    <!-- Action Window -->
     <record id="action_data_cleanup_wizard" model="ir.actions.act_window">
         <field name="name">Delete All Transactions</field>
         <field name="res_model">data.cleanup.wizard</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>
+
+    <!-- Menu Items - referencing action from same file -->
+    <menuitem id="menu_data_cleanup"
+              name="Delete All Transactions"
+              parent="stock.menu_stock_inventory_control"
+              action="action_data_cleanup_wizard"
+              sequence="100"
+              groups="stock.group_stock_manager"/>
+
+    <menuitem id="menu_data_cleanup_settings"
+              name="Data Cleanup"
+              parent="base.menu_administration"
+              action="action_data_cleanup_wizard"
+              sequence="99"
+              groups="base.group_system"/>
 </odoo>

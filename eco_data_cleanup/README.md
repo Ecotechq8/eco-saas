@@ -1,12 +1,19 @@
 # ECO Data Cleanup - Delete All Transactions
 
-## Overview
-This Odoo module provides a centralized action to delete all transactions from multiple modules:
-- **Purchase Orders**
-- **Sales Orders**
-- **Inventory Transactions** (Stock Moves, Pickings, etc.)
-- **Projects & Tasks**
-- **Accounting Entries** (Journal Entries, Invoices, Payments, etc.)
+## 📁 Module Structure
+```
+eco_data_cleanup/
+├── __init__.py
+├── __manifest__.py
+├── models/
+│   ├── __init__.py
+│   └── data_cleanup_wizard.py    # Wizard logic
+├── views/
+│   └── data_cleanup_views.xml     # Views, actions, and menus
+├── security/
+│   └── ir.model.access.csv        # Access rights
+└── README.md
+```
 
 ## Features
 - ✅ One-click deletion of all transactions across modules

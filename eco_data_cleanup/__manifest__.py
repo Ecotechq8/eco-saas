@@ -31,8 +31,7 @@
     ],
     'data': [
         'security/ir.model.access.csv',
-        'data/action_server_data.xml',
-        'wizards/data_cleanup_wizard_views.xml',
+        'views/data_cleanup_views.xml',
     ],
     'installable': True,
     'application': False,
