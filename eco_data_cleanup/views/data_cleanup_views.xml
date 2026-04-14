@@ -30,7 +30,7 @@
                             string="Delete Transactions" 
                             type="object" 
                             class="btn-danger"
-                            confirm="Are you absolutely sure you want to delete all selected transactions? This cannot be undone!"/>
+                            confirm="This action will delete all selected transactions. This CANNOT be undone. Are you sure you want to proceed?"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

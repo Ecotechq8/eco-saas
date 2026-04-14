@@ -203,9 +203,14 @@ class DataCleanupWizard(models.TransientModel):
         pos = po_obj.search([])
         
         if pos:
-            # Cancel all purchase orders first
-            pos.button_cancel()
-            # Then delete them
+            # Try to cancel purchase orders first (will skip those with done receipts)
+            for po in pos:
+                try:
+                    po.button_cancel()
+                except Exception as e:
+                    _logger.warning('Could not cancel PO %s: %s', po.name, str(e))
+            
+            # Now delete all POs (including cancelled and uncancellable ones)
             pos.unlink()
             _logger.info('Deleted %d purchase orders', len(pos))
         
