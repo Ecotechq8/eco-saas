@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_data_cleanup_wizard_form" model="ir.ui.view">
+        <field name="name">data.cleanup.wizard.form</field>
+        <field name="model">data.cleanup.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Delete All Transactions">
+                <group>
+                    <field name="delete_all"/>
+                </group>
+                <group string="Select Modules to Clean" attrs="{'invisible': [('delete_all', '=', True)]}">
+                    <group>
+                        <field name="delete_purchase"/>
+                        <field name="delete_sales"/>
+                        <field name="delete_inventory"/>
+                    </group>
+                    <group>
+                        <field name="delete_projects"/>
+                        <field name="delete_accounting"/>
+                    </group>
+                </group>
+                <div class="alert alert-warning" role="alert" style="margin: 10px 0;">
+                    <strong>WARNING:</strong> This action will permanently delete all selected transaction data.
+                    Master data (products, partners, employees, etc.) will be preserved.
+                    <br/>This operation CANNOT be undone!
+                </div>
+                <footer>
+                    <button name="action_delete_all_transactions" 
+                            string="Delete Transactions" 
+                            type="object" 
+                            class="btn-danger"
+                            confirm="Are you absolutely sure you want to delete all selected transactions? This cannot be undone!"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_data_cleanup_wizard" model="ir.actions.act_window">
+        <field name="name">Delete All Transactions</field>
+        <field name="res_model">data.cleanup.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
