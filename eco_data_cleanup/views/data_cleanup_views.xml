@@ -9,7 +9,7 @@
                 <group>
                     <field name="delete_all"/>
                 </group>
-                <group string="Select Modules to Clean" attrs="{'invisible': [('delete_all', '=', True)]}">
+                <group string="Select Modules to Clean" invisible="delete_all">
                     <group>
                         <field name="delete_purchase"/>
                         <field name="delete_sales"/>
