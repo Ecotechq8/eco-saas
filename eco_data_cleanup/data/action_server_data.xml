@@ -4,7 +4,7 @@
     <menuitem id="menu_data_cleanup"
               name="Delete All Transactions"
               parent="stock.menu_stock_inventory_control"
-              action="action_data_cleanup_wizard"
+              action="eco_data_cleanup.action_data_cleanup_wizard"
               sequence="100"
               groups="stock.group_stock_manager"/>
 
@@ -12,7 +12,7 @@
     <menuitem id="menu_data_cleanup_settings"
               name="Data Cleanup"
               parent="base.menu_administration"
-              action="action_data_cleanup_wizard"
+              action="eco_data_cleanup.action_data_cleanup_wizard"
               sequence="99"
               groups="base.group_system"/>
 </odoo>
