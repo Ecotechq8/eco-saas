@@ -10,7 +10,5 @@ class HrAttendance(models.Model):
         'project.project',
         related='employee_id.project_ids',
         string='Employee Projects',
-        store=True,
         readonly=True,
-        help='Projects the employee is working on.'
     )
