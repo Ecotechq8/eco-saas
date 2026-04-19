@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- ********** Bank Form view ********** -->
+        <record id="view_res_bank_form_in" model="ir.ui.view">
+            <field name="name">res.bank.form</field>
+            <field name="model">res.bank</field>
+            <field name="inherit_id" ref="base.view_res_bank_form"/>
+            <field name="arch" type="xml">
+                <field name="bic" position="replace">
+                    <field name="bic" string="Bank Identifier/IFSC Code"/>
+                    <field name="branch"/>
+                    <field name="swift_code"/>
+                </field>
+                <field name="bic" position="after">
+<!--                    <field name="bank_name"/>-->
+                    <field name="ad_code"/>
+                </field>
+            </field>
+        </record>
+
+        <record id="base.action_res_bank_form" model="ir.actions.act_window">
+            <field name="name">Branch</field>
+            <field name="res_model">res.bank</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new bank.
+                </p>
+                <p>
+                    Manage bank records you want to be used in the system.
+                </p>
+            </field>
+        </record>
+
+        <!-- ********** Bank Account Type tree view ********** -->
+        <record id="bank_acc_type_tree_view" model="ir.ui.view">
+            <field name="name">Bank Account Type</field>
+            <field name="model">bank.account.type</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Bank Account Type form view ********** -->
+        <record id="bank_acc_type_form_view" model="ir.ui.view">
+            <field name="name">Bank Account Type</field>
+            <field name="model">bank.account.type</field>
+            <field name="arch" type="xml">
+                <form string="Bank Account Type">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Bank Account Type ********** -->
+        <record id="action_bank_acc_type" model="ir.actions.act_window">
+            <field name="name">Bank Account Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">bank.account.type</field>
+            <field name="view_id" ref="verts_v15_basic_masters.bank_acc_type_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--** Modification in employee form ** -->
+        <record id='verts_employee_inherit_inhe' model='ir.ui.view'>
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page" position="after">
+                    <page string="Region">
+                        <group>
+                            <field name="inter_id"/>
+                            <field name="domestic_id" options="{'no_open': True, 'no_create': True}"/>
+                            <field name="check_employee" invisible="1"/>
+                        </group>
+                    </page>
+                </xpath>
+                <field name="country_id" position="replace">
+                    <field name="country_id" string="Country"/>
+                </field>
+                <field name="identification_id" position="before">
+                    <field name="state_id"/>
+                </field>
+            </field>
+        </record>
+
+        <!-- ***************************************** International Region *********************************************** -->
+        <record id="tree_internation_zone_basic_masters" model="ir.ui.view">
+            <field name="name">employee.internation.zone</field>
+            <field name="model">internation.zone</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="note"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="form_internation_zone_basic_masters" model="ir.ui.view">
+            <field name="name">employee.internation.zone</field>
+            <field name="model">internation.zone</field>
+            <field name="arch" type="xml">
+                <form string="International Region">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="working_hours" widget="float_time" invisible="1"/>
+                            <field name="short_leave_hours" widget="float_time"
+                                   invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Countries">
+                                <field name="international_country_ids" >
+                                    <list editable="bottom">
+                                        <field name="country_name" required="1"/>
+                                        <field name="country_code"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="note" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_internation_zone_basic_masters" model="ir.actions.act_window">
+            <field name="name">International Zone</field>
+            <field name="res_model">internation.zone</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="tree_internation_zone_basic_masters"/>
+        </record>
+
+        <!-- ***************************************** Domestic Region *********************************************** -->
+        <record id="tree_domestic_zone_basic_masters" model="ir.ui.view">
+            <field name="name">domestic.zone</field>
+            <field name="model">domestic.zone</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="note"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="form_domestic_zone_basic_masters" model="ir.ui.view">
+            <field name="name">domestic.zone</field>
+            <field name="model">domestic.zone</field>
+            <field name="arch" type="xml">
+                <form string="Domestic Zone">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="zone_type" required="1"/>
+                            <field name="country_id" required="1"/>
+                            <field name="working_hours" widget="float_time" invisible="1"/>
+                            <field name="short_leave_hours" widget="float_time"
+                                   invisible="1"/>
+                            <field name="domestic_region_bool" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="States"
+                                  invisible="zone_type in [False, 'city']">
+                                <field name="domestic_state_line" >
+                                    <list editable="bottom">
+                                        <field name="state_name" required="1"
+                                               domain="[('country_id','=',parent.country_id),]"/>
+                                        <field name="state_code"/>
+                                        <field name="domestic_region_bool_line" invisible="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="City"
+                                  invisible="zone_type in [False, 'state']">
+                                <field name="domestic_city_line" >
+                                    <list editable="bottom">
+                                        <field name="city_name"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group>
+                            <field name="note" nolabel="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_domestic_zone_basic_masters" model="ir.actions.act_window">
+            <field name="name">Domestic Zone</field>
+            <field name="res_model">domestic.zone</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="tree_domestic_zone_basic_masters"/>
+        </record>
+
+        <!-- ****************************** Divisions/BU *********************************** -->
+        <!-- ********** Divisions/BU tree view ********** -->
+        <record id="basic_masters_divisions_bu_tree_view" model="ir.ui.view">
+            <field name="name">Divisions/BU</field>
+            <field name="model">basic.masters</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="divisions_bu"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Divisions/BU form view ********** -->
+        <record id="basic_masters_form_divisions_bu_view" model="ir.ui.view">
+            <field name="name">Divisions/BU</field>
+            <field name="model">basic.masters</field>
+            <field name="arch" type="xml">
+                <form string="Divisions/BU">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="divisions_bu" class="oe_edit_only"/>
+                            <h1>
+                                <field name="divisions_bu" placeholder="Divisions/BU Name"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Divisions/BU ********** -->
+        <record id="action_basic_masters_divisions_bu" model="ir.actions.act_window">
+            <field name="name">Divisions/BU</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">basic.masters</field>
+            <field name="view_id" ref="basic_masters_divisions_bu_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ****************************** Cities *********************************** -->
+        <!-- ********** Cities tree view ********** -->
+        <record id="cities_basic_master_tree_view" model="ir.ui.view">
+            <field name="name">Cities</field>
+            <field name="model">cities.basic.masters</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="state_id"/>
+                    <field name="country_id"/>
+                    <field name="district_id"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Cities form view ********** -->
+        <record id="cities_basic_master_form_view" model="ir.ui.view">
+            <field name="name">Cities</field>
+            <field name="model">cities.basic.masters</field>
+            <field name="arch" type="xml">
+                <form string="Cities">
+                    <sheet>
+                        <group>
+                            <field style="text-transform: capitalize;"  name="name" readonly="cities_bool == True"/>
+                            <field name="district_id"/>
+                            <field name="state_id" readonly="cities_bool == True"/>
+                            <field name="country_id"/>
+                            <field name="cities_bool" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Cities ********** -->
+        <record id="action_cities_basic_master" model="ir.actions.act_window">
+            <field name="name">Cities</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cities.basic.masters</field>
+            <field name="view_id" ref="cities_basic_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ****************************** Areas *********************************** -->
+        <!-- ********** Areas tree view ********** -->
+        <record id="areas_basic_master_tree_view" model="ir.ui.view">
+            <field name="name">Areas</field>
+            <field name="model">areas.basic.masters</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="city_id"/>
+                </list>
+            </field>
+        </record>
+        <!-- ********** Areas form view ********** -->
+        <record id="areas_basic_master_form_view" model="ir.ui.view">
+            <field name="name">Areas</field>
+            <field name="model">areas.basic.masters</field>
+            <field name="arch" type="xml">
+                <form string="Areas">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="city_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Cities ********** -->
+        <record id="action_areas_basic_master" model="ir.actions.act_window">
+            <field name="name">Areas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">areas.basic.masters</field>
+            <field name="view_id" ref="areas_basic_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ************************ Mode of Transport ************************** -->
+        <!-- ********** Mode of Transport tree view ********** -->
+        <record id="mode_transport_basic_master_tree_view" model="ir.ui.view">
+            <field name="name">Mode of Transport</field>
+            <field name="model">mode.transport</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="mode_of_transport"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Mode of Transport form view ********** -->
+        <record id="mode_transport_basic_master_form_view" model="ir.ui.view">
+            <field name="name">Mode of Transport</field>
+            <field name="model">mode.transport</field>
+            <field name="arch" type="xml">
+                <form string="Mode of Transport">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="mode_of_transport" class="oe_edit_only"/>
+                            <h1>
+                                <field name="mode_of_transport" placeholder="Mode of Transport Name"
+                                       readonly="mode_transport_bool == True"/>
+                                <field name="mode_transport_bool" invisible="1"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Mode of Transport ********** -->
+        <record id="action_mode_transport_basic_master" model="ir.actions.act_window">
+            <field name="name">Mode of Transport</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">mode.transport</field>
+            <field name="view_id" ref="mode_transport_basic_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ************************ Ports ************************** -->
+        <!-- ********** Ports tree view ********** -->
+        <record id="ports_basic_master_tree_view" model="ir.ui.view">
+            <field name="name">Ports</field>
+            <field name="model">ports</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="port_type_id"/>
+                    <field name="incoming_trans_days" invisible="1"/>
+                    <field name="delivery_trans_days" invisible="1"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Ports form view ********** -->
+        <record id="ports_basic_master_form_view" model="ir.ui.view">
+            <field name="name">Ports</field>
+            <field name="model">ports</field>
+            <field name="arch" type="xml">
+                <form string="Ports">
+                    <sheet>
+                        <group>
+                            <field name="name" readonly="ports_bool == True"/>
+                            <field name="port_type_id" options="{'no_open': True, 'no_create': True}"
+                                   readonly="ports_bool == True"/>
+                            <field name="port_load_bool"/>
+                            <field name="port_discharge_bool"/>
+                            <field name="expected_trans_days" invisible="1"/>
+                            <field name="incoming_trans_days" invisible="1"/>
+                            <field name="delivery_trans_days" invisible="1"/>
+                        </group>
+                        <group>
+                            <label for="street" string="Address"/>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..."
+                                       class="o_address_street"/>
+                                <field name="street2" placeholder="Street 2..."
+                                       class="o_address_street"/>
+                                <field name="city" options='{"no_open": true, "no_create": true}' placeholder="City"
+                                       class="o_address_city"/>
+                                <field name="state_id" class="o_address_state"
+                                       placeholder="State" options='{"no_open": true, "no_create": true}'/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"/>
+                                <field name="country_id" placeholder="Country"
+                                       class="o_address_country" options='{"no_open": true, "no_create": true}'/>
+                            </div>
+                            <field name="ports_bool" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Port ********** -->
+        <record id="action_ports_basic_master" model="ir.actions.act_window">
+            <field name="name">Ports</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ports</field>
+            <field name="view_id" ref="ports_basic_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- *************Container Type************* -->
+        <record id="container_type_basic_master_tree_view" model="ir.ui.view">
+            <field name="name">Container Type</field>
+            <field name="model">container.type</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="capacity"/>
+                    <field name="description"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Container Type form view ********** -->
+        <record id="container_type_basic_master_form_view" model="ir.ui.view">
+            <field name="name">Container Type</field>
+            <field name="model">container.type</field>
+            <field name="arch" type="xml">
+                <form string="Ports">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="capacity"/>
+                            <field name="description"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Container Type ********** -->
+        <record id="action_container_type_basic_master" model="ir.actions.act_window">
+            <field name="name">Container Type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">container.type</field>
+            <field name="view_id" ref="container_type_basic_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ****************************** Zone/Circle *********************************** -->
+        <!-- ********** Zone/Circle tree view ********** -->
+        <record id="zone_master_tree_view" model="ir.ui.view">
+            <field name="name">Zone</field>
+            <field name="model">res.state.zone</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Zone/circle form view ********** -->
+        <record id="zone_basic_master_form_view" model="ir.ui.view">
+            <field name="name">Zone</field>
+            <field name="model">res.state.zone</field>
+            <field name="arch" type="xml">
+                <form string="Zone">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="country_id"/>
+                            <field name="state_id" domain="[('country_id','=',country_id)]"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Zone/Circle ********** -->
+        <record id="action_zone_basic_master" model="ir.actions.act_window">
+            <field name="name">Zone</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.state.zone</field>
+            <field name="view_id" ref="zone_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ****************************** Zone/Circle *********************************** -->
+        <!-- ********** Zone/Circle tree view ********** -->
+        <record id="district_master_tree_view" model="ir.ui.view">
+            <field name="name">District</field>
+            <field name="model">res.zone.district</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="country_id"/>
+                    <field name="state_id"/>
+                    <field name="zone_id"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Zone/circle form view ********** -->
+        <record id="district_basic_master_form_view" model="ir.ui.view">
+            <field name="name">District</field>
+            <field name="model">res.zone.district</field>
+            <field name="arch" type="xml">
+                <form string="District">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="country_id"/>
+                            <field name="state_id"/>
+                            <field name="zone_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Zone/Circle ********** -->
+        <record id="action_district_basic_master" model="ir.actions.act_window">
+            <field name="name">District</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.zone.district</field>
+            <field name="view_id" ref="district_master_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!-- ************************ Point of Stuffing ************************** -->
+        <!-- ********** Point of Stuffing tree view ********** -->
+        <record id="point_of_stuffing_tree_view" model="ir.ui.view">
+            <field name="name">Point of Stuffing</field>
+            <field name="model">point.of.stuffing</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- ********** Point of Stuffing form view ********** -->
+        <record id="point_of_stuffing_form_view" model="ir.ui.view">
+            <field name="name">Point of Stuffing</field>
+            <field name="model">point.of.stuffing</field>
+            <field name="arch" type="xml">
+                <form string="Ports">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- ********** Action Point of Stuffing ********** -->
+        <record id="action_point_of_stuffing" model="ir.actions.act_window">
+            <field name="name">Point of Stuffing</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">point.of.stuffing</field>
+            <field name="view_id" ref="point_of_stuffing_tree_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--	Industry Master Tree view	-->
+        <record id="industry_tree_view" model="ir.ui.view">
+            <field name="name">res_industry_tree</field>
+            <field name="model">res.industry</field>
+            <field name="arch" type="xml">
+                <list editable="bottom">
+                    <field name="name" required="1"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_res_industry" model="ir.actions.act_window">
+            <field name="name">Industry</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.industry</field>
+<!--            <field name="view_type">form</field>-->
+            <field name="view_id" ref="industry_tree_view"/>
+            <field name="view_mode">tree</field>
+        </record>
+    </data>
+</odoo>
+

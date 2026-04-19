@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+
+		<!-- Supplier Category -->
+
+		<record id="view_partner_categories_filter" model="ir.ui.view">
+			<field name="name">Customer Categories</field>
+			<field name="model">partner.categories</field>
+			<field name="priority" eval="8" />
+			<field name="arch" type="xml">
+				<search string="Supplier Categories">
+					<field name="name" />
+<!--					<field name="account_receivable" />-->
+<!--					<field name="account_payable" />-->
+					<field name="prefix" />
+					<field name="suffix" />
+					<field name="sequence_size" />
+					<newline />
+					<group expand="0" string="Group By...">
+						<filter name="supp_cat_filter" string="Name" domain="[]" context="{'group_by':'name'}" />
+					</group>
+				</search>
+			</field>
+		</record>
+
+		<record model="ir.ui.view" id="partner_categories_trees">
+			<field name="name">Partner Categories</field>
+			<field name="model">partner.categories</field>
+			<field name="type">list</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+<!--					<field name="account_receivable" />-->
+<!--					<field name="account_payable" />-->
+					<field name="prefix" />
+					<field name="suffix" />
+					<field name="sequence_size" />
+				</list>
+			</field>
+		</record>
+		<record model="ir.ui.view" id="partner_categories_form">
+			<field name="name">Partner Categories</field>
+			<field name="model">partner.categories</field>
+			<field name="type">form</field>
+			<field name="arch" type="xml">
+				<form string='Partners Type'>
+					<group>
+						<field name="name" />
+						<field name="sequence_size" />
+						<field name="prefix" />
+						<field name="suffix" />
+<!--						<field name="account_receivable" />-->
+<!--						<field name="account_payable" />-->
+						<field name="type" />
+					</group>
+				</form>
+			</field>
+		</record>
+
+		<record id="supplier_categories_actions" model="ir.actions.act_window">
+			<field name="name">Supplier Categories</field>
+			<field name="res_model">partner.categories</field>
+			<field name="view_mode">kanban,list,form</field>
+			<field name="domain">[('type','=','supplier')]</field>
+			<field name="context">{'default_type': 'supplier'}</field>
+			<field name="view_id" ref="view_partner_categories_filter" />
+		</record>
+
+
+
+		<!-- Demo Data Supplier -->
+
+
+		<record id="supplier_categories_intercompany" model="partner.categories">
+			<field name="name">Supplier - Intercompany</field>
+			<field name="type">supplier</field>
+		</record>
+
+
+		<record id="supplier_categories_marketplace" model="partner.categories">
+			<field name="name">Supplier - Marketplace</field>
+			<field name="type">supplier</field>
+		</record>
+
+
+		<record id="supplier_categories_bulk_purchase" model="partner.categories">
+			<field name="name">Supplier - Bulk Purchase</field>
+			<field name="type">supplier</field>
+		</record>
+
+
+		<record id="supplier_categories_service" model="partner.categories">
+			<field name="name">Service</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categories_capex" model="partner.categories">
+			<field name="name">Capex</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categories_opex" model="partner.categories">
+			<field name="name">Opex</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categories_legal" model="partner.categories">
+			<field name="name">Legal</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categoryies_marketing" model="partner.categories">
+			<field name="name">Marketing</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categories_tech" model="partner.categories">
+			<field name="name">Tech</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categories_intercompani" model="partner.categories">
+			<field name="name">Inter-Company</field>
+			<field name="type">supplier</field>
+		</record>
+
+
+		<record id="supplier_categories_employee" model="partner.categories">
+			<field name="name">Employee</field>
+			<field name="type">supplier</field>
+		</record>
+
+		<record id="supplier_categoyies_other" model="partner.categories">
+			<field name="name">Others</field>
+			<field name="type">supplier</field>
+		</record>
+
+
+		<record id="customer_categories_actions" model="ir.actions.act_window">
+			<field name="name">Partner Categories</field>
+			<field name="res_model">partner.categories</field>
+			<field name="view_mode">kanban,list,form</field>
+			<field name="domain">[('type','=','customer')]</field>
+			 <field name="context">{'default_type': 'customer'}
+            </field>
+			<field name="view_id" ref="view_partner_categories_filter" />
+		</record>
+
+
+<!--		&lt;!&ndash; Demo Data Customer &ndash;&gt;-->
+
+<!--		<record id="customer_categories_interior" model="partner.categories">-->
+<!--			<field name="name">Interior Designer</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_architect" model="partner.categories">-->
+<!--			<field name="name">Architect</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_builder" model="partner.categories">-->
+<!--			<field name="name">Builder</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_trader" model="partner.categories">-->
+<!--			<field name="name">Trader</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_individual" model="partner.categories">-->
+<!--			<field name="name">Individual</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_b2b" model="partner.categories">-->
+<!--			<field name="name">B2B</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+
+
+<!--		<record id="customer_categories_b2c" model="partner.categories">-->
+<!--			<field name="name">B2C</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+
+
+<!--		<record id="customer_categories_service" model="partner.categories">-->
+<!--			<field name="name">Service</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+
+
+<!--		<record id="customer_categories_marketing" model="partner.categories">-->
+<!--			<field name="name">Marketing</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+
+<!--		<record id="customer_categories_other" model="partner.categories">-->
+<!--			<field name="name">Other Customer</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+
+<!--		<record id="customer_categories_wholesaler" model="partner.categories">-->
+<!--			<field name="name">Wholesaler</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_semi_wholesale" model="partner.categories">-->
+<!--			<field name="name">Semi Wholesale</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_kirana_shop" model="partner.categories">-->
+<!--			<field name="name">Kirana Shop</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+<!--		<record id="customer_categories_daily_need" model="partner.categories">-->
+<!--			<field name="name">Daily Need</field>-->
+<!--			<field name="type">customer</field>-->
+<!--		</record>-->
+
+	</data>
+</odoo>
+		

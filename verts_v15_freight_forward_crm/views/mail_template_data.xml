@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="email_template_for_ff_price_request" model="mail.template">
+        <field name="name">Freight Price Request</field>
+        <field name="model_id" ref="crm.model_crm_lead"/>
+        <field name="subject">Price Request - {{ object.code or object.name or '' }}</field>
+        <field name="email_from">{{ user.email_formatted or user.company_id.email_formatted or '' }}</field>
+        <field name="body_html" type="html">
+            <div>
+                <p>Hello,</p>
+                <p>Please share your freight price for <strong>{{ object.name or '' }}</strong>.</p>
+                <p>
+                    Reference:
+                    <span>{{ object.code or object.name or '' }}</span>
+                </p>
+            </div>
+        </field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</odoo>

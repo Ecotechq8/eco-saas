@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<record id="term_and_condition_set_tree_view" model="ir.ui.view">
+			<field name="name">term.and.condition.set.tree</field>
+			<field name="model">term.and.condition.set</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="tc_set_type" />
+					<field name="is_default" />
+				</list>
+			</field>
+		</record>
+		
+		<record id="term_and_condition_set_form_view" model="ir.ui.view">
+			<field name="name">term.and.condition.set.form</field>
+			<field name="model">term.and.condition.set</field>
+			<field name="arch" type="xml">
+				<form string="Terms &amp; Conditions Set">
+					<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" />
+							<h1>
+								<field name="name" placeholder="Name....." />
+							</h1>
+						</div>
+						<group >
+						    <field name="tc_set_type" />
+							<field name="is_default" />
+						</group>
+						<notebook>
+							<page string="Lines">
+								<field name="tc_set_line" >
+									<list editable="bottom">
+									    <field name="term_and_condition_id"/>
+										<field name="removable" />
+									</list>
+									<form string="Terms &amp; Conditions Set Lines" >
+									    <group>
+										    <field name="term_and_condition_id" options="{'no_create': True, 'no_create_edit': True}"/>
+										    <field name="removable" />
+									    </group>
+									</form>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record> 
+		
+		<record id="action_term_and_condition_set" model="ir.actions.act_window">
+			<field name="name">Terms &amp; Conditions Set</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">term.and.condition.set</field>
+			<field name="view_id" ref="verts_v15_basic_masters.term_and_condition_set_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+	</data>
+</odoo>

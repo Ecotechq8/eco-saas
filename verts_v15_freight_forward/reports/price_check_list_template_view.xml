@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id ="price_check_list_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <style  type="text/css">
+                        .tbl_bdr
+                        {
+                         margin:0;
+                         padding:0;
+                        }
+                        .tbl_bdr tr th
+                        {
+                         margin:0;
+                         padding:0;
+                         border:1px solid #cccccc;
+                        }
+                        .tbl_bdr tr td
+                        {
+                         margin:0;
+                         padding:0;
+<!--                         text-align:left;-->
+                         border:1px solid #cccccc;
+                        }
+                    </style>
+                    <table style="width:100%; border: 1px solid black;">
+                        <tr>
+                            <td>
+                                <table style="width:100%">
+                                    <tr>
+                                        <td>
+                                            <img t-if="o.company_id.logo"
+                                        t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+                                        style="height: 80px;padding-bottom: 10px;" align="left" />
+                                        </td>
+                                        <td style="font-size:12px;">
+                                            <center>
+                                                <u><h3><b>PRICE CHECK LIST</b></h3></u>
+                                            </center>
+                                        </td>
+                                        <td style="font-size:10px;">
+                                            <p align="right">
+                                                Date :<span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}' />
+                                            </p>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td style="font-size:10px;">-->
+<!--                                <p align="right">-->
+<!--                                    Date :<span t-field="doc.date_order" t-options='{"format": "dd/MM/yyyy"}' />-->
+<!--                                </p>-->
+<!--                            </td>-->
+<!--                            <hr></hr>-->
+<!--                        </tr>-->
+<!--                        <br></br>-->
+<!--                        <tr><td><hr></hr></td></tr>-->
+
+
+                        <tr>
+                            <td>
+                                <table width="100%" class="tbl_bdr" align="center" >
+                                    <tr>
+                                       <td style="font-size:10px;" width="20%"> Party Name </td>
+                                       <td style="font-size:10px;" width="30%"> <span t-field="o.partner_id" /></td>
+                                       <td style="font-size:10px;" width="20%"> Checklist No </td>
+                                       <td style="font-size:10px;" width="30%"> <span t-field="o.name" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;" width="20%"> Shipping line </td>
+                                        <td style="font-size:10px;" width="30%"><span t-field="o.freight_forwarder_id" /> </td>
+                                        <td style="font-size:10px;" width="20%"> Destination </td>
+                                        <td style="font-size:10px;" width="30%">  <span t-field="o.port_of_discharge_id" /><span t-out="o.cal_port_of_discharge_id()" /></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;" width="20%"> Transit Time </td>
+                                        <td style="font-size:10px;" width="30%"><span t-out="o.cal_transit_time()" /></td>
+                                        <td style="font-size:10px;" width="20%"> Dollar Rate </td>
+                                        <td style="font-size:10px;" width="30%"> <span t-out="o.cal_cur_rate()" /> </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size:10px;" width="20%"> Stuffing Location </td>
+                                        <td style="font-size:10px;" width="30%"> <span t-field="o.stuffing_point_id" /> </td>
+                                        <td style="font-size:10px;" width="20%"> Lot No </td>
+                                        <td style="font-size:10px;" width="30%">  </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <br/>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+
+                        <tr>
+                            <td>
+                                <table width="100%" class="tbl_bdr"  align="center" >
+                                  <tr>
+                                  <th width="50%" style="font-size:10px;text-align:center"> Product </th>
+                                  <th width="40%" style="font-size:10px;text-align:center">Product Quantity</th>
+                                  <th width="10%" style="font-size:10px;text-align:center"> Rate </th>
+                                  </tr>
+
+                                   <t t-foreach="o.order_line" t-as="line">
+                                      <tr>
+                                            <td style="font-size:10px;" align="center">
+                                                <span t-field="line.product_id"/>
+                                            </td>
+                                            <td style="font-size:10px;" align="center">
+                                                <span t-out="'%.3f'%(line.product_uom_qty)"/>
+                                            </td>
+                                            <td style="font-size:10px;" align="center">
+                                                <span t-out="'%.3f'%(line.price_unit)"/>
+                                            </td>
+                                      </tr>
+                                    </t>
+                                 </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table width="100%" class="tbl_bdr" align="center" >
+                                    <tr>
+                                        <th width="50%" style="font-size:10px;text-align:center"> Container Type </th>
+                                        <th width="40%" style="font-size:10px;text-align:center">Capacity</th>
+                                        <th width="10%" style="font-size:10px;text-align:center"> Quantity </th>
+                                    </tr>
+
+                                    <t t-foreach="o.container_detail_line" t-as="line">
+                                        <tr>
+                                            <td style="font-size:10px;" align="center">
+                                                <span t-field="line.container_type_id"/>
+                                            </td>
+                                            <td style="font-size:10px;" align="center">
+                                                <span t-out="'%.3f'%(line.capacity_in_mt)"/>
+                                            </td>
+                                            <td style="font-size:10px;" align="center">
+                                                <span t-out="'%.3f'%(line.container_qty)"/>
+                                            </td>
+                                      </tr>
+                                    </t>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <table style="width:100%; border: 1px solid black;" align="center">
+<!--                        <tr>-->
+<!--                            <td>-->
+<!--                                <table width="100%" class="tbl_bdr" align="center" >-->
+                                    <tr>
+                                        <th width="20%" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;text-align:center">Expense Related To</th>
+        <!--                                <th width="16%" style="text-align:left">Product Class</th>-->
+                                        <th width="20%" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;text-align:center">Expense Name</th>
+                                        <th width="15%" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;text-align:center">USD</th>
+                                        <th width="15%" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;text-align:center">Rate</th>
+                                        <th width="15%" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;text-align:center">Amount</th>
+                                        <th width="15%" style="font-size:10px;border-bottom: 1px solid black;text-align:center">Remarks</th>
+                                    </tr>
+                                    <t t-foreach="o.sale_expense_line" t-as="line">
+                                        <tr>
+                                            <td align="left" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;">
+                                                <span t-field="line.exp_related_to"/>
+                                            </td>
+        <!--                                    <td  style="border-collapse: collapse; border:solid 1p" align="left" width="16%">-->
+        <!--										<span t-field="line.product_class"/>-->
+        <!--									</td>-->
+                                            <td align="left" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;">
+                                                <span t-field="line.expense_id"/>
+                                            </td>
+                                            <td align="right" style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;">
+                                                <span t-out="'%.3f'%(line.usd_value)"/>
+                                            </td>
+                                            <td align="right"  style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;">
+                                                <span t-out="'%.3f'%(line.rate)"/>
+                                            </td>
+                                            <td align="right"  style="font-size:10px;border-right: 1px solid black;border-bottom: 1px solid black;">
+                                                <span t-out="'%.3f'%(line.exp_amt)"/>
+                                            </td>
+                                            <td align="right" style="font-size:10px;border-bottom: 1px solid black;">
+                                                <span t-field="line.remark"/>
+                                            </td>
+                                      </tr>
+                                    </t>
+                                    <tr>
+                                        <td align="right"  style="font-size:10px;"><b>Total Expense</b></td>
+                                        <td align="right">
+                                           <b><span t-out="'%.3f'%(o.total_expense)"/></b>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+<!--                                 </table>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+                    </table>
+
+                    <table width="100%" ><tr>
+                            <td style="font-size:10px;"><text ><u>Cost Summary</u></text></td>
+                        </tr>
+<!--                         <br></br>-->
+                    </table>
+
+                    <table style="font-size:10px;border: 1px solid #000000;" width="100%" align="center">
+                          <tr>
+<!--                          <th width="19%">Product Name </th>-->
+                              <th style="font-size:10px;border-right: 1px solid #000000;border-bottom: 1px solid #000000;" width="50%">Rate Per KG INR</th>
+                              <th style="font-size:10px;border-bottom: 1px solid #000000;" width="50%">Expense Rate/KG </th>
+<!--                           <th width="20%">Costing/K</th>-->
+<!--                           <th width="20%">Rate Per KG</th>-->
+<!--                           <th width="20%">Exp. Rate/MT in USD</th>-->
+<!--                           <th width="10%">&#160;&#160; 157.89</th>-->
+                          </tr>
+
+                        <tr>
+<!--                          <td width="20%"></td>-->
+                           <td style="font-size:10px;border-right: 1px solid #000000;" width="50%" align="center">
+                               <span t-out="'%.3f'%((o.amount_total + o.total_expense)/o.total_product_uom_qty)"/>
+                           </td>
+                           <td style="font-size:10px;" width="50%" align="center">
+                                <span t-out="'%.3f'%((o.total_expense)/o.total_product_uom_qty)"/>
+                           </td>
+<!--                           <td width="20%"> </td>-->
+<!--                           <td width="20%"> </td>-->
+<!--                           <th width="20%"> </th>-->
+                          </tr>
+                    </table>
+
+<!--                     <table width="100%" ><tr>-->
+<!--                            <td>-->
+<!--                                <u>Product Details</u>-->
+<!--                            </td>-->
+<!--                            <td> </td>-->
+<!--                            <td> </td>-->
+<!--                        </tr>-->
+<!--                         <br></br>-->
+<!--                    </table>-->
+
+<!--                    <table width="100%" class="tbl_bdr" align="center" >-->
+<!--                          <tr>-->
+<!--                          <th width="19%">Cut Size</th>-->
+<!--                          <th width="19%">Mesh Size</th>-->
+<!--                          <th width="15%">SHU</th>-->
+<!--                           <th width="12%">Color Value</th>-->
+<!--                           <th width="14%">Variety</th>-->
+<!--                           <th width="26%">Stem Type</th>-->
+<!--                           <th width="10%">Quality</th>-->
+<!--                           <th width="10%">Polish</th>-->
+<!--                          </tr>-->
+
+<!--                        <tr>-->
+<!--&lt;!&ndash;                          <td width="19%">&#160;&#160;1/8" </td>&ndash;&gt;-->
+<!--                          <td width="19%"> </td>-->
+<!--                          <td width="15%"> </td>-->
+<!--                           <td width="12%"> </td>-->
+<!--&lt;!&ndash;                           <td width="14%">&#160;&#160;Other</td>&ndash;&gt;-->
+<!--&lt;!&ndash;                           <td width="26%">&#160;&#160;0.00</td>&ndash;&gt;-->
+<!--                           <td width="10%"> </td>-->
+<!--                            <td width="10%"> </td>-->
+<!--                          </tr>-->
+
+<!--                        <tr>-->
+<!--                          <th width="15%">&#160;&#160;Aflatoxin </th>-->
+<!--                          <th width="19%">&#160;&#160;Seeds </th>-->
+<!--                          <th width="15%">&#160;&#160;Treatment </th>-->
+<!--                           <th width="12%">&#160;&#160;Packing </th>-->
+<!--                           <th width="19%">&#160;&#160;Packing Type</th>-->
+<!--                           <th width="26%">&#160;&#160; Moisture</th>-->
+<!--                           <th width="10%">&#160;&#160;Marking</th>-->
+<!--                            <th width="10%">&#160;&#160;Curcumin</th>-->
+<!--                          </tr>-->
+
+<!--                        <tr>-->
+<!--                          <td width="19%"></td>-->
+<!--                          <td width="19%"></td>-->
+<!--                          <td width="15%"></td>-->
+<!--                           <td width="12%"></td>-->
+<!--                           <td width="14%"></td>-->
+<!--                           <td width="26%"> </td>-->
+<!--                           <td width="10%"></td>-->
+<!--                            <td width="10%"> </td>-->
+<!--                          </tr>-->
+<!--                    </table>-->
+                </t>
+            </t>
+        </template>
+
+        <template id="report_of_price_check_list">
+			<t t-call="web.html_container">
+			  <t t-foreach="docs" t-as="o">
+			   <t t-call="verts_v15_freight_forward.price_check_list_report"/>
+			  </t>
+			</t>
+	   </template>
+    </data>
+</odoo>

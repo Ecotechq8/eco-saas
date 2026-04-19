@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Mark admin user as profile -->
+        <record model="res.users" id="base.user_admin">
+            <field name="is_user_profile" eval="True"/>
+        </record>
+        <!-- Note: Admin Profile user creation commented out to avoid duplicates -->
+
+    </data>
+</odoo>

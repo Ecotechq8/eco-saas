@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <!-- Digital Signature Template -->
+    <t t-name="verts_v15_basic_masters.DigitalSignature" owl="1">
+        <div class="digital_signature">
+            <span>Digital Signature</span>
+        </div>
+    </t>
+</templates>

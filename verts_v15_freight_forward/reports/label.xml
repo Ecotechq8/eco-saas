@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_airwaybill_label">
+        <t t-call="web.html_container">
+            <t t-foreach="doc_ids" t-as="doc_id">
+                <t t-set="doc" t-value="docs.browse(doc_id)"/>
+                <t t-set="labels" t-value="range(int(doc.total_pieces))"/>
+
+                <t t-foreach="labels" t-as="i">
+                    <!-- Page break after every 4 labels -->
+                    <t t-if="i != 0 and i % 4 == 0">
+                        <div style="page-break-after: always;"></div>
+                    </t>
+
+                    <!-- Clear float after every 2 labels to start a new row -->
+                    <t t-if="i != 0 and i % 2 == 0">
+                        <div style="clear: both; height: 10px;"></div>
+                    </t>
+
+                    <div style="
+                        width: 42%;
+                        border: 2px solid black;
+                        padding: 0;
+                        box-sizing: border-box;
+                        font-family: Arial, sans-serif;
+                        font-size: 11px;
+                        display: inline-block;
+                        vertical-align: top;
+                        margin: 0 60px 60px 0;
+                        height: 540px;">
+
+                        <div style="padding: 8px; font-size: 10px; height: 30px; border-bottom: 1px solid black;">
+                            <div>Airline</div>
+                            <div style="font-weight: bold; font-size: 14px; text-align: center; margin-top: 5px;">
+                                <t t-out="doc.shipping_line.name"/>
+                            </div>
+                        </div>
+
+
+                        <!-- Barcode Section -->
+                        <div style="text-align: center; margin: 10px 0; padding: 0;">
+                            <img t-att-src="'/report/barcode/Code128/%s' % ('01683230254000' + '%02d' % (i + 1))"
+                                 width="200" height="35"/>
+                            <div style="text-align: center; font-size: 10px; margin-top: 3px;">
+                                <t t-if="doc.mode == 'air'">
+                                    <t t-out="doc.mawb.awb_no"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-out="doc.mawb_land"/>
+                                </t>
+                                <t t-out="str(i + 1).zfill(2)"/>
+                            </div>
+                        </div>
+
+                        <!-- Information Table -->
+                        <table style="width: 100%; border-collapse: collapse; font-size: 11px; margin: 0;" border="1">
+                            <!-- Air Waybill No. Row -->
+                            <tr>
+                                <td style="padding: 8px; font-size: 10px; height: 50px;">
+                                    <div>Air Waybill No.</div>
+                                    <div style="font-weight: bold; font-size: 14px; text-align: center; margin-top: 5px;">
+                                        <t t-if="doc.mode == 'air'">
+                                            <t t-if="doc.shipping_line and doc.shipping_line.airline_no">
+                                                <t t-out="doc.shipping_line.airline_no"/>-<t t-out="doc.mawb.awb_no"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-out="doc.mawb.awb_no"/>
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="doc.shipping_line and doc.shipping_line.airline_no">
+                                                <t t-out="doc.shipping_line.airline_no"/>-<t t-out="doc.mawb_land"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-out="doc.mawb_land"/>
+                                            </t>
+                                        </t>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Destination & Pieces -->
+                            <tr>
+                                <td style="padding: 8px; font-size: 10px; width: 50%; height: 50px;">
+                                    <div>Destination</div>
+                                    <div style="font-weight: bold; font-size: 14px; text-align: center; margin-top: 5px;">
+                                        <t t-out="doc.port_of_discharge_id.code"/>
+                                    </div>
+                                </td>
+                                <td style="padding: 8px; font-size: 10px; width: 50%; height: 50px;">
+                                    <div>Total No. of Pieces</div>
+                                    <div style="font-weight: bold; font-size: 14px; text-align: center; margin-top: 5px;">
+                                        <t t-out="doc.total_pieces"/>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- Weight & Origin -->
+                            <tr>
+                                <td style="padding: 8px; font-size: 10px; width: 50%; height: 50px;">
+                                    <div>Weight of Consignment</div>
+                                    <div style="font-weight: bold; font-size: 14px; text-align: center; margin-top: 5px;">
+                                        <t t-out="doc.total_gross_weight"/>
+                                        k
+                                    </div>
+                                </td>
+                                <td style="padding: 8px; font-size: 10px; width: 50%; height: 50px;">
+                                    <div>Origin</div>
+                                    <div style="font-weight: bold; font-size: 14px; text-align: center; margin-top: 5px;">
+                                        <t t-out="doc.port_of_loading_id.code"/>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td style="padding: 8px; font-size: 10px; width: 50%; height: 45px;">
+                                    <div>Via(1)</div>
+                                    <div style="height: 20px; text-align: center; margin-top: 5px;"></div>
+                                </td>
+                                <td style="padding: 8px; font-size: 10px; width: 50%; height: 45px;">
+                                    <div>Via(2)</div>
+                                    <div style="height: 20px; text-align: center; margin-top: 5px;"></div>
+                                </td>
+                            </tr>
+
+                            <!-- Additional Info & Footer as one final row inside the box -->
+                            <tr>
+                                <td
+                                    style="padding: 8px; font-size: 10px; height: 170px; vertical-align: top;">
+                                    <div style="display: flex; justify-content: space-between; font-size: 10px;">
+                                        <span>Additional Information</span>
+                                        <span style="margin-left: 80px;">Piece No.<t t-out="str(i + 1)"/>/
+                                            <t t-out="doc.total_pieces"/>
+                                        </span>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <!-- Footer -->
+                        <div style="text-align: center; font-size: 9px; margin-top: 8px; padding: 5px;">
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="label_report_paperformat" model="report.paperformat">
+        <field name="name">Label Report Format</field>
+        <field name="default" eval="False"/>
+        <field name="format">A4</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">10</field>
+        <field name="margin_right">10</field>
+        <field name="header_line" eval="False"/>
+        <field name="orientation">Portrait</field>
+    </record>
+
+    <report
+            id="action_report_airwaybill_label"
+            string="Air Waybill Labels"
+            model="cargo.order"
+            report_type="qweb-pdf"
+            name="verts_v15_freight_forward.report_airwaybill_label"
+            file="verts_v15_freight_forward.report_airwaybill_label"
+            paperformat="verts_v15_freight_forward.label_report_paperformat"/>
+</odoo>

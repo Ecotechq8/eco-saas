@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_air_line_user,air.line.user,model_air_line,base.group_user,1,1,1,1
+access_inbound_flight_user,inbound.flight.user,model_inbound_flight,base.group_user,1,1,1,1
+access_inbound_flight_details_user,inbound.flight.details.user,model_inbound_flight_details,base.group_user,1,1,1,1
+access_gsa_invoice_user,gsa.invoice.user,model_gsa_invoice,base.group_user,1,1,1,1
+access_gsa_invoice_line_user,gsa.invoice.line.user,model_gsa_invoice_line,base.group_user,1,1,1,1
+access_move_container_line_user,move.container.line.user,model_move_container_line,base.group_user,1,1,1,1

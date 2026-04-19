@@ -1,0 +1,43 @@
+<odoo>
+    <data>
+        <record id="export_invoice_details_report_form_view" model="ir.ui.view">
+            <field name="name">export.invoice.details.form</field>
+            <field name="model">export.invoice.details</field>
+            <field name="arch" type="xml">
+                <form string="Export Invoice Details">
+                <group>
+                	<group >
+                         <field name="from_date"/>
+                         <field name="to_date"/>
+<!--                        account.invoice not found in base module in version 14-->
+<!--                         <field name="invoice_no" domain="[('is_export','=',True)]" options='{"no_create": true}'/>-->
+                    </group>
+                    </group>
+                     <footer>
+                         <button name="report_print" string="Print" type="object" class="oe_highlight" />
+                         <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="action_export_invoice_details_report" model="ir.actions.act_window">
+            <field name="name">Export Invoice Details</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">export.invoice.details</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <record id="export_invoice_details_report_view" model="ir.ui.view">
+			<field name="name">Export Invoice Details</field>
+			<field name="model">export.invoice.details.view</field>
+			<field name="arch" type="xml">
+				<form string="Excel Report file">
+                    <group>
+                        <field name="excel_file" readonly="1" filename="file_name" />
+                        <field name="file_name" invisible="1" />
+				    </group>
+				</form>
+			</field>
+		</record>
+    </data>
+</odoo>

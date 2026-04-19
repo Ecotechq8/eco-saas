@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!--Start Common Schdeule view	-->
+		<record id="common_schedule_tree_view" model="ir.ui.view">
+			<field name="name">common.schedule.tree</field>
+			<field name="model">common.schedule</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="report_at_time" />
+					<field name="req_from" />
+					<field name="country_specific" />
+					<field name="port_of_loading_specific" />
+				</list>
+			</field>
+		</record>
+
+		<record id="common_schedule_form_view" model="ir.ui.view">
+			<field name="name">common.schedule.form</field>
+			<field name="model">common.schedule</field>
+			<field name="arch" type="xml">
+				<form string="Common Schedule">
+					<sheet>
+						<label for="name" string="Schedule Name" />
+						<h1>
+							<field name="name" required="1"/>
+						</h1>
+						<group>
+							<field name="report_at_time" />
+							<field name="req_from" />
+							<field name="country_specific" no_label="1" class="oe_inline"/>
+							<field name="port_of_loading_specific" no_label="1" class="oe_inline"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_common_schedule" model="ir.actions.act_window">
+			<field name="name">Common Schedule</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">common.schedule</field>
+			<field name="view_id" ref="verts_v15_freight_forward.common_schedule_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+		<!--Stop Common Schedule View-->
+
+		<!--Start Product Mix Variants -->
+		<record id="product_mix_variants_tree_view" model="ir.ui.view">
+			<field name="name">product.mix.variants.tree</field>
+			<field name="model">product.mix.variants</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="qc_parameter_id" />
+					<field name="value" />
+				</list>
+			</field>
+		</record>
+
+		<record id="product_mix_variants_form_view" model="ir.ui.view">
+			<field name="name">product.mix.variants.form</field>
+			<field name="model">product.mix.variants</field>
+			<field name="arch" type="xml">
+				<form string="Product Mix Variants">
+					<sheet>
+						<group>
+							<field name="qc_parameter_id" />
+							<field name="value" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_product_mix_variants" model="ir.actions.act_window">
+			<field name="name">Product Mix Variants</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">product.mix.variants</field>
+			<field name="view_id" ref="verts_v15_freight_forward.product_mix_variants_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+		<!--Stop Product Mix Variants -->
+
+		<!--Start Export Packing Type View-->
+		<record id="export_packing_type_tree_view" model="ir.ui.view">
+            <field name="name">export.packing.type.tree</field>
+            <field name="model">export.packing.type</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name" />
+                </list>
+            </field>
+        </record>
+        <record id="export_packing_type_form_view" model="ir.ui.view">
+            <field name="name">export.packing.type.form</field>
+            <field name="model">export.packing.type</field>
+            <field name="arch" type="xml">
+                <form string="Export Packing Type">
+                    <sheet>
+                        <group>
+                        	<group>
+                            	<field name="name" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+		<record id="action_export_packing_type" model="ir.actions.act_window">
+            <field name="name">Export Packing Type</field>
+            <field name="res_model">export.packing.type</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="export_packing_type_tree_view"/>
+        </record>
+
+		<!--Stop Packing Type View-->
+	</data>
+</odoo>
+
+
+

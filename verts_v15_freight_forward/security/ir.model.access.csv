@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_cargo_order_user,cargo.order.user,model_cargo_order,base.group_user,1,1,1,1
+access_job_order_user,job.order.user,model_job_order,base.group_user,1,1,1,1
+access_country_export_expense_line_user,country.export.expense.line.user,model_country_export_expense_line,base.group_user,1,1,1,1
+access_country_export_document_line_user,country.export.document.line.user,model_country_export_document_line,base.group_user,1,1,1,1
+access_fumigation_line_user,fumigation.line.user,model_fumigation_line,base.group_user,1,1,1,1
+access_schedule_line_user,schedule.line.user,model_schedule_line,base.group_user,1,1,1,1

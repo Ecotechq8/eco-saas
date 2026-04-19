@@ -1,0 +1,39 @@
+<odoo>
+	<data>
+        <!-- ********* Makers ******** -->
+		<record id="makers_info_tree" model="ir.ui.view">
+			<field name="name">makers.info.tree</field>
+			<field name="model">makers.info</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="full_name" />
+				</list>
+			</field>
+		</record>
+
+		<record id="makers_info_form" model="ir.ui.view">
+			<field name="name">makers.info.form</field>
+			<field name="model">makers.info</field>
+			<field name="arch" type="xml">
+				<form string="Makers">
+					<sheet>
+						<group>
+							<field name="name" required="1" />
+							<field name="full_name" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_makers_info" model="ir.actions.act_window">
+			<field name="name">External Brands/Makes</field>
+			<field name="res_model">makers.info</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">list,form</field>
+			<field name="view_id" ref="makers_info_tree" />
+		</record>
+
+    </data>
+</odoo>

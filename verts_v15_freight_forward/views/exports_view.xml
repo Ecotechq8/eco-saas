@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- **********ECGC Rating Tree view ********** -->
+		<record id="ecgc_rating_tree_view" model="ir.ui.view">
+			<field name="name">ECGC Rating</field>
+			<field name="model">ecgc.rating</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="risk_perception" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** ECGC Rating form view ********** -->
+		<record id="ecgc_rating_form_view" model="ir.ui.view">
+			<field name="name">ECGC Rating</field>
+			<field name="model">ecgc.rating</field>
+			<field name="arch" type="xml">
+				<form string="ECGC Rating">
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="risk_perception" />
+							<field name="expense_id" />
+<!--							<field name="ecgc_calculation_groups" widget="many2many_tags"  />-->
+							<!--<field name="payment_term_id" widget="many2many_tags" domain="[('export_payment_term','=',True)]" />-->
+						</group>
+						<notebook>
+							<page name="country" string="Country" >
+								<field name="ecgc_rating_line" >
+									<list editable="bottom">
+										<field name="country_id" options='{"no_create": true}' required="1"/>
+									</list>
+								</field>
+							</page>
+							<page name="payment" string="Payment Details" >
+								<field name="payment_lines" >
+									<list editable="bottom">
+										<field name="payment_term_id" domain="[('export_payment_term','=',True)]" required="1" options='{"no_create": true}'/>
+										<field name="rate"/>
+									</list>
+								</field>
+							</page>
+
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action ECGC Rating ********** -->
+		<record id="action_ecgc_rating" model="ir.actions.act_window">
+			<field name="name">ECGC Rating</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ecgc.rating</field>
+			<field name="view_id" ref="verts_v15_freight_forward.ecgc_rating_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+		<!-- **********ECGC Premium Rate Tree view ********** -->
+		<record id="ecgc_premium_rate_tree_view" model="ir.ui.view">
+			<field name="name">ECGC Premium Rate</field>
+			<field name="model">ecgc.premium.rate</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="ecgc_rating_id" />
+					<field name="payment_term_id" />
+					<field name="rate" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** ECGC Premium Rate form view ********** -->
+		<record id="ecgc_premium_rate_form_view" model="ir.ui.view">
+			<field name="name">ECGC Premium Rate</field>
+			<field name="model">ecgc.premium.rate</field>
+			<field name="arch" type="xml">
+				<form string="ECGC Rating">
+					<sheet>
+						<group>
+							<field name="ecgc_rating_id"   required="1"/>
+							<field name="payment_term_id" options='{"no_create": true}' required="1"/>
+							<field name="rate" required="1"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action ECGC Premium Rate ********** -->
+		<record id="action_ecgc_premium_rate" model="ir.actions.act_window">
+			<field name="name">ECGC Premium Rate</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ecgc.premium.rate</field>
+			<field name="view_id" ref="verts_v15_freight_forward.ecgc_premium_rate_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+		<!-- **********Terminal Handling Charges (THC) Tree view ********** -->
+		<record id="terminal_handling_charges_tree_view" model="ir.ui.view">
+			<field name="name">Terminal Handling Charges (THC)</field>
+			<field name="model">terminal.handling.charges</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="point_of_stuffing_id" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** Terminal Handling Charges (THC) form view ********** -->
+		<record id="terminal_handling_charges_form_view" model="ir.ui.view">
+			<field name="name">Terminal Handling Charges (THC)</field>
+			<field name="model">terminal.handling.charges</field>
+			<field name="arch" type="xml">
+				<form string="Terminal Handling Charges (THC)">
+					<sheet>
+						<group>
+							<field name="name" />
+							<!--<field name="port_of_loading_id" required="1" options='{"no_create": true}' domain="[('port_load_bool','=',True)]"/>-->
+							<field name="point_of_stuffing_id" required="1" options='{"no_create": true}' domain="[('is_stuffing_point','=',True)]"/>
+							<field name='expense_id' options='{"no_create": true}' domain="[('is_export_expense','=',True)]"/>
+						</group>
+						<field name="terminal_charges_line" >
+							<list editable="bottom">
+								<field name="container_type"/>
+								<field name="price"/>
+							</list>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Terminal Handling Charges (THC) ********** -->
+		<record id="action_terminal_handling_charges" model="ir.actions.act_window">
+			<field name="name">Terminal Handling Charges (THC)</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">terminal.handling.charges</field>
+			<field name="view_id" ref="verts_v15_freight_forward.terminal_handling_charges_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+		<!-- **********Empty Trailer Cost Tree view ********** -->
+		<record id="empty_trailer_cost_tree_view" model="ir.ui.view">
+			<field name="name">Empty Trailer Cost</field>
+			<field name="model">empty.trailer.cost</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="place_of_stuffing_id" />
+					<field name="expense_id" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** Empty Trailer Cost form view ********** -->
+		<record id="empty_trailer_cost_form_view" model="ir.ui.view">
+			<field name="name">Empty Trailer Cost</field>
+			<field name="model">empty.trailer.cost</field>
+			<field name="arch" type="xml">
+				<form string="Empty Trailer Cost">
+					<sheet>
+						<group>
+							<field name="name" />
+							<!--<field name="port_of_loading_id" options='{"no_create": true}' />-->
+							<field name='expense_id' options='{"no_create": true}' domain="[('is_export_expense','=',True)]"/>
+							<field name="place_of_stuffing_id" options='{"no_create": true}' domain="[('is_stuffing_point','=',True)]"/>
+						</group>
+						<field name="empty_cost_line" >
+							<list editable="bottom">
+								<field name="container_type"/>
+								<field name="qty"/>
+								<field name="to_qty"/>
+								<field name="price"/>
+							</list>
+						</field>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Empty Trailer Cost ********** -->
+		<record id="action_empty_trailer_cost" model="ir.actions.act_window">
+			<field name="name">Empty Trailer Cost</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">empty.trailer.cost</field>
+			<field name="view_id" ref="verts_v15_freight_forward.empty_trailer_cost_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+		<!-- **********Health Certificate Charges Tree view ********** -->
+		<record id="health_certificate_charges_tree_view" model="ir.ui.view">
+			<field name="name">Health Certificate Charges</field>
+			<field name="model">health.certificate.charges</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** Health Certificate Charges form view ********** -->
+		<record id="health_certificate_charges_form_view" model="ir.ui.view">
+			<field name="name">Health Certificate Charges</field>
+			<field name="model">health.certificate.charges</field>
+			<field name="arch" type="xml">
+				<form string="Health Certificate Charges">
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="international_region_id" widget="many2many_tags" options="{'no_create': True,'no_open': True}"/>
+							<field name='expense_id' options='{"no_create": true}' domain="[('is_export_expense','=',True)]"/>
+							 <button name="load_country" string="Load Country" type="object" class="oe_highlight" invisible="1"/>
+						</group>
+						<notebook>
+							<page string="Health Charges" name="health_charges">
+								<field name="health_certi_charges_line" >
+									<list editable="bottom">
+										<field name="amt_from"/>
+										<field name="amt_to"/>
+										<field name="price"/>
+									</list>
+								</field>
+							</page>
+							<page string="Country" name="country">
+								<field name="health_certi_country_line" >
+									<list editable="bottom">
+										<field name="country_id" options="{'no_create': True,'no_open': True}"/>
+									</list>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Health Certificate Charges ********** -->
+		<record id="action_health_certificate_charges" model="ir.actions.act_window">
+			<field name="name">Health Certificate Charges</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">health.certificate.charges</field>
+			<field name="view_id" ref="verts_v15_freight_forward.health_certificate_charges_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+		<!-- **********Insurance % Tree view ********** -->
+		<record id="insurance_tree_view" model="ir.ui.view">
+			<field name="name">Insurance %</field>
+			<field name="model">insurance</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="insurance" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** Insurance % form view ********** -->
+		<record id="insurance_form_view" model="ir.ui.view">
+			<field name="name">Insurance %</field>
+			<field name="model">insurance</field>
+			<field name="arch" type="xml">
+				<form string="Insurance %">
+					<sheet>
+						<group>
+							<field name="name" required="1"/>
+							<field name="insurance" required="1"/>
+							<field name='expense_id' options='{"no_create": true}' domain="[('is_export_expense','=',True)]"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Insurance % ********** -->
+		<record id="action_insurance" model="ir.actions.act_window">
+			<field name="name">Insurance %</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">insurance</field>
+			<field name="view_id" ref="verts_v15_freight_forward.insurance_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+		<!-- ********** Inherit Port ********** -->
+		<record id="basic_masters_port_view_inherit" model="ir.ui.view">
+			<field name="name">ports.form.inherit</field>
+			<field name="model">ports</field>
+			<field name="inherit_id" ref="verts_v15_basic_masters.ports_basic_master_form_view" />
+			<field name="arch" type="xml">
+				<field name='port_load_bool' position="after">
+					<field name='is_stuffing_point' invisible="0"/>
+					<field name="code"/>
+				</field>
+				<field name='port_type_id' position="after">
+					<field name='is_dry_port'/>
+				</field>
+				<xpath expr="//sheet" position="inside">
+					<notebook >
+						<page name="Export Expenses" string="Export Expenses">
+							<field name="export_expense_line" >
+								<list editable="bottom">
+									<field name='expense_id' options='{"no_create": true}' domain="[('is_export_expense','=',True)]"/>
+									<field name='price'/>
+<!--									<field name='currency'/>-->
+								</list>
+							</field>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+
+		<record id="basic_masters_port_tree_view_inherit" model="ir.ui.view">
+			<field name="name">ports.form.inherit</field>
+			<field name="model">ports</field>
+			<field name="inherit_id" ref="verts_v15_basic_masters.ports_basic_master_tree_view" />
+			<field name="arch" type="xml">
+				<field name='port_type_id' position="after">
+					<field name='country_id'/>
+					<field name='port_load_bool'/>
+					<field name='is_stuffing_point'/>
+					<field name='port_discharge_bool'/>
+					<field name='is_dry_port'/>
+				</field>
+			</field>
+		</record>
+
+
+		<!-- **********Export Documents Tree view ********** -->
+		<record id="export_doc_tree_view" model="ir.ui.view">
+			<field name="name">Export Documents</field>
+			<field name="model">export.document</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+				</list>
+			</field>
+		</record>
+		<!-- ********** Export Documents form view ********** -->
+		<record id="export_doc_form_view" model="ir.ui.view">
+			<field name="name">Export Documents</field>
+			<field name="model">export.document</field>
+			<field name="arch" type="xml">
+				<form string="Export Document">
+					<sheet>
+						<group>
+							<field name="name"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Export Documents ********** -->
+		<record id="action_export_doc" model="ir.actions.act_window">
+			<field name="name">Export Documents</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">export.document</field>
+			<field name="view_id" ref="verts_v15_freight_forward.export_doc_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+
+		<!-- **********Transit Duration Tree view ********** -->
+		<record id="transit_duration_tree_view" model="ir.ui.view">
+			<field name="name">Transit Duration</field>
+			<field name="model">transit.duration</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="origin_port_id"/>
+					<field name="dest_port_id"/>
+					<field name="transit_days"/>
+				</list>
+			</field>
+		</record>
+		<!-- ********** Transit Duration form view ********** -->
+		<record id="transit_duration_form_view" model="ir.ui.view">
+			<field name="name">Transit Duration</field>
+			<field name="model">transit.duration</field>
+			<field name="arch" type="xml">
+				<form string="Transit Duration">
+					<sheet>
+						<group>
+							<field name="origin_port_id" required="1" options='{"no_create": true}'/>
+							<field name="dest_port_id" required="1" options='{"no_create": true}'/>
+							<field name="transit_days" required="1" options='{"no_create": true}'/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Transit Duration ********** -->
+		<record id="action_transit_duration" model="ir.actions.act_window">
+			<field name="name">Transit Duration</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">transit.duration</field>
+			<field name="view_id" ref="verts_v15_freight_forward.transit_duration_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+
+
+
+
+		<!-- ********** Payment Term ********** -->
+
+
+		<record id="view_payment_term_form_inherit11" model="ir.ui.view">
+			<field name="name">account.payment.term.form</field>
+			<field name="model">account.payment.term</field>
+			<field name="inherit_id" ref="account.view_payment_term_form" />
+			<field name="arch" type="xml">
+				<field name="name" position="after">
+					<field name="export_payment_term"/>
+				</field>
+			</field>
+		</record>
+
+		<record id="action_payment_term_export_form" model="ir.actions.act_window">
+            <field name="name">Payment Terms</field>
+            <field name="res_model">account.payment.term</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="account.view_payment_term_search"/>
+			<field name="domain">[('export_payment_term','=',True)]</field>
+			<field name="context">{'default_export_payment_term':True}</field>
+        </record>
+
+		<record model="ir.actions.act_window.view"
+			id="action_view_payment_term_form_export">
+			<field name="sequence" eval="3" />
+			<field name="view_mode">form</field>
+			<field name="view_id"
+				ref="account.view_payment_term_form" />
+			<field name="act_window_id" ref="action_payment_term_export_form" />
+		</record>
+
+		<record model="ir.actions.act_window.view"
+			id="action_view_payment_term_tree_export">
+			<field name="sequence" eval="2" />
+			<field name="view_mode">list</field>
+			<field name="view_id" ref="account.view_payment_term_tree" />
+			<field name="act_window_id" ref="action_payment_term_export_form" />
+		</record>
+
+		<record id="action_point_of_stuffing" model="ir.actions.act_window">
+            <field name="name">Point of Stuffing</field>
+            <field name="res_model">ports</field>
+            <field name="view_mode">list,form</field>
+			<field name="domain">[('is_stuffing_point','=',True)]</field>
+			<field name="context">{'default_is_stuffing_point':True}</field>
+        </record>
+
+		<record model="ir.actions.act_window.view"
+			id="action_point_of_stuffing_form_export">
+			<field name="sequence" eval="3" />
+			<field name="view_mode">form</field>
+			<field name="view_id"
+				ref="verts_v15_basic_masters.ports_basic_master_form_view" />
+			<field name="act_window_id" ref="action_point_of_stuffing" />
+		</record>
+
+		<record model="ir.actions.act_window.view"
+			id="action_point_of_stuffing_tree_export">
+			<field name="sequence" eval="2" />
+			<field name="view_mode">list</field>
+			<field name="view_id" ref="verts_v15_basic_masters.ports_basic_master_tree_view" />
+			<field name="act_window_id" ref="action_point_of_stuffing" />
+		</record>
+
+		<!--New View  For Export -  International Region -->
+		<!-- ***************************************** International Region *********************************************** -->
+		<record id="tree_internation_region_exports" model="ir.ui.view">
+			<field name="name">internation.zone</field>
+			<field name="model">internation.zone</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="code" />
+					<field name="name" />
+				</list>
+			</field>
+		</record>
+		<record id="form_internation_region_exports" model="ir.ui.view">
+			<field name="name">internation.zone</field>
+			<field name="model">internation.zone</field>
+			<field name="arch" type="xml">
+				<form string="International Region">
+					<sheet>
+						<group>
+							<field name="name" />
+							<field name="code" />
+						</group>
+						<notebook>
+							<page string="Countries">
+								<field name="international_country_ids" >
+									<list editable="bottom">
+										<field name="country_name" required="1" />
+										<field name="country_code" />
+									</list>
+								</field>
+							</page>
+						</notebook>
+
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<record id="action_internation_region_exports" model="ir.actions.act_window">
+			<field name="name">International Region</field>
+			<field name="res_model">internation.zone</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">list,form</field>
+			<field name="view_ids" eval="[(5, 0, 0),
+               (0, 0, {'view_mode': 'list', 'view_id': ref('verts_v15_freight_forward.tree_internation_region_exports')}),
+               (0, 0, {'view_mode': 'form', 'view_id': ref('verts_v15_freight_forward.form_internation_region_exports')})]"/>
+		</record>
+		<!--New View  For Export -  International Region -->
+
+		<!-- **********Service Type Tree view ********** -->
+		<record id="service_type_tree_view" model="ir.ui.view">
+			<field name="name">Service Type</field>
+			<field name="model">service.type</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name"/>
+					<field name="service"/>
+					<field name="weight_factor"/>
+					<field name="weight_factor_type"/>
+					<field name="email_partner_ids" widget="many2many_tags"/>
+					<field name="full_container_service"/>
+				</list>
+			</field>
+		</record>
+		<!-- ********** Service Type form view ********** -->
+		<record id="service_type_form_view" model="ir.ui.view">
+			<field name="name">Service Type</field>
+			<field name="model">service.type</field>
+			<field name="arch" type="xml">
+				<form string="Service Type">
+					<sheet>
+						<group>
+							<field name="name" required="1"/>
+							<field name="weight_factor_type" required="1"/>
+							<field name="weight_factor"/>
+							<field name="email_partner_ids" widget="many2many_tags"/>
+							<field name="full_container_service"/>
+							<field name="service"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Service Type********** -->
+		<record id="action_service_type_id" model="ir.actions.act_window">
+			<field name="name">Service Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">service.type</field>
+			<field name="view_id" ref="verts_v15_freight_forward.service_type_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+
+	</data>
+</odoo>
+

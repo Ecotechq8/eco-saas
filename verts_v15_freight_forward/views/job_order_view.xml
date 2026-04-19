@@ -1,0 +1,758 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="job_order_export_form_view_inherit" model="ir.ui.view">
+            <field name="name">job.order.form</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <form string="job Order" class="o_sale_order">
+                    <header>
+                        <!--First Type-->
+                        <button name="action_cro_requested"
+                                type="object" string="CRO Requested"/>
+                        <button name="action_cro_released"
+                                type="object" string="CRO Released"/>
+                        <button name="action_stuff_started"
+                                type="object" string="Stuff Started"/>
+                        <button name="action_stuffing_completed"
+                                type="object" string="Stuffing Completed"/>
+                        <button name="action_sent_to_port"
+                                type="object" string="Sent to Port"/>
+                        <button name="action_custom_clearance"
+                                type="object" string="Custom Clearance"/>
+                        <button name="action_sealing_done"
+                                type="object" string="Sealing Done"/>
+                        <button name="action_bill_of_lading_completed"
+                                type="object" string="Bill of Lading Completed"/>
+                        <button name="action_vessel_set_to_sail"
+                                type="object" string="Vessel Set to Sail"/>
+                        <button name="action_pre_alert"
+                                type="object" string="PreAlert"/>
+                        <button name="action_destination_arrival"
+                                type="object" string="Destination Arrival"/>
+                        <button name="action_destination_clearance"
+                                type="object" string="Destination Clearance"/>
+                        <button name="action_delivery"
+                                type="object" string="Delivery"/>
+                        <button name="action_completed"
+                                type="object" string="Completed"/>
+                        <!--Second Type-->
+                        <button name="action_book_with_flight"
+                                type="object" string="Book with the flight"/>
+                        <button name="action_arrange_the_airway_bill"
+                                type="object" string="Arrange the Airway Bill"/>
+                        <button name="action_pickup"
+                                type="object" string="Pickup"/>
+                        <button name="action_sent_to_port"
+                                type="object" string="Sent to the port"/>
+                        <button name="action_custom_clearance"
+                                type="object" string="Custom Clearance"/>
+                        <button name="action_booking_flight_schedule_confirmation"
+                                type="object" string="Booking/Flight Schedule Confirmation"/>
+                        <button name="action_pre_alert"
+                                type="object" string="PreAlert"/>
+                        <button name="action_destination_arrival"
+                                type="object" string="Destination Arrival"/>
+                        <button name="action_destination_clearance"
+                                type="object" string="Destination Clearance"/>
+                        <button name="action_delivery"
+                                type="object" string="Delivery"/>
+                        <button name="action_completed"
+                                type="object" string="Completed"/>
+                        <!--Second Type-->
+                        <!--Third Type-->
+                        <button name="action_eta_shipment_arrival"
+                                type="object" string="ETA - Shipment Arrival"/>
+                        <button name="action_document_readiness"
+                                type="object" string="Document Readiness"/>
+                        <button name="action_job_arrival_notice"
+                                type="object" string="job Arrival Notice"/>
+                        <button name="action_forward_for_clearance"
+                                type="object" string="Forward for Clearance"/>
+                        <button name="action_under_clearance"
+                                type="object" string="Under Clearance"/>
+                        <button name="action_awaiting_approval"
+                                type="object" string="Awaiting Approval"/>
+                        <button name="action_custom_declaration_completed"
+                                type="object" string="Custom Declaration Completed"/>
+                        <button name="action_under_custom_inspection"
+                                type="object" string="Under Custom Inspection"/>
+                        <button name="action_out_for_delivery"
+                                type="object" string="Out for Delivery"/>
+                        <button name="action_delivery"
+                                type="object" string="Delivery"/>
+                        <button name="action_completed"
+                                type="object" string="Completed"/>
+                        <!--Third Type-->
+                        <button name="action_send_to_finance"
+                                type="object" string="Create Invoice"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="job_ready, cro_requested, cro_released, stuff_started, stuffing_completed, sent_to_port, custom_clearance, sealing_done, bill_of_lading_completed, vessel_set_to_sail, pre_alert, destination_arrival, destination_clearance, delivery, completed, book_with_the_flight, arrange_the_airway_bill, pickup, booking_flight_schedule_confirmation, prealert_received, eta_shipment_arrival, document_readiness, job_arrival_notice, forward_for_clearance, under_clearance, awaiting_approval, custom_declaration_completed, under_custom_inspection, out_for_delivery"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_view_customer_quotes" type="object"
+                                    class="oe_stat_button" icon="fa-pencil-square-o" string="Customer Quotes">
+                            </button>
+                            <!--						<button class="oe_stat_button" type="object" name="action_get_bill"-->
+                            <!--								icon="fa-usd" string="Vendor Bill" widget="statinfo" groups="verts_v15_freight_forward.group_cha_invoice"/>--><!--by kajal-->
+                            <!--						<button class="oe_stat_button" type="object" name="action_get_invoice"-->
+                            <!--								icon="fa-usd" string="Customer Invoice" widget="statinfo" groups="verts_v15_freight_forward.group_cha_vendor"/>--><!--by kajal-->
+                        </div>
+                        <!--						<div class="oe_button_box" name="button_box">-->
+                        <!--							<field name="picking_ids" invisible="1"/>-->
+                        <!--								<button type="object"-->
+                        <!--									name="action_view_delivery"-->
+                        <!--									class="oe_stat_button"-->
+                        <!--									icon="fa-truck"-->
+                        <!--									invisible="delivery_count == 0" groups="base.group_user">-->
+                        <!--									<field name="delivery_count" widget="statinfo" string="Delivery"/>-->
+                        <!--								</button>-->
+                        <!--							<button name="action_view_invoice" type="object"-->
+                        <!--								class="oe_stat_button" icon="fa-pencil-square-o"-->
+                        <!--								invisible="invoice_count == 0">-->
+                        <!--								<field name="invoice_count" widget="statinfo"-->
+                        <!--									string="Invoices" />-->
+                        <!--							</button>-->
+                        <!--						</div>-->
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group name="main_details">
+                            <group>
+                                <field name="partner_id" widget="res_partner_many2one"
+                                       options='{"always_reload": true, "no_create": true, "no_open": true}'/>
+                                <field name="country_id" invisible="1"/>
+                                <field name="partner_invoice_id"
+                                       groups="sale.group_delivery_invoice_address"
+                                       context="{'default_type':'invoice'}"
+                                       options='{"always_reload": true, "no_open": true}' invisible="1"/>
+                                <field name="consignee_id"
+                                       options="{'no_create': True, 'no_open': True}"
+                                       required="1"/>
+                                <field name="consignor_id"
+                                       options="{'no_create': True, 'no_open': True}"
+                                       required="1"/>
+                                <field name="notify_id"
+                                       options="{'no_create': True, 'no_open': True}"
+                                       required="0"/>
+                                <field name="customer_po_ref"/>
+                                <!--								<field name="order_type" readonly="1" force_save="1" invisible="1"/>-->
+                            </group>
+                            <group>
+                                <field name="date_order" widget="date"/>
+                                <field name="validity_date"/>
+                                <field name="pricelist_id"
+                                       groups="product.group_sale_pricelist" required="0"
+                                       options='{"no_create": true, "no_open": true}'/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name='cha_id' options='{"no_create": true}'/>
+                                <field name='reference_by_id'
+                                       options='{"no_create": true, "no_open": true}'/>
+                                <field name='cur_rate' required="1"/>
+                            </group>
+                            <group string="Order Type" name="order_type">
+                                <field name="order_type" required="1"/>
+                                <field name="mode" readonly="1"/>
+                                <field name="import_export" readonly="1"
+                                       required="order_type == 'freight'"/>
+                                <field name="account_analytic_id"/>
+                                <field name="opportunity_id" invisible="0"/>
+                                <!--								<field name="profitability" invisible="0" groups="verts_v15_freight_forward.group_cha_profitable"/>--><!--by kajal-->
+                                <!--								<field name="origin1" invisible="1" />--><!--by kajal-->
+                            </group>
+                            <group string="Shipment Details" name="shipment_details">
+                                <field name="weight_uom_id"
+                                       domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"
+                                       options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                <field name="dimension_uom_id" string="Length UoM"
+                                       domain="[('freight_forward_forms', '=', True), ('category_id.name', '=', 'Length / Distance')]"
+                                       options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                <field name="service_type" required="1"
+                                       options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                <field name='stuffing_point_id'
+                                       required="1"
+                                       options='{"no_create": true, "no_open": true}'/>
+                                <field name='port_of_loading_id'
+                                       options='{"no_create": true, "no_open": true}'
+                                       required="1"/>
+                                <field name='port_of_discharge_id'
+                                       options='{"no_create": true, "no_open": true}'
+                                       required="1"/>
+                                <field name="incoterm_id"/>
+                                <!--								<field name="export_import"/>-->
+                                <field name="commodity"/>
+                                <field name="shipment_by"/>
+                                <field name="shipping_line" domain="[('is_shipping_line','=',True)]"/>
+                                <field name="vessel_id"/>
+                                <field name="voyage_id"/>
+                                <field name="shipping_order_no"/>
+                                <field name="carrier_booking_no"/>
+                                <field name="eta_port_of_loading"/>
+                                <field name="cut_off_time"/>
+                                <field name="estimated_time_departure"/>
+                                <field name="actual_time_sailing"/>
+                                <field name="eta_port_of_destination"/>
+                                <field name="est_transit_days"/>
+                                <field name="bill_of_lading_type"/>
+                                <field name="bill_of_lading_no"/>
+                                <field name="mawb"/>
+                                <field name="hawb"/>
+                                <field name='dry_port_id'
+                                       options='{"no_create": true, "no_open": true}' invisible="1"/>
+                            </group>
+                            <group string="Weight Details" name="weight_details">
+                                <field name="total_pieces"/>
+                                <field name="total_gross_weight"/>
+                                <field name="total_value"/>
+                                <field name="total_chargeable_weight" readonly="0"/>
+                                <field name="total_volume_cbm" readonly="0"/>
+                                <field name="total_volumetric_weight"/>
+                                <field name="total_cbm" invisible="1"/>
+                            </group>
+                            <group string="Required Services" name="required_services">
+                                <field name="freight_forwarding_reqd"/>
+                                <field name="pre_job_carriage_reqd"/>
+                                <field name="custom_clearance_reqd"/>
+                                <field name="reefer_dry"/>
+                                <field name="genset_reqd"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Order Lines" name="order_lines">
+                                <field name="order_line"
+                                       widget="section_and_note_one2many" mode="list,kanban">
+                                    <form>
+                                        <field name="display_type" invisible="1"/>
+                                        <!-- We need the sequence field to be here for new lines to be
+                                            added at the correct position. TODO: at some point we want to fix this in
+                                            the framework so that an invisible field is not required. -->
+                                        <field name="sequence" invisible="1"/>
+                                        <group>
+                                            <group
+                                                    invisible="display_type != False">
+                                                <field name="product_id"
+                                                       context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
+                                                       required="display_type == False"
+                                                       force_save="1"/>
+                                                <field name="container_type_id"/>
+                                                <field name="remark"/>
+                                                <field name="capacity_in_mt"/>
+                                                <field name="price_subtotal" invisible="1"/>
+                                                <label for="product_uom_qty" string="Ordered Quantity"/>
+                                                <div>
+                                                    <field
+                                                            context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'uom_qty_change':True, 'company_id': parent.company_id}"
+                                                            name="product_uom_qty" class="oe_inline"/>
+                                                    >>>>>>> c65504d34b0d5445c66ba4ba0bf190ae126af613
+
+                                                    <field name="product_uom_category_id" invisible="1"/>
+                                                    <field name="product_uom" groups="uom.group_uom"
+                                                           class="oe_inline oe_no_button"
+                                                           required="display_type == False"/>
+                                                </div>
+                                                <field name="price_unit"/>
+                                                <label for="discount"
+                                                       groups="product.group_discount_per_so_line"/>
+                                                <div name="discount"
+                                                     groups="product.group_discount_per_so_line">
+                                                    <field name="discount" class="oe_inline"/>
+                                                </div>
+                                            </group>
+                                            <group
+                                                    invisible="display_type != False">
+                                                <field name="company_id" invisible="1"/>
+                                            </group>
+                                        </group>
+                                        <label for="name" string="Description"
+                                               invisible="display_type != False"/>
+                                        <label for="name"
+                                               string="Section Name (eg. Products, Services)"
+                                               invisible="display_type != 'line_section'"/>
+                                        <label for="name" string="Note"
+                                               invisible="display_type != 'line_note'"/>
+                                        <field name="name"/>
+                                        <field name="state" invisible="1"/>
+                                    </form>
+                                    <list editable="bottom">
+                                        <control>
+                                            <create string="Add a product"/>
+                                            <!--<create string="Configure a product" context="{'open_product_configurator':
+                                                True}" groups="product.group_product_variant"/> -->
+                                            <!--<create string="Add a section" context="{'default_display_type':
+                                                'line_section'}"/> -->
+                                            <!--<create string="Add a note" context="{'default_display_type':
+                                                'line_note'}"/> -->
+                                        </control>
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="display_type" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="product_uom_category_id" invisible="1"/>
+                                        <field name="product_id"
+                                               force_save="1"
+                                               context="{
+                                            'partner_id': parent.partner_id,
+                                            'quantity': product_uom_qty,
+                                            'pricelist': parent.pricelist_id,
+                                            'uom':product_uom,
+                                            'company_id': parent.company_id,
+                                            'default_lst_price': price_unit,
+                                            'default_description_sale': name
+                                        }"/>
+                                        <field name="name" widget="section_and_note_text"/>
+                                        <field name="remark"/>
+                                        <field name="container_type_id"/>
+                                        <field name="capacity_in_mt"/>
+                                        <field name="product_uom_qty" string="Ordered Qty"
+                                               context="{
+                                            'partner_id': parent.partner_id,
+                                            'quantity': product_uom_qty,
+                                            'pricelist': parent.pricelist_id,
+                                            'uom': product_uom,
+                                            'company_id': parent.company_id
+                                        }"/>
+                                        <field name="bag_box_qty"/>
+                                        <field name="packing_type"/>
+                                        <field name="product_uom"
+                                               context="{'company_id': parent.company_id}"
+                                               groups="uom.group_uom" options='{"no_open": true}'/>
+                                        <!--										<field name="base_price"-->
+                                        <!-- />-->
+                                        <!--										<field name="overhead_expenses"-->
+                                        <!-- />-->
+
+                                        <field name="price_unit"/>
+                                        <field name="tax_id" widget="many2many_tags"
+                                               options="{'no_create': True}"
+                                               domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
+                                        />
+                                        <field name="discount"
+                                               groups="product.group_discount_per_so_line"/>
+                                        <field name="price_subtotal" widget="monetary"
+                                               groups="account.group_show_line_subtotals_tax_excluded"/>
+                                        <field name="price_total" widget="monetary"
+                                               groups="account.group_show_line_subtotals_tax_included"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right"
+                                       name="sale_total">
+                                    <field name="amount_untaxed" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div
+                                            class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total"/>
+                                    </div>
+                                    <field name="amount_total" nolabel="1"
+                                           class="oe_subtotal_footer_separator" widget='monetary'
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <field name="note" class="oe_inline"
+                                       placeholder="Terms and conditions... (note: you can setup default ones in the Configuration menu)"/>
+                                <div class="oe_clear"/>
+                            </page>
+
+                            <page name="package_details" string="Package Details">
+                                <field name="job_freight_line">
+                                    <list>
+                                        <field name="product_id"
+                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                        <field name="goods_desc"/>
+                                        <field name="product_uom_quantity"/>
+                                        <field name="weight_factor"/>
+                                        <field name="volumetric_weight"/>
+                                        <field name="total_chargeable_weight"/>
+                                    </list>
+                                    <form string="job Freight Line">
+                                        <group>
+                                            <field name="product_id" string="Service" required="1"
+                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                            <field name="goods_desc" required="0"/>
+                                            <field name="product_uom_quantity"/>
+                                            <field name="packing_type"
+                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                            <field name="type" string="Stackable"/>
+                                            <field name="commercial_invoice_value"/>
+                                            <field name="full_container_service" invisible="1"/>
+                                            <field name="product_uom" invisible="1" readonly="1" force_save="1"
+                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                            <field name="loose_bool"/>
+                                        </group>
+                                        <group string="Container Details" name="container_detail"
+                                               invisible="full_container_service == False">
+                                            <field name="container_type_id"
+                                                   invisible="full_container_service == False"/>
+                                            <field name="capacity_in_mt"
+                                                   invisible="full_container_service == False"/>
+                                            <field name="container_qty"
+                                                   invisible="full_container_service == False"/>
+                                        </group>
+                                        <group string="Gross Weight Per Pack" name="weight">
+                                            <field name="weight_input"
+                                                   invisible="loose_bool == True"/>
+                                            <field name="weight_uom_id" readonly="1" force_save="1"
+                                                   domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"
+                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"
+                                            />
+                                            <field name="weight_per_package" string="Weight (KG)" readonly="1"
+                                                   force_save="1" invisible="loose_bool == True"/>
+                                        </group>
+                                        <group
+                                               invisible="full_container_service == True"
+                                               string="Volumetric Weight Per Pack" name="volumetric">
+                                            <field name="length_per_package" string="Length (cm)"/>
+                                            <field name="width_per_package" string="Width (cm)"/>
+                                            <field name="height_per_package" string="Height (cm)"/>
+                                            <field name="dimension_uom_id" string="Length UoM" readonly="1"
+                                                   force_save="1"
+                                                   domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Length / Distance')]"
+                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                            <div class="o_td_label">
+                                                <label for="volume_cbcm" string="Volume (Cubic CM)"
+                                                       style="font-weight:bold;"
+                                                       invisible="uom_name != 'cm'"/>
+                                                <label for="volume_cbcm" string="Volume (Cubic Inches)"
+                                                       style="font-weight:bold;"
+                                                       invisible="uom_name != 'in'"/>
+                                            </div>
+                                            <field name="volume_cbcm" nolabel="1"/>
+                                            <field name="volume" string="Volume (cbm)"/>
+                                            <field name="weight_factor" readonly="1" force_save="1"/>
+                                            <field name="volumetric_weight"/>
+                                            <field name="uom_name" invisible="1"/>
+                                        </group>
+                                        <group string="Chargeable &amp; Total Weight"
+                                               name="chargeable_weight">
+                                            <field name="total_weight" invisible="0" force_save="1"/>
+                                            <field name="chargeable_weight" readonly="1" force_save="1"/>
+                                            <field name="total_chargeable_weight"/>
+                                            <field name="total_volume_cbm"/>
+                                            <field name="total_volumetric_weight"/>
+                                        </group>
+                                    </form>
+                                </field>
+                                <!--                                <group name="footer_total">-->
+                                <!--                                    <field name="total_pieces"/>-->
+                                <!--                                    <field name="total_gross_weight"/>-->
+                                <!--                                    <field name="total_cbm"/>-->
+                                <!--                                    <field name="total_value"/>-->
+                                <!--                                    <field name="total_chargeable_weight"/>-->
+                                <!--                                    <field name="total_volume_cbm"/>-->
+                                <!--                                    <field name="total_volumetric_weight"/>-->
+                                <!--                                </group>-->
+                            </page>
+                            <page string="Container Details" name="container_details">
+                                <field name="job_container_line">
+                                    <list editable="bottom">
+                                        <field name="container_type_id" required="1"
+                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>
+                                        <field name="count"/>
+                                        <field name="container_qty"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Payment Details" invisible="1">
+                                <field name="payment_term_line"
+                                       context="{'country_id':country_id}" >
+                                    <list editable="bottom">
+                                        <field name='country_id' invisible="1"/>
+                                        <field name='payment_id' required="1"/>
+                                        <field name='value' required="1"/>
+                                        <field name='ecgc_rate' readonly="1" force_save="1"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string='Profit and Loss'>
+                                <group>
+                                    <field name="invoice_amount" string="invoice Amount" readonly="1"/>
+                                    <field name="profit_on_order" string="Profit On Order" readonly="1"/>
+                                </group>
+                                <field name="sale_expense_line" >
+                                    <list editable="bottom" create="1"
+                                          delete="1">
+                                        <field name='exp_related_to' readonly="0" force_save="1"/>
+                                        <!--										<field name='product_class' readonly="0" force_save="1" />-->
+                                        <field name='expense_id'
+                                               domain="[('is_export_expense','=',True)]" readonly="0"
+                                               force_save="1" options='{"no_create": true}'/>
+                                        <field name='qty' readonly="0" force_save="1"/>
+                                        <field name='usd_value'/>
+                                        <field name='rate'/>
+                                        <field name='exp_amt_fc' invisible="1"/>
+                                        <field name='exp_amt' readonly="0" force_save="1"/>
+                                        <field name='remark'/>
+                                    </list>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right"
+                                       name="expense_total">
+                                    <field name="total_expense" widget='monetary'
+                                           readonly="1" options="{'currency_field': 'currency_id'}"/>
+                                    <field name="rate_per_kg_on_expense" widget='monetary'
+                                           readonly="1" options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </page>
+                            <page name="Export Documents" string="Export Documents">
+                                <field name="sale_export_document_line"
+                                        create="1" delete="1">
+                                    <list editable="bottom">
+                                        <field name='export_document_id'/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page name="schedule_lines" string="Schedule">
+                                <field name="schedule_lines">
+                                    <list>
+                                        <field name="schedule_id" required="1"/>
+                                        <field name="report_at_time"/>
+                                        <field name="req_from"/>
+                                        <field name="country_specific"/>
+                                        <field name="port_of_loading_specific"/>
+                                        <field name="completion_date"/>
+                                        <field name="remarks"/>
+                                        <!--										<field name="invoice_id" invisible="1" force_save="1"/>-->
+                                        <field name="sale_id" invisible="1" force_save="1"/>
+                                        <field name="sale_export_attachment_lines"/>
+                                    </list>
+                                    <form>
+                                        <group>
+                                            <field name="schedule_id" required="1"/>
+                                            <field name="report_at_time"/>
+                                            <field name="req_from"/>
+                                            <field name="country_specific"/>
+                                            <field name="port_of_loading_specific"/>
+                                            <field name="completion_date"/>
+                                            <field name="remarks"/>
+                                            <!--											<field name="invoice_id" invisible="1" force_save="1"/>-->
+                                            <field name="sale_id" invisible="1" force_save="1"/>
+                                        </group>
+                                        <separator string="Attachment Lines"/>
+                                        <field name="sale_export_attachment_lines"
+                                               context="{'tree_view_ref': 'verts_v15_freight_forward.sale_schedule_export_attachment_lines_tree'}">
+                                            <form>
+                                                <group>
+                                                    <field name="sale_remark"/>
+                                                    <field name="fname" invisible="1"/>
+                                                    <field name="sale_attachment_value" filename="fname"/>
+                                                    <field name="sale_export_attachment_id" invisible="1"
+                                                           force_save="1"/>
+                                                </group>
+                                            </form>
+                                        </field>
+                                    </form>
+                                </field>
+                            </page>
+                            <page name="export_specification"
+                                  string="Export Product Specification">
+                                <field name="qc_pro_specification_line"
+                                       >
+                                    <list
+                                          editable="bottom">
+                                        <field name="product_id" required="1"/>
+                                        <field name="qc_parameter_id" required="1"/>
+                                        <field name="value"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Other Information" name="other_information">
+                                <group>
+                                    <group string="Shipping Information" name="sale_shipping"
+                                    >
+                                        <field name="commitment_date"
+                                        />
+                                    </group>
+                                    <group string="Sales Information" name="sales_person">
+                                        <field name="team_id"
+                                               options="{'no_create': True, 'no_open': True}" required="1"/>
+                                        <field name="user_id"
+                                               options="{'no_create': True, 'no_open': True}" required="1"
+                                               domain="[('sale_team_id','=',team_id)]"/>
+                                        <field name="client_order_ref"/>
+                                        <field name="reference" readonly="1"
+                                               invisible="reference == False"/>
+                                        <field name="company_id"
+                                               options="{'no_create': True, 'no_open': True}"
+                                               groups="base.group_multi_company"/>
+
+                                    </group>
+                                    <group name="sale_pay" string="Invoicing">
+                                        <field name="fiscal_position_id"
+                                               options="{'no_create': True, 'no_open': True}" readonly="1"
+                                               force_save="1"/>
+                                    </group>
+                                    <group string="Reporting" name="technical"
+                                           groups="base.group_no_one">
+                                        <field groups="base.group_no_one" name="origin"/>
+                                    </group>
+                                    <group name="utm_link" groups="base.group_no_one"/>
+                                </group>
+                            </page>
+                            <page string="Terms and Conditions">
+                                <group>
+                                    <field name="export_tc_set_ids" widget="many2many_tags"
+                                           domain="[('tc_set_type','=', 'sale')]"/>
+
+                                </group>
+                                <field name="export_so_tc_set_line"
+                                       options="{'no_create': True, 'no_create_edit': True}">
+                                    <list editable="bottom">
+                                        <field name="s_no" readonly="1"/>
+                                        <field name="term_and_condition_id"
+                                               options="{'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="term_and_condition_option_id"
+                                               domain="[('term_and_condition_id','=', term_and_condition_id)]"
+                                               options="{'no_create': True, 'no_create_edit': True}"/>
+                                        <field name="removable"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="job_order_tree_view_inherit"
+                model="ir.ui.view">
+            <field name="name">job.order.tree.view</field>
+            <field name="model">job.order</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="partner_id"/>
+                    <field name="name"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_job_sea_freight_import_id"
+                model="ir.actions.act_window">
+            <field name="name">Job Order</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">job.order</field>
+            <field name="view_mode">list,form</field>
+
+        </record>
+
+        <!--        <record id="action_job_sea_freight_export_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Sea Freight Export</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'sea'),('import_export', '=',-->
+        <!--                'export')]-->
+        <!--            </field>-->
+        <!--            <field name="context">{'default_order_type': 'freight', 'default_mode': 'sea' , 'default_import_export':-->
+        <!--                'export'}-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_job_air_freight_import_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Air Freight Import</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'air'),('import_export', '=',-->
+        <!--                'import')]-->
+        <!--            </field>-->
+        <!--            <field name="context">{'default_order_type': 'freight', 'default_mode': 'air' , 'default_import_export':-->
+        <!--                'import'}-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_job_air_freight_export_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Air Freight Export</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'air'),('import_export', '=',-->
+        <!--                'export')]-->
+        <!--            </field>-->
+        <!--            <field name="context">{'default_order_type': 'freight', 'default_mode': 'air' , 'default_import_export':-->
+        <!--                'export'}-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_clearance_export_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Clearance Export</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'custom'),('import_export', '=', 'export')]</field>-->
+        <!--            <field name="context">{'default_order_type': 'custom', 'default_import_export': 'export'}</field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_clearance_import_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Clearance Import</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'custom'),('import_export', '=', 'import')]</field>-->
+        <!--            <field name="context">{'default_order_type': 'custom', 'default_import_export': 'import'}</field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_job_road_freight_export_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Road Freight Export</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'land'),('import_export', '=',-->
+        <!--                'export')]-->
+        <!--            </field>-->
+        <!--            <field name="context">{'default_order_type': 'freight', 'default_mode': 'land' , 'default_import_export':-->
+        <!--                'export'}-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_job_road_freight_import_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Road Freight Import</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'land'),('import_export', '=',-->
+        <!--                'import')]-->
+        <!--            </field>-->
+        <!--            <field name="context">{'default_order_type': 'freight', 'default_mode': 'land' , 'default_import_export':-->
+        <!--                'import'}-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+
+        <!--        <record id="action_job_order_packing_removal_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Packing And Removal</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'packing_and_removal')]</field>-->
+        <!--            <field name="context">{'default_order_type': 'packing_and_removal'}</field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_job_order_warehousing_id"-->
+        <!--                model="ir.actions.act_window">-->
+        <!--            <field name="name">Warehousing</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">job.order</field>-->
+        <!--            <field name="view_mode">list,form</field>-->
+        <!--            <field name="domain">[('order_type', '=', 'warehousing')]</field>-->
+        <!--            <field name="context">{'default_order_type': 'warehousing'}</field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

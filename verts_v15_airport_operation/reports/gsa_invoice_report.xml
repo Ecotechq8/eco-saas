@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="report_gsa_invoice_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="header">
+                   <table width="100%" border="0" cellspacing="0" cellpadding="0"
+		                t-attf-style="margin:0; font-family: Arial,Helvetica, sans-serif; background:#fff;" class="my-0 table table-sm table-borderless">
+                        <tbody>
+                            <tr>
+                                <td valign="top" width="33%" align="left"
+                                    style="color:#4D4D4F; font-size:12px; padding:
+												0 0 0px 0; line-height:16px; padding-top:16px;">
+                                    <img
+                                         t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+                                         style="max-height: 80px;"/>
+                                </td>
+                                <td style="width: 33%; height: 49px; font-size: 50px;" align="center">
+
+                                </td>
+                                <td style="width: 33%; height: 49px;">
+                                    <strong>
+                                        Bobyan Complex, Office #31,
+                                        <br/>
+                                        Ground Floor, Dajeej – Farwaniya.
+                                        <br/>
+                                        P.O.Box 21575 Safat 13076, Kuwait
+                                        <br/>
+                                        Tel : +965-22020345 / 22020346
+                                    </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <t t-call="web.internal_layout">
+                    <h1 style="text-align: center;">
+                        <b>Invoice</b>
+                    </h1>
+                    <div style="border: 1px solid #000; padding: 10px; margin-bottom: 10px;">
+                        <table style="width:100%;">
+                            <tr>
+                                <td style="width: 60%; vertical-align: top;">
+                                    <div style="display: flex; flex-direction: column;">
+                                        <strong>Customer:</strong>
+                                        <span/>
+                                    </div>
+                                    <div style="margin-left: 76px;">
+                                        <t>
+                                            <t/>
+                                            ,
+                                        </t>
+                                        <t>
+                                            <t/>
+                                            ,
+                                        </t>
+                                        <t>
+                                            <t/>
+                                            ,
+                                        </t>
+                                        <t>
+                                            <t/>
+                                            ,
+                                        </t>
+                                        <t>
+                                            <t/>
+                                            ,
+                                        </t>
+                                        <t/>
+                                    </div>
+                                </td>
+                                <td>
+                                    <strong>Invoice Number:</strong>
+                                </td>
+                                <td/>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <strong>Invoice Date:</strong>
+                                </td>
+                                <td>
+                                    <t/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <t>
+                        <div style="border: 1px solid #000; padding: 10px; margin: 10px 0;">
+                            <strong>Remarks:</strong>
+                            <br/>
+                            <p/>
+                        </div>
+                    </t>
+                    <br/>
+
+                    <h4>Flight Details</h4>
+                    <table class="table table-sm table-bordered">
+                        <thead style="background-color: #d3d3d3;">
+                            <tr>
+                                <th>Sr</th>
+                                <th>FLT Date</th>
+                                <th>FLT Number</th>
+                                <th>Route</th>
+                                <!--                                    <th>Gross Weight</th>-->
+                                <!--                                    <th>Chargeable Weight</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-value="1"/>
+                            <tr t-foreach="o.flt_details_ids" t-as="flt">
+                                <td>
+                                    <span/>
+                                </td>
+                                <td>
+                                    <span/>
+                                </td>
+                                <td>
+                                    <span/>
+                                </td>
+                                <td>
+                                    <span/>
+                                </td>
+                                <!--                                    <td>-->
+                                <!--                                        <span/>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td>-->
+                                <!--                                        <span/>-->
+                                <!--                                    </td>-->
+                                <t t-value="counter + 1"/>
+                            </tr>
+                            <!--                                <tr>-->
+                            <!--                                    <td style="text-align: right;"><strong>Total Chargeable Weight:</strong></td>-->
+                            <!--                                    <td><span/></td>-->
+                            <!--                                </tr>-->
+                        </tbody>
+                    </table>
+                    <br/>
+
+                    <h4>Invoice Details</h4>
+
+                    <!-- Initialize total accumulators -->
+                    <t t-value="0.0"/>
+                    <t t-value="0.0"/>
+
+                    <table class="table table-sm table-bordered">
+                        <thead style="background-color: #d3d3d3;">
+                            <tr>
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Subtotal</th>
+                                <th>ROE</th>
+                                <th>Amt in KWD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.invoice_line_ids" t-as="line">
+                                <!-- Accumulate totals -->
+
+                                <td>
+                                    <span/>
+                                </td>
+                                <td>
+                                    <span/>
+                                </td>
+                                <td>
+                                    <span field="line.price_unit"/>
+                                </td>
+                                <td>
+                                    <span field="line.price_subtotal"/>
+                                </td>
+                                <td>
+                                    <t>
+                                        <span/>
+                                    </t>
+                                    <t>
+                                        <span/>
+                                    </t>
+                                </td>
+                                <td>
+                                    <t
+                                       t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
+                                    <t
+                                       t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
+                                </td>
+                            </tr>
+
+                            <!-- Totals row for Subtotal, ROE, and Amt in KWD -->
+                            <tr>
+                                <td style="text-align: right; font-weight: bold;">Total:</td>
+                                <td>
+                                    <span field="o.amount_untaxed"/>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <span field="o.amount_untaxed_signed"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <strong>
+                                        <span/>
+                                        Only
+                                    </strong>
+                                </td>
+                            </tr>
+
+                            <!-- Standard Invoice Totals -->
+                            <!-- <t>
+                                <tr>
+                                    <td style="text-align: right;">
+                                        <strong>Untaxed Total:</strong>
+                                    </td>
+                                    <td>
+                                        <span field="o.amount_untaxed"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">
+                                        <strong>Tax:</strong>
+                                    </td>
+                                    <td>
+                                        <span field="o.amount_tax"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: right;">
+                                        <strong>Total:</strong>
+                                    </td>
+                                    <td>
+                                        <span field="o.amount_total"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <strong>
+                                            <span/>
+                                            Only
+                                        </strong>
+                                    </td>
+                                </tr>
+                            </t> -->
+                        </tbody>
+                    </table>
+
+                    <br></br>
+                    <p>
+                        <strong>Kindly remit to the following Bank Account at Kuwait</strong>
+                    </p>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr>
+                            <td style="font-weight: bold; width: 20%;">Beneficiary Name</td>
+                            <td style="width: 5px;">:</td>
+                            <td style="width: 75px;"/>
+                        </tr>
+                        <t>
+                            <tr>
+                                <td style="font-weight: bold;width: 20%;">Bank Name</td>
+                                <td style="width: 5px;">:</td>
+                                <td style="width: 75px;"/>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;width: 20%;">Bank Address</td>
+                                <td style="width: 5px;">:</td>
+                                <td style="width: 75px;">
+                                    <t>
+                                        <t/> <br/>
+                                    </t>
+                                    <t>
+                                        <t/> <br/>
+                                    </t>
+                                    <t>
+                                        <t/>,
+                                    </t>
+                                    <t>
+                                        <t/>,
+                                    </t>
+                                     <t>
+                                        <t/>
+                                    </t>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;width: 20%;">Account #</td>
+                                <td style="width: 5px;">:</td>
+                                <td style="width: 75px;"/>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;width: 20%;">IBAN #</td>
+                                <td style="width: 5px;">:</td>
+                                <td style="width: 75px;"/>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;width: 20%;">SWIFT Code</td>
+                                <td style="width: 5px;">:</td>
+                                <td style="width: 75px;"/>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: bold;width: 20%;">Account Currency</td>
+                                <td style="width: 5px;">:</td>
+                                <td style="width: 75px;"/>
+                            </tr>
+                        </t>
+                    </table>
+
+                    <div class="footer">
+                        <div class="text-center">
+                            <table class="my-0 table table-sm table-borderless">
+                                <tr width="100%">
+                                    <td align="center">
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td align="right">
+                                        Page
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="action_report_gsa_invoice" model="ir.actions.report">
+        <field name="name">GSA Invoice Report</field>
+        <field name="model">account.move</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">verts_v15_airport_operation.report_gsa_invoice_document</field>
+        <field name="report_file">verts_v15_airport_operation.report_gsa_invoice_document</field>
+        <field name="binding_model_id" ref="verts_v15_airport_operation.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

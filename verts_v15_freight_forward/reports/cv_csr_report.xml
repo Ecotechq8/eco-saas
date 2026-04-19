@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <template id="cv_csr_report_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-set="is_kwd" t-value="doc.partner_id.property_purchase_currency_id.name == 'KWD'"/>
+                <div class="page" style="font-size: 12px;">
+
+                    <!-- Header with table layout for proper PDF alignment -->
+                    <table style="width:100%; margin-bottom: 10px;">
+                        <tr>
+                            <td style="vertical-align:top;">
+<!--                                <h4 style="margin: 5px 0;">CARGO DIVISION</h4>-->
+                                <h4 style="margin: 10px 0;">Cargo Sales Report</h4>
+                            </td>
+                            <td style="text-align:right; vertical-align:top;">
+                                <img t-if="doc.company_id.logo"
+                                     t-att-src="'data:image/png;base64,%s' % doc.company_id.logo.decode('utf-8')"
+                                     style="height: 60px;"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Report details -->
+                    <p style="margin: 2px 0;">
+                        <span style="display: inline-block; min-width: 70px; font-weight: bold;">Airline</span>
+                        <span style="display: inline-block; width: 10px; font-weight: bold;">:</span>
+                        <t t-out="doc.partner_id.name"/>
+                    </p>
+                    <p style="margin: 2px 0;">
+                        <span style="display: inline-block; min-width: 70px; font-weight: bold;">Period</span>
+                        <span style="display: inline-block; width: 10px; font-weight: bold;">:</span>
+                        <t t-out="doc.date_from.strftime('%d %b %Y')"/> to
+                        <t t-out="doc.date_to.strftime('%d %b %Y')"/>
+                    </p>
+                    <p style="margin: 2px 0;">
+                        <span style="display: inline-block; min-width: 70px; font-weight: bold;">Currency</span>
+                        <span style="display: inline-block; width: 10px; font-weight: bold;">:</span>
+                        <t t-out="doc.partner_id.property_purchase_currency_id.name"/>
+                    </p>
+                    <br/>
+                    <br/>
+                    <!-- Data table -->
+                    <table class="table table-sm table-bordered" style="width:100%; font-size:12px;">
+                        <thead style="background-color:#f0f0f0;">
+                            <tr>
+                                <th style="text-align:center;">Date</th>
+                                <th style="text-align:center;">Agent</th>
+                                <th style="text-align:center;">MAWB Prefix</th>
+                                <th style="text-align:center;">MAWB</th>
+                                <th style="text-align:right;">Destination</th>
+                                <th style="text-align:right;">Gross Weight</th>
+                                <th style="text-align:right;">Chargeable Weight</th>
+                                <th style="text-align:right;">Rate</th>
+                                <th style="text-align:right;">Freight</th>
+                                <th style="text-align:right;">Other Charges</th>
+                                <th style="text-align:right;">Total</th>
+                                <th style="text-align:right;">GSA Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="total_gross" t-value="0"/>
+                            <t t-set="total_chargeable" t-value="0"/>
+                            <t t-set="total_freight" t-value="0"/>
+                            <t t-set="total_other" t-value="0"/>
+                            <t t-set="total_amount" t-value="0"/>
+                            <t t-set="total_commission" t-value="0"/>
+
+                            <t t-foreach="doc.cv_line_ids" t-as="line">
+                                <tr>
+                                    <td style="text-align:center;">
+                                        <t t-out="line.date.strftime('%d/%m/%Y') if line.date else ''"/>
+                                    </td>
+                                    <td style="text-align:center;"><t t-out="line.agent_id.name"/></td>
+                                    <td style="text-align:center;"><t t-out="doc.partner_id.airline_no or ''"/></td>
+                                    <td style="text-align:center;"><t t-out="line.mawb"/></td>
+                                    <td style="text-align:right;"><t t-out="line.destination_code"/></td>
+                                    <td style="text-align:right;"><t t-out="'%.2f' % line.gross_weight"/></td>
+                                    <td style="text-align:right;"><t t-out="'%.2f' % line.chargeable_weight"/></td>
+                                    <td style="text-align:right;"><t t-out="('%.2f' % line.rate) if not is_kwd else ('%.3f' % line.rate)"/></td>
+                                    <td style="text-align:right;"><t t-out="('%.2f' % line.air_freight) if not is_kwd else ('%.3f' % line.air_freight)"/></td>
+                                    <td style="text-align:right;"><t t-out="('%.2f' % line.other_charges) if not is_kwd else ('%.3f' % line.other_charges)"/></td>
+                                    <td style="text-align:right;"><t t-out="('%.2f' % line.total_amount) if not is_kwd else ('%.3f' % line.total_amount)"/></td>
+                                    <td style="text-align:right;"><t t-out="('%.2f' % line.amount) if not is_kwd else ('%.3f' % line.amount)"/></td>
+
+                                    <!-- Totals -->
+                                    <t t-set="total_gross" t-value="total_gross + (line.gross_weight or 0.0)"/>
+                                    <t t-set="total_chargeable" t-value="total_chargeable + (line.chargeable_weight or 0.0)"/>
+                                    <t t-set="total_freight" t-value="total_freight + (line.air_freight or 0.0)"/>
+                                    <t t-set="total_other" t-value="total_other + (line.other_charges or 0.0)"/>
+                                    <t t-set="total_amount" t-value="total_amount + (line.total_amount or 0.0)"/>
+                                    <t t-set="total_commission" t-value="total_commission + (line.amount or 0.0)"/>
+                                </tr>
+                            </t>
+
+                            <!-- Total Row -->
+                            <tr style="font-weight:bold; background-color:#e6e6e6;">
+                                <td>Total</td>
+                                <td style="text-align:right;">
+                                    <t t-out="'%.2f' % total_gross"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <t t-out="'%.2f' % total_chargeable"/>
+                                </td>
+                                <td></td>
+                                <td style="text-align:right;">
+                                    <t t-out="doc.partner_id.property_purchase_currency_id.name"/>
+                                    <t t-out="('%.2f' % total_freight) if not is_kwd else ('%.3f' % total_freight)"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <t t-out="doc.partner_id.property_purchase_currency_id.name"/>
+                                    <t t-out="('%.2f' % total_other) if not is_kwd else ('%.3f' % total_other)"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <t t-out="doc.partner_id.property_purchase_currency_id.name"/>
+                                    <t t-out="('%.2f' % total_amount) if not is_kwd else ('%.3f' % total_amount)"/>
+                                </td>
+                                <td style="text-align:right;">
+                                    <t t-out="doc.partner_id.property_purchase_currency_id.name"/>
+                                    <t t-out="('%.2f' % total_commission) if not is_kwd else ('%.3f' % total_commission)"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="action_cv_csr_report_qweb"
+            string="Print CSR Report"
+            model="cv.csr.report"
+            report_type="qweb-pdf"
+            name="verts_v15_freight_forward.cv_csr_report_template"
+            file="verts_v15_freight_forward.cv_csr_report_template"
+            print_report_name="'CSR Report - ' + (object.sequence or '')"
+            paperformat="report_cv_csr_landscape"
+    />
+
+</odoo>

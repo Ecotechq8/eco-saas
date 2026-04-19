@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="ocean_voyage_tree_view" model="ir.ui.view">
+            <field name="name">Voyage</field>
+            <field name="model">ocean.voyage</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="shipping_line"/>
+                    <field name="desc"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="ocean_voyage_form_view" model="ir.ui.view">
+            <field name="name">Voyage</field>
+            <field name="model">ocean.voyage</field>
+            <field name="arch" type="xml">
+                <form string="Voyage">
+                    <sheet>
+                        <group>
+                            <field name="name" required="1"/>
+                            <field name="shipping_line" domain="[('is_shipping_line','=',True)]"/>
+                            <field name="desc"/>
+                            <field name="estimated_arrival"/>
+                            <field name="estimated_sail"/>
+                            <field name="booking_cut_off"/>
+                            <field name="vgm_cut_off"/>
+                            <field name="port_cust_off"/>
+                            <field name="si_cut_off"/>
+                        </group>
+                        <notebook>
+                            <page string="Cargo Orders">
+                                <field name="cargo_order_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_ocean_voyage" model="ir.actions.act_window">
+            <field name="name">Ocean Voyage</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">ocean.voyage</field>
+            <field name="view_id" ref="verts_v15_freight_forward.ocean_voyage_tree_view"/>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_inbound_flight_form" model="ir.ui.view">
+        <field name="name">inbound.flight.form</field>
+        <field name="model">inbound.flight</field>
+        <field name="arch" type="xml">
+            <form string="Inbound Flight">
+                <header>
+                    <button name="action_create_invoice"
+                            string="Create Invoice"
+                            type="object"
+                            groups="verts_v15_airport_operation.group_invoice_creator"
+                            class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="location"/>
+                            <field name="date"/>
+                            <field name="loaded" invisible="1"/>
+                            <field name="type"/>
+                            <field name="airline_id"/>
+                            <field name="trx_type"/>
+                            <field name="manifest"/>
+                        </group>
+                        <group>
+                            <field name="gross_wt"/>
+                            <field name="chrg_wt"/>
+                            <label for="route" string="Route"/>
+                            <div>
+                                <!-- Edit mode -->
+                                <div name="route_only" class="o_row oe_edit_only">
+                                    <field name="route" class="oe_inline"/>
+                                    <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                    <field name="route2" class="oe_inline"/>
+                                </div>
+
+                                <!-- Read-only mode -->
+                                <div name="route_read_only" class="o_row oe_read_only">
+                                    <span>
+                                        <field name="route" class="oe_inline"/>
+                                    </span>
+                                    <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                    <span>
+                                        <field name="route2" class="oe_inline"/>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <!-- <field name="route"/>
+                            <field name="route2"/> -->
+                            <field name="flt_date"/>
+                            <field name="arr_date"/>
+                            <field name="flt"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+
+        </field>
+    </record>
+
+    <!-- Tree View for Inbound Flight -->
+    <record id="view_inbound_flight_tree" model="ir.ui.view">
+        <field name="name">inbound.flight.tree</field>
+        <field name="model">inbound.flight</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="date"/>
+                <field name="trx_type"/>
+                <field name="airline_id"/>
+                <field name="manifest"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_inbound_flight" model="ir.actions.act_window">
+        <field name="name">Flight Operation</field>
+        <field name="res_model">inbound.flight</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+</odoo>

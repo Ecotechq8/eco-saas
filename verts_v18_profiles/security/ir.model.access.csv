@@ -1,0 +1,6 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"base.access_ir_sequence_group_user","ir_sequence_group_user","base.model_ir_sequence","base.group_user",1,1,1,1
+"base.access_ir_sequence_date_range_group_user","ir_sequence_date_range group_user","base.model_ir_sequence_date_range","base.group_user",1,1,1,1
+"access_res_lang_group_user_profile","profile_res_lang_group_user","base.model_res_lang","base.group_user",1,1,1,0
+"access_group_assign","access.group.assign","model_group_assign","base.group_user",1,1,1,0
+"access_res_user_history","res.user.history","model_res_user_history","base.group_user",1,1,1,0

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_gsa_invoice_tree" model="ir.ui.view">
+        <field name="name">gsa.invoice.tree</field>
+        <field name="model">gsa.invoice</field>
+        <field name="arch" type="xml">
+            <list sample="1">
+                <field name="name"/>
+                <field name="company_id"/>
+                <field name="doc_number"/>
+                <field name="year_ref"/>
+                <field name="flt_from"/>
+                <field name="customer_id"/>
+                <field name="remarks"/>
+                <field name="date"/>
+                <field name="airline_id"/>
+                <field name="bank"/>
+                <field name="flt_to"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_gsa_invoice_form" model="ir.ui.view">
+        <field name="name">gsa.invoice.form</field>
+        <field name="model">gsa.invoice</field>
+        <field name="arch" type="xml">
+            <form string="GSA Invoice">
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="gsa_invoice" invisible="1"/>
+                            <field name="company_id"/>
+                            <field name="airline_id"/>
+                            <field name="year_ref"/>
+                            <label for="flt_from" string="Flt Form"/>
+                            <div>
+                                <div name="route_only" class="o_row oe_edit_only">
+                                    <field name="flt_from" class="oe_inline"/>
+                                    <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon" title="Arrow"/>
+                                    <field name="flt_to" class="oe_inline"/>
+                                </div>
+                            </div>
+                            <field name="remarks"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="doc_number"/>
+                            <field name="bank"/>
+                            <field name="customer_id"/>
+                        </group>
+                    </group>
+                    <button name="fetch_flt"
+                            string="Fetch Flt"
+                            type="object"
+                            class="oe_highlight"
+                            help="Click on this button will fetch all details"/>
+                    <notebook>
+                        <page string="Flt Details">
+                            <field name="flt_details_ids" readonly="True">
+                                <list editable="bottom">
+                                    <field name="flt_date"/>
+                                    <field name="flt_number"/>
+                                    <field name="route"/>
+                                    <field name="gross_wt"/>
+                                    <field name="chg_wt"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Invoice Lines">
+                            <field name="invoice_line_ids">
+                                <list editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="quantity"/>
+                                    <field name="price_unit"/>
+                                    <field name="amount" readonly="1"/>
+                                    <field name="currency_id"/>
+                                    <field name="exchange_rate"/>
+                                    <field name="subtotal" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_gsa_invoice" model="ir.actions.act_window">
+        <field name="name">GSA Invoice</field>
+        <field name="res_model">gsa.invoice</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+</odoo>

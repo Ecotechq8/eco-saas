@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_packing_list">
+			<!-- <div class="header"> -->
+			<!-- <table style="width:100%"> -->
+			<!-- <tr> -->
+			<!-- <td -->
+			<!-- style="padding-top:0px; font-size:14px ;text-align:left;font-family:verdana;width:70%" -->
+			<!-- rowspan="2"> -->
+			<!-- <h2 style="text-transform:capitalize; font-size :18px; padding:0px; 
+				margin:0;"> -->
+			<!-- <b> -->
+			<!-- <span t-attf-style="color:1px solid black;" t-field="o.company_id.name" 
+				/> -->
+			<!-- <br /> -->
+			<!-- </b> -->
+			<!-- </h2> -->
+			<!-- <span t-field="o.company_id.street" /><br/> -->
+			<!-- <span t-field="o.company_id.street2" /><br/> -->
+			<!-- <span t-field="o.company_id.city" />, -->
+			<!-- <span t-field="o.company_id.state_id.name" />, -->
+			<!-- <span t-field="o.company_id.zip" /><br/> -->
+			<!-- <span t-field="o.company_id.country_id.name" /><br/> -->
+			<!-- <span t-field="o.company_id.email" /><br/> -->
+			<!-- <span t-field="o.company_id.website" /> -->
+			<!-- </td> -->
+			<!-- <td style="padding-top:15px; font-size:14px ;text-align:right;font-family:verdana;width:30%" -->
+			<!-- rowspan="2"> -->
+			<!-- <img t-if="o.company_id.logo" t-attf-src="data:image/*;base64,{{o.company_id.logo}}" 
+				style="max-height: 80px;" /><br /> -->
+			<!-- </td> -->
+			<!-- </tr> -->
+			<!-- </table> -->
+			<!-- <hr /> -->
+			<!-- </div> -->
+			<t t-call="web.html_container">
+				<div class="page">
+					<style>
+						table {
+						border-collapse: collapse;
+						}
+
+						table,
+						td,
+						th {
+						border: 1px solid black;padding: 5px;
+						}
+					</style>
+
+					<center>
+						Packing List
+						<br />
+						("Supply meant for Export under bond without payment of IGST")
+					</center>
+
+					<table width="100%">
+						<tr>
+							<td rowspan="4"
+								style="padding: 5px;text-align: left;">
+								<p>
+									<u>Consiger:</u>
+									<br />
+									<span t-field="o.company_id.name" />
+									<br />
+									<span t-field="o.company_id.city" />
+									<br />
+									<span t-field="o.company_id.zip" />
+									,
+									<span t-field="o.company_id.state_id.name" />
+									(
+									<span t-field="o.company_id.country_id.name" />
+									)
+									<br />
+									Phone&#160;:&#160;
+									<span t-field="o.company_id.phone" />
+									<br />
+									GSTIN NO&#160;:&#160;
+									<span t-field="o.company_id.vat" />
+									<br />
+									USFDA REG. NO.
+									<br />
+								</p>
+								<td style="padding: 5px;text-align: left;">
+									<p>IEC Code No</p>
+								</td>
+								<td style="padding: 5px;text-align: left;">
+									<span t-field="o.company_id.export_import_license_no" />
+								</td>
+							</td>
+						</tr>
+						<tr>
+							<td style="padding: 5px;text-align: left;">
+								Invoice No.
+							</td>
+							<td style="padding: 5px;text-align: left;">
+								<span t-field="o.number" />
+								
+							</td>
+						</tr>
+						<tr>
+							<td style="padding: 5px;text-align: left;">
+								Date
+							</td>
+							<td style="padding: 5px;text-align: left;">
+								<span t-field="o.date_invoice" />
+							</td>
+						</tr>
+						<tr>
+							<td style="padding: 5px;text-align: left;">
+								Last Date of Shipment
+							</td>
+							<td>
+								-
+							</td>
+						</tr>
+					</table>
+					<table width="100%">
+						<tr>
+							<td>
+								<u>Consignee</u>
+								<br />
+								<span t-field="o.consignee_id.name" />
+								<br />
+								<span t-field="o.consignee_id.street" />
+								<span t-field="o.consignee_id.street2" />
+								<span t-field="o.consignee_id.city_id.name" />
+								-
+								<span t-field="o.consignee_id.zip" />
+								,
+								<span t-field="o.consignee_id.state_id.name" />
+								<br />
+								(
+								<span t-field="o.consignee_id.country_id.name" />
+								)
+								<br />
+								<br />
+								<br />
+							</td>
+							<td rowspan="2">
+								<u>Consigner Bank Details</u>
+								<table width="92%" style="border: 1px;">
+									<tr>
+										<td width="30%" style="padding:3px;border: 0px;">A/C Name</td>
+										<td width="5%" style="padding:3px;border: 0px;">:</td>
+										<td width="60%" style="padding:3px;border: 0px;">
+											<span t-if="o.company_id">
+												<span t-field="o.company_id.name" />
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td width="30%" style="padding:3px;border: 0px;">Bank Name</td>
+										<td width="5%" style="padding:3px;border: 0px;">:</td>
+										<td width="60%" style="padding:3px;border: 0px;">
+											<span t-if="o.company_id.bank_branch_id">
+												<span t-field="o.company_id.bank_branch_id.name" />
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td width="30%" style="padding:3px;border: 0px;">Account No</td>
+										<td width="5%" style="padding:3px;border: 0px;">:</td>
+										<td width="60%" style="padding:3px;border: 0px;">
+											<span
+												t-if="o.company_id.bank_account_id.bank_account_id.acc_number">
+												<span
+													t-field="o.company_id.bank_account_id.bank_account_id.acc_number" />
+											</span>
+										</td>
+									</tr>
+									<tr>
+										<td width="30%" style="padding:3px;border: 0px;">Swift Code</td>
+										<td width="5%" style="padding:3px;border: 0px;">:</td>
+										<td width="60%" style="padding:3px;border: 0px;">
+											<span t-if="o.company_id.swift_code">
+												<span t-field="o.company_id.swift_code" />
+											</span>
+											<span t-elif="o.company_id.bank_account_id.swift_code">
+												<span t-field="o.company_id.bank_account_id.swift_code" />
+											</span>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>
+									<u>Notify Party</u>
+								</strong>
+								<br />
+								<b>
+									<span t-field="o.notify_id.name" />
+								</b>
+								<br />
+								<span t-field="o.notify_id.street" />
+								<span t-field="o.notify_id.street2" />
+								<span t-field="o.notify_id.city_id.name" />
+								-
+								<span t-field="o.notify_id.zip" />
+								,
+								<span t-field="o.notify_id.state_id.name" />
+								<br />
+								(
+								<span t-field="o.notify_id.country_id.name" />
+								)
+							</td>
+						</tr>
+					</table>
+					<table width="100%">
+						<tr>
+							<td style="padding: 5px;text-align: left;">
+								Port of loading
+							</td>
+							<td style="padding: 5px;text-align: center;">
+								<span t-field="o.port_of_loading_id.name" />
+							</td>
+							<t t-foreach="o.payment_term_line" t-as="line">
+								<td rowspan="4" style="padding: 5px;text-align: left;">
+									<center>
+										<p>
+											<u>Payment Terms</u>
+										</p>
+										<br />
+										<span t-field="line.payment_id.name" />
+										<br />
+										<br />
+										<br />
+										<br />
+										<ul>
+											<strong>Terms of Shipment</strong>
+											<br />
+											<span t-field="o.term_of_shipment_id.name" />
+										</ul>
+									</center>
+								</td>
+							</t>
+						</tr>
+						<tr>
+							<td style="padding: 5px;text-align: left;">
+								Port Of Discharge
+							</td>
+							<td style="padding: 5px;text-align: center;">
+								<span t-field="o.port_of_discharge_id.name" />
+							</td>
+						</tr>
+						<tr>
+							<td style="padding: 5px;text-align: left;">
+								Country of Origin
+							</td>
+							<td style="padding: 5px;text-align: center;">
+								INDIA
+							</td>
+						</tr>
+						<td style="padding: 5px;text-align: left;">Country of Final Destination</td>
+						<td style="padding: 5px;text-align: left;"></td>
+					</table>
+
+					<table style="width:100%">
+						<thead>
+							<tr>
+								<th width="20%"
+									style="padding: 5px;text-align: left;font-weight:bold;background-color:gainsboro;">No,Kind Of Package</th>
+								<th width="25%"
+									style="padding: 5px;text-align: left;font-weight:bold;background-color:gainsboro;">Description Of Goods</th>
+								<th width="15%"
+									style="padding: 5px;text-align: left;font-weight:bold;background-color:gainsboro;">NO OF BAGS</th>
+								<th width="18%"
+									style="padding: 5px;text-align: left;font-weight:bold;background-color:gainsboro;">NET WEIGHT (KG)</th>
+								<th width="22%"
+									style="padding: 5px;text-align: left;font-weight:bold;background-color:gainsboro;">GROSS-WEIGHT (KG)</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr t-foreach="o.invoice_line_ids" t-as="line">
+								<td style="border:1px solid;padding: 5px;text-align: left;"
+									width="20%">
+									<span t-field="line.packing_type.name" />
+								</td>
+								<td style="border:1px solid;padding: 5px;text-align: left;"
+									width="25%">
+									<span t-out="line.product_id.name" />
+									<br />
+									<br />
+									HSN Code :
+									<span t-out="line.product_id.l10n_in_hsn_code" />
+									<br />
+									Batch No :
+									<br />
+									Product Code :
+									<span t-out="line.product_id.default_code" />
+									<br />
+									BBE :
+									<br />
+									Manuf :
+									<br />
+									Exp :
+									<br />
+								</td>
+								<td style="border:1px solid;padding: 5px;text-align: right;"
+									width="15%">
+									<span t-field="line.bag_box_qty" />
+								</td>
+								<td style="border:1px solid;padding: 5px;text-align: right;"
+									width="18%">
+									<span t-field="line.qty_ref_uom" />
+								</td>
+								<td style="border:1px solid;padding: 5px;text-align: right;"
+									width="22%">
+									<span t-field="line.qty_ref_uom" />
+								</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<table style="width:100%; border: 1px solid black;">
+						<tr>
+							<td style="padding: 5px;text-align: left;">Container Size:1X40",HC</td>
+						</tr>
+					</table>
+
+					<table style="width:100%;">
+						<tr>
+							<td width="55%" style="padding: 5px;text-align: left;">
+								<p>
+									<u>
+										<strong>FTP Declarations :</strong>
+									</u>
+									<br />
+									a)"we intend to claim rewards under Merchandise Export From
+									India Scheme
+									<br />
+									(MEIS)"
+									<br />
+									b)Export Under Duty Draw Back
+									<br />
+									<u>
+										<strong>ADDITIONAL TERMS AND CONDITION</strong>
+									</u>
+									<br />
+									1) Mode of shipment by sea subject to availability of the
+									vessel
+									<br />
+									2) Quantity And Value Tolerance +/-10% allowed in 1X40"HC
+									<br />
+									3) QUALICHEM/SGC Inspection charges on your account at our
+									factory Nagpur
+									<br />
+									4) All other Charges except ocean Freight and Insurance will be
+									on Buyers account
+									<br />
+									5) Documents To be issued after shipment
+									<br />
+									6) 3+2 Orginal Bill Of Lading
+									<br />
+									7) Commercial Invoice
+									<br />
+									8) Packing List
+									<br />
+									9) Phytosanitary Certificate
+									<br />
+									10) Fumigation Certificate
+									<br />
+									11) Health Certificate
+									<br />
+									<p>
+										<font size="2">
+											The exporter of the products covered by this document
+											<br />
+											declares that except where otherwise clearly indicated,these
+											products are of
+											<u>
+												<strong>INDIA</strong>
+											</u>
+											of
+											<br />
+											prefential origin according to rules of origin of the
+											generalized system of preferences
+											<br />
+											of the European union and that the origin criterion met is
+											<u>
+												<strong>"P"</strong>
+											</u>
+										</font>
+									</p>
+
+								</p>
+							</td>
+
+							<td style="padding: 5px;text-align: left;">
+								<p>
+									11) Inspection Certificate if any.
+									<br />
+									12) Any Dispute or Difference of Controversy of claim
+									<br />
+									arising under, out of or relating to this contract and any
+									<br />
+									subsequent amendments of this contract ,including,
+									<br />
+									without limitation ,its formation,validity,interpretation,
+									<br />
+									Perforation, Shall be referred to and finally decided by
+									<br />
+									arbitration in accordance with the rules of the indian
+									<br />
+									Chamber Council of arbitration,Mumbai,and the award
+									<br />
+									made in pursuance there of shall be binding on the
+									<br />
+									parties
+									<br />
+									<br />
+									<u>
+										<strong>Declaration :</strong>
+									</u>
+									<br />
+									We declare that Invoices shows the actual price of
+									the goods described and that all particulars are true
+									and correct.
+									<hr width="100%"></hr>
+									<font size="1">
+										<center>
+											For&#160;&#160;
+											<span t-field="o.company_id.name" />
+										</center>
+									</font>
+									<br></br>
+									<hr width="100%"></hr>
+									<hr width="100%"></hr>
+									<font size="1">
+										<center>
+											<strong>Proprietor</strong>
+										</center>
+									</font>
+								</p>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</t>
+		</template>
+
+		<template id="packing_list_report">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t t-call="verts_v15_freight_forward.report_packing_list" />
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

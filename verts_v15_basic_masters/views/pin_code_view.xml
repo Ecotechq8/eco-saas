@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<record id="pin_code_master_tree_view" model="ir.ui.view">
+			<field name="name">Pin Code Master</field>
+			<field name="model">pin.code.master</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name"/>
+					<field name="area_id"/>
+                    <field name="district_id"/>
+					<field name="city_id"/>
+                    <field name="state_id"/>
+					<field name="country_id"/>
+				</list>
+			</field>
+		</record>
+
+		<record id="pin_code_master_form_view" model="ir.ui.view">
+			<field name="name">Pin Code Master</field>
+			<field name="model">pin.code.master</field>
+			<field name="arch" type="xml">
+				<form string="Pin Code Master form">
+                    <sheet>
+						<group name="pin_code">
+							<field name="name"/>
+                            <field name="area_id"/>
+                            <field name="district_id"/>
+                            <field name="city_id"/>
+                            <field name="state_id"/>
+                            <field name="country_id"/>
+                        </group>
+                    </sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_pin_code_master" model="ir.actions.act_window">
+			<field name="name">Pin Code Master</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">pin.code.master</field>
+			<field name="view_id" ref="pin_code_master_tree_view"/>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+	</data>
+</odoo>

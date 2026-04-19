@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="journal_report_payment_and_receipt">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t>
+                        <div class="page">
+                            <div class="oe_structure"/>
+                            <table style="width:100%;border-collapse:collapse;">
+                                <tr style="font-size:13px;">
+                                    <td style="border: 1px solid black;padding:7px;">
+                                        <!--                                        <center>Subject to Nagpur Jurisdiction.</center>-->
+                                        <h5 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0;">
+                                            <b>
+                                                <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                                      t-field="o.company_id.name"/>
+                                                <img t-if="o.company_id.logo"
+                                                     t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+                                                     style="max-height: 80px;" align="right"/>
+                                                <br/>
+                                            </b>
+                                        </h5>
+                                        <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                              t-field="o.company_id.street"/>
+                                        <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                              t-field="o.company_id.street2"/>
+                                        <br/>
+                                        <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                              t-field="o.company_id.city"/>
+                                        <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                              t-field="o.company_id.state_id.name"/>
+                                        <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                              t-field="o.company_id.zip"/>
+                                        <span t-attf-style="color: #{o.company_id  or '#ffffff'};"
+                                              t-field="o.company_id.country_id.name"/>
+                                        <br/>
+                                        <span>Email:</span>
+                                        <t t-out="o.company_id.email"/>,
+                                        <!--									<br/>-->
+                                        <span>Website:</span>
+                                        <t t-out="o.company_id.website"/>
+                                        <br/>
+                                        <span>Phone:</span>
+                                        <t t-out="o.company_id.phone"/>,
+                                        <!--									<br/>-->
+                                        <span>GSTIN:</span>
+                                        <t t-out="o.company_id.vat"/>
+                                        <br/>
+                                        <span>
+                                            <center>
+                                                <b>JOURNAL VOUCHER</b>
+                                            </center>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr style="border: 1px solid black; width: 100%;font-size:13px">
+                                    <td align="left" style="width:60%;border: 1px solid black;padding:7px;">
+                                        <span>
+                                            <b>PARTY NAME</b>
+                                        </span>
+                                        <br/>
+                                        <t t-out="o.partner_id.name"/>
+                                        <br/>
+                                        <t t-if="o.partner_id.street">
+                                            <t t-out="o.partner_id.street"/>
+                                            <span>,</span>
+                                        </t>
+                                        <t t-if="o.partner_id.street2">
+                                            <t t-out="o.partner_id.street2"/>
+                                            <span>,</span>
+                                        </t>
+                                        <t t-if="o.partner_id.city_id">
+                                            <t t-out="o.partner_id.city_id.name"/>,
+                                        </t>
+
+                                        <t t-if="o.partner_id.zip">
+                                            <span>
+                                                <t t-out="o.partner_id.zip"/>
+                                            </span>
+                                            ,
+                                        </t>
+                                        <br/>
+                                        <t t-if="o.partner_id.state_id">
+                                            <span>
+                                                <t t-out="o.partner_id.state_id.name"/>
+                                            </span>
+                                            ,
+                                        </t>
+                                        <span>
+                                            <t t-out="o.partner_id.country_id.name"/>
+                                        </span>
+                                        <!--                                    <br/>-->
+                                    </td>
+                                    <td align="left" style="width:60%;border: 2px solid black;padding:5px;">
+                                        <span>Vch No :</span>
+                                        <t t-out="o.name"/>
+                                        <br/>
+                                        <span>Vch Dt. :</span>
+                                        <t t-out="o.date.strftime('%d-%m-%Y')"/>
+                                        <br/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <table style="width:100%;border: 1px solid black;border-collapse:collapse;">
+                                <tr style="width:100%;border: 1px solid black;font-size:10px">
+                                    <!--                                    <td style="width:5%;border: 1px solid black">-->
+                                    <!--                                       <center> <b>Sr.</b></center>-->
+                                    <!--                                    </td>-->
+                                    <td style="width:20%;border: 1px solid black">
+                                        <center>
+                                            <b>Account</b>
+                                        </center>
+                                    </td>
+                                    <td style="width:20%;border: 1px solid black">
+                                        <center>
+                                            <b>partner</b>
+                                        </center>
+                                    </td>
+                                    <td style="width:20%;border: 1px solid black">
+                                        <center>
+                                            <b>Label</b>
+                                        </center>
+                                    </td>
+                                    <td style="width:20%;border: 1px solid black">
+                                        <center>
+                                            <b>Debit</b>
+                                        </center>
+                                    </td>
+                                    <td style="width:20%;border: 1px solid black">
+                                        <center>
+                                            <b>Credit</b>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <t t-if="o.line_ids">
+                                    <tr t-foreach="o.line_ids" t-as="l"
+                                        style="width:100%;border: 1px solid black;font-size:10px;">
+                                        <t t-if="l.account_id">
+                                            <td style="border: 1px solid black;padding:5px;">
+                                                <span t-out="l.account_id.name"/>
+                                            </td>
+                                            <td style="border: 1px solid black;padding:5px;">
+                                                <t t-if="l.partner_id.name">
+                                                    <span t-out="l.partner_id.name"/>
+                                                </t>
+                                            </td>
+                                            <td style="border: 1px solid black">
+                                                <center>
+                                                    <span t-field="l.name"/>
+                                                </center>
+                                            </td>
+                                            <td align="right" style="border: 1px solid black;padding:5px;">
+<!--                                                <span t-out="'{0:,.3f}'.format(l.debit)"/>-->
+                                                <span t-field="l.debit"/>
+                                            </td>
+                                            <td align="right" style="border: 1px solid black;padding:5px;">
+<!--                                                <span t-out="'{0:,.3f}'.format(l.credit)"/>-->
+                                                <span t-field="l.credit"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <!--                                <tr style="width:100%;border: 1px solid black;font-size:10px">-->
+                                <!--                                    <td style="width:80%;border: 1px solid black">-->
+                                <!--                                        <center>Advance Payment</center>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td align="right" style="width:20%;border: 1px solid black;padding:3px;">-->
+                                <!--                                        &lt;!&ndash;                                        <t t-if="o.apply_tds">&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                    		<span t-out="'{0:,.2f}'.format(o.amount_to_be_paid)"/>&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                    	</t>&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                        <t t-if="not o.apply_tds">&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                            <span t-out="'{0:,.2f}'.format(o.advance_payment_amount())"/>&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                    	</t>&ndash;&gt;-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+
+                                <!--                                <tr style="width:100%;border: 1px solid black;font-size:10px;">-->
+                                <!--                                    <td style="width:30%;border: 1px solid black;padding:3px;" rowspan="6">-->
+                                <!--                                        <b>Paid by :</b>-->
+                                <!--                                        <br></br>-->
+                                <!--                                        Payment Mode :-->
+                                <!--                                        <span t-field="o.payment_method_line_id"/>-->
+                                <!--                                        <t t-if="o.payment_type=='inbound' and o.partner_type=='customer' and o.payment_mode=='cheque'">-->
+                                <!--                                            <t t-if="o.customer_bank_name">-->
+                                <!--                                                <br></br>-->
+                                <!--                                                Partner Bank :-->
+                                <!--                                                <span t-field="o.customer_bank_name.name"/>-->
+                                <!--                                            </t>-->
+                                <!--                                            <br></br>-->
+                                <!--                                            Cheque No :-->
+                                <!--                                            <span t-field="o.cheque_no"/>-->
+                                <!--                                            <br></br>-->
+                                <!--                                            Dt. :-->
+                                <!--                                            <t t-if="o.date">-->
+                                <!--                                                <t t-out="o.date.strftime('%d-%m-%Y')"/>-->
+                                <!--                                            </t>-->
+                                <!--                                        </t>-->
+                                <!--                                        <t t-if="o.payment_type=='outbound' and o.partner_type=='supplier' and o.payment_mode=='cheque'">-->
+                                <!--                                            <t t-if="o.beneficiary_bank">-->
+                                <!--                                                <br></br>-->
+                                <!--                                                Partner Bank :-->
+                                <!--                                                <span t-field="o.beneficiary_bank.name"/>-->
+                                <!--                                            </t>-->
+                                <!--                                            <br></br>-->
+                                <!--                                            Cheque Book :-->
+                                <!--                                            <span t-field="o.cheque_book_id.bank_name.name"/>-->
+                                <!--                                            <br></br>-->
+                                <!--                                            Dt. :-->
+                                <!--                                            <t t-if="o.date">-->
+                                <!--                                                <t t-out="o.date.strftime('%d-%m-%Y')"/>-->
+                                <!--                                            </t>-->
+                                <!--                                            <br></br>-->
+                                <!--                                            <t t-if="o.cheque_leaf_id">-->
+                                <!--                                                Cheque Leaf :-->
+                                <!--                                                <span t-field="o.cheque_leaf_id.cheque_leaf_number"/>-->
+                                <!--                                            </t>-->
+                                <!--                                        </t>-->
+                                <!--                                        <t t-if="o.payment_mode=='neft'">-->
+                                <!--                                            UTR No :-->
+                                <!--                                            <span t-field="o.utr_no"/>-->
+                                <!--                                        </t>-->
+                                <!--                                        <t t-if="o.payment_mode=='rtgs'">-->
+                                <!--                                            <br></br>-->
+                                <!--                                            RTGS No :-->
+                                <!--                                            <span t-field="o.rtgs_no"/>-->
+                                <!--                                        </t>-->
+                                <!--                                        <br></br>-->
+                                <!--                                        Payment Journal :-->
+                                <!--                                        <span t-field="o.journal_id.name"/>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                        &lt;!&ndash;                                    <t t-if="o.apply_tds">&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                    TDS Rate : <span t-out="'{0:,.2f}'.format(o.account_tax_id.name)"/>&ndash;&gt;-->
+                                <!--                                        &lt;!&ndash;                                     </t>&ndash;&gt;-->
+                                <!--                                    </td>-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+
+                                <!--                                    </td>-->
+
+                                <!--                                </tr>-->
+                                <!--                                <tr style="font-size:10px;">-->
+                                <!--                                    <td align="right" style="width:35%;border: 1px solid black;padding-right:3px;"-->
+                                <!--                                        height="27px;">-->
+                                <!--                                        &lt;!&ndash;                                        <span t-out="'{0:,.2f}'.format(o.tds_amount)"/>&ndash;&gt;-->
+                                <!--                                    </td>-->
+                                <!--                                    <td style="width:35%;border: 1px solid black;padding-right:3px;" height="27px;">-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                                <!--                                <tr style="font-size:10px;">-->
+                                <!--                                    <td align="right" style="width:35%;border: 1px solid black;padding-right:3px;"-->
+                                <!--                                        height="27px;">-->
+                                <!--                                        &lt;!&ndash;                                        <span t-out="'{0:,.2f}'.format(o.after_tds_amount())"/>&ndash;&gt;-->
+                                <!--                                    </td>-->
+                                <!--                                    <td style="width:35%;border: 1px solid black;padding-right:3px;" height="27px;">-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                                <!--                                <tr style="font-size:10px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    </td>-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                                <!--                                <tr style="font-size:10px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    </td>-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    </td>-->
+                                <!--                                </tr>-->
+                                <tr style="font-size:10px;width:100%;">
+                                    <td style="width:60%;border: 1px solid black text-align:right;">
+                                        <center>TOTAL PAID AMOUNT</center>
+                                    </td>
+                                    <td align="right" style="width:20%;border: 1px solid black;padding:3px;">
+                                        <span t-out="'{0:,.3f}'.format(o.cal_debit())"/>
+                                    </td>
+                                    <td align="right" style="width:20%;border: 1px solid black;padding:3px;">
+                                        <span t-out="'{0:,.3f}'.format(o.cal_credit())"/>
+                                    </td>
+                                </tr>
+                                <tr style="width:100%;border-top: 1px solid black;font-size:10px;">
+                                    <td align="left" style="padding:7px;">
+                                        <b>Remarks :</b>
+                                        <span t-field="o.ref"/>
+                                        <!--                                        <br/>-->
+                                        <!--                                                                                <span t-field="o.ref"/>-->
+                                        <!--                                        <br/>-->
+                                    </td>
+                                    <td align="right" style="padding:7px;border-right: 1px solid black">
+                                        <b>For
+                                            <span t-field="o.company_id.name"/>
+                                        </b>
+                                        <br/>
+                                    </td>
+
+                                </tr>
+                                <tr style="font-size:10px;">
+                                    <td style="padding:7px;" align="left">
+                                        <br/>
+                                        <br/>
+                                        ____________________
+                                        <br/>
+                                        Receiver`s Signatory
+                                        <br/>
+                                    </td>
+                                    <td style="padding:7px;border-right: 1px solid black" align="right">
+                                        <br/>
+                                        <br/>
+                                        <br/>
+                                        Authorised Signatory
+                                        <br/>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+
+    <record id="journal_paperformat_report_payment_and_receipt"
+            model="report.paperformat">
+        <field name="name">Payment and Receipt Format</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">10</field>
+        <field name="margin_left">7</field>
+        <field name="margin_right">7</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">55</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report id="journal_report_payment_and_receipt_id"
+            string="Journal Voucher"
+            model="account.move"
+            report_type="qweb-pdf"
+            file="verts_v15_freight_forward.journal_report_payment_and_receipt"
+            name="verts_v15_freight_forward.journal_report_payment_and_receipt"
+            paperformat="verts_v15_freight_forward.journal_paperformat_report_payment_and_receipt"
+    />
+
+</odoo>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="verts_view_new_payment_form_inherit1" model="ir.ui.view">
+            <field name="name">account.payment.invoice.form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_post']" position="after">
+                    <!-- Show this for inbound payments -->
+                        <button name="print_payment_receipt"
+                                type="object"
+                                string="Print Payment Receipt"
+                                class="btn-secondary"
+                                icon="fa-print"
+                                invisible="payment_type != 'inbound'"/>
+
+<!--                         Show this for outbound payments-->
+                        <button name="print_payment_voucher"
+                                type="object"
+                                string="Print Payment Voucher"
+                                class="btn-secondary"
+                                icon="fa-print"/>
+
+<!--                    <button name="proforma_voucher" type="object" string="Approve"-->
+<!--                            invisible="state != 'draft'" class="oe_highlight"/>-->
+                </xpath>
+                  <xpath expr="//field[@name='partner_bank_id']" position="after">
+                    <field name="is_cheque"/>
+                    <field name="cheque_number" invisible="is_cheque == False"/>
+                    <field name="cheque_date" invisible="is_cheque == False"/>
+                    <field name="drawn_on" invisible="is_cheque == False"/>
+                </xpath>
+                <xpath expr="//sheet/group" position="after">
+
+                    <notebook invisible="state != 'posted'">
+                        <page string="Payment Information" name="payment_info">
+                            <!-- <group>
+                         		<field name="load_invoices" readonly="state != 'draft'"/>
+                         		<field name="load_amount"/>
+                         	</group>
+                            <field name="line_dr_ids" invisible="payment_type != 'outbound'" context="{'journal_id':journal_id, 'type':payment_type, 'partner_id':partner_id}">
+                                <list create="false" delete="false" editable="bottom" colors="gray:amount==0">
+                                    <field name="move_line_id" context="{'journal_id':parent.journal_id, 'partner_id':parent.partner_id}"
+                                        domain="[('account_id.user_type_id.type','=','payable'), ('full_reconcile_id','=', False), ('partner_id','=',parent.partner_id)]"
+                                        required="1"/>
+                                    <field name="invoice_no" readonly="1" force_save="1"/>
+                                    <field name="account_id" groups="base.group_no_one" domain="[('user_type_id.type','=','payable')]"/>
+                                    <field name="date_original" readonly="1"/>
+                                    <field name="date_due" readonly="1"/>
+                                    <field name="amount_original" readonly="1"/>
+                                    <field name="amount_unreconciled" readonly="1" groups="account.group_account_user"/>
+                                    <field name="reconcile" on_change="onchange_reconcile(reconcile, amount, amount_unreconciled, context)" groups="account.group_account_user"/>
+                                    <field name="amount" sum="Total Allocation" on_change="onchange_amount(amount, amount_unreconciled, context)" force_save="1"/>
+                                </list>
+                            </field> -->
+                            <!-- <label for="line_cr_ids" invisible="payment_type != 'inbound'"/>
+                            <field name="line_cr_ids" invisible="payment_type != 'inbound'" context="{'journal_id':journal_id, 'partner_id':partner_id}">
+                                <list create="false" delete="false" editable="bottom" colors="gray:amount==0">
+                                    <field name="move_line_id" context="{'journal_id':parent.journal_id, 'partner_id':parent.partner_id}"
+                                        domain="[('account_id.user_type_id.type','=','payable'), ('full_reconcile_id','=', False), ('partner_id','=',parent.partner_id)]"
+                                        required="1"/>
+                                    <field name="invoice_no" readonly="1" force_save="1"/>
+                                    <field name="account_id" groups="base.group_no_one" domain="[('user_type_id.type','=','payable')]"/>
+                                    <field name="date_original" readonly="1"/>
+                                    <field name="date_due" readonly="1"/>
+                                    <field name="amount_original" readonly="1"/>
+                                    <field name="amount_unreconciled" readonly="1" groups="account.group_account_user"/>
+                                    <field name="reconcile" on_change="onchange_reconcile(reconcile, amount, amount_unreconciled, context)" groups="account.group_account_user"/>
+                                    <field name="amount" sum="Total Allocation" on_change="onchange_amount(amount, amount_unreconciled, context)" force_save="1"/>
+                                </list>
+                            </field> -->
+
+                            <group>
+                                <group>
+                                    <button name="get_vendor_invoices" type="object" string="Load Invoices"
+                                            class="btn-primary"
+                                            invisible="state != 'posted'"/>
+                                </group>
+                                <group>
+                                    <button name="adjust_manual" type="object" string="Adjust" class="btn-primary"
+                                            invisible="state != 'posted'"/>
+                                </group>
+                            </group>
+                            <field name="payment_invoice_ids">
+                                <list editable="bottom" create="false" delete="false">
+                                    <field name="is_select" nolabel="1"/>
+                                    <field name="is_reconciled" invisible="1"/>
+                                    <field name="invoice_id" readonly="1" force_save="1"/>
+                                    <field name="origin"/>
+                                    <field name="date_invoice"/>
+                                    <field name="date_due"/>
+                                    <field name="amount_total"/>
+                                    <field name="residual"/>
+                                    <field name="reconcile_amount"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="payment_state" invisible="1"/>
+                                </list>
+                            </field>
+
+                        </page>
+                        <page string="Adjusted Invoices">
+                            <field name="adjusted_invoice_ids" readonly="1">
+                                <list>
+                                    <field name="invoice_id"/>
+                                    <field name="origin"/>
+                                    <field name="date_invoice"/>
+                                    <field name="date_due"/>
+                                    <field name="reconcile_amount" sum="reconcile_amount"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+        <record id="account_payment_form_inherited" model="ir.ui.view">
+            <field name="name">account.payment.form.inherited</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet//notebook//page[@name='payment_info']" position="inside">
+                    <!-- <separator string="Invoices"/> -->
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

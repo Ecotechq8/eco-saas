@@ -1,0 +1,405 @@
+<odoo>
+    <data>
+<!--        <menuitem id="menu_exports_pro_header" name="Freight Forward"-->
+<!--                  sequence="5" groups="verts_v15_freight_forward.group_header_user_export_menu"-->
+<!--                  web_icon="verts_v15_freight_forward,static/description/icon.png"/>-->
+<!--        <menuitem id="menu_exports_pro" name="Configurations"-->
+<!--                  sequence="500" parent="menu_exports_pro_header"-->
+<!--                  groups="verts_v15_freight_forward.group_export_configuration_menu"/>-->
+
+<!--        <menuitem id="menu_export_party_master" name="Export Party Master"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_export_res_partner_inherit"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu16" sequence="1"/>-->
+
+<!--        <menuitem id="menu_shipping_line_id" name="Shipping Line"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_shippingline_res_partner_inherit"-->
+<!--                  groups="verts_v15_freight_forward.group_shipping_line_menu26" sequence="2"/>-->
+
+
+<!--        <menuitem id="menu_is_airline" name="Airlines" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_is_airline"-->
+<!--                  groups="verts_v15_freight_forward.group_shipping_line_menu26" sequence="3"/>.-->
+
+<!--        <menuitem id="menu_awb_masters" name="AWB Master" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_awb_master"-->
+<!--                  groups="verts_v15_freight_forward.group_shipping_line_menu26" sequence="3"/>-->
+
+<!--        <menuitem id="menu_awb_numbers" name="AWB Numbers" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_awb_master_line_tree"-->
+<!--                  groups="verts_v15_freight_forward.group_shipping_line_menu26" sequence="3"/>-->
+
+<!--        <menuitem id="menu_custom_house_agent_id" name="Custom House Agents"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_cha_res_partner_inherit"-->
+<!--                  groups="verts_v15_freight_forward.group_cha_menu27" sequence="4"/>-->
+<!--        <menuitem id="menu_ocean_vessels" name="Ocean Vessels"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_ocean_vessel"-->
+<!--                  groups="verts_v15_freight_forward.group_cha_menu27" sequence="5"/>-->
+
+<!--        <menuitem id="menu_voyages" name="Voyages"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_ocean_voyage"-->
+<!--                  groups="verts_v15_freight_forward.group_cha_menu27" sequence="6"/>-->
+
+<!--        <menuitem id="menu_bill_of_lading_type" name="Bill of Lading Types"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_bill_lading_type"-->
+<!--                  groups="verts_v15_freight_forward.group_cha_menu27" sequence="7"/>-->
+
+<!--        <menuitem id="menu_ecgc_rating" name="ECGC Rating"-->
+<!--                  sequence="1" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_ecgc_rating"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu1"/>-->
+<!--        <menuitem id="menu_ecgc_premium_rate" name="ECGC Premium Rate"-->
+<!--                  sequence="2" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_ecgc_premium_rate"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu2"/>-->
+<!--        <menuitem id="menu_thc" name="Terminal Handling Charges (THC)"-->
+<!--                  sequence="8" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_terminal_handling_charges"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu3"/>-->
+<!--        <menuitem id="menu_empty_trailer_cost" name="Empty Trailer Cost"-->
+<!--                  sequence="9" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_empty_trailer_cost"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu4"/>-->
+<!--        <menuitem id="menu_health_certificate_charges" name="Health Certificate Charges"-->
+<!--                  sequence="10" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_health_certificate_charges"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu5"/>-->
+<!--        <menuitem id="menu_insurance" name="Insurance %"-->
+<!--                  sequence="11" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_insurance"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu6"/>-->
+<!--        <menuitem id="menu_export_expenses" name="Export Expenses"-->
+<!--                  sequence="12" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_export_expense_tree"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu7"/>-->
+<!--        <menuitem id="menu_export_documents" name="Export Documents"-->
+<!--                  sequence="13" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_export_doc"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu8"/>-->
+<!--        <menuitem id="menu_transit_duration" name="Transit Duration"-->
+<!--                  sequence="14" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_transit_duration"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu9"/>-->
+<!--        <menuitem id="menu_incoterm" name="Incoterms"-->
+<!--                  sequence="15" parent="menu_exports_pro"-->
+<!--                  action="account.action_incoterms_tree"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu10"/>-->
+<!--        <menuitem id="menu_country_for_export" name="Country"-->
+<!--                  parent="menu_exports_pro" sequence="5"-->
+<!--                  action="base.action_country" groups="verts_v15_freight_forward.group_export_config_submenu11"/>-->
+<!--        <menuitem id="sub_menu_ports_for_export" name="Ports"-->
+<!--                  sequence="6" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_basic_masters.action_ports_basic_master"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu12"/>-->
+
+        <!--Create New View For Export - International Region (Not use Basic Masters View)-->
+<!--        <menuitem id="menu_international_region_for_export"-->
+<!--                  name="International Region"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_internation_region_exports"-->
+<!--                  sequence="13" groups="verts_v15_freight_forward.group_export_config_submenu13"/>-->
+<!--        &lt;!&ndash;Create New View For Export - International Region (Not use Basic Masters View)&ndash;&gt;-->
+
+<!--        <menuitem id="menu_payment_term_id" name="Payment Terms"-->
+<!--                  sequence="14" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_payment_term_export_form"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu14"/>-->
+<!--        <menuitem id="menu_point_of_stuffing" name="Point of Stuffing"-->
+<!--                  sequence="15" parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_point_of_stuffing"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu15"/>-->
+
+<!--        <menuitem id="menu_export_agents" name="Vendors"-->
+<!--                  sequence="2" parent="menu_exports_pro_header"-->
+<!--                  groups="verts_v15_freight_forward.group_export_quotation_menu"/>-->
+
+<!--        <menuitem id="menu_ff_agent_quote_id"-->
+<!--                  name="Vendor Quotes"-->
+<!--                  sequence="1"-->
+<!--                  action="verts_v15_freight_forward.action_ff_agent_quote_id"-->
+<!--                  parent="verts_v15_freight_forward.menu_export_agents"/>-->
+
+<!--        <menuitem id="menu_ff_agent_order_id"-->
+<!--                  name="Vendor Order"-->
+<!--                  sequence="2"-->
+<!--                  action="verts_v15_freight_forward.action_ff_agent_order_id"-->
+<!--                  parent="verts_v15_freight_forward.menu_export_agents"/>-->
+
+<!--        <menuitem id="menu_export_customers_group" name="Customers"-->
+<!--                  sequence="3" parent="menu_exports_pro_header"-->
+<!--                  groups="verts_v15_freight_forward.group_export_quotation_menu"/>-->
+
+<!--        <menuitem id="menu_export_quotation_exports" name="Quotations"-->
+<!--                  sequence="1" parent="menu_export_customers_group"-->
+<!--                  action="verts_v15_freight_forward.action_quatation_export"-->
+<!--                  groups="verts_v15_freight_forward.group_export_quotation_menu"/>-->
+
+<!--        <menuitem id="menu_export_sale_order_exports" name="Orders"-->
+<!--                  sequence="2" parent="menu_export_customers_group"-->
+<!--                  action="verts_v15_freight_forward.action_sale_order_exports"-->
+<!--                  groups="verts_v15_freight_forward.group_export_sales_order_menu"/>-->
+
+<!--        <menuitem id="menu_export_customers" name="Customers"-->
+<!--                  sequence="3" parent="menu_export_customers_group"-->
+<!--                  action="account.res_partner_action_customer"-->
+<!--                  groups="verts_v15_freight_forward.group_export_sales_order_menu"/>-->
+
+<!--        <menuitem id="menu_cargo_order_exports" name="Cargo Order"-->
+<!--                  sequence="4" parent="menu_exports_pro_header"-->
+<!--                  groups="verts_v15_freight_forward.group_export_quotation_menu"/>-->
+<!--        <menuitem id="menu_job_order_exports" name="Job Order"-->
+<!--                  sequence="4" parent="menu_exports_pro_header"/>-->
+
+<!--        <menuitem id="menu_sea_freight_import_id"-->
+<!--                  name="Sea Freight Import"-->
+<!--                  sequence="1"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_sea_freight_import_id"/>-->
+
+<!--        <menuitem id="menu_sea_freight_export_id"-->
+<!--                  name="Sea Freight Export"-->
+<!--                  sequence="2"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_sea_freight_export_id"/>-->
+
+<!--        <menuitem id="menu_air_freight_import_id"-->
+<!--                  name="Air Freight Import"-->
+<!--                  sequence="3"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_air_freight_import_custom_id"/>-->
+
+<!--        <menuitem id="menu_air_freight_export_id"-->
+<!--                  name="Air Freight Export"-->
+<!--                  sequence="4"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_air_freight_export_custom_id"/>-->
+
+<!--        <menuitem id="menu_clearance_export_id"-->
+<!--                  name="Clearance Export"-->
+<!--                  sequence="5"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_clearance_export_id"/>-->
+
+<!--        <menuitem id="menu_clearance_import_id"-->
+<!--                  name="Clearance Import"-->
+<!--                  sequence="6"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_clearance_import_id"/>-->
+
+<!--        <menuitem id="menu_road_freight_export_id"-->
+<!--                  name="Road Freight Export"-->
+<!--                  sequence="7"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_road_freight_export_id"/>-->
+
+<!--        <menuitem id="menu_road_freight_import_id"-->
+<!--                  name="Road Freight Import"-->
+<!--                  sequence="8"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_road_freight_import_id"/>-->
+
+<!--        <menuitem id="menu_courier_import_id"-->
+<!--                  name="Courier Import"-->
+<!--                  sequence="9"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_courier_import_id"/>-->
+
+<!--        <menuitem id="menu_courier_export_id"-->
+<!--                  name="Courier Export"-->
+<!--                  sequence="10"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_courier_export_id"/>-->
+
+<!--        <menuitem id="menu_cross_trade_air_id"-->
+<!--                  name="Cross Trade Air"-->
+<!--                  sequence="11"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_cross_trade_air_id"/>-->
+
+<!--        <menuitem id="menu_cross_trade_sea_id"-->
+<!--                  name="Cross Trade Sea"-->
+<!--                  sequence="12"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_cargo_cross_trade_sea_id"/>-->
+
+<!--        <menuitem id="menu_all_cargo_orders_id"-->
+<!--                  name="All Cargo Orders"-->
+<!--                  sequence="15"-->
+<!--                  parent="menu_cargo_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_all_cargo_id"/>-->
+
+        <!--		<menuitem id="menu_cargo_order_packing_removal_id"-->
+        <!--				  name="Packing And Removal"-->
+        <!--				  sequence="9"-->
+        <!--				  parent="menu_cargo_order_exports"-->
+        <!--				  action="verts_v15_freight_forward.action_cargo_order_packing_removal_id"/>-->
+
+        <!--		<menuitem id="menu_cargo_order_warehousing_id"-->
+        <!--				  name="Warehousing"-->
+        <!--				  sequence="10"-->
+        <!--				  parent="menu_cargo_order_exports"-->
+        <!--				  action="verts_v15_freight_forward.action_cargo_order_warehousing_id"/>-->
+
+        <!-- <menuitem id="menu_export_quotation" name="Exports Quotations"
+                  sequence="1" parent="sale.sale_order_menu"
+                  action="verts_v15_freight_forward.action_quatation_export" groups="verts_v15_freight_forward.group_export_quotation_menu"/>
+        <menuitem id="menu_export_sale_order" name="Exports Sales Orders"
+                  sequence="3" parent="sale.sale_order_menu"
+                  action="verts_v15_freight_forward.action_sale_order_exports" groups="verts_v15_freight_forward.group_export_sales_order_menu"/> -->
+        <!--Reporting-->
+<!--        <menuitem id="menu_export_invoice_details_parent" name="Reporting" parent="menu_exports_pro_header"-->
+<!--                  groups="verts_v15_freight_forward.group_export_reports_menu"/>-->
+
+<!--        &lt;!&ndash;		<menuitem id="menu_export_invoice_details" name="Exports Invoice Details"&ndash;&gt;-->
+<!--        &lt;!&ndash;				   parent="menu_export_invoice_details_parent"&ndash;&gt;-->
+<!--        &lt;!&ndash;				  action="verts_v15_freight_forward.action_export_invoice_details_report"/>&ndash;&gt;&lt;!&ndash;by kajal&ndash;&gt;-->
+
+<!--        &lt;!&ndash; Goods Category  &ndash;&gt;-->
+<!--        <menuitem id="menu_export_pro_categ" name="Commodity Type"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_export_pro_categ"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu17"/>-->
+
+<!--        &lt;!&ndash; QC Parameter  &ndash;&gt;-->
+<!--        <menuitem id="menu_qc_parameter" name="QC Parameters"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_qc_parameter"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu18"/>-->
+
+<!--        &lt;!&ndash; Spice Board Rate Master  &ndash;&gt;-->
+<!--        <menuitem id="menu_spice_board_rate_master"-->
+<!--                  name="Spice Board Rate Master"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_spice_board_rate_master"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu19"/>-->
+
+<!--        <menuitem id="menu_export_container_type"-->
+<!--                  name="Container Type"-->
+<!--                  sequence="10"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_basic_masters.action_container_type_basic_master"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu21"/>-->
+
+
+<!--        <menuitem id="menu_common_schedule_id"-->
+<!--                  name="Common Schedule"-->
+<!--                  sequence="15"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_common_schedule"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu20"/>-->
+
+<!--        <menuitem id="menu_product_mix_variants_id"-->
+<!--                  name="Product Mix Variants"-->
+<!--                  sequence="16"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_product_mix_variants"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu22"/>-->
+
+<!--        <menuitem id="menu_export_packing_type_id"-->
+<!--                  name="Packaging Type"-->
+<!--                  sequence="17"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_export_packing_type"-->
+<!--                  groups="verts_v15_freight_forward.group_export_config_submenu23"/>-->
+
+<!--        <menuitem id="menu_service_type_id"-->
+<!--                  name="Service Type"-->
+<!--                  sequence="18"-->
+<!--                  parent="menu_exports_pro"-->
+<!--                  action="verts_v15_freight_forward.action_service_type_id"/>-->
+
+
+        <!-- Products -->
+        <!--		<menuitem id="menu_export_product_id" name="Product"-->
+        <!--				  parent="menu_exports_pro_header"-->
+        <!--				  action="verts_v15_freight_forward.product_template_action_inherit_export" groups="verts_v15_freight_forward.group_export_product_menu"/>-->
+        <!--				  -->
+
+
+        <!-- Account -->
+        <!--		<menuitem name="Export Invoices"-->
+        <!--				  action="verts_v15_freight_forward.action_invoice_tree1_export"-->
+        <!--				  id="menu_action_account_invoice_export"-->
+        <!--				  parent="account.menu_finance_receivables" />-->
+        <!--&lt;!&ndash;				  groups="verts_v15_freight_forward.group_export_config_submenu25"/>&ndash;&gt;-->
+
+<!--        <menuitem name="So Invoices"-->
+<!--                  action="verts_v15_freight_forward.action_so_invoice_val_suruchi"-->
+<!--                  id="menu_so_invoice_values_view"-->
+<!--                  parent="verts_v15_freight_forward.menu_export_invoice_details_parent"/>-->
+
+        <!-- Validate Export Invoice menu -->
+        <!--		<menuitem name="Validate Export Invoices"-->
+        <!--				  action="action_validate_exports_invoice_view"-->
+        <!--				  id="menu_action_validate_exports_invoice_view"-->
+        <!--				  parent="verts_v15_freight_forward.menu_export_invoice_details_parent"/>-->
+
+        <!--MEIS Report Wizard Menu View-->
+        <!--		<menuitem name="Generate MEIS Report"-->
+        <!--				  parent="verts_v15_freight_forward.menu_export_invoice_details_parent"-->
+        <!--				  sequence="4"-->
+        <!--				  action="action_meis_report_wiz"-->
+        <!--				  id="menu_action_meis_report_wiz_id" />--><!--by kajal-->
+
+        <!--MEIS Report Wizard Menu View-->
+        <!--		<menuitem name="MEIS Report"-->
+        <!--				  parent="verts_v15_freight_forward.menu_export_invoice_details_parent"-->
+        <!--				  sequence="5"-->
+        <!--				  action="action_meis_report_id"-->
+        <!--				  id="menu_action_meis_report_id" />-->
+
+<!--        <menuitem id="menu_ff_invoice_id"-->
+<!--                  name="FF Invoice"-->
+<!--                  sequence="8"-->
+<!--                  parent="verts_v15_freight_forward.menu_exports_pro_header"-->
+<!--        />-->
+
+<!--        <menuitem id="menu_ff_customer_invoice_id"-->
+<!--                  name="Customer Invoice"-->
+<!--                  sequence="1"-->
+<!--                  action="verts_v15_freight_forward.action_freight_invoice_id"-->
+<!--                  parent="verts_v15_freight_forward.menu_ff_invoice_id"-->
+<!--        />-->
+
+<!--        <menuitem id="menu_ff_vendor_invoice_id"-->
+<!--                  name="Vendor Bill"-->
+<!--                  sequence="2"-->
+<!--                  action="verts_v15_freight_forward.action_freight_vendor_invoice_id"-->
+<!--                  parent="verts_v15_freight_forward.menu_ff_invoice_id"-->
+<!--        />-->
+
+<!--        <menuitem id="menu_job_order_sea_freight_import_id"-->
+<!--                  name="Job Order"-->
+<!--                  sequence="1"-->
+<!--                  parent="menu_job_order_exports"-->
+<!--                  action="verts_v15_freight_forward.action_job_sea_freight_import_id"/>-->
+
+<!--        <menuitem id="menu_cv_csr_report"-->
+<!--                  name="CSR REPORT"-->
+<!--                  parent="verts_v15_freight_forward.menu_export_invoice_details_parent"-->
+<!--                  action="action_cv_csr_report"-->
+<!--                  sequence="4"/>-->
+
+        <record id="account.menu_action_account_payments_receivable" model="ir.ui.menu">
+            <field name="name">Payment Receipt</field>
+        </record>
+
+
+        <record id="account.menu_action_account_payments_payable" model="ir.ui.menu">
+            <field name="name">Payment Voucher</field>
+        </record>
+
+<!--        <record id="account.menu_finance" model="ir.ui.menu">-->
+<!--            <field name="groups_id" eval="[(6, 0, [ref('verts_v15_freight_forward.group_accounting_main_menu')])]"/>-->
+<!--        </record>-->
+
+<!--         <record id="account.menu_finance" model="ir.ui.menu">-->
+<!--            <field name="groups_id" eval="[(6, 0, [ref('verts_v15_freight_forward.group_accounting_main_menu')])]"/>-->
+<!--        </record>-->
+    </data>
+</odoo>

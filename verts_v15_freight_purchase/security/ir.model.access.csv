@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_request_for_quotation_user,request.for.quotation.user,model_request_for_quotation,base.group_user,1,1,1,1
+access_request_for_quotation_line_user,request.for.quotation.line.user,model_request_for_quotation_line,base.group_user,1,1,1,1
+access_wiz_change_pol_qty_user,wiz.change.pol.qty.user,model_wiz_change_pol_qty,base.group_user,1,1,1,1

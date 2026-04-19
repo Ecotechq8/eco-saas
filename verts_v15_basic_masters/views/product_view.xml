@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+
+		<record id="product_template_form_view_inherit12" model="ir.ui.view">
+			<field name="name">product.template.common.form</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_only_form_view" />
+			<field name="arch" type="xml">
+				<field name="barcode" position="after">
+<!--					<field name="branch_id" invisible="1" options="{'no_create': True}" />-->
+				</field>
+			</field>
+		</record>
+
+		<!--=====BRAND VIEW======-->
+		<record id="brands_info_tree_view" model="ir.ui.view">
+			<field name="name">brands.info.tree</field>
+			<field name="model">brands.info</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name"/>
+				</list>
+			</field>
+		</record>
+
+		<record id="brands_info_form_view" model="ir.ui.view">
+			<field name="name">brands.info.form</field>
+			<field name="model">brands.info</field>
+			<field name="arch" type="xml">
+				<form string="Brands">
+					<sheet>
+						<group>
+							<field name="name" required="1" />
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_brands_info_master" model ="ir.actions.act_window">
+			<field name="name">Internal (Self) Brands</field>
+			<field name="res_model">brands.info</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="brands_info_tree_view"/>
+		</record>
+
+	</data>
+</odoo>

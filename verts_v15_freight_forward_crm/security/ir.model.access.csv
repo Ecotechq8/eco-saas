@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_lead_order_line_user,lead.order.line.user,model_lead_order_line,base.group_user,1,1,1,1
+access_lead_container_lines_user,lead.container.lines.user,model_lead_container_lines,base.group_user,1,1,1,1
+access_box_details_wizard_user,box.details.wizard.user,model_box_details_wizard,base.group_user,1,1,1,1
+access_box_details_line_user,box.details.line.user,model_box_details_line,base.group_user,1,1,1,1

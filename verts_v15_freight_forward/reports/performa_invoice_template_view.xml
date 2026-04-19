@@ -1,0 +1,739 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<template id="report_performa_invoice">
+			<t t-call="web.basic_layout">
+				<t t-foreach="docs" t-as="o">
+					<t>
+						<div class="page">
+
+							<table width="100%" border="0" cellspacing="0"
+								cellpadding="0"
+								t-attf-style="padding:0px 20px 0px 20px; margin:0; font-family: Arial,Helvetica, sans-serif; background:#fff;">
+								<tr>
+									<td width="45%">
+										<table>
+											<t t-if="not o.branch_id">
+												<tr>
+													<td valign="top" align="left"
+														style="color:#4D4D4F; font-size:12px; padding: 0 0 0px 0; line-height:16px; padding-top:16px;">
+														<img
+															t-if="o.company_id.invoice_logo or o.company_id.logo"
+															t-attf-src="data:image/*;base64,{{o.company_id.invoice_logo or o.company_id.logo}}"
+															style="max-height: 80px;" />
+														<h2
+															style="text-transform:capitalize; font-size :22px; padding:0px; margin:0;">
+															<b>
+																<span
+																	t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																	t-field="o.company_id.name" />
+																<br />
+															</b>
+														</h2>
+													</td>
+												</tr>
+												<tr>
+													<td width="50%" style="font-size:13px;">
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.company_id.street" />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.company_id.street2" />
+														<br />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.company_id.city.name" />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.company_id.zip" />
+
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.company_id.state_id.name" />
+														<br />
+														<!-- <span t-if="o.company_id.email"> Email: <span t-attf-style="color: 
+															#{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};" 
+															t-field="o.company_id.email" /> </span> <span t-if="o.company_id.website"> 
+															Website: <span t-attf-style="color: #{o.company_id and o.company_id.company_color 
+															or '#ffffff'};" t-field="o.company_id.website" /> <br /> </span> -->
+														<span t-if="o.company_id.phone">
+															<b>Phone:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.company_id.phone" />
+														</span>
+														<span t-if="o.company_id.pan_no">
+															<b>PAN:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.company_id.pan_no" />
+															<br />
+														</span>
+														<span t-if="o.company_id.cin_no">
+															<b>CIN:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.company_id.cin_no" />
+														</span>
+														<span t-if="o.company_id.vat">
+															<b>GSTIN:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.company_id.vat" />
+															<br />
+														</span>
+														<span t-if="o.branch_id.name">
+															<b>Branch:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.name" />
+															<br />
+														</span>
+													</td>
+												</tr>
+											</t>
+											<t t-if="o.branch_id">
+												<tr>
+													<td valign="top" align="left"
+														style="color:#4D4D4F; font-size:12px; padding: 0 0 0px 0; line-height:16px; padding-top:16px;">
+														<img t-if="o.branch_id.logo_branch"
+															t-attf-src="data:image/*;base64,{{o.branch_id.logo_branch}}"
+															style="max-height: 80px;" />
+														<h2
+															style="text-transform:capitalize; font-size :22px; padding:0px; margin:0;">
+															<b>
+																<span
+																	t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																	t-field="o.branch_id.name" />
+																<br />
+															</b>
+														</h2>
+													</td>
+												</tr>
+												<tr>
+													<td width="50%">
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.branch_id.street" />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.branch_id.street2" />
+														<br />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.branch_id.city" />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.branch_id.zip" />
+														<span
+															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+															t-field="o.branch_id.state_id.name" />
+
+														<br />
+														<span t-if="o.branch_id.email">
+															Email:
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.email" />
+														</span>
+														<span t-if="o.branch_id.website">
+															Website:
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.website" />
+															<br />
+														</span>
+														<span t-if="o.branch_id.phone">
+															<b>Phone:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.phone" />
+														</span>
+														<span t-if="o.branch_id.pan_no">
+															<b>PAN:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.pan_no" />
+															<br />
+														</span>
+														<span t-if="o.branch_id.cin_no">
+															<b>CIN:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.cin_no" />
+														</span>
+														<span t-if="o.branch_id.gstin_no">
+															<b>>GSTIN:</b>
+															<span
+																t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
+																t-field="o.branch_id.gstin_no" />
+															<br />
+														</span>
+													</td>
+
+												</tr>
+											</t>
+										</table>
+									</td>
+									<td align="right"
+										style="font-size:14px; padding:0px; width:55%; ">
+										<table width="100%" border="1" cellspacing="0"
+											cellpadding="0"
+											t-attf-style="color:#fff; text-transform:capitalize; font-size:14px; border: 1px solid black;">
+											<tr
+												t-attf-style="color: black; background-color: gainsboro;border-bottom:1px solid">
+												<td align="center"
+													style="padding:9px 15px; font-weight:bold;font-size:12px;border-bottom:1px solid">
+													PROFORMA INVOICE
+													<br />
+													("Supply Meant For Export under bond without payment of
+													IGST")
+												</td>
+											</tr>
+											<tr
+												t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">
+												<td width="25%" style="padding:0px 0px 0px 5px;">
+													<b>IEC Code No</b>
+												</td>
+												<td width="25%"
+													style="text-align:left; padding:0px 15px 0px 0px;">
+													<span t-field="o.company_id.export_import_license_no" />
+												</td>
+												<td style="padding:0px 0px 0px 5px;">
+													<b>Date</b>
+												</td>
+												<td style="text-align:left; padding:0px 15px 0px 0px;">
+													<span t-field="o.date_invoice" />
+												</td>
+
+											</tr>
+											<tr
+												t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">
+
+
+												<td width="25%" style="padding:0px 0px 0px 5px;">
+													<b>
+														Invoice No.
+													</b>
+												</td>
+												<td width="25%"
+													style="text-align:left;padding:0px 15px 0px 0px;">
+													<span t-field="o.contract_no" />
+												</td>
+
+												<td style="padding:0px 0px 0px 5px;">
+													<b>Term Of Shipment</b>
+												</td>
+												<td style="text-align:left; padding:0px 15px 0px 0px;">
+													<span t-field="o.term_of_shipment_id.name" />
+												</td>
+											</tr>
+											<tr
+												t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">
+
+
+												<td style="padding:0px 0px 0px 5px;">
+													<b>Dest. Country</b>
+												</td>
+												<td style="text-align:left; padding:0px 15px 0px 0px;">
+
+													<span t-field="o.partner_id.country_id.name" />
+												</td>
+
+												<td style="padding:0px 0px 0px 5px;">
+													<b>Port of Discharge</b>
+												</td>
+												<td style="text-align:left; padding:0px 15px 0px 0px;">
+													<span t-field="o.port_of_discharge_id.name" />
+												</td>
+											</tr>
+											<tr
+												t-attf-style="color: #{o.company_id and o.company_id.text_color or '#000000'};">
+												<td style="padding:0px 0px 0px 5px;">
+													<b>Origin Country</b>
+												</td>
+												<td style="text-align:left; padding:0px 15px 0px 0px;">
+													<span t-field="o.company_id.country_id.name" />
+												</td>
+
+												<td style="padding:0px 0px 0px 5px;">
+													<b>Port of Loading</b>
+												</td>
+												<td style="text-align:left; padding:0px 15px 0px 0px;">
+													<span t-field="o.port_of_loading_id.name" />
+												</td>
+												<!-- <td style="padding:0px 0px 0px 5px;"> <b>Term of Shipment</b> 
+													</td> <td style="text-align:left; padding:0px 15px 0px 0px;"> <span t-field="o.port_of_loading_id.name" 
+													/> </td> -->
+
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+
+
+
+
+
+
+
+
+							<!-- <h2> <center>PROFORMA INVOICE</center> </h2> <center> <b>("Supply 
+								Meant For Export under bond without payment of IGST") </b> </center> <table 
+								style="width:100%; border: 1px solid black; padding-left:20px;"> <tr style=" 
+								border: 1px solid black; "> <td rowspan="5" style=" border: 1px solid black;" 
+								align="left"> <u>Consigner:</u> <br /> <b> <span t-field="o.company_id.name" 
+								/> </b> <br /> <span t-field="o.company_id.street" /> <span t-field="o.company_id.street2" 
+								/> <span t-field="o.company_id.city.name" /> - <span t-field="o.company_id.zip" 
+								/> , <span t-field="o.company_id.state_id.name" /> ( <span t-field="o.company_id.country_id.name" 
+								/> ) <br /> <span t-field="o.company_id.phone" /> <br /> <span t-field="o.company_id.vat" 
+								/> <br /> </td> </tr> <tr style=" border: 1px solid black;"> <td style=" 
+								border: 1px solid black;" align="left">IEC Code No </td> <td style=" border: 
+								1px solid black;" align="left"> <span t-field="o.company_id.export_import_license_no" 
+								/> </td> </tr> <tr style=" border: 1px solid black;"> <td style=" border: 
+								1px solid black;">Invoice no.</td> <td style=" border: 1px solid black;"> 
+								<span t-field="o.contract_no" /> </td> </tr> <tr style=" border: 1px solid 
+								black;"> <td style=" border: 1px solid black;">Date</td> <td style=" border: 
+								1px solid black;"> <span t-field="o.date_invoice" /> </td> </tr> <tr> <td>Date 
+								of Shipment</td> <td style=" border: 1px solid black;"> </td> </tr> <tr style=" 
+								border: 1px solid black;"> <td style=" border: 1px solid black;"> <u>Consignee</u> 
+								<br /> <span t-field="o.partner_id.name" /> <br /> <span t-field="o.partner_id.street" 
+								/> <span t-field="o.partner_id.street2" /> <span t-field="o.partner_id.city_id.name" 
+								/> - <span t-field="o.partner_id.zip" /> , <span t-field="o.partner_id.state_id.name" 
+								/> ( <span t-field="o.partner_id.country_id.name" /> ) </td> <td rowspan="2" style=" border: 1px solid black;"> <u>Consignor Bank Details</u> 
+								<br /> Account Name <span t-field="o.company_id.name" /> <br /> Bank Name 
+								<span t-field="o.company_id.bank_id.name" /> <br /> <span t-field="o.company_id.bank_branch_id.name" 
+								/> <br /> Account No <span t-field="o.company_id.bank_account_id.bank_account_id.acc_number" 
+								/> <br /> Swift Code <span t-field="o.company_id.swift_code" /> </td> </tr> 
+								<tr style=" border: 1px solid black;"> <td style=" border: 1px solid black;"> 
+								<u>Notify Party</u> <br /> <span t-field="o.partner_id.name" /> <br /> <span 
+								t-field="o.partner_id.street" /> <span t-field="o.partner_id.street2" /> 
+								<span t-field="o.partner_id.city_id.name" /> - <span t-field="o.partner_id.zip" 
+								/> , <span t-field="o.partner_id.state_id.name" /> ( <span t-field="o.partner_id.country_id.name" 
+								/> ) </td> </tr> <td style=" border: 1px solid black;"> Port of Loading </td> 
+								<td style=" border: 1px solid black;"> <span t-field="o.port_of_loading_id.name" 
+								/> </td> <td rowspan="4" style=" border: 1px solid black;"> <b> <u> <center>Payment 
+								Terms</center> </u> </b> <table width="100%"> <tr> <th></th> <th></th> <th></th> 
+								</tr> <tr t-foreach="o.payment_term_line" t-as="t"> <td> <span t-field="t.payment_id.name" 
+								/> </td> <td> <span t-field="t.value" /> </td> <td> <span t-field="t.ecgc_rate" 
+								/> </td> </tr> </table> <br /> <center>(100%)CAD</center> <br /> <br /> <u> 
+								<center>Term of Shipment </center> </u> <center>CIF,NEW YORK</center> </td> 
+								<tr style=" border: 1px solid black;"> <td style=" border: 1px solid black;"> 
+								Port of Discharge </td> <td style=" border: 1px solid black;"> <span t-field="o.port_of_discharge_id.name" 
+								/> </td> </tr> <tr style=" border: 1px solid black;"> <td style=" border: 
+								1px solid black;"> Country of Origin </td> <td style=" border: 1px solid 
+								black;"> India </td> </tr> <tr style=" border: 1px solid black;"> <td> Country 
+								of Final Destination </td> <td style=" border: 1px solid black;"> <span t-field="o.partner_id.country_id.name" 
+								/> </td> </tr> </table> -->
+
+
+
+
+
+
+
+
+
+
+
+							<table width="100%" border="0" cellspacing="0"
+								cellpadding="0"
+								t-attf-style="text-transform:capitalize; font-size:14px;
+								border: 1px solid ;">
+								<thead
+									t-attf-style="text-transform:capitalize; font-size:14px; border: 1px solid;">
+									<tr border="0" cellspacing="0" cellpadding="0" align="left"
+										t-attf-style="padding:5px 10px; border:1px solid; font-weight:bold;background-color:gainsboro;">
+
+										<th style="border-right: 1px solid;" width="33%"
+											class="text-center">
+											<strong>Consignee</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="33%"
+											class="text-center">
+											<strong>Notify Party</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="34%"
+											class="text-center">
+											<strong>Consignor Bank Details</strong>
+										</th>
+									</tr>
+								</thead>
+								<br></br>
+								<tbody>
+									<tr align="left">
+										<td
+											style="border: 0px solid; padding:3px;border-right: 1px solid;">
+											<span t-field="o.consignee_id.name" />
+											<br />
+											<span t-field="o.consignee_id.street" />
+											<span t-field="o.consignee_id.street2" />
+											<span t-field="o.consignee_id.city_id.name" />
+											-
+											<span t-field="o.consignee_id.zip" />
+											,
+											<span t-field="o.consignee_id.state_id.name" />
+											<br />
+											(
+											<span t-field="o.consignee_id.country_id.name" />
+											)
+										</td>
+
+										<td align="left"
+											style="border: 0px solid; padding:3px;border-right: 1px solid;">
+											<span t-field="o.notify_id.name" />
+											<br />
+											<span t-field="o.notify_id.street" />
+											<span t-field="o.notify_id.street2" />
+											<span t-field="o.notify_id.city_id.name" />
+											-
+											<span t-field="o.notify_id.zip" />
+											,
+											<span t-field="o.notify_id.state_id.name" />
+											<br />
+											(
+											<span t-field="o.notify_id.country_id.name" />
+											)
+										</td>
+
+										<td align="left" style="border: 0px solid; padding:3px;">
+
+
+
+											<table width="100%">
+												<tr>
+													<td width="30%" style="padding:3px;">A/C Name</td>
+													<td width="5%" style="padding:3px;">:</td>
+													<td width="65%" style="padding:3px;">
+														<span t-if="o.company_id">
+															<span t-field="o.company_id.name" />
+														</span>
+													</td>
+												</tr>
+												<tr>
+													<td width="30%" style="padding:3px;">Bank Name</td>
+													<td width="5%" style="padding:3px;">:</td>
+													<td width="65%" style="padding:3px;">
+														<span t-if="o.company_id.bank_branch_id">
+															<span t-field="o.company_id.bank_branch_id.name" />
+														</span>
+													</td>
+												</tr>
+												<tr>
+													<td width="30%" style="padding:3px;">Account No</td>
+													<td width="5%" style="padding:3px;">:</td>
+													<td width="65%" style="padding:3px;">
+														<span
+															t-if="o.company_id.bank_account_id.bank_account_id.acc_number">
+															<span
+																t-field="o.company_id.bank_account_id.bank_account_id.acc_number" />
+														</span>
+													</td>
+												</tr>
+												<tr>
+													<td width="30%" style="padding:3px;">Swift Code</td>
+													<td width="5%" style="padding:3px;">:</td>
+													<td width="65%" style="padding:3px;">
+														<span t-if="o.company_id.swift_code">
+															<span t-field="o.company_id.swift_code" />
+														</span>
+														<span
+															t-elif="o.company_id.bank_account_id.swift_code">
+															<span
+																t-field="o.company_id.bank_account_id.swift_code" />
+														</span>
+													</td>
+												</tr>
+											</table>
+
+										</td>
+									</tr>
+								</tbody>
+							</table>
+
+							<table width="100%" border="0" cellspacing="0"
+								cellpadding="0"
+								t-attf-style="text-transform:capitalize; font-size:14px;
+								border: 1px solid ;">
+								<thead
+									t-attf-style="text-transform:capitalize; font-size:14px; border: 1px solid;">
+									<tr border="0" cellspacing="0" cellpadding="0" align="left"
+										t-attf-style="padding:5px 10px; border:1px solid; font-weight:bold;background-color:gainsboro;">
+
+
+										<th style="border-right: 1px solid;" width="33%"
+											class="text-center">
+											<strong>Payment Term</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="33%"
+											class="text-center">
+											<strong>Value</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="34%"
+											class="text-center">
+											<strong>ECGC Rate%</strong>
+										</th>
+
+
+									</tr>
+								</thead>
+								<br></br>
+								<tbody>
+									<tr align="left" t-foreach="o.payment_term_line" t-as="t">
+
+										<td
+											style="border: 0px solid; padding:3px;border-right: 1px solid;">
+											<span t-field="t.payment_id.name" />
+										</td>
+
+										<td align="right"
+											style="border: 0px solid; padding:3px;border-right: 1px solid;">
+											<span t-field="t.value" />
+										</td>
+
+										<td align="right" style="border: 0px solid; padding:3px;">
+											<span t-field="t.ecgc_rate" />
+										</td>
+
+
+									</tr>
+								</tbody>
+							</table>
+
+
+							<table width="100%" border="0" cellspacing="0"
+								cellpadding="0"
+								t-attf-style="text-transform:capitalize; font-size:14px;
+								border: 1px solid ;">
+								<thead
+									t-attf-style="text-transform:capitalize; font-size:14px; border: 1px solid;">
+									<tr border="0" cellspacing="0" cellpadding="0" align="left"
+										t-attf-style="padding:5px 10px; border:1px solid; font-weight:bold;background-color:gainsboro;">
+
+										<!-- <th style="border-right: 1px solid;" width="3%" class="text-center"> 
+											<strong>Sr.</strong> </th> -->
+
+										<th style="border-right: 1px solid;" width="33%"
+											class="text-center">
+											<strong>No and Kind of Packages</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="33%"
+											class="text-center">
+											<strong>Description Of Goods</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="12%"
+											class="text-center">
+											<strong>Quantity in MT</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="12%"
+											class="text-center">
+											<strong>
+												Rate USD
+												<br />
+												Per/MT
+											</strong>
+										</th>
+
+										<th style="border-right: 1px solid;" width="10%"
+											class="text-center">
+											<strong>Amount in US $</strong>
+										</th>
+
+
+										<!-- <th style="border-right: 1px solid;" width="17%" class="text-center"> 
+											<strong>Remarks</strong> </th> -->
+									</tr>
+								</thead>
+								<br></br>
+								<tbody>
+									<tr align="center" t-foreach="o.invoice_line_ids"
+										t-as="line">
+										<td style="border: 1px solid; padding:3px;">
+											<span t-field="line.bag_box_qty" />
+											Bags
+											<br />
+											Packing Type
+											:
+											<span t-field="line.packing_type.name" />
+										</td>
+										<td style="border: 1px solid; padding:3px;">
+											<span t-field="line.product_id.name" />
+										</td>
+										<td align="center" style="border: 1px solid; padding:3px;">
+
+
+											<span t-out="line.quantity/1000" />
+										</td>
+
+										<td align="center" style="border: 1px solid; padding:3px;">
+											<span
+												t-out="'{0:,.3f}'.format((line.price_unit*1000)/(o.cur_rate))" />
+										</td>
+
+										<td align="center" style="border: 1px solid; padding:3px;">
+											<span
+												t-out="'{0:,.3f}'.format((line.price_subtotal)/(o.cur_rate))" />
+										</td>
+									</tr>
+								</tbody>
+								<!-- <tr align="left">
+									<td style="border-bottom: 0px solid;border-left: 1px solid;">
+									</td>
+									<td style="border-bottom: 0px solid;" align="right">
+										<span>
+											<b>Tax : $</b>
+										</span>
+									</td>
+									<td style="border-bottom: 0px solid;" align="left">
+										<b>
+											<span
+												t-out="'{0:,.3f}'.format((o.amount_tax)/(o.cur_rate))" />
+										</b>
+									</td>
+									<td align="right"
+										style="border-bottom: 0px solid;font-size:18px;">
+										<span>
+											<b>Tax : $</b>
+										</span>
+									</td>
+									<td align="right"
+										style="border-bottom: 0px solid;font-size:18px;">
+										<b>
+											<span
+												t-out="'{0:,.3f}'.format((o.amount_tax)/(o.cur_rate))" />
+										</b>
+									</td>
+								</tr> -->
+								
+								
+								
+								<tr align="left">
+									<td style="border-bottom: 1px solid;border-left: 1px solid;">
+										<b>Container Size:2X40"REEFER </b>
+									</td>
+									<td style="border-bottom: 1px solid;" align="right">
+										<!-- <span>
+											<b>Tax : $</b>
+										</span> -->
+									</td>
+									<td style="border-bottom: 1px solid;" align="left">
+										<!-- <b>
+											<span
+												t-out="'{0:,.3f}'.format((o.amount_tax)/(o.cur_rate))" />
+										</b> -->
+									</td>
+									<td align="right"
+										style="border-bottom: 1px solid;font-size:18px;">
+										<span>
+											<b>Total : $</b>
+										</span>
+									</td>
+									<td align="right"
+										style="border-bottom: 1px solid;font-size:18px;">
+										<b>
+											<span
+												t-out="'{0:,.3f}'.format((o.amount_total)/(o.cur_rate))" />
+										</b>
+									</td>
+								</tr>
+
+							</table>
+							<h6>
+								<b>
+									Dollar in word :
+									<span t-out="o._get_amount_in_words_dollar()" />
+								</b>
+							</h6>
+
+							<table style="width:100%;border: 1px solid black">
+								<tr style="background-color:gainsboro;">
+									<th style="border:solid 1px black;">Condition</th>
+									<th style="border:solid 1px black;">Term And Conditions Option</th>
+								</tr>
+
+								<t t-foreach="o.export_acc_tc_set_line" t-as="t">
+									<tr>
+										<td style="border:solid 1px black; padding-left:10px;"
+											class="text-left">
+											<span t-field="t.term_and_condition_id.name" />
+
+										</td>
+										<td style="border:solid 1px black; padding-left:10px;"
+											class="text-left">
+											<span t-field="t.term_and_condition_option_id.name" />
+
+										</td>
+
+
+									</tr>
+								</t>
+							</table>
+
+<!-- 
+                            <table style="width:100%;border: 0px solid black">
+								<tr>
+									<td width="24.5" align="right">
+										<b>
+												For,
+												<span t-field="o.company_id.name" />
+										</b>
+										<br />
+										<br />
+										<b>
+											Authorised Signatory
+										</b>
+									</td>
+								</tr>
+							</table> -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+							<!-- <table width="100%" border="0" cellspacing="0" cellpadding="0" 
+								t-attf-style="text-transform:capitalize; font-size:14px; border: 1px solid 
+								;"> <thead t-attf-style="text-transform:capitalize; font-size:14px; border: 
+								1px solid;"> <tr border="0" cellspacing="0" cellpadding="0" align="left" 
+								t-attf-style="padding:5px 10px; border:1px solid; font-weight:bold;background-color:gainsboro;"> 
+								<th style="border-right: 0px solid;" width="50%" class="text-left"> <strong>Terms 
+								and Conditions</strong> </th> <th style="border-right: 1px solid;" width="50%" 
+								class="text-center"> </th> </tr> </thead> <tbody> <tr> <td style="border: 
+								0px solid; padding:3px;border-right: 1px solid;"> <u> <b>ADDITIONAL TERMS 
+								AND CONDITION</b> </u> <br /> <table width="100%"> <tr> <th></th> <th></th> 
+								<th></th> </tr> <tr t-foreach="o.account_tc_set_line" t-as="t"> <td> <span 
+								t-field="t.term_and_condition_id.name" /> </td> <td> </td> <td> <span t-field="t.term_and_condition_option_id.name" 
+								/> </td> </tr> </table> </td> <td align="left" style="border: 0px solid; 
+								padding:3px;border-right: 1px solid;"> <b> <u>FTP Declarations:</u> </b> 
+								<br /> <p style="text-align:left;font-size:10px;"> <b> A.("We intend to claim 
+								rewards under Merchandise Export From India Scheme" MEIS") <br /> B)Export 
+								Under Duty Draw Back <br /> C)Export Under EPCG License No:5030000884 DATED 
+								20.11.2018 </b> </p> <u> <b>Declaration:</b> </u> <p style="text-align:left;font-size:10px;"> 
+								<b> We declare that this Invoice shows the actual price of the goods described 
+								and that all particular are true and correct. </b> </p> </td> </tr> </tbody> 
+								</table> -->
+
+						</div>
+						<div class="oe_structure" />
+					</t>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

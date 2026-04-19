@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<!-- **********Export Product Category Tree view ********** -->
+		<record id="export_pro_categ_tree_view" model="ir.ui.view">
+			<field name="name">Export Product Category</field>
+			<field name="model">export.product.category</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="hs_code"/>
+				</list>
+			</field>
+		</record>
+		<!-- ********** Export Product Category form view ********** -->
+		<record id="export_pro_categ_form_view" model="ir.ui.view">
+			<field name="name">Export Product Category</field>
+			<field name="model">export.product.category</field>
+			<field name="arch" type="xml">
+				<form string="Export Product Category">
+					<sheet>
+						<group>
+							<group>
+								<field name="name" required="1"/>
+							</group>
+							<group>
+								<field name="hs_code"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		<!-- ********** Action Export Product Category ********** -->
+		<record id="action_export_pro_categ" model="ir.actions.act_window">
+			<field name="name">Commodity Type</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">export.product.category</field>
+			<field name="view_id" ref="verts_v15_freight_forward.export_pro_categ_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+	</data>
+</odoo>
+
+
+

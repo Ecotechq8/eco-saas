@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+    <t t-name="verts_v15_print_template.FieldColor" owl="1">
+        <span class="oe_form_field o_field_widget" t-att-class="{ 'o_readonly': isReadonly }">
+            <t t-if="!isReadonly">
+                <input
+                    t-ref="colorInput"
+                    type="color"
+                    class="form-control"
+                    t-att-value="state.colorValue"
+                    t-on-input="onColorInput"
+                    style="width: 80px; height: 30px; cursor: pointer;"
+                />
+            </t>
+            <t t-if="isReadonly">
+                <div 
+                    t-att-style="'background-color: ' + state.colorValue + '; width: 80px; height: 30px; border: 1px solid #ccc;'" 
+                    class="o_readonly_color"/>
+                <span class="ms-2" t-out="state.colorValue"/>
+            </t>
+        </span>
+    </t>
+</templates>

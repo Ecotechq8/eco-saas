@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="report_invoice_document_ff_invoice">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="header">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0"
+                           t-attf-style="margin:0; font-family: Arial,Helvetica, sans-serif; background:#fff;"
+                           class="my-0 table table-sm table-borderless">
+                        <tbody>
+                            <tr>
+                                <td valign="top" width="33%" align="left"
+                                    style="color:#4D4D4F; font-size:12px; padding:
+												0 0 0px 0; line-height:16px; padding-top:16px;">
+                                    <img t-if="o.company_id.logo"
+                                         t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+                                         style="max-height: 80px;"/>
+                                </td>
+                                <td style="width: 33%; height: 49px; font-size: 50px;" align="center">
+
+                                </td>
+                                <td style="width: 33%; height: 49px;">
+                                    <strong>
+                                        Bobyan Complex, Office #31,
+                                        <br/>
+                                        Ground Floor, Dajeej – Farwaniya.
+                                        <br/>
+                                        P.O.Box 21575 Safat 13076, Kuwait
+                                        <br/>
+                                        Tel : +965-22020345 / 22020346
+                                    </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <t t-call="web.internal_layout">
+                    <h1 style="text-align: center;">
+                        <b>Invoice</b>
+                    </h1>
+
+                    <table style="width: 100%; border: 1px solid #000; font-size: 11px; border-collapse: collapse;">
+                        <tr>
+                            <!-- LEFT BOX -->
+                            <td style="width: 50%; vertical-align: top; border-right: 1px solid #000; padding: 4px;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Customer</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.partner_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.partner_id.street"/>
+                                            <span t-out="o.partner_id.street2"/>
+                                            <span t-out="o.partner_id.city"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.partner_id.state_id.name"/>
+                                            <span t-out="o.partner_id.country_id.name"/>
+                                            <span t-out="o.partner_id.zip"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Shipper</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.consignor_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Consignee</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.consignee_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Port of Origin</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.port_of_loading_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Final Destination</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.port_of_discharge_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <t t-if="o.mode == 'air'">
+                                        <tr>
+                                            <td style="padding: 2px;">
+                                                <strong>Carrier</strong>
+                                            </td>
+                                            <td style="padding: 2px;">:
+                                                <span t-out="o.shipping_line.name"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 2px;">
+                                                <strong>Flight #/Date</strong>
+                                            </td>
+                                            <td style="padding: 2px;">:
+                                                <span t-out="o.flight_number_1"/>/
+                                                <t t-if="o.flight_date_1"
+                                                   t-out="o.flight_date_1.strftime('%d/%m/%Y')"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Cust. P/O No</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.customer_po_ref"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Shipper Ref. No</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.ref_num"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>ETD</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <t t-if="o.estimated_time_departure"
+                                               t-out="o.estimated_time_departure.strftime('%d/%m/%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>ETA</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <t t-if="o.eta_port_of_destination"
+                                               t-out="o.eta_port_of_destination.strftime('%d/%m/%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Note</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-field="o.remarks"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+
+                            <!-- RIGHT BOX -->
+                            <td style="width: 50%; vertical-align: top; padding: 4px;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Invoice Number</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Date</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <t t-if="o.invoice_date" t-out="o.invoice_date.strftime('%d/%m/%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Payment due date</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <t t-if="o.invoice_date_due"
+                                               t-out="o.invoice_date_due.strftime('%d/%m/%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Job Number</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.cargo_id.name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Job Date</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <t t-if="o.date_order" t-out="o.date_order.strftime('%d/%m/%Y')"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Master Number</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <t t-if="o.mode == 'air'">
+                                                <span t-out="o.mawb.awb_no"/>
+                                            </t>
+                                            <t t-elif="o.mode != 'air'">
+                                                <span t-out="o.bill_of_lading_no"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>House Number</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.hawb"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Number of Packs</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-out="o.total_pieces"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Gross Weight (kgs)</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-field="o.total_gross_weight"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 2px;">
+                                            <strong>Chargeable Weight (kgs)</strong>
+                                        </td>
+                                        <td style="padding: 2px;">:
+                                            <span t-field="o.total_chargeable_weight"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- Invoice Table -->
+                    <table class="table"
+                           style="width: 100%; border: 1px solid #000; margin-top: 15px; font-size: 11px; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #eee; text-align: center;">
+                                <th style="border: 1px solid #000;">No</th>
+                                <th style="border: 1px solid #000;">Description</th>
+                                <th style="border: 1px solid #000;">Currency</th>
+                                <th style="border: 1px solid #000;">Per Unit</th>
+                                <th style="border: 1px solid #000;">Unit</th>
+                                <th style="border: 1px solid #000;">Curr. Amount</th>
+                                <th style="border: 1px solid #000;">ROE</th>
+                                <th style="border: 1px solid #000;">Amt in KWD</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="counter" t-value="1"/>
+                            <t t-foreach="o.invoice_line_ids" t-as="line">
+                                <tr>
+                                    <td style="border: 1px solid #000; text-align: center;">
+                                        <span t-out="counter"/>
+                                    </td>
+                                    <td style="border: 1px solid #000;">
+                                        <span t-out="line.name"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: center;">
+                                        <span t-out="line.currency_id.name"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: right;">
+                                        <span t-field="line.price_unit"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: right;">
+                                        <span t-out="line.quantity"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: right;">
+                                        <span t-field="line.price_total"/>
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: right;">
+                                        <t t-if="line.debit">
+                                            <span t-out="'{:.12g}'.format(line.debit / line.price_total) if line.price_total else 0"/>
+                                        </t>
+                                        <t t-if="line.credit">
+                                            <span t-out="'{:.12g}'.format(line.credit / line.price_total) if line.price_total else 0"/>
+                                        </t>
+                                    </td>
+                                    <td style="border: 1px solid #000; text-align: right;">
+                                        <t t-if="line.debit" t-out="line.debit"
+                                           t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
+                                        <t t-if="line.credit" t-out="line.credit"
+                                           t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
+                                    </td>
+                                </tr>
+                                <t t-set="counter" t-value="counter + 1"/>
+                            </t>
+                        </tbody>
+                    </table>
+
+                    <div style="margin-top: 10px; border-top: 1px solid #000; padding-top: 10px;">
+                        <p style="font-weight: bold; text-align: right;">Total :
+                            <span t-field="o.amount_total_signed"/>
+                        </p>
+                        <p style="text-align: left;">
+                            <strong>
+                                <span t-out="o.company_currency_id.amount_to_text(o.amount_total_signed)"/>
+                            </strong>
+                        </p>
+
+                        <!-- Two-column layout: Additional Remarks on left, Summary table on right -->
+                        <div style="width: 100%; display: table; margin-top: 10px;">
+                            <!-- Left column: Additional Remarks -->
+                            <div style="display: table-cell; width: 60%; vertical-align: top; padding-right: 20px;">
+                                <p style="border-top: 1px solid #000; padding-top: 10px;">
+                                    <strong>Additional Remarks :</strong>
+                                    <span t-field="o.narration"/>
+                                </p>
+                            </div>
+
+                            <!-- Right column: Summary table, shown only if paid_amount is not zero or None -->
+                            <t t-set="pmt_content"
+                               t-value="(o.invoice_payments_widget and o.invoice_payments_widget != 'false' and json.loads(o.invoice_payments_widget).get('content')) or []"/>
+                            <t t-set="last_pmt" t-value="pmt_content and pmt_content[-1] or False"/>
+                            <t t-set="paid_amount" t-value="o.amount_total - o.amount_residual"/>
+
+                            <t t-if="paid_amount">  <!-- Condition to show table only if paid_amount is not zero or None -->
+                                <div style="display: table-cell; width: 40%; vertical-align: top;">
+                                    <table style="width:100%; border:1px solid #000; border-collapse:collapse; font-size:11px;">
+                                        <!-- Row 1: Total -->
+                                        <tr style="background:#b79a90;">
+                                            <td style="padding:4px; font-weight:bold; border:1px solid #000;">Total</td>
+                                            <td style="padding:4px; text-align:right; border:1px solid #000;">
+                                                <span t-field="o.amount_total"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Row 2: Paid on DATE | amount -->
+                                        <tr>
+                                            <td style="padding:4px; border:1px solid #000;">
+                                                <t t-if="last_pmt">
+                                                    Paid on
+                                                    <t t-set="pdt" t-value="last_pmt.get('date')"/>
+                                                    <t t-if="pdt and '-' in pdt"
+                                                       t-out="datetime.datetime.strptime(pdt, '%Y-%m-%d').strftime('%d/%m/%Y')"/>
+                                                    <t t-elif="pdt" t-out="pdt"/>
+                                                </t>
+                                                <t t-if="not last_pmt">Paid</t>
+                                            </td>
+                                            <td style="padding:4px; text-align:right; border:1px solid #000;">
+                                                <span t-out="paid_amount"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Row 3: Amount Due -->
+                                        <tr style="background:#111; color:#fff;">
+                                            <td style="padding:4px; font-weight:bold; border:1px solid #000;">Amount Due
+                                            </td>
+                                            <td style="padding:4px; text-align:right; border:1px solid #000;">
+                                                <span t-field="o.amount_residual"
+                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </t>
+                        </div>
+                    </div>
+
+                    <div style="margin-top:30px; width:100%; font-size:12px; display:table;">
+                        <!-- Left: Terms -->
+                        <div style="display:table-cell; width:60%; vertical-align:top;">
+                            <strong>Terms:</strong>
+                            <ul style="padding-left: 15px;">
+                                <li>Cheques should be issued in favor of Bahman International Cargo</li>
+                                <li>Any discrepancy should be notified to us in writing within 7 days from the
+                                    invoice date.
+                                </li>
+                                <li>If no comments are received within 7 days from receipt of this invoice, the
+                                    same shall be considered as approved.
+                                </li>
+                            </ul>
+                            <p style="margin-top: 10px;">E.&amp;O.E</p>
+                            <p style="font-size:11px;">This is a computer-generated document and does not
+                                require a signature or stamp.
+                            </p>
+                        </div>
+
+                        <!-- Right: Bank Details -->
+                        <t t-if="o.partner_bank_id">
+                            <div style="display:table-cell; width:35%; padding-left: 20px; vertical-align:top;">
+                                <li>All payments via Bank Transfer, please remit to the following Bank Account
+                                    details:
+                                </li>
+                                <div style="border: 1px solid #000; padding: 10px; border-radius: 10px;">
+                                    <strong>Bank Details</strong>
+                                    <br/>
+                                    <t t-if="o.partner_bank_id">
+                                        A/C Name:
+                                        <t t-out="o.partner_bank_id.acc_holder_name"/>
+                                        <br/>
+                                        Bank Name:
+                                        <t t-out="o.partner_bank_id.bank_id.name"/>
+                                        <br/>
+                                        A/C No:
+                                        <t t-out="o.partner_bank_id.acc_number"/>
+                                        <br/>
+                                        IBAN No:
+                                        <t t-out="o.partner_bank_id.bank_id.iban"/>
+                                        <br/>
+                                        Swift Code:
+                                        <t t-out="o.partner_bank_id.bank_id.swift_code"/>
+                                        <br/>
+                                    </t>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+
+                    <div class="footer">
+                        <div class="text-center">
+                            <table class="my-0 table table-sm table-borderless">
+                                <tr width="100%">
+                                    <td align="center">
+                                    </td>
+                                </tr>
+                                <tr width="100%">
+                                    <td align="right">
+                                        Page
+                                        <span class="page"/>
+                                        /
+                                        <span class="topage"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+    <record id="ff_invoice_action" model="ir.actions.report">
+        <field name="name">FF Invoice</field>
+        <field name="model">account.move</field>
+        <field name="report_name">verts_v15_freight_forward.report_invoice_document_ff_invoice</field>
+        <field name="report_file">verts_v15_freight_forward.report_invoice_document_ff_invoice</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="binding_model_id" ref="verts_v15_freight_forward.model_account_move"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

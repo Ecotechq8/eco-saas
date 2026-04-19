@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<record id="view_country_form_iherit" model="ir.ui.view">
+			<field name="name">res.country.form</field>
+			<field name="model">res.country</field>
+			<field name="inherit_id"
+				ref="verts_v15_basic_masters.view_country_form_iherit_basic" />
+			<field name="arch" type="xml">
+				<field name='code' position="after">
+					<field name='ecgc_rating' readonly="1" force_save="1"
+						invisible="1" />
+					<field name='ecgc_rating_id' readonly="1" force_save="1" />
+				</field>
+				<xpath expr="//notebook" position="inside">
+					<page name="Export Expenses" string="Export Expenses">
+
+						<group string="Import Export Expence">
+							<group>
+								<field name="load_export_expense_values" />
+							</group>
+							<group>
+								<button name="upload_export_expense" string="Import"
+									type="object" class="oe_highlight" />
+							</group>
+						</group>
+
+						<field name="country_export_expense_line"
+							>
+							<list editable="bottom">
+								<field name='expense_id' options='{"no_create": true}'
+									domain="[('is_export_expense','=',True)]" />
+								<field name='price' />
+<!--								<field name='currency' />-->
+							</list>
+						</field>
+					</page>
+					<page name="Export Documents" string="Export Documents">
+
+						<group string="Import Export Document">
+							<group>
+								<field name="load_export_doc_values" />
+							</group>
+							<group>
+								<button name="upload_export_doc" string="Import"
+									type="object" class="oe_highlight" />
+							</group>
+						</group>
+<!--						<field name="country_export_document_line"-->
+<!--							>-->
+<!--							<list editable="bottom">-->
+<!--								<field name='export_document_id' />-->
+<!--								<field name='copies' />-->
+<!--							</list>-->
+<!--						</field>-->
+					</page>
+					<page name="fumigation_master" string="Fumigation Master">
+					
+					<group string="Import Fumigation Master">
+							<group>
+								<field name="load_fumigation_values" />
+							</group>
+							<group>
+								<button name="upload_fumigation" string="Import"
+									type="object" class="oe_highlight" />
+							</group>
+						</group>
+						<field name="fumigation_lines" >
+							<list editable="bottom">
+								<field name="container_type_id" />
+								<field name="alp_dosage" />
+								<field name="alp_hours" />
+								<field name="alp_price" />
+								<field name="alp_charges_id" options='{"no_create": true}' />
+								<field name="mbr_filled_dosage" />
+								<field name="mbr_filled_hours" />
+								<field name="mbr_filled_price" />
+								<field name="mbr_filled_id" options='{"no_create": true}' />
+								<field name="mbr_empty_dosage" />
+								<field name="mbr_empty_hours" />
+								<field name="mbr_empty_price" />
+								<field name="mbr_empty_charges_id"
+									options='{"no_create": true}' />
+							</list>
+						</field>
+					</page>
+					<page name="schedule_lines" string="Schedule">
+					    <group string="Import Schedule">
+<!--							<group>-->
+<!--								<field name="load_schedule_values" />-->
+<!--							</group>-->
+<!--							<group>-->
+<!--								<button name="upload_schedule" string="Import"-->
+<!--									type="object" class="oe_highlight" />-->
+<!--							</group>-->
+						</group>
+<!--						<field name="schedule_lines" >-->
+<!--							<list editable="bottom">-->
+<!--								<field name="schedule_id" required="1" />-->
+<!--								<field name="report_at_time" />-->
+<!--								<field name="req_from" />-->
+<!--								<field name="country_specific" no_label="1"-->
+<!--									class="oe_inline" />-->
+<!--								<field name="port_of_loading_specific" no_label="1"-->
+<!--									class="oe_inline" />-->
+<!--							</list>-->
+<!--						</field>-->
+					</page>
+				</xpath>
+
+
+				<xpath expr="//notebook/page/field[@name='state_ids']"
+					position="before">
+
+
+					<group string="Import State">
+						<group>
+							<field name="load_state_values" />
+						</group>
+						<group>
+							<button name="upload_state" string="Import" type="object"
+								class="oe_highlight" />
+						</group>
+
+					</group>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

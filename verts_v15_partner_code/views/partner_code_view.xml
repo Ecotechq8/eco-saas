@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<odoo>
+	<data>
+		<!-- Partner Form View Inherit -->
+		<record id="verts_view_partner_form_inherit_code" model="ir.ui.view">
+			<field name="name">res.partner.form.inherit</field>
+			<field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form" />
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet/group/group/div[@class='o_address_format']" position="after">
+						<field name="partner_code_id" />
+					</xpath>
+			</field>
+		</record>
+
+		<!-- Project Form View Inherit From Project -->
+		<record id="verts_project_inherit" model="ir.ui.view">
+			<field name="name">verts.project.project.form.inherit</field>
+			<field name="model">project.project</field>
+			<field name="inherit_id" ref="project.edit_project" />
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="before">
+					<group colspan="4" col="4">
+						<group>
+							<field name="partner_code_id" widget="selection" readonly="1"/>
+						</group>
+					</group>
+				</xpath>
+			</field>
+		</record>
+
+	</data>
+</odoo>
+

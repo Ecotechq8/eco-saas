@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="cargo_order_tree_view" model="ir.ui.view">
+			<field name="name">Cargo Orders</field>
+			<field name="model">cargo.order</field>
+			<field name="arch" type="xml">
+				<list>
+					<field name="name" />
+					<field name="desc" />
+				</list>
+			</field>
+		</record>
+
+		<record id="cargo_order_form_view" model="ir.ui.view">
+			<field name="name">Cargo Order</field>
+			<field name="model">cargo.order</field>
+			<field name="arch" type="xml">
+				<form string="cargo.order">
+					<sheet>
+						<group>
+                                <field name="partner_id" widget="res_partner_many2one"
+									   options='{"always_reload": true, "no_create": true, "no_open": true}' />
+								<field name="country_id" invisible="1" />
+								<field name="export" invisible="1" />
+								<field name="partner_invoice_id"
+									groups="sale.group_delivery_invoice_address"
+									context="{'default_type':'invoice'}"
+									options='{"always_reload": true, "no_open": true}' invisible="1"/>
+								<field name="consignee_id"
+									   options="{'no_create': True, 'no_open': True}"
+									   required="1"/>
+							    <field name="notify_id"
+									   options="{'no_create': True, 'no_open': True}"
+									   required="1"/>
+								<group string="Port Details">
+								    <field name='stuffing_point_id'
+									    domain="[('is_stuffing_point','=',True)]" required="1"
+									    options='{"no_create": true, "no_open": true}' />
+								    <field name='port_of_loading_id'
+									    options='{"no_create": true, "no_open": true}'
+									    domain="[('port_load_bool','=',True)]" required="1" />
+								    <field name='port_of_discharge_id'
+									    options='{"no_create": true, "no_open": true}'
+									    domain="[('port_discharge_bool','=',True), ('country_id','=',country_id)]"
+									    required="1" />
+								    <field name='dry_port_id'
+								    	options='{"no_create": true, "no_open": true}' invisible="1" />
+								    <field name='export_import'/>
+								    <field name='commodity'/>
+								    <field name='shipment_by'/>
+								    <field name='shipping_line'/>
+								    <field name='vessel'/>
+								    <field name='voyage'/>
+								    <field name='shipping_order_no'/>
+								    <field name='carrier_booking_no'/>
+								    <field name='eta_pol'/>
+								    <field name='cutoff_time'/>
+								    <field name='eta_departure'/>
+								    <field name='eta_destination'/>
+								    <field name='est_transit_days'/>
+								    <field name='bill_lading_type'/>
+								    <field name='term_of_shipment_id' options="{'no_create': True, 'no_open': True}" required="1"/>
+							    </group>
+							    <group string="Required Services">
+								    <field name='freight_forwarding_reqd'/>
+								    <field name='pre_cargo_carriage_reqd'/>
+								    <field name='custom_clearance_reqd'/>
+								    <field name='reefer_dry'/>
+								    <field name='genset_reqd'/>
+							    </group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_cargo_order" model="ir.actions.act_window">
+			<field name="name">Cargo Order</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">cargo.order</field>
+			<field name="view_id" ref="verts_v15_freight_forward.cargo_order_tree_view" />
+			<field name="view_mode">list,form</field>
+		</record>
+
+	</data>
+</odoo>

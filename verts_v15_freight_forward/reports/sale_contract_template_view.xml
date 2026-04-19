@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sale_contact_report">
+            <div class="header">
+			     <table style="width:100%">
+						<tr>
+							<td
+							style="padding-top:0px; font-size:14px ;text-align:left;font-family:verdana;width:70%"
+							rowspan="2">
+							<h2 style="text-transform:capitalize; font-size :18px; padding:0px; margin:0;">
+								<b>
+									<span t-attf-style="color:1px solid black;" t-field="o.company_id.name" />
+									<br />
+								</b>
+							</h2>
+								<span t-field="o.company_id.street" /><br/>
+								<span t-field="o.company_id.street2" /><br/>
+								<span t-field="o.company_id.city" />,
+								<span t-field="o.company_id.state_id.name" />,
+								<span t-field="o.company_id.zip" /><br/>
+								<span t-field="o.company_id.country_id.name" /><br/>
+								<span t-field="o.company_id.email" /><br/>
+								<span t-field="o.company_id.website" />
+							</td>
+							<td style="padding-top:15px; font-size:14px ;text-align:right;font-family:verdana;width:30%"
+								rowspan="2">
+								<img t-if="o.company_id.logo" t-attf-src="data:image/*;base64,{{o.company_id.logo}}" style="max-height: 80px;" /><br />
+							</td>
+						</tr>
+					</table>
+                    <hr />
+            </div>
+            <t t-call="web.html_container">
+                    <table style="width:100%; border: 1px solid black;">
+                        <tr>
+                            <td><text > <center><u><b>SALES CONTRACT</b></u></center></text></td>
+                        </tr>
+                         <table border="1" style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                            <tr>
+                                <td rowspan="7" width="43%" style="padding: 5px;text-align: left;"><p><u>
+                                    SELLER:</u><br/>
+                                <span t-field="o.company_id.name"></span><br/>
+                                <span t-field="o.company_id.city" /><br/>
+                                <span t-field="o.company_id.zip" />,<span t-field="o.company_id.state_id.name" />(<span t-field="o.company_id.country_id.name" />)<br/>
+                                Phone&#160;:&#160;<span t-field="o.company_id.phone" /><br/>
+                                GSTIN NO&#160;:&#160;<span t-field="o.company_id.vat" /><br/>
+                                USFDA REG. NO.<br/>
+                                CONSIGNEE:<br/>
+                               <span t-field="o.partner_id.name"/>
+                                <br/>
+                                </p></td>
+                                <td style="padding: 5px;text-align: left;"><p><u>Proforma Invoice Number-<strong><span t-field="o.name"></span>,&#160;Dated&#160;:<span t-out="o.cal_date_order()"></span></strong></u><br></br><b><u>Party:</u></b><br/><span t-field="o.partner_id.name"/></p></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;text-align: left;">
+                                    <u>Consigner Bank Details</u>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;text-align: left;">Account Name</td>
+                                <td style="padding: 5px;text-align: left;"><span t-field="o.company_id.name" /></td>
+                            </tr>
+                             <tr>
+                                <td style="padding: 5px;text-align: left;">Bank </td>
+                                <td style="padding: 5px;text-align: left;"><span t-field="o.company_id.bank_id.name" /></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;text-align: left;">Branch </td>
+                                <td style="padding: 5px;text-align: left;"><span t-field="o.company_id.bank_branch_id.name" /></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;text-align: left;">Account No </td>
+                                <td style="padding: 5px;text-align: left;"><span t-field="o.company_id.bank_account_id.name" /></td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 5px;text-align: left;">Swift Code </td>
+                                <td style="padding: 5px;text-align: left;"><span t-field="o.company_id.swift_code" /></td>
+                            </tr>
+                       </table>
+                    <table border="1" style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                            <tr>
+                                <th width="5%" style="padding: 5px;text-align: left;">Sr.No</th>
+                                <th width="30%" style="padding: 5px;text-align: left;">ITEMS DESCRIPTION</th>
+                                <th width="15%" style="padding: 5px;text-align: left;">QUANTITY</th>
+                                <th width="20%" style="padding: 5px;text-align: left;">PACKING</th>
+                                <th width="10%" style="padding: 5px;text-align: left;">PRICE(USD/MT)</th>
+                                <th width="20%" style="padding: 5px;text-align: left;">TOTAL PRICE</th>
+                            </tr>
+                            <t t-foreach="o.order_line" t-as="line">
+                              <tr>
+                                  <td style="border:1px solid;padding: 5px;text-align: left;" width="5%">
+                                      <span t-out="line_index+1"/>
+                                  </td>
+                                  <td style="border:1px solid;padding: 5px;text-align: left;" width="30%">
+                                        <span t-out="line.product_id.name"/>
+                                  </td>
+                                  <td  style="border:1px solid;padding: 5px;text-align: right;" class="text-center"  width="15%">
+                                        <span t-field="line.product_uom_qty"/>
+                                  </td>
+        <!--                              <td width="10%"></td>-->
+                                  <td  style="border:1px solid;padding: 5px;text-align: left;" class="text-center"  width="20%">
+                                        <span t-field="line.packing_type.name"/>
+                                  </td>
+                                  <td  style="border:1px solid;padding: 5px;text-align: right;" class="text-center"  width="10%">
+                                        <span t-field="line.price_unit"/>
+                                  </td>
+                                  <td  style="border:1px solid;padding: 5px;text-align: right;" class="text-center"  width="20%">
+                                        <span t-field="line.price_subtotal"/>
+                                  </td>
+                              </tr>
+                            </t>
+                    </table>
+
+                    <tr>
+                       <table border="1" style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                    <tr>
+                    <td rowspan="3" style="padding: 5px;text-align: left;"><p><u>TERMS OF SHIPMENT-</u><span t-field="o.term_of_shipment_id"/></p>
+                    </td>
+                    <td style="border:1px solid;padding: 5px;text-align: right;">TOTAL QUANTITY-<span t-out="o.calculate_total_quantity()"/></td>
+                    <td>TOTAL CONTRACT VALUE(USD) </td>
+                    <td style="padding: 5px;text-align: right;"><span t-field="o.amount_total"/></td>
+                    </tr>
+                    <tr>
+                    <td><u>AMOUNT IN WORDS&#160;:</u><span t-out="o.convert_amount_in_word()"/></td>
+                    </tr>
+                    </table>
+                  </tr>
+                  <table border="1" style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                        <tr>
+                            <th width="33.33%" style="padding: 5px;text-align: left;">Container type</th>
+                            <th width="33.33%" style="padding: 5px;text-align: center;">Capacity</th>
+                            <th width="33.33%" style="padding: 5px;text-align: center;">Quantity</th>
+                        </tr>
+                        <t t-foreach="o.container_detail_line" t-as="line">
+                          <tr>
+                              <td>
+                                  <span t-out="line.container_type_id.name"/>
+                              </td>
+                              <td style="border:1px solid;padding: 5px;text-align: right;">
+                                  <span t-out="line.capacity_in_mt"/>
+                              </td>
+                              <td style="border:1px solid;padding: 5px;text-align: right;">
+                                  <span t-out="line.container_qty"/>
+                              </td>
+                          </tr>
+                        </t>
+                    </table>
+                  <table  style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                    <thead>
+                    <tr>
+                        <th width="100%" style="padding: 5px;text-align: left;">PAYMENT TERM</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr t-foreach="o.payment_term_line" t-as="line">
+                            <td>
+                                <span t-out="line_index+1"/>.
+                                <span t-out="line.payment_id.name"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                  </table>
+                  <table  style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                        <thead>
+                        <tr>
+                            <th width="100%" style="padding: 5px;text-align: left;">
+                                <u>DOCUMENT</u><br/>
+                            </th>
+                        </tr>
+                        </thead>
+                            <tbody>
+                                 <tr t-foreach="o.sale_export_document_line" t-as="line">
+                                      <td style="border:0px solid;padding:7px;">
+                                            <span t-out="line_index+1"/>.
+                                            <span t-field="line.export_document_id.name"/>
+                                      </td>
+                                 </tr>
+                            </tbody>
+                  </table>
+
+                  <table style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                        <thead>
+                        <tr>
+                            <th width="100%"  style="padding: 5px;text-align: left;">
+                                <u>SPECIFICATION</u><br/>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                         <tr t-foreach="o.qc_pro_specification_line" t-as="line">
+                              <td style="border:1px solid;padding:7px;">
+                                  <span t-out="line_index+1"/>.
+                                  <span t-field="line.product_id.name"/>
+                              </td>
+                         </tr>
+                        </tbody>
+                  </table>
+
+                  <div id="total1" class="row" name="total1" style="page-break-inside: avoid;">
+
+                      <table style=" width=100%; border: 1px solid black;border-collapse: collapse;">
+                        <tr>
+                            <td style="padding: 5px;text-align: left;"><u>OTHER TERMS</u></td>
+                            <td></td>
+                        </tr>
+                         <tr>
+                             <td style="padding: 5px;text-align: left;"><p>ALL IMPORT DUTIES,TAX,LICENCE ETC, PRESENT OR FUTURE TO BE ON BUYERS ACCOUNT  RISK</p></td>
+                             <td></td>
+                        </tr>
+                        <br/>
+                        <tr>
+                            <td><table style="width:50%; border: 1px solid black;border-collapse: collapse;">
+                               <tr align="center"><td><p>WE CONFIRM<br></br>SELLER'S SIGNATURE WITH COMPANY STAMP<br></br><span t-field="o.partner_id.name"/></p></td></tr>
+                        </table></td>
+                            <td><table style="width:100%; border: 1px solid black;border-collapse: collapse;">
+                                <tr align="center"><td><p>WE CONFIRM<br></br>BUYER'S SIGNATURE WITH COMPANY STAMP<br></br><span t-field="o.partner_id.name"/></p></td></tr>
+                            </table></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;text-align: left;"><span t-field="o.company_id.street"/>,<span t-field="o.company_id.street2"/>,<span t-field="o.company_id.city"/>,<span t-field="o.company_id.state_id"/>,<span t-field="o.company_id.zip"/></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 5px;text-align: left;">EMAIL-&#160;<span t-field="o.company_id.email"/></td>
+                            <td style="padding: 5px;text-align: left;">WEBSITE-&#160;<span t-field="o.company_id.website"/></td>
+                        </tr>
+                    </table>
+                  </div>
+
+            </table>
+        </t>
+        </template>
+
+        <template id="report_of_sale_contract">
+			<t t-call="web.html_container">
+			  <t t-foreach="docs" t-as="o">
+			   <t t-call="verts_v15_freight_forward.sale_contact_report"/>
+			  </t>
+			</t>
+	   </template>
+    </data>
+</odoo>

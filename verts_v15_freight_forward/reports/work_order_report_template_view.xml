@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<template id="export_work_order_report">
+			<table width="100%">
+				<tr>
+					<td rowspan="4" align="left"  width="70%" style="border:1px solid;padding:7px;">
+						<img t-if="o.company_id.logo"
+									t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+									style="max-height: 45px;padding-bottom: 10px;" width="20%" align="right" />
+
+									<u>Consigner</u>
+									:<br/>
+									<b>
+									<h3><span t-field="o.company_id.name" /></h3>
+								    </b>
+									<span t-field="o.company_id.street" />
+									<span t-field="o.company_id.city" />
+									<span t-field="o.company_id.state_id.name" />
+									<span t-field="o.company_id.zip" />
+									<span t-field="o.company_id.country_id.name" />
+								<br/>
+									Phone:&#160;&#160;
+									<span t-field="o.company_id.phone" />
+								<br/>
+									<span t-if="o.company_id.country_id.code=='IN'"> GSTIN:&#160;&#160;</span>
+									<span t-if="o.company_id.country_id.code!='IN'">TAX/VAT No:&#160;&#160;</span>
+									<span t-field="o.company_id.vat" />
+							</td>
+							<td width="17%" style="border:1px solid;padding:7px;">Date</td>
+							<td width="13%" style="border:1px solid;padding:7px;"><span t-out="o.cal_date_order()"/></td>
+						</tr>
+						<tr>
+							<td width="17%" style="border:1px solid;padding:7px;">Work Order No.</td>
+							<td width="13%" style="border:1px solid;padding:7px;"><span t-field="o.name"/></td>
+						</tr>
+						<tr>
+							<td width="17%" style="border:1px solid;padding:7px;">Port of Loading</td>
+							<td width="13%" style="border:1px solid;padding:7px;"><span t-field="o.port_of_loading_id.name"/></td>
+						</tr>
+						<tr>
+							<td width="17%" style="border:1px solid;padding:7px;">Port of Discharge</td>
+							<td width="13%" style="border:1px solid;padding:7px;"><span t-field="o.port_of_discharge_id.name"/></td>
+						</tr>
+						<tr>
+							<td rowspan="3" style="border:1px solid;padding:7px;">
+								<p align="left">
+									<b>
+										<u>Marka</u>
+									</b>
+								</p>
+							</td>
+						</tr>
+						   <tr>
+							<td width="17%" style="border:1px solid;padding:7px;">Production Date</td>
+							<td width="13%" style="border:1px solid;padding:7px;"></td>
+						   </tr>
+						<tr>
+							<td width="17%" style="border:1px solid;padding:7px;">DO Date</td>
+							<td width="13" style="border:1px solid;padding:7px;"></td>
+						</tr>
+
+			</table>
+			<h1 align="center">WORK ORDER</h1>
+			<p align="left">R/Sir,</p>
+			<p align="left">We &#160;&#160;confirm &#160;&#160;hereby&#160;&#160; following&#160;&#160; transaction&#160;&#160; concluded &#160;&#160;on&#160;&#160;
+				behalf&#160;&#160; for&#160;&#160; our&#160;&#160; account&#160;&#160; and&#160;&#160; the &#160;&#160;risk&#160;&#160; of&#160;&#160;the&#160;&#160;
+				mentioned&#160;&#160; buyer&#160;&#160; as&#160;&#160; per&#160;&#160; given&#160;&#160; termshere&#160;&#160; under .
+			</p>
+			<table style="width:100%;">
+				  <tr>
+					  <td style="border:1px solid;padding:7px;" align="center"><b>Container Type</b></td>
+					  <td style="border:1px solid;padding:7px;" align="center"><b>Capacity</b></td>
+					  <td style="border:1px solid;padding:7px;" align="center"><b>Container Quantity</b></td>
+				  </tr>
+				  <t t-foreach="o.container_detail_line" t-as="line">
+					  <tr >
+							<td  style="border:1px solid;padding:7px;" width="33%" align="center">
+								<span t-field="line.container_type_id"/>
+
+							</td>
+								<td style="border:1px solid;padding:7px;" width="33%" align="center">
+								<span t-field="line.capacity_in_mt"/>
+
+							</td>
+								<td  style="border:1px solid;padding:7px;" class="text-center"  width="32%" align="center">
+								<span t-field="line.container_qty"/>
+							</td>
+					  </tr>
+				  </t>
+			</table>
+			<br/>
+			<table width="100%">
+				<tr>
+					<td width="60%" style="border:1px solid;padding:7px;"><b>Description Of Good</b></td>
+					<td width="20%" style="border:1px solid;padding:7px;"><b>Parameter</b></td>
+					<td width="20%" style="border:1px solid;padding:7px;"><b>Type</b></td>
+				</tr>
+				<t t-foreach="o.order_line" t-as="line">
+				<t t-foreach="o.qc_pro_specification_line" t-as="para">
+					<t t-if="line.product_id==para.product_id">
+					 <tr>
+						 <t t-if="variable ==line.product_id">
+							 <td style="border:1px solid;padding:7px;">
+							 </td>
+						 </t>
+						 <t t-if="variable !=line.product_id">
+							 <td style="border:1px solid;padding:7px;">
+								 <span t-field="para.product_id.complete_product_name"/><br></br>
+								 Quantity: <span t-field="line.product_uom_qty"/><span t-field="line.product_uom.name"/>, 
+								 Packing: <span t-field="line.packing_type.name"/>, 
+								 Total Bags: <span t-field="line.bag_box_qty"/>
+								 <t t-set="variable" t-value="line.product_id" />
+							 </td>
+						 </t>
+						<td style="border:1px solid;padding:7px;">
+							<span t-field="para.qc_parameter_id.qc_parameter_id.name"/>
+						</td>
+						<td style="border:1px solid;padding:7px;">
+							<span t-field="para.value"/>
+						</td>
+					 </tr>
+				</t>
+				</t>
+			</t>
+			</table>
+			<table width="100%">
+				<tr>
+					<td width="60%" align="left" >
+					   On signing the PO kindly please return the same by mail or courier
+					</td>
+					<td width="40%" align="right">
+					   For <span t-field="o.company_id.name" />
+					</td>
+				</tr>
+				<tr>
+				  <td style="height:100px"></td>
+				</tr>
+				<tr>
+					<td width="60%" align="left">
+					   Receiver's Signature and Stamp
+					</td>
+					<td width="40%" align="right">
+					   Authorised Signatory
+					</td>
+				</tr>
+			</table>
+		</template>
+
+		<template id="report_of_export_work_order">
+			<t t-call="web.html_container">
+			  <t t-foreach="docs" t-as="o">
+			   <t t-call="verts_v15_freight_forward.export_work_order_report"/>
+			  </t>
+			</t>
+	   </template>
+	</data>
+</odoo>
+
+
+
+
+

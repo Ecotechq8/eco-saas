@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+<data>
+	<!-- Res Country Form View Inherit  -->
+	<record id="view_country_form_iherit_basic" model="ir.ui.view">
+        <field name="name">res.country.form</field>
+        <field name="model">res.country</field>
+        <field name="inherit_id" ref="base.view_country_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//form/sheet/label[@for='state_ids']" position="before">
+				<notebook >
+					<page name="states" string="States">
+						<field name="state_ids" >
+							<list editable="bottom">
+								<field name='name' />
+								<field name='code'/>
+							</list>
+						</field>
+					</page>
+				</notebook>
+			</xpath>
+			<xpath expr="//form/sheet/label[@for='state_ids']" position="replace"/>
+			<xpath expr="//form/sheet/field[@name='state_ids']" position="replace"/>
+        </field>
+    </record>
+</data>	
+</odoo>
