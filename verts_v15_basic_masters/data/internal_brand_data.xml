@@ -1,29 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <record id="internal_brand1" model="brands.info">
-            <field name="name">Classic</field>
-        </record>
-        <record id="internal_brand2" model="brands.info">
-            <field name="name">Premium</field>
-        </record>
-        <record id="internal_brand3" model="brands.info">
-            <field name="name">Special</field>
-        </record>
-        <record id="internal_brand4" model="brands.info">
-            <field name="name">Inspiron</field>
-        </record>
-        <record id="internal_brand5" model="brands.info">
-            <field name="name">Vostro</field>
-        </record>
-         <record id="internal_brand6" model="brands.info">
-            <field name="name">XPS</field>
-        </record>
-         <record id="internal_brand7" model="brands.info">
-            <field name="name">Allenware</field>
-        </record>
-         <record id="internal_brand8" model="brands.info">
-            <field name="name">Lattitude</field>
-        </record>
+        <!-- Internal Brand Data -->
     </data>
 </odoo>

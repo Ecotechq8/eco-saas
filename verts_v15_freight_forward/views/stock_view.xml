@@ -10,14 +10,14 @@
 				 <xpath expr="//form/sheet/group/group/field[@name='backorder_id']" position="after">
                      <field name="is_export" invisible="1"/>
         		</xpath>
-                 <xpath expr="//form/sheet/notebook/page/field[@name='move_ids_without_package']/tree/field[@name='product_id']" position="after">
-                     <field name="packing_type" attrs="{'column_invisible': [('parent.is_export', '=', False)]}"/>
-                     <field name="bag_box_qty" attrs="{'column_invisible': [('parent.is_export', '=', False)]}"/>
+                 <xpath expr="//form/sheet/notebook/page/field[@name='move_ids_without_package']/list/field[@name='product_id']" position="after">
+                     <field name="packing_type"/>
+                     <field name="bag_box_qty"/>
         		</xpath>
         		<notebook position="inside">
                      <page name="export_specification" string="Export Product Specification">
-                            <field name="qc_pro_specification_line" widget="one2many_list">
-                                <list string="Export Product Specification" editable="bottom">
+                            <field name="qc_pro_specification_line" >
+                                <list editable="bottom">
                                     <field name="qc_parameter_id" required="1"/>
                                     <field name="value"/>
                                 </list>

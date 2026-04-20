@@ -38,7 +38,7 @@
             <field name="name">Bank Account Type</field>
             <field name="model">bank.account.type</field>
             <field name="arch" type="xml">
-                <list string="Bank Account Type">
+                <list>
                     <field name="name"/>
                     <field name="code"/>
                     <field name="description"/>
@@ -53,7 +53,7 @@
             <field name="arch" type="xml">
                 <form string="Bank Account Type">
                     <sheet>
-                        <group colspan="4" col="4">
+                        <group>
                             <field name="name"/>
                             <field name="code"/>
                             <field name="description"/>
@@ -80,7 +80,7 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook/page" position="after">
                     <page string="Region">
-                        <group col="4">
+                        <group>
                             <field name="inter_id"/>
                             <field name="domestic_id" options="{'no_open': True, 'no_create': True}"/>
                             <field name="check_employee" invisible="1"/>
@@ -101,7 +101,7 @@
             <field name="name">employee.internation.zone</field>
             <field name="model">internation.zone</field>
             <field name="arch" type="xml">
-                <list string="International Region">
+                <list>
                     <field name="code"/>
                     <field name="name"/>
                     <field name="note"/>
@@ -113,9 +113,9 @@
             <field name="name">employee.internation.zone</field>
             <field name="model">internation.zone</field>
             <field name="arch" type="xml">
-                <form string="International Region" version="7.0">
+                <form string="International Region">
                     <sheet>
-                        <group col="4">
+                        <group>
                             <field name="name"/>
                             <field name="code"/>
                             <field name="working_hours" widget="float_time" invisible="1"/>
@@ -124,8 +124,8 @@
                         </group>
                         <notebook>
                             <page string="Countries">
-                                <field name="international_country_ids" widget="one2many_list">
-                                    <list string="Countries" editable="bottom">
+                                <field name="international_country_ids" >
+                                    <list editable="bottom">
                                         <field name="country_name" required="1"/>
                                         <field name="country_code"/>
                                     </list>
@@ -153,7 +153,7 @@
             <field name="name">domestic.zone</field>
             <field name="model">domestic.zone</field>
             <field name="arch" type="xml">
-                <list string="Domestic Zone">
+                <list>
                     <field name="code"/>
                     <field name="name"/>
                     <field name="note"/>
@@ -167,7 +167,7 @@
             <field name="arch" type="xml">
                 <form string="Domestic Zone">
                     <sheet>
-                        <group col="4">
+                        <group>
                             <field name="name"/>
                             <field name="code"/>
                             <field name="zone_type" required="1"/>
@@ -179,9 +179,9 @@
                         </group>
                         <notebook>
                             <page string="States"
-                                  attrs="{'invisible': ['|', ('zone_type','=',False),('zone_type','=','city')]}">
-                                <field name="domestic_state_line" widget="one2many_list">
-                                    <list string="States" editable="bottom">
+                                  invisible="zone_type in [False, 'city']">
+                                <field name="domestic_state_line" >
+                                    <list editable="bottom">
                                         <field name="state_name" required="1"
                                                domain="[('country_id','=',parent.country_id),]"/>
                                         <field name="state_code"/>
@@ -190,9 +190,9 @@
                                 </field>
                             </page>
                             <page string="City"
-                                  attrs="{'invisible': ['|', ('zone_type','=',False),('zone_type','=','state')]}">
-                                <field name="domestic_city_line" widget="one2many_list">
-                                    <list string="City" editable="bottom">
+                                  invisible="zone_type in [False, 'state']">
+                                <field name="domestic_city_line" >
+                                    <list editable="bottom">
                                         <field name="city_name"/>
                                     </list>
                                 </field>
@@ -220,7 +220,7 @@
             <field name="name">Divisions/BU</field>
             <field name="model">basic.masters</field>
             <field name="arch" type="xml">
-                <list string="Divisions/BU">
+                <list>
                     <field name="divisions_bu"/>
                 </list>
             </field>
@@ -259,7 +259,7 @@
             <field name="name">Cities</field>
             <field name="model">cities.basic.masters</field>
             <field name="arch" type="xml">
-                <list string="Cities">
+                <list>
                     <field name="name"/>
                     <field name="state_id"/>
                     <field name="country_id"/>
@@ -275,10 +275,10 @@
             <field name="arch" type="xml">
                 <form string="Cities">
                     <sheet>
-                        <group col="4">
-                            <field style="text-transform: capitalize;"  name="name" attrs="{'readonly':[('cities_bool','=', True)]}"/>
+                        <group>
+                            <field style="text-transform: capitalize;"  name="name" readonly="cities_bool == True"/>
                             <field name="district_id"/>
-                            <field name="state_id" attrs="{'readonly':[('cities_bool','=', True)]}"/>
+                            <field name="state_id" readonly="cities_bool == True"/>
                             <field name="country_id"/>
                             <field name="cities_bool" invisible="1"/>
                         </group>
@@ -302,7 +302,7 @@
             <field name="name">Areas</field>
             <field name="model">areas.basic.masters</field>
             <field name="arch" type="xml">
-                <list string="Areas">
+                <list>
                     <field name="name"/>
                     <field name="city_id"/>
                 </list>
@@ -315,7 +315,7 @@
             <field name="arch" type="xml">
                 <form string="Areas">
                     <sheet>
-                        <group col="4">
+                        <group>
                             <field name="name"/>
                             <field name="city_id"/>
                         </group>
@@ -339,7 +339,7 @@
             <field name="name">Mode of Transport</field>
             <field name="model">mode.transport</field>
             <field name="arch" type="xml">
-                <list string="Mode of Transport">
+                <list>
                     <field name="mode_of_transport"/>
                 </list>
             </field>
@@ -356,7 +356,7 @@
                             <label for="mode_of_transport" class="oe_edit_only"/>
                             <h1>
                                 <field name="mode_of_transport" placeholder="Mode of Transport Name"
-                                       attrs="{'readonly':[('mode_transport_bool','=', True)]}"/>
+                                       readonly="mode_transport_bool == True"/>
                                 <field name="mode_transport_bool" invisible="1"/>
                             </h1>
                         </div>
@@ -380,7 +380,7 @@
             <field name="name">Ports</field>
             <field name="model">ports</field>
             <field name="arch" type="xml">
-                <list string="Ports">
+                <list>
                     <field name="name"/>
                     <field name="port_type_id"/>
                     <field name="incoming_trans_days" invisible="1"/>
@@ -396,17 +396,17 @@
             <field name="arch" type="xml">
                 <form string="Ports">
                     <sheet>
-                        <group colspan="4" col="4">
-                            <field name="name" attrs="{'readonly':[('ports_bool','=', True)]}"/>
+                        <group>
+                            <field name="name" readonly="ports_bool == True"/>
                             <field name="port_type_id" options="{'no_open': True, 'no_create': True}"
-                                   attrs="{'readonly':[('ports_bool','=', True)]}"/>
+                                   readonly="ports_bool == True"/>
                             <field name="port_load_bool"/>
                             <field name="port_discharge_bool"/>
                             <field name="expected_trans_days" invisible="1"/>
                             <field name="incoming_trans_days" invisible="1"/>
                             <field name="delivery_trans_days" invisible="1"/>
                         </group>
-                        <group colspan="8" col="4">
+                        <group>
                             <label for="street" string="Address"/>
                             <div class="o_address_format">
                                 <field name="street" placeholder="Street..."
@@ -442,7 +442,7 @@
             <field name="name">Container Type</field>
             <field name="model">container.type</field>
             <field name="arch" type="xml">
-                <list string="Ports">
+                <list>
                     <field name="name"/>
                     <field name="capacity"/>
                     <field name="description"/>
@@ -457,7 +457,7 @@
             <field name="arch" type="xml">
                 <form string="Ports">
                     <sheet>
-                        <group colspan="4" col="4">
+                        <group>
                             <field name="name"/>
                             <field name="capacity"/>
                             <field name="description"/>
@@ -482,7 +482,7 @@
             <field name="name">Zone</field>
             <field name="model">res.state.zone</field>
             <field name="arch" type="xml">
-                <list string="Zone">
+                <list>
                     <field name="name"/>
                     <field name="country_id"/>
                     <field name="state_id"/>
@@ -497,7 +497,7 @@
             <field name="arch" type="xml">
                 <form string="Zone">
                     <sheet>
-                        <group col="4">
+                        <group>
                             <field name="name"/>
                             <field name="country_id"/>
                             <field name="state_id" domain="[('country_id','=',country_id)]"/>
@@ -522,7 +522,7 @@
             <field name="name">District</field>
             <field name="model">res.zone.district</field>
             <field name="arch" type="xml">
-                <list string="District">
+                <list>
                     <field name="name"/>
                     <field name="country_id"/>
                     <field name="state_id"/>
@@ -538,7 +538,7 @@
             <field name="arch" type="xml">
                 <form string="District">
                     <sheet>
-                        <group col="4">
+                        <group>
                             <field name="name"/>
                             <field name="country_id"/>
                             <field name="state_id"/>
@@ -564,7 +564,7 @@
             <field name="name">Point of Stuffing</field>
             <field name="model">point.of.stuffing</field>
             <field name="arch" type="xml">
-                <list string="Ports">
+                <list>
                     <field name="name"/>
                 </list>
             </field>
@@ -577,7 +577,7 @@
             <field name="arch" type="xml">
                 <form string="Ports">
                     <sheet>
-                        <group colspan="4" col="2">
+                        <group>
                             <field name="name" required="1"/>
                         </group>
                     </sheet>
@@ -599,7 +599,7 @@
             <field name="name">res_industry_tree</field>
             <field name="model">res.industry</field>
             <field name="arch" type="xml">
-                <list string="Industry" editable="bottom">
+                <list editable="bottom">
                     <field name="name" required="1"/>
                 </list>
             </field>

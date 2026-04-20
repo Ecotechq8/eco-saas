@@ -6,7 +6,7 @@
 			<field name="name">Pin Code Master</field>
 			<field name="model">pin.code.master</field>
 			<field name="arch" type="xml">
-				<list string="Pin Code Master Tree">
+				<list>
 					<field name="name"/>
 					<field name="area_id"/>
                     <field name="district_id"/>
@@ -23,7 +23,7 @@
 			<field name="arch" type="xml">
 				<form string="Pin Code Master form">
                     <sheet>
-						<group name="pin_code" col="4" colspan="4">
+						<group name="pin_code">
 							<field name="name"/>
                             <field name="area_id"/>
                             <field name="district_id"/>

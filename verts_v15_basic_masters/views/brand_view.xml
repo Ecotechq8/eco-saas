@@ -7,7 +7,7 @@
             <field name="arch" type="xml">
                 <form string="Brand Category">
                     <sheet>
-                        <group colspan="4" col="4">
+                        <group>
                             <field name="name" />
                             <field name="brand_category_code" />
                         </group>
@@ -19,9 +19,9 @@
         <record model="ir.ui.view" id="view_brand_cat_trees">
                 <field name="name">Brand Category</field>
                 <field name="model">brand.category</field>
-                <field name="type">tree</field>
+                <field name="type">list</field>
                 <field name="arch" type="xml">
-                    <list string='Brand Category'>
+                    <list>
                         <field name="brand_category_code" />
                         <field name="name"/>
                     </list>
@@ -32,7 +32,7 @@
                 <field name="name">Brand Category</field>
                 <field name="type">ir.actions.act_window</field>
                 <field name="res_model">brand.category</field>
-                <field name="view_mode">tree,form</field>
+                <field name="view_mode">list,form</field>
                 <field name="view_id" ref="verts_v15_basic_masters.view_brand_cat_trees"/>
         </record>
 
@@ -43,7 +43,7 @@
             <field name="arch" type="xml">
                 <form string="Brands">
                     <sheet>
-                        <group colspan="4" col="4">
+                        <group>
                             <field name="brand_code" />
                             <field name="name" />
                             <field name="brand_category_id" />
@@ -58,9 +58,9 @@
         <record model="ir.ui.view" id="view_brand_trees">
             <field name="name">Brands</field>
             <field name="model">brand</field>
-            <field name="type">tree</field>
+            <field name="type">list</field>
             <field name="arch" type="xml">
-                <list string='Brands'>
+                <list>
                     <field name="brand_code" />
                     <field name="name" />
                     <field name="brand_category_id" />
@@ -74,7 +74,7 @@
             <field name="name">Brands</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">brand</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="view_id" ref="verts_v15_basic_masters.view_brand_trees"/>
         </record>
     </data>

@@ -1,66 +1,26 @@
-# -*- coding: utf-8 -*-
-#############################################################################
-#
-#    Cybrosys Technologies Pvt. Ltd.
-#
-#    Copyright (C) 2022-TODAY Cybrosys Technologies(<https://www.cybrosys.com>)
-#    Author: Cybrosys Techno Solutions(<https://www.cybrosys.com>)
-#
-#    You can modify it under the terms of the GNU LESSER
-#    GENERAL PUBLIC LICENSE (LGPL v3), Version 3.
-#
-#    This program is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU LESSER GENERAL PUBLIC LICENSE (LGPL v3) for more details.
-#
-#    You should have received a copy of the GNU LESSER GENERAL PUBLIC LICENSE
-#    (LGPL v3) along with this program.
-#    If not, see <http://www.gnu.org/licenses/>.
-#
-#############################################################################
-
-import logging
-from odoo import models, fields,api
-import odoo
+from odoo import api, fields, models, _
 
 
-_logger = logging.getLogger(__name__)
-
-
-class Branch(models.Model):
-    """res branch"""
+class ResBranch(models.Model):
     _name = "res.branch"
-    _description = 'Company Branches'
-    _order = 'name'
+    _description = "Branch"
 
-    name = fields.Char(string='Branch', required=True, store=True)
-    company_id = fields.Many2one('res.company', required=True, string='Company')
-    street = fields.Char()
-    street2 = fields.Char()
-    zip = fields.Char()
-    city = fields.Char()
-    state_id = fields.Many2one(
-        'res.country.state',
-        string="Fed. State", domain="[('country_id', '=?', country_id)]"
-    )
-    country_id = fields.Many2one('res.country',  string="Country")
-    email = fields.Char(store=True, )
-    phone = fields.Char(store=True)
-    website = fields.Char(readonly=False)
-    logo_branch = fields.Binary(string="Branch Logo", attachment=True,
-                                default=lambda self: self._get_default_image(False, True))
-
-    @api.model
-    def _get_default_image(self, is_company, colorize=False):
-        img_path = odoo.modules.get_module_resource(
-            'base', 'static/img', 'avatar.png')
-        with open(img_path, 'rb') as f:
-            image = f.read()
-        # colorize user avatars
-        # if not is_company:
-        #     image = tools.image_colorize(image)
-
-    _sql_constraints = [
-        ('name_uniq', 'unique (name)', 'The Branch name must be unique !')
-    ]
+    name = fields.Char(string='Branch Name', required=True)
+    code = fields.Char(string='Branch Code')
+    company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.company)
+    active = fields.Boolean(string='Active', default=True)
+    street = fields.Char(string='Street')
+    street2 = fields.Char(string='Street2')
+    city = fields.Char(string='City')
+    state_id = fields.Many2one('res.country.state', string='State')
+    country_id = fields.Many2one('res.country', string='Country')
+    zip = fields.Char(string='Zip')
+    phone = fields.Char(string='Phone')
+    email = fields.Char(string='Email')
+    website = fields.Char(string='Website')
+    logo_branch = fields.Binary(string="Branch Logo", attachment=True)
+    
+    @api.onchange('state_id')
+    def _onchange_state_id(self):
+        if self.state_id and self.state_id.country_id:
+            self.country_id = self.state_id.country_id

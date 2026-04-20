@@ -17,7 +17,7 @@
                         <group>
                             <field name="logo_branch" widget="image" class="oe_avatar" nolabel="1"/>
                         </group>
-                        <notebook colspan="4">
+                        <notebook>
                         <page string="Contact Information" name="contact_info">
                             <group>
                             <group>
@@ -49,7 +49,7 @@
             <field name="name">res.branch.tree</field>
             <field name="model">res.branch</field>
             <field name="arch" type="xml">
-                <list string="Branches" sample="1">
+                <list sample="1">
                     <field name="name"/>
                     <field name="company_id"/>
                     <field name="phone"/>

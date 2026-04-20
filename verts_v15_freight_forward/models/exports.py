@@ -6,6 +6,104 @@ from odoo import api,fields,models, _
 from odoo.exceptions import UserError
 
 
+class Ports(models.Model):
+    _inherit = 'ports'
+
+    is_stuffing_point = fields.Boolean(string='Is Stuffing Point', default=False)
+
+
+class ProductProduct(models.Model):
+    _inherit = 'product.product'
+
+    is_export_expense = fields.Boolean(string='Is Export Expense', default=False)
+
+
+class UomUom(models.Model):
+    _inherit = 'uom.uom'
+
+    freight_forward_forms = fields.Boolean(string='Freight Forward Forms', default=False)
+
+
+class ResCountry(models.Model):
+    _inherit = 'res.country'
+
+    ecgc_rating = fields.Many2one('ecgc.rating', string='ECGC Rating')
+    ecgc_rating_id = fields.Many2one('ecgc.rating', string='ECGC Rating')
+    port_id = fields.Many2one('ports', string='Port')
+    image_url = fields.Char(string='Image URL')
+    load_export_expense_values = fields.Boolean(string='Load Export Expense Values', default=False)
+    load_export_doc_values = fields.Boolean(string='Load Export Doc Values', default=False)
+    load_fumigation_values = fields.Boolean(string='Load Fumigation Values', default=False)
+    load_state_values = fields.Boolean(string='Load State Values', default=False)
+    country_export_expense_line = fields.One2many('country.export.expense.line', 'country_id', string='Export Expense Lines')
+    country_export_document_line = fields.One2many('country.export.document.line', 'country_id', string='Export Document Lines')
+    fumigation_lines = fields.One2many('fumigation.line', 'country_id', string='Fumigation Lines')
+    schedule_lines = fields.One2many('schedule.line', 'country_id', string='Schedule Lines')
+
+    def upload_export_expense(self):
+        pass
+
+    def upload_export_doc(self):
+        pass
+
+    def upload_fumigation(self):
+        pass
+
+    def upload_state(self):
+        pass
+
+
+class CountryExportExpenseLine(models.Model):
+    _name = 'country.export.expense.line'
+    _description = 'Country Export Expense Line'
+
+    country_id = fields.Many2one('res.country', string='Country')
+    expense_id = fields.Many2one('product.product', string='Expense', domain=[('is_export_expense', '=', True)])
+    price = fields.Float(string='Price')
+    # currency = fields.Many2one('res.currency', string='Currency')
+
+
+class CountryExportDocumentLine(models.Model):
+    _name = 'country.export.document.line'
+    _description = 'Country Export Document Line'
+
+    country_id = fields.Many2one('res.country', string='Country')
+    # export_document_id = fields.Many2one('export.document.master', string='Export Document')
+    copies = fields.Integer(string='Copies', default=1)
+
+
+class FumigationLine(models.Model):
+    _name = 'fumigation.line'
+    _description = 'Fumigation Line'
+
+    country_id = fields.Many2one('res.country', string='Country')
+    container_type_id = fields.Many2one('container.type', string='Container Type')
+    alp_dosage = fields.Float(string='ALP Dosage')
+    alp_hours = fields.Float(string='ALP Hours')
+    alp_price = fields.Float(string='ALP Price')
+    alp_charges_id = fields.Many2one('product.product', string='ALP Charges')
+    mbr_filled_dosage = fields.Float(string='MBR Filled Dosage')
+    mbr_filled_hours = fields.Float(string='MBR Filled Hours')
+    mbr_filled_price = fields.Float(string='MBR Filled Price')
+    mbr_filled_id = fields.Many2one('product.product', string='MBR Filled')
+    mbr_empty_dosage = fields.Float(string='MBR Empty Dosage')
+    mbr_empty_hours = fields.Float(string='MBR Empty Hours')
+    mbr_empty_price = fields.Float(string='MBR Empty Price')
+    mbr_empty_charges_id = fields.Many2one('product.product', string='MBR Empty Charges')
+
+
+class ScheduleLine(models.Model):
+    _name = 'schedule.line'
+    _description = 'Schedule Line'
+
+    country_id = fields.Many2one('res.country', string='Country')
+    # schedule_id = fields.Many2one('schedule.master', string='Schedule', required=True)
+    report_at_time = fields.Float(string='Report At Time')
+    req_from = fields.Char(string='Request From')
+    country_specific = fields.Boolean(string='Country Specific', default=False)
+    port_of_loading_specific = fields.Boolean(string='Port of Loading Specific', default=False)
+
+
 class ecgc_rating(models.Model):
     _name = "ecgc.rating"
     _description = 'ecgc_rating'
@@ -13,7 +111,7 @@ class ecgc_rating(models.Model):
     name = fields.Char('ECGC Rating/Classification', size=128, required=True)
     risk_perception = fields.Char('Risk Perception', size=128)
     expense_id = fields.Many2one('product.product', string='Expense Name')
-    ecgc_calculation_groups = fields.Many2many('product.classification', 'ecgc_product_class_rel', 'ecgc_rating_id','prdouct_class_id', string='Product Class')
+    # ecgc_calculation_groups = fields.Many2many('product.classification', 'ecgc_product_class_rel', 'ecgc_rating_id','prdouct_class_id', string='Product Class')
     # payment_term_id = fields.Many2many('account.payment.term', 'ecgc_payment_rel', 'ecgc_id', 'payment_id', string='Payment Terms')
     ecgc_rating_line = fields.One2many('ecgc.rating.line', 'ecgc_rating_id', 'ECGC Rating Line')
     payment_lines = fields.One2many('ecgc.premium.rate', 'ecgc_rating_id', 'Payment Details')
@@ -211,7 +309,7 @@ class export_expense(models.Model):
     country_id = fields.Many2one('res.country', 'Country Id')
     expense_id = fields.Many2one('product.product','Expense')
     price = fields.Float('Price')
-    currency=fields.Many2one('res.currency',"Currency")
+    # currency=fields.Many2one('res.currency',"Currency")
     # point_of_stuffing_id = fields.Many2one('ports', 'Point of Stuffing')
     
     @api.onchange("expense_id")

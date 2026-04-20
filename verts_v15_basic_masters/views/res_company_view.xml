@@ -1,28 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data>
-        <record id="view_company_form_verts_finance_inherited" model="ir.ui.view">
-            <field name="name">res.company.form</field>
-            <field name="model">res.company</field>
-            <field name="type">form</field>
-            <field name="inherit_id" ref="base.view_company_form"/>
-            <field name="arch" type="xml">
-                <field name="currency_id" position="before">
-                    <!--			    	<field name='gstin_no'/>-->
-                </field>
-                <xpath expr="//field[@name='company_registry']" position="after">
-					<field name="cin_no"/>
-					<field name="pan_no"/>
-					<field name="partner_account_id"/>
-					<field name="bank_id" readonly="1"/>
-				 </xpath>
-                <xpath expr="//notebook/page" position="after">
-                    <group string="About Us">
-                        <group>
-                            <field name='about_us'/>
-                        </group>
-                    </group>
-                </xpath>
-            </field>
-        </record>
+    <data noupdate="0">
+        <!-- Res Company View - Placeholder -->
     </data>
 </odoo>

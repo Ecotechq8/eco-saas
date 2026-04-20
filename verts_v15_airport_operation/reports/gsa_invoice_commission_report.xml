@@ -11,7 +11,7 @@
                             <tr>
                                 <td valign="top" width="33%" align="left"
                                     style="color:#4D4D4F; font-size:12px; padding-top:16px;">
-                                    <img t-if="o.company_id.logo"
+                                    <img
                                          t-attf-src="data:image/*;base64,{{ o.company_id.logo }}"
                                          style="max-height: 80px;" />
                                 </td>
@@ -40,36 +40,36 @@
                                 <td style="width: 60%; vertical-align: top;">
                                     <div style="display: flex; flex-direction: column;">
                                         <strong>Customer:</strong>
-                                        <span t-out="o.partner_id.name"/>
+                                        <span/>
                                     </div>
                                     <div style="margin-left: 76px;">
-                                        <t t-if="o.partner_id.street">
-                                            <t t-out="o.partner_id.street"/>
+                                        <t>
+                                            <t/>
                                             ,
                                         </t>
-                                        <t t-if="o.partner_id.street2">
-                                            <t t-out="o.partner_id.street2"/>
+                                        <t>
+                                            <t/>
                                             ,
                                         </t>
-                                        <t t-if="o.partner_id.city_id">
-                                            <t t-out="o.partner_id.city_id.name"/>
+                                        <t>
+                                            <t/>
                                             ,
                                         </t>
-                                        <t t-if="o.partner_id.zip">
-                                            <t t-out="o.partner_id.zip"/>
+                                        <t>
+                                            <t/>
                                             ,
                                         </t>
-                                        <t t-if="o.partner_id.state_id">
-                                            <t t-out="o.partner_id.state_id.name"/>
+                                        <t>
+                                            <t/>
                                             ,
                                         </t>
-                                        <t t-out="o.partner_id.country_id.name"/>
+                                        <t/>
                                     </div>
                                 </td>
                                 <td>
                                     <strong>Invoice Number:</strong>
                                 </td>
-                                <td t-out="o.name"/>
+                                <td/>
                             </tr>
                             <tr>
                                 <td></td>
@@ -77,7 +77,7 @@
                                     <strong>Invoice Date:</strong>
                                 </td>
                                 <td>
-                                    <t t-if="o.invoice_date" t-out="o.invoice_date.strftime('%d/%m/%Y')"/>
+                                    <t/>
                                 </td>
                             </tr>
                         </table>
@@ -89,15 +89,15 @@
                         <table style="width: 100%; border: 1px solid black; border-collapse: collapse;">
                             <thead>
                                 <tr style="height: 40px;">
-                                    <td style="vertical-align: middle;" colspan="5"><b  style="margin-left: 35px;">Remarks:</b> <t t-out="o.remarks"/></td>
+                                    <td style="vertical-align: middle;"><b  style="margin-left: 35px;">Remarks:</b> <t/></td>
                                 </tr>
                                 <tr style="height: 40px;">
-                                    <td style="vertical-align: middle;" colspan="5">
+                                    <td style="vertical-align: middle;">
                                         <b style="margin-left: 35px;">Flight From:</b>
-                                        <t t-out="o.flt_from.strftime('%d/%m/%Y')"/>
+                                        <t/>
                                         <span style="display:inline-block; width:40px;"></span>
                                         <b>To:</b>
-                                        <t t-out="o.flt_to.strftime('%d/%m/%Y')"/>
+                                        <t/>
                                     </td>
                                 </tr>
                                 <tr style="background-color: #d3d3d3;">
@@ -109,26 +109,26 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <t t-set="index" t-value="1"/>
+                                <t t-value="1"/>
                                 <t t-foreach="o.invoice_line_ids" t-as="line">
                                     <tr>
-                                        <td style="border: 1px solid black;text-align: center;" t-out="index"/>
+                                        <td style="border: 1px solid black;text-align: center;"/>
                                         <td style="border: 1px solid black;text-align: center;">
-                                           <span t-field="line.name"/>
+                                           <span field="line.name"/>
                                         </td>
-                                        <td style="border: 1px solid black;text-align: center;"><span t-field="line.freight_amount"/></td>
-                                        <td style="border: 1px solid black;text-align: center;"><span t-field="line.commission_percentage"/></td>
-                                        <td style="border: 1px solid black;text-align: center;"><span t-field="line.price_total"/></td>
+                                        <td style="border: 1px solid black;text-align: center;"><span field="line.freight_amount"/></td>
+                                        <td style="border: 1px solid black;text-align: center;"><span field="line.commission_percentage"/></td>
+                                        <td style="border: 1px solid black;text-align: center;"><span field="line.price_total"/></td>
                                     </tr>
-                                    <t t-set="index" t-value="index + 1"/>
+                                    <t t-value="index + 1"/>
                                 </t>
 
                                 <!-- Total Row -->
                                 <tr style="height: 90px;">
-                                    <td colspan="4" style="background-color: #d3d3d3;vertical-align: middle;"><strong>
-                                        <span style="margin-left:35px;" t-out="o.company_currency_id.amount_to_text(o.amount_total)"/> Only
+                                    <td style="background-color: #d3d3d3;vertical-align: middle;"><strong>
+                                        <span style="margin-left:35px;"/> Only
                                     </strong></td>
-                                    <td style="background-color: #d3d3d3;text-align: center;vertical-align: middle;"><strong><span t-field="o.amount_total"/></strong></td>
+                                    <td style="background-color: #d3d3d3;text-align: center;vertical-align: middle;"><strong><span field="o.amount_total"/></strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -142,54 +142,54 @@
                         <tr>
                             <td style="font-weight: bold; width: 20%;">Beneficiary Name</td>
                             <td style="width: 5px;">:</td>
-                            <td style="width: 75px;" t-out="o.company_id.name"/>
+                            <td style="width: 75px;"/>
                         </tr>
-                        <t t-if="o.partner_bank_id">
+                        <t>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Bank Name</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;" t-out="o.partner_bank_id.bank_id.name"/>
+                                <td style="width: 75px;"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Bank Address</td>
                                 <td style="width: 5px;">:</td>
                                 <td style="width: 75px;">
-                                    <t t-if="o.partner_bank_id.bank_id.street">
-                                        <t t-out="o.partner_bank_id.bank_id.street"/> <br/>
+                                    <t>
+                                        <t/> <br/>
                                     </t>
-                                    <t t-if="o.partner_bank_id.bank_id.street2">
-                                        <t t-out="o.partner_bank_id.bank_id.street2"/> <br/>
+                                    <t>
+                                        <t/> <br/>
                                     </t>
-                                    <t t-if="o.partner_bank_id.bank_id.city">
-                                        <t t-out="o.partner_bank_id.bank_id.city"/>,
+                                    <t>
+                                        <t/>,
                                     </t>
-                                    <t t-if="o.partner_bank_id.bank_id.country">
-                                        <t t-out="o.partner_bank_id.bank_id.country.name"/>,
+                                    <t>
+                                        <t/>,
                                     </t>
-                                     <t t-if="o.partner_bank_id.bank_id.zip">
-                                        <t t-out="o.partner_bank_id.bank_id.zip"/>
+                                     <t>
+                                        <t/>
                                     </t>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Account #</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;" t-out="o.partner_bank_id.acc_number"/>
+                                <td style="width: 75px;"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">IBAN #</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;" t-out="o.partner_bank_id.bank_id.iban"/>
+                                <td style="width: 75px;"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">SWIFT Code</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;" t-out="o.partner_bank_id.bank_id.swift_code"/>
+                                <td style="width: 75px;"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Account Currency</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;" t-out="o.partner_bank_id.currency_id.name"/>
+                                <td style="width: 75px;"/>
                             </tr>
                         </t>
                     </table>

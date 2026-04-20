@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-
-        <record id="stuffing_point_01" model="ports">
-            <field name="name">Factory 1</field>
-            <field name="country_id" ref="base.in"/>
-            <field name="is_stuffing_point" eval="True" />
-        </record>
-        <record id="stuffing_point_02" model="ports">
-            <field name="name">Factory 2</field>
-            <field name="country_id" ref="base.in"/>
-            <field name="is_stuffing_point" eval="True" />
-        </record>
-        <record id="stuffing_point_03" model="ports">
-            <field name="name">Factory 3</field>
-            <field name="country_id" ref="base.in"/>
-            <field name="is_stuffing_point" eval="True" />
-        </record>
+        <!-- point_of_stuffing_data.xml data placeholder -->
     </data>
 </odoo>

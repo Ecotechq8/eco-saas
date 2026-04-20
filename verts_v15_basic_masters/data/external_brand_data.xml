@@ -1,47 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <record id="external_brand1" model="makers.info">
-            <field name="name">DELL</field>
-        </record>
-        <record id="external_brand2" model="makers.info">
-            <field name="name">HP</field>
-        </record>
-        <record id="external_brand3" model="makers.info">
-            <field name="name">LENOVO</field>
-        </record>
-        <record id="external_brand4" model="makers.info">
-            <field name="name">HONEYWELL</field>
-        </record>
-        <record id="external_brand5" model="makers.info">
-            <field name="name">SCHNEIDER</field>
-        </record>
-         <record id="external_brand6" model="makers.info">
-            <field name="name">HAVELLS</field>
-        </record>
-         <record id="external_brand7" model="makers.info">
-            <field name="name">SIEMENS</field>
-        </record>
-         <record id="external_brand8" model="makers.info">
-            <field name="name">CRABTREE</field>
-        </record>
-        <record id="external_brand9" model="makers.info">
-            <field name="name">PANASONIC</field>
-        </record>
-        <record id="external_brand10" model="makers.info">
-            <field name="name">ANCHOR</field>
-        </record>
-        <record id="external_brand11" model="makers.info">
-            <field name="name">CROMPTON</field>
-        </record>
-        <record id="external_brand12" model="makers.info">
-            <field name="name">ROMA</field>
-        </record>
-        <record id="external_brand13" model="makers.info">
-            <field name="name">BAJAJ</field>
-        </record>
-        <record id="external_brand14" model="makers.info">
-            <field name="name">ABB</field>
-        </record>
+        <!-- External Brand Data -->
     </data>
 </odoo>

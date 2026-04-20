@@ -26,7 +26,7 @@
     'author': 'VERTS Services India Pvt. Ltd.',
     "description": """""",
     "website": "http://www.verts.co.in",
-    "depends": ['base', 'product', 'hr', 'verts_v15_profiles'],
+    "depends": ['base', 'product', 'hr'],
     "category": "Generic Modules",
     "license": "LGPL-3",
     "data": [
@@ -59,16 +59,15 @@
         'data/categories_demo_data.xml',
         'views/menu_view.xml',
     ],
-    'images': ['static/description/Digital_Signature.jpg'],
     'installable': True,
-    'assets': {
-        'web.assets_backend': [
-        #'verts_v15_basic_masters/static/src/js/**/*',
-        ],
-        'web.qweb_suite_reports': [
-            'verts_v15_basic_masters/static/src/xml/digital_sign.xml',
-        ],
-    },
+    # 'assets': {
+    #     'web.assets_backend': [
+    #     #'verts_v15_basic_masters/static/src/js/**/*',
+    #     ],
+    #     'web.qweb_suite_reports': [
+    #         'verts_v15_basic_masters/static/src/xml/digital_sign.xml',
+    #     ],
+    # },
 }
 
 

@@ -33,10 +33,3 @@ class ProductTemplate(models.Model):
             res['arch'] = etree.tostring(doc, encoding="unicode")
         return res
 
-
-class BrandsInfo(models.Model):
-    _name = "brands.info"
-    _description = "Brands Info"
-
-    name = fields.Char(string='Name')
-

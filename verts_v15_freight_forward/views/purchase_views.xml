@@ -9,46 +9,44 @@
             <field name="arch" type="xml">
                 <form string="Purchase Order" class="o_purchase_order">
                 <header>
-                    <button name="action_rfq_send" states="draft" string="Send by Email" type="object" context="{'send_rfq':True}" class="oe_highlight" data-hotkey="g"/>
-                    <button name="print_quotation" string="Print RFQ" type="object" states="draft" class="oe_highlight" groups="base.group_user" data-hotkey="k"/>
-                    <button name="button_confirm" type="object" states="sent" string="Confirm Order" class="oe_highlight" id="bid_confirm" data-hotkey="v"/>
+                    <button name="action_rfq_send" string="Send by Email" type="object" context="{'send_rfq':True}" class="oe_highlight" data-hotkey="g"/>
+                    <button name="print_quotation" string="Print RFQ" type="object" class="oe_highlight" groups="base.group_user" data-hotkey="k"/>
+                    <button name="button_confirm" type="object" string="Confirm Order" class="oe_highlight" id="bid_confirm" data-hotkey="v"/>
                     <button name="button_approve" type="object" states='to approve' string="Approve Order" class="oe_highlight" groups="purchase.group_purchase_manager" data-hotkey="z"/>
                     <button name="action_create_invoice"
                             string="Create Bill"
                             type="object" class="oe_highlight"
-                            context="{'create_bill':True}"
-                            attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_count', '>', 0 )]}"/>
-                    <button name="action_rfq_send" states="sent" string="Re-Send by Email" type="object" context="{'send_rfq':True}" data-hotkey="g"/>
-                    <button name="print_quotation" string="Print RFQ" type="object" states="sent" groups="base.group_user" data-hotkey="k"/>
-                    <button name="button_confirm" type="object" states="draft" string="Confirm Order" id="draft_confirm"/>
-                    <button name="action_rfq_send" states="purchase" string="Send PO by Email" type="object" context="{'send_rfq':False}" data-hotkey="g"/>
-                    <button name="confirm_reminder_mail" string="Confirm Receipt Date" type="object" attrs="{'invisible': ['|','|', ('state', 'not in', ('purchase', 'done')), ('mail_reminder_confirmed', '=', True), ('date_planned', '=', False)]}" groups="base.group_no_one" data-hotkey="o"/>
+                            context="{'create_bill':True}"/>
+                    <button name="action_rfq_send" string="Re-Send by Email" type="object" context="{'send_rfq':True}" data-hotkey="g"/>
+                    <button name="print_quotation" string="Print RFQ" type="object" groups="base.group_user" data-hotkey="k"/>
+                    <button name="button_confirm" type="object" string="Confirm Order" id="draft_confirm"/>
+                    <button name="action_rfq_send" string="Send PO by Email" type="object" context="{'send_rfq':False}" data-hotkey="g"/>
+                    <button name="confirm_reminder_mail" string="Confirm Receipt Date" type="object" groups="base.group_no_one" data-hotkey="o"/>
 <!-- <button name="action_create_invoice"
 string="Create Bill"
-type="object" context="{'create_bill':True}"
-                            attrs="{'invisible': ['|', '|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('ord -->er_line', '=', [])]}" data-hotkey="w"/>
-                    <button name="button_draft" states="cancel" string="Set to Draft" type="object" data-hotkey="o"/>
-                    <button name="button_cancel" states="draft,to approve,sent,purchase" string="Cancel" type="object" data-hotkey="x" />
-                    <button name="button_done" type="object" string="Lock" states="purchase" data-hotkey="l"/>
-                    <button name="button_unlock" type="object" string="Unlock" states="done" groups="purchase.group_purchase_manager" data-hotkey="l"/>
-                    <!-- custom button -->
-                    <button string="Create Customer Quote"
-                            name="action_create_quotation"
-                            type="object" class="oe_highlight"/>
-                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase" readonly="1"/>
+type="object" context="{'create_bill':True}" data-hotkey="w"/>
+                    <button name="button_draft" string="Set to Draft" type="object" data-hotkey="o"/>
+                    <button name="button_cancel" string="Cancel" type="object" data-hotkey="x" />
+                    <button name="button_done" type="object" string="Lock" data-hotkey="l"/>
+                    <button name="button_unlock" type="object" string="Unlock" groups="purchase.group_purchase_manager" data-hotkey="l"/>
+                    <!- custom button -->
+<!--                    <button string="Create Customer Quote"-->
+<!--                            name="action_create_quotation"-->
+<!--                            type="object" class="oe_highlight"/>-->
+<!--                    <field name="state" widget="statusbar" statusbar_visible="draft,sent,purchase" readonly="1"/>-->
                 </header>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button type="object"  name="action_view_invoice"
                             class="oe_stat_button"
-                            icon="fa-pencil-square-o" attrs="{'invisible':['|', ('invoice_count', '=', 0), ('state', 'in', ('draft','sent','to approve'))]}">
+                            icon="fa-pencil-square-o">
                             <field name="invoice_count" widget="statinfo" string="Vendor Bills"/>
                             <field name='invoice_ids' invisible="1"/>
                         </button>
                     </div>
                     <div class="oe_title">
-                        <span class="o_form_label" attrs="{'invisible': [('state','not in',('draft','sent'))]}">Request for Quotation </span>
-                        <span class="o_form_label" attrs="{'invisible': [('state','in',('draft','sent'))]}">Purchase Order </span>
+                        <span class="o_form_label">Request for Quotation </span>
+                        <span class="o_form_label">Purchase Order </span>
                         <h1>
                             <field name="priority" widget="priority" class="mr-3"/>
                             <field name="name" readonly="1"/>
@@ -67,38 +65,36 @@ type="object" context="{'create_bill':True}"
                             <field name="id" invisible="1"/>
                         </group>
                         <group>
-                            <field name="date_order" attrs="{'invisible': [('state','in',('purchase','done'))]}"/>
-                            <label for="date_approve" attrs="{'invisible': [('state','not in',('purchase','done'))]}"/>
-                            <div name="date_approve" attrs="{'invisible': [('state','not in',('purchase','done'))]}" class="o_row">
+                            <field name="date_order"/>
+                            <label for="date_approve"/>
+                            <div name="date_approve" class="o_row">
                                 <field name="date_approve"/>
                                 <field name="mail_reception_confirmed" invisible="1"/>
-                                <span class="text-muted" attrs="{'invisible': [('mail_reception_confirmed','=', False)]}">(confirmed by vendor)</span>
+                                <span class="text-muted" invisible="mail_reception_confirmed == False">(confirmed by vendor)</span>
                             </div>
                             <label for="date_planned"/>
                             <div name="date_planned_div" class="o_row">
-                                <field name="date_planned" attrs="{'readonly': [('state', 'not in', ('draft', 'sent', 'to approve', 'purchase'))]}"/>
+                                <field name="date_planned"/>
                                 <field name="mail_reminder_confirmed" invisible="1"/>
-                                <span class="text-muted" attrs="{'invisible': [('mail_reminder_confirmed', '=', False)]}">(confirmed by vendor)</span>
+                                <span class="text-muted" invisible="mail_reminder_confirmed == False">(confirmed by vendor)</span>
                             </div>
                             <label for="receipt_reminder_email" invisible='1'/>
                             <div name="reminder" class="o_row" groups='purchase.group_send_reminder' title="Automatically send a confirmation email to the vendor X days before the expected receipt date, asking him to confirm the exact date.">
                                 <field name="receipt_reminder_email"/>
                                 <span>Ask confirmation</span>
-                                <div class="o_row oe_inline" attrs="{'invisible': [('receipt_reminder_email', '=', False)]}">
+                                <div class="o_row oe_inline" invisible="receipt_reminder_email == False">
                                     <field name="reminder_date_before_receipt" class="oe_inline"/>
                                     day(s) before
-                                    <widget name='toaster_button' button_name="send_reminder_preview" title="Preview the reminder email by sending it to yourself." attrs="{'invisible': [('id', '=', False)]}"/>
+                                    <widget name='toaster_button' button_name="send_reminder_preview" title="Preview the reminder email by sending it to yourself." invisible="id == False"/>
                                 </div>
                             </div>
                         </group>
                         <!-- custom group -->
-                        <group string="Order Type" name="order_type" colspan="4" col="4"
-                           attrs="{'invisible': [('is_agent_quote', '=', False)]}">
-                            <field name="order_type"
-                                   attrs="{'required': [('is_agent_quote', '=', True)], 'readonly': [('is_agent_quote', '=', True)]}"/>
-                            <field name="mode" readonly="0"
-                                   attrs="{'required': [('order_type', '=', 'freight')], 'readonly': [('order_type', '=', 'custom')]}"/>
-                            <field name="import_export" attrs="{'required': [('order_type', '=', 'freight')]}"/>
+                        <group string="Order Type" name="order_type"
+                           invisible="is_agent_quote == False">
+                            <field name="order_type"/>
+                            <field name="mode" readonly="0"/>
+                            <field name="import_export" required="order_type == 'freight'"/>
                             <field name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
                             <field name="carrier_name"/>
                             <field name="sale_id" readonly="1" force_save="1"/>
@@ -110,8 +106,8 @@ type="object" context="{'create_bill':True}"
                             <field name="notes2"/>
                         </group>
 
-                        <group string="Shipment Details" name="shipment_details" col="4" colspan="4"
-                           attrs="{'invisible': [('is_agent_quote', '=', False)]}">
+                        <group string="Shipment Details" name="shipment_details"
+                           invisible="is_agent_quote == False">
                             <field name="weight_uom_id" readonly="1" force_save="1"/>
                             <field name="dimension_uom_id" readonly="1" force_save="1"/>
                             <field name="opportunity_id" readonly="1" force_save="1"/>
@@ -123,20 +119,16 @@ type="object" context="{'create_bill':True}"
 <!--                            <field name="port_of_loading_id"/>-->
 
                             <field name='port_of_loading_id'
-                                   attrs="{'invisible': [('mode', 'in', ('air', 'courier'))]}"
                                    options='{"no_create": true, "no_open": true}'/>
 
                             <field name='port_of_discharge_id'
-                                   attrs="{'invisible': [('mode', 'in', ('air', 'courier'))]}"
                                    options='{"no_create": true, "no_open": true}'/>
 
                             <field name='port_of_loading_id'
-                                   attrs="{'invisible': [('mode', 'not in', ('air', 'courier'))]}"
                                    string="Departure Airport"
                                    options='{"no_create": true, "no_open": true}'/>
 
                             <field name='port_of_discharge_id'
-                                   attrs="{'invisible': [('mode', 'not in', ('air', 'courier'))]}"
                                    string="Arrival Airport"
                                    options='{"no_create": true, "no_open": true}'/>
 
@@ -144,7 +136,7 @@ type="object" context="{'create_bill':True}"
                             <field name="goods_category_id" string="Commodity Type"/>
                             <field name="hs_code"/>
                         </group>
-                        <group string="Required Services" name="required_services" colspan="4" col="4">
+                        <group string="Required Services" name="required_services">
                             <field name="freight_forwarding"/>
                             <field name="pre_cargo_carriage"/>
                             <field name="custom_clearance"/>
@@ -152,8 +144,8 @@ type="object" context="{'create_bill':True}"
                             <field name="genset"/>
                             <field name="gsa_sales"/>
                         </group>
-                        <group string="Weight Details" name="weight_details" col="4" colspan="4"
-                               attrs="{'invisible': [('is_agent_quote', '=', False)]}">
+                        <group string="Weight Details" name="weight_details"
+                               invisible="is_agent_quote == False">
                            <field name="total_pieces"/>
 								<field name="total_gross_weight"/>
 								<field name="total_value"/>
@@ -172,10 +164,9 @@ type="object" context="{'create_bill':True}"
                             <field name="tax_country_id" invisible="1"/>
                             <field name="order_line"
                                 widget="section_and_note_one2many"
-                                mode="tree,kanban"
-                                context="{'default_state': 'draft'}"
-                                attrs="{'readonly': [('state', 'in', ('done', 'cancel'))]}">
-                                <list string="Purchase Order Lines" editable="bottom">
+                                mode="list,kanban"
+                                context="{'default_state': 'draft'}">
+                                <list editable="bottom">
                                     <control>
                                         <create name="add_product_control" string="Add a product"/>
                                         <create name="add_section_control" string="Add a section" context="{'default_display_type': 'line_section'}"/>
@@ -190,38 +181,30 @@ type="object" context="{'create_bill':True}"
                                     <field name="sequence" widget="handle"/>
                                     <field
                                         name="product_id"
-                                        attrs="{
-                                            'readonly': [('state', 'in', ('purchase', 'to approve','done', 'cancel'))],
-                                            'required': [('display_type', '=', False)],
-                                        }"
                                         context="{'partner_id':parent.partner_id, 'quantity':product_qty,'uom':product_uom, 'company_id': parent.company_id}"
                                         force_save="1" domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
                                     <field name="name" widget="section_and_note_text"/>
                                     <field name="as_per_actual"/>
-                                    <field name="date_planned" optional="hide" attrs="{'required': [('display_type', '=', False)]}" force_save="1"/>
+                                    <field name="date_planned" optional="hide" required="display_type == False" force_save="1"/>
                                     <field name="account_analytic_id" optional="hide" context="{'default_partner_id':parent.partner_id}" groups="analytic.group_analytic_accounting" domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
                                     <field name="analytic_tag_ids" optional="hide" groups="analytic.group_analytic_tags" widget="many2many_tags" options="{'color_field': 'color'}" domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
                                     <field name="product_qty"/>
                                     <field name="qty_received_manual" invisible="1"/>
                                     <field name="qty_received_method" invisible="1"/>
-                                    <field name="qty_received" string="Received" attrs="{'column_invisible': [('parent.state', 'not in', ('purchase', 'done'))], 'readonly': [('qty_received_method', '!=', 'manual')]}" optional="show"/>
-                                    <field name="qty_invoiced" string="Billed" attrs="{'column_invisible': [('parent.state', 'not in', ('purchase', 'done'))]}" optional="show"/>
+                                    <field name="qty_received" string="Received" optional="show"/>
+                                    <field name="qty_invoiced" string="Billed" optional="show"/>
                                     <field name="product_uom" string="UoM" groups="uom.group_uom"
-                                        attrs="{
-                                            'readonly': [('state', 'in', ('purchase', 'done', 'cancel'))],
-                                            'required': [('display_type', '=', False)]
-                                        }"
                                         force_save="1" optional="show"/>
-                                    <field name="product_packaging_qty" attrs="{'invisible': ['|', ('product_id', '=', False), ('product_packaging_id', '=', False)]}" groups="product.group_stock_packaging" optional="show"/>
-                                    <field name="product_packaging_id" attrs="{'invisible': [('product_id', '=', False)]}" context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}" groups="product.group_stock_packaging" optional="show"/>
-                                    <field name="price_unit" attrs="{'readonly': [('qty_invoiced', '!=', 0)]}"/>
+                                    <field name="product_packaging_qty" groups="product.group_stock_packaging" optional="show"/>
+                                    <field name="product_packaging_id" invisible="product_id == False" context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}" groups="product.group_stock_packaging" optional="show"/>
+                                    <field name="price_unit" readonly="qty_invoiced != 0"/>
                                     <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use','=','purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" context="{'default_type_tax_use': 'purchase', 'search_view_ref': 'account.account_tax_view_search'}" options="{'no_create': True}" optional="show"/>
                                     <field name="price_subtotal" widget="monetary"/>
                                 </list>
                                 <form string="Purchase Order Line">
                                         <field name="state" invisible="1"/>
                                         <field name="display_type" invisible="1"/>
-                                        <group attrs="{'invisible': [('display_type', '!=', False)]}">
+                                        <group invisible="display_type != False">
                                             <group>
                                                 <field name="product_uom_category_id" invisible="1"/>
                                                 <field name="product_id"
@@ -232,21 +215,21 @@ type="object" context="{'create_bill':True}"
                                                 <label for="product_qty"/>
                                                 <div class="o_row">
                                                     <field name="product_qty"/>
-                                                    <field name="product_uom" groups="uom.group_uom" attrs="{'required': [('display_type', '=', False)]}"/>
+                                                    <field name="product_uom" groups="uom.group_uom" required="display_type == False"/>
                                                 </div>
                                                 <field name="qty_received_method" invisible="1"/>
-                                                <field name="qty_received" string="Received Quantity" attrs="{'invisible': [('parent.state', 'not in', ('purchase', 'done'))], 'readonly': [('qty_received_method', '!=', 'manual')]}"/>
-                                                <field name="qty_invoiced" string="Billed Quantity" attrs="{'invisible': [('parent.state', 'not in', ('purchase', 'done'))]}"/>
-                                                <field name="product_packaging_id" attrs="{'invisible': [('product_id', '=', False)]}" context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}" groups="product.group_stock_packaging" />
+                                                <field name="qty_received" string="Received Quantity"/>
+                                                <field name="qty_invoiced" string="Billed Quantity"/>
+                                                <field name="product_packaging_id" invisible="product_id == False" context="{'default_product_id': product_id, 'tree_view_ref':'product.product_packaging_tree_view', 'form_view_ref':'product.product_packaging_form_view'}" groups="product.group_stock_packaging" />
                                                 <field name="price_unit"/>
                                                 <field name="taxes_id" widget="many2many_tags" domain="[('type_tax_use', '=', 'purchase'), ('company_id', '=', parent.company_id), ('country_id', '=', parent.tax_country_id)]" options="{'no_create': True}"/>
                                             </group>
                                             <group>
-                                                <field name="date_planned" widget="date" attrs="{'required': [('display_type', '=', False)]}"/>
-                                                <field name="account_analytic_id" colspan="2" domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]" groups="analytic.group_analytic_accounting"/>
+                                                <field name="date_planned" widget="date" required="display_type == False"/>
+                                                <field name="account_analytic_id" domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]" groups="analytic.group_analytic_accounting"/>
                                                 <field name="analytic_tag_ids" groups="analytic.group_analytic_tags" domain="['|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]" widget="many2many_tags" options="{'color_field': 'color'}"/>
                                             </group>
-                                            <group colspan="12">
+                                            <group>
                                             <notebook>
                                                 <page string="Notes" name="notes">
                                                     <field name="name"/>
@@ -257,9 +240,9 @@ type="object" context="{'create_bill':True}"
                                             </notebook>
                                             </group>
                                         </group>
-                                        <label for="name" string="Section Name (eg. Products, Services)" attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
-                                        <label for="name" string="Note" attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
-                                        <field name="name" nolabel="1"  attrs="{'invisible': [('display_type', '=', False)]}"/>
+                                        <label for="name" string="Section Name (eg. Products, Services)" invisible="display_type != 'line_section'"/>
+                                        <label for="name" string="Note" invisible="display_type != 'line_note'"/>
+                                        <field name="name" nolabel="1"  invisible="display_type == False"/>
                                  </form>
                                  <kanban class="o_kanban_mobile">
                                      <field name="name"/>
@@ -319,7 +302,7 @@ type="object" context="{'create_bill':True}"
                                  </kanban>
                             </field>
                             <group class="oe_subtotal_footer oe_right">
-                                <field name="tax_totals_json" widget="account-tax-totals-field" nolabel="1" colspan="2"/>
+                                <field name="tax_totals_json" widget="account-tax-totals-field" nolabel="1"/>
                                 <field name="currency_conversion_rate" required="1"/>
                                 <field name="total_cur_conversion_amount" class="oe_subtotal_footer_separator" readonly="1"/>
                                 <field name="company_currency_id"  invisible="1"/>
@@ -331,7 +314,7 @@ type="object" context="{'create_bill':True}"
 
                         <page name="freight_order_line" string="Freight Details">
                            <field name="freight_order_line">
-                               <list string="Lead Line">
+                               <list>
                                    <field name="product_id" options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                    <field name="goods_desc"/>
                                    <field name="commodity_type"/>
@@ -344,7 +327,7 @@ type="object" context="{'create_bill':True}"
 
                                </list>
                                <form string="Lead Order Line"> 
-                                   <!--                                        <group col="4" colspan="4" name="shipper_details" string="Shipper Details">-->
+                                   <!--                                        <group name="shipper_details" string="Shipper Details">-->
                                    <!--                                            <field name="consignor_id"/>-->
                                    <!--                                            <field name="consignor_name"/>-->
                                    <!--&lt;!&ndash;                                            <label for="consignor_street" string="Address"/>&ndash;&gt;-->
@@ -357,7 +340,7 @@ type="object" context="{'create_bill':True}"
                                    <!--                                                    <field name="consignor_country_id" placeholder="Country" class="o_address_country" options="{'no_open': True,'no_create':True,'no_edit':True}" string="Country"/>-->
                                    <!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
                                    <!--                                        </group>-->
-                                   <group col="4" colspan="4" name="shipment_details" string="Shipment Details">
+                                   <group name="shipment_details" string="Shipment Details">
                                        <field name="product_id" string="Service" required="1"
                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                        <field name="goods_desc" required="0"/>
@@ -373,56 +356,50 @@ type="object" context="{'create_bill':True}"
                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                        <field name="loose_bool"/>
                                    </group>
-                                   <group col="4" colspan="4" string="Container Details" name="container_detail"
-                                          attrs="{'invisible': [('full_container_service', '=', False)]}">
+                                   <group string="Container Details" name="container_detail"
+                                          invisible="full_container_service == False">
                                        <field name="container_type_id"
-                                              attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                              invisible="full_container_service == False"/>
                                        <field name="capacity_in_mt"
-                                              attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                              invisible="full_container_service == False"/>
                                        <field name="container_qty"
-                                              attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                              invisible="full_container_service == False"/>
                                    </group>
-                                   <group col="4" colspan="4" string="Gross Weight Per Pack" name="weight">
-                                       <field name="weight_input" attrs="{'invisible': [('loose_bool', '=', True)]}"/>
+                                   <group string="Gross Weight Per Pack" name="weight">
+                                       <field name="weight_input" invisible="loose_bool == True"/>
                                        <field name="weight_uom_id" readonly="1" force_save="1"
                                               domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"
                                               options="{'no_open': True,'no_create':True,'no_edit':True}"
                                        />
                                        <field name="weight_per_package" string="Weight (KG)" readonly="1" force_save="1"
-                                              attrs="{'invisible': [('loose_bool', '=', True)]}"/>
+                                              invisible="loose_bool == True"/>
                                    </group>
-                                   <group col="4" colspan="4"
-                                          attrs="{'invisible': [('full_container_service', '=', True)]}"
+                                   <group
+                                          invisible="full_container_service == True"
                                           string="Volumetric Weight Per Pack" name="volumetric">
-                                       <field name="length_per_package" string="Length (cm)"
-                                              attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
-                                       <field name="width_per_package" string="Width (cm)"
-                                              attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
-                                       <field name="height_per_package" string="Height (cm)"
-                                              attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
+                                       <field name="length_per_package" string="Length (cm)"/>
+                                       <field name="width_per_package" string="Width (cm)"/>
+                                       <field name="height_per_package" string="Height (cm)"/>
                                        <field name="dimension_uom_id" string="Length UoM" readonly="1" force_save="1"
                                               domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Length / Distance')]"
-                                              options="{'no_open': True,'no_create':True,'no_edit':True}"
-                                              attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
+                                              options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                        <div class="o_td_label">
                                            <label for="volume_cbcm" string="Volume (Cubic CM)"
                                                   style="font-weight:bold;"
-                                                  attrs="{'invisible': [('uom_name', '!=', 'cm')]}"/>
+                                                  invisible="uom_name != 'cm'"/>
                                            <label for="volume_cbcm" string="Volume (Cubic Inches)"
                                                   style="font-weight:bold;"
-                                                  attrs="{'invisible': [('uom_name', '!=', 'in')]}"/>
+                                                  invisible="uom_name != 'in'"/>
                                        </div>
-                                       <field name="volume_cbcm" nolabel="1"
-                                              attrs="{'invisible': [('uom_name', 'not in', ('in', 'cm'))]}"/>
+                                       <field name="volume_cbcm" nolabel="1"/>
                                        <field name="volume" string="Volume (cbm)"/>
                                        <field name="weight_factor" readonly="1" force_save="1"/>
                                        <field name="volumetric_weight"/>
                                        <field name="uom_name" invisible="1"/>
                                    </group>
-                                   <group col="4" colspan="4" string="Chargeable &amp; Total Weight"
+                                   <group string="Chargeable &amp; Total Weight"
                                           name="chargeable_weight">
-                                       <field name="total_weight" invisible="0" force_save="1"
-                                              attrs="{'readonly': [('loose_bool', '!=', True)],'required': [('loose_bool', '=', True)]}"/>
+                                       <field name="total_weight" invisible="0" force_save="1"/>
                                        <field name="chargeable_weight" readonly="1" force_save="1"/>
                                        <field name="total_chargeable_weight"/>
                                        <field name="total_volume_cbm"/>
@@ -432,7 +409,7 @@ type="object" context="{'create_bill':True}"
 
                                </form>
                            </field>
-<!--                            <group col="4" colspan="4" name="footer_total">-->
+<!--                            <group name="footer_total">-->
 <!--                                <field name="total_gross_weight"/>-->
 <!--                                <field name="sum_total_volumetric_weight"/>-->
 <!--                                <field name="pivot_weight"/>-->
@@ -441,7 +418,7 @@ type="object" context="{'create_bill':True}"
                         </page>
                         <page string="Container Details" name="container_details">
                                <field name="purchase_container_line_ids">
-                                   <list string="Container Line" editable="bottom">
+                                   <list editable="bottom">
                                        <field name="container_type_id" required="1"
                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                        <field name="capacity_in_mt" readonly="1" force_save="1"/>
@@ -459,9 +436,9 @@ type="object" context="{'create_bill':True}"
                                     <field name="origin"/>
                                 </group>
                                 <group name="invoice_info">
-                                    <field name="invoice_status" attrs="{'invisible': [('state', 'in', ('draft', 'sent', 'to approve', 'cancel'))]}"/>
-                                    <field name="payment_term_id" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}" options="{'no_create': True}"/>
-                                    <field name="fiscal_position_id" options="{'no_create': True}" attrs="{'readonly': ['|', ('invoice_status','=', 'invoiced'), ('state', '=', 'done')]}"/>
+                                    <field name="invoice_status"/>
+                                    <field name="payment_term_id" options="{'no_create': True}"/>
+                                    <field name="fiscal_position_id" options="{'no_create': True}"/>
                                 </group>
                             </group>
                         </page>
@@ -489,13 +466,11 @@ type="object" context="{'create_bill':True}"
                     <field name="is_agent_quote" invisible="1"/>
                 </xpath>
                 <xpath expr="//notebook" position="before">
-                    <group string="Order Type" name="order_type" colspan="4" col="4"
-                           attrs="{'invisible': [('is_agent_quote', '=', False)]}">
-                        <field name="order_type"
-                               attrs="{'required': [('is_agent_quote', '=', True)], 'readonly': [('is_agent_quote', '=', True)]}"/>
-                        <field name="mode" readonly="1"
-                               attrs="{'required': [('order_type', '=', 'freight')], 'readonly': [('order_type', '=', 'custom')]}"/>
-                        <field name="import_export" attrs="{'required': [('order_type', '=', 'freight')]}"/>
+                    <group string="Order Type" name="order_type"
+                           invisible="is_agent_quote == False">
+                        <field name="order_type"/>
+                        <field name="mode" readonly="1"/>
+                        <field name="import_export" required="order_type == 'freight'"/>
                         <field name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
                         <field name="carrier_name"/>
 
@@ -505,8 +480,8 @@ type="object" context="{'create_bill':True}"
                         <field name="gen_hazmat"/>
                         <field name="notes2"/>
                     </group>
-                    <group string="Shipment Details" name="shipment_details" col="4" colspan="4"
-                           attrs="{'invisible': [('is_agent_quote', '=', False)]}">
+                    <group string="Shipment Details" name="shipment_details"
+                           invisible="is_agent_quote == False">
                         <field name="weight_uom_id" readonly="1" force_save="1"/>
                         <field name="dimension_uom_id" readonly="1" force_save="1"/>
                         <field name="opportunity_id" readonly="1" force_save="1"/>
@@ -518,8 +493,8 @@ type="object" context="{'create_bill':True}"
                         <field name="incoterm_id"/>
                         <field name="goods_category_id" string="Commodity Type"/>
                     </group>
-                    <group string="Weight Details" name="weight_details" col="4" colspan="4"
-                           attrs="{'invisible': [('is_agent_quote', '=', False)]}">
+                    <group string="Weight Details" name="weight_details"
+                           invisible="is_agent_quote == False">
                         <field name="total_pieces"/>
                         <field name="total_gross_weight"/>
                         <field name="total_value"/>
@@ -532,7 +507,7 @@ type="object" context="{'create_bill':True}"
                 <xpath expr="//page[@name='purchase_delivery_invoice']" position="before">
                     <page name="freight_order_line" string="Freight Details">
                         <field name="freight_order_line">
-                            <list string="Lead Line">
+                            <list>
                                 <field name="product_id" options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                 <field name="goods_desc"/>
                                 <field name="commodity_type"/>
@@ -543,7 +518,7 @@ type="object" context="{'create_bill':True}"
                                 <field name="total_chargeable_weight"/>
                             </list>
                             <form string="Lead Order Line"> -->
-                                <!--                                        <group col="4" colspan="4" name="shipper_details" string="Shipper Details">-->
+                                <!--                                        <group name="shipper_details" string="Shipper Details">-->
                                 <!--                                            <field name="consignor_id"/>-->
                                 <!--                                            <field name="consignor_name"/>-->
                                 <!--&lt;!&ndash;                                            <label for="consignor_street" string="Address"/>&ndash;&gt;-->
@@ -556,7 +531,7 @@ type="object" context="{'create_bill':True}"
                                 <!--                                                    <field name="consignor_country_id" placeholder="Country" class="o_address_country" options="{'no_open': True,'no_create':True,'no_edit':True}" string="Country"/>-->
                                 <!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
                                 <!--                                        </group>-->
-                                <!-- <group col="4" colspan="4" name="shipment_details" string="Shipment Details">
+                                <!-- <group name="shipment_details" string="Shipment Details">
                                     <field name="product_id" string="Service" required="1"
                                            options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                     <field name="goods_desc" required="0"/>
@@ -571,56 +546,50 @@ type="object" context="{'create_bill':True}"
                                            options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                     <field name="loose_bool"/>
                                 </group>
-                                <group col="4" colspan="4" string="Container Details" name="container_detail"
-                                       attrs="{'invisible': [('full_container_service', '=', False)]}">
+                                <group string="Container Details" name="container_detail"
+                                       invisible="full_container_service == False">
                                     <field name="container_type_id"
-                                           attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                           invisible="full_container_service == False"/>
                                     <field name="capacity_in_mt"
-                                           attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                           invisible="full_container_service == False"/>
                                     <field name="container_qty"
-                                           attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                           invisible="full_container_service == False"/>
                                 </group>
-                                <group col="4" colspan="4" string="Gross Weight Per Pack" name="weight">
-                                    <field name="weight_input" attrs="{'invisible': [('loose_bool', '=', True)]}"/>
+                                <group string="Gross Weight Per Pack" name="weight">
+                                    <field name="weight_input" invisible="loose_bool == True"/>
                                     <field name="weight_uom_id" readonly="1" force_save="1"
                                            domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"
                                            options="{'no_open': True,'no_create':True,'no_edit':True}"
                                     />
                                     <field name="weight_per_package" string="Weight (KG)" readonly="1" force_save="1"
-                                           attrs="{'invisible': [('loose_bool', '=', True)]}"/>
+                                           invisible="loose_bool == True"/>
                                 </group>
-                                <group col="4" colspan="4"
-                                       attrs="{'invisible': [('full_container_service', '=', True)]}"
+                                <group
+                                       invisible="full_container_service == True"
                                        string="Volumetric Weight Per Pack" name="volumetric">
-                                    <field name="length_per_package" string="Length (cm)"
-                                           attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
-                                    <field name="width_per_package" string="Width (cm)"
-                                           attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
-                                    <field name="height_per_package" string="Height (cm)"
-                                           attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
+                                    <field name="length_per_package" string="Length (cm)"/>
+                                    <field name="width_per_package" string="Width (cm)"/>
+                                    <field name="height_per_package" string="Height (cm)"/>
                                     <field name="dimension_uom_id" string="Length UoM" readonly="1" force_save="1"
                                            domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Length / Distance')]"
-                                           options="{'no_open': True,'no_create':True,'no_edit':True}"
-                                           attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
+                                           options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                     <div class="o_td_label">
                                         <label for="volume_cbcm" string="Volume (Cubic CM)"
                                                style="font-weight:bold;"
-                                               attrs="{'invisible': [('uom_name', '!=', 'cm')]}"/>
+                                               invisible="uom_name != 'cm'"/>
                                         <label for="volume_cbcm" string="Volume (Cubic Inches)"
                                                style="font-weight:bold;"
-                                               attrs="{'invisible': [('uom_name', '!=', 'in')]}"/>
+                                               invisible="uom_name != 'in'"/>
                                     </div>
-                                    <field name="volume_cbcm" nolabel="1"
-                                           attrs="{'invisible': [('uom_name', 'not in', ('in', 'cm'))]}"/>
+                                    <field name="volume_cbcm" nolabel="1"/>
                                     <field name="volume" string="Volume (cbm)"/>
                                     <field name="weight_factor" readonly="1" force_save="1"/>
                                     <field name="volumetric_weight"/>
                                     <field name="uom_name" invisible="1"/>
                                 </group>
-                                <group col="4" colspan="4" string="Chargeable &amp; Total Weight"
+                                <group string="Chargeable &amp; Total Weight"
                                        name="chargeable_weight">
-                                    <field name="total_weight" invisible="0" force_save="1"
-                                           attrs="{'readonly': [('loose_bool', '!=', True)],'required': [('loose_bool', '=', True)]}"/>
+                                    <field name="total_weight" invisible="0" force_save="1"/>
                                     <field name="chargeable_weight" readonly="1" force_save="1"/>
                                     <field name="total_chargeable_weight"/>
                                     <field name="total_volume_cbm"/>
@@ -632,7 +601,7 @@ type="object" context="{'create_bill':True}"
                     </page>
                        <page string="Container Details" name="container_details">
                             <field name="purchase_container_line_ids">
-                                <list string="Container Line" editable="bottom">
+                                <list editable="bottom">
                                     <field name="container_type_id" required="1"
                                            options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                     <field name="capacity_in_mt" readonly="1" force_save="1"/>
@@ -648,7 +617,7 @@ type="object" context="{'create_bill':True}"
             <field name="name">purchase.order.form.inherit</field>
             <field name="model">purchase.order</field>
             <field name="arch" type="xml">
-                <list string="Purchase Order" multi_edit="1" decoration-bf="message_unread==True"
+                <list multi_edit="1" decoration-bf="message_unread==True"
                       class="o_purchase_order" js_class="purchase_list_dashboard" sample="1">
                     <field name="message_unread" invisible="1"/>
                     <field name="partner_ref" optional="hide"/>
@@ -660,7 +629,6 @@ type="object" context="{'create_bill':True}"
                     <field name="date_planned" invisible="context.get('quotation_only', False)" optional="show"/>
                     <field name="user_id" optional="show" widget="many2one_avatar_user"/>
                     <field name="date_order"
-                           attrs="{'invisible': ['|', '|', ('state', '=', 'purchase'), ('state', '=', 'done'), ('state', '=', 'cancel')]}"
                            invisible="not context.get('quotation_only', False)" widget="remaining_days"
                            optional="show"/>
                     <field name="activity_ids" widget="list_activity" optional="show"/>
@@ -682,7 +650,7 @@ type="object" context="{'create_bill':True}"
         <record model="ir.actions.act_window" id="action_ff_agent_quote_id">
             <field name="name">Vendor Quote</field>
             <field name="res_model">purchase.order</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="domain">[('is_agent_quote','=',True), ('state','in',('draft', 'sent'))]</field>
             <field name="context">{'default_is_agent_quote': True}</field>
         </record>
@@ -703,7 +671,7 @@ type="object" context="{'create_bill':True}"
         <record model="ir.actions.act_window" id="action_ff_agent_order_id">
             <field name="name">Vendor Order</field>
             <field name="res_model">purchase.order</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="domain">[('is_agent_quote','=',True), ('state','not in',('draft', 'sent'))]</field>
             <field name="context">{'default_is_agent_quote': True}</field>
         </record>

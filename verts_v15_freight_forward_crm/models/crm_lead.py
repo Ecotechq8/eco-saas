@@ -143,6 +143,7 @@ class CrmLead(models.Model):
         for line in self.order_line:
             vals = {
                 "wizard_id": order_id.id,
+                "lead_line_id": line.id,
                 "box_count": line.product_uom_quantity,
                 "commodity_type": line.commodity_type and line.commodity_type.id or False,
                 "hs_code": line.hs_code,
@@ -155,7 +156,6 @@ class CrmLead(models.Model):
         view = self.env.ref('verts_v15_freight_forward_crm.view_box_details_wizard_form')
         return {
             'type': 'ir.actions.act_window',
-            'view_type': 'form',
             'view_mode': 'form',
             'res_model': 'box.details.wizard',
             'views': [(view.id, 'form')],
@@ -308,16 +308,14 @@ class CrmLead(models.Model):
             }
 
     def action_request_price(self):
-        channel_id = self.env.ref('verts_v15_freight_forward_crm.channel_ff_price_request_leads_id')
-        menu_id = self.env.ref('verts_v15_freight_forward_crm.menu_action_crm_opp_freight_forw_crm').id
-        print(channel_id, 'channel_idchannel_id')
+        channel_id = self.env.ref('verts_v15_freight_forward_crm.channel_ff_price_request_leads_id', raise_if_not_found=False)
+        menu = self.env.ref('verts_v15_freight_forward_crm.menu_action_crm_opp_freight_forw_crm', raise_if_not_found=False)
         action = self.env['ir.model.data']._xmlid_to_res_id(
             'verts_v15_freight_forward_crm.freight_forward_crm_crm_lead_all_leads')
-        print("issues ======", )
-        if menu_id and action:
+        if channel_id and menu and action:
             message = _(
                 'Please provide price for the lead: <a href="/web#id=%s&action=%s&model=crm.lead&view_mode=form&menu_id=%s" target="_blank">[%s]%s</a>' % (
-                    self.id, action, menu_id, self.code, self.name))
+                    self.id, action, menu.id, self.code, self.name))
             channel_id.message_post(
                 subject='Lead Generated',
                 body=message,
@@ -332,13 +330,18 @@ class CrmLead(models.Model):
                 emails = []
                 if self.service_type and self.service_type.email_partner_ids:
                     for partner in self.service_type.email_partner_ids:
-                        emails.append(partner.email)
+                        if partner.email:
+                            emails.append(partner.email)
+                if not emails:
+                    raise UserError(_('No recipient email addresses were found on the selected service type.'))
                 email_to = str(','.join(emails))
                 template.send_mail(
                     self.id,
                     force_send=True,
                     raise_exception=False,
                     email_values={'email_to': email_to})
+            else:
+                raise UserError(_('The freight price request email template is missing.'))
         else:
             raise UserError(_(
                 'Outgoing Mail server not configured.'))
@@ -359,9 +362,9 @@ class CrmLead(models.Model):
             "res_model": "purchase.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '!=', 'purchase')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.custom_purchase_order_form').id, 'form'),
             ],
         }
@@ -374,9 +377,9 @@ class CrmLead(models.Model):
             "res_model": "purchase.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '=', 'purchase')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.custom_purchase_order_form').id, 'form'),
             ],
         }
@@ -389,9 +392,9 @@ class CrmLead(models.Model):
             "res_model": "sale.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '!=', 'sale')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.sale_order_export_form_view_inherit').id, 'form'),
             ],
         }
@@ -404,9 +407,9 @@ class CrmLead(models.Model):
             "res_model": "sale.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '=', 'sale')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.sale_order_export_form_view_inherit').id, 'form'),
             ],
         }
@@ -481,7 +484,6 @@ class CrmLead(models.Model):
             view = self.env.ref('verts_v15_freight_forward.custom_purchase_order_form')
             return {
                 'type': 'ir.actions.act_window',
-                'view_type': 'form',
                 'view_mode': 'form',
                 'res_model': 'purchase.order',
                 'views': [(view.id, 'form')],
@@ -578,7 +580,6 @@ class CrmLead(models.Model):
                 view = self.env.ref('verts_v15_freight_forward.sale_order_export_form_view_inherit')
                 return {
                     'type': 'ir.actions.act_window',
-                    'view_type': 'form',
                     'view_mode': 'form',
                     'res_model': 'sale.order',
                     'views': [(view.id, 'form')],
@@ -677,7 +678,6 @@ class FreightCrmleadline(models.Model):
                   'lead_id.consignor_street2', 'lead_id.consignor_city_id', 'lead_id.consignor_state_id',
                   'lead_id.consignor_country_id')
     def onchange_get_shipper_details(self):
-        print("Shipper ======", )
         if self.lead_id.consignor_id:
             self.consignor_id = self.lead_id.consignor_id.id
         if self.lead_id.consignor_name:

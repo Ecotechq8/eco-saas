@@ -1,6 +1,6 @@
 from odoo import api,fields,models, _
 from odoo.exceptions import UserError
-from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
+# from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT, DATETIME_FORMATS_MAP, float_compare
 
 
 class Bank(models.Model):
@@ -12,6 +12,12 @@ class Bank(models.Model):
     bank_name = fields.Many2one('res.bank', string='Bank Name')
     swift_code = fields.Char(string='Swift Code')
     ad_code = fields.Char(string='AD Code')
+    prefix = fields.Char(string='Prefix')
+    suffix = fields.Char(string='Suffix')
+    bic = fields.Char(string='BIC')
+    account_payable = fields.Many2one('account.account', string='Account Payable')
+    account_receivable = fields.Many2one('account.account', string='Account Receivable')
+    identification_id = fields.Many2one('res.bank.identification', string='Identification')
 
 
 class BankAccountType(models.Model):
@@ -25,12 +31,13 @@ class BankAccountType(models.Model):
 
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
-    
+
     check_employee = fields.Boolean(string='Check Employee', default=False)
     state_id = fields.Many2one('res.country.state', string='State', change_default=True)
     inter_id = fields.Many2one('internation.zone', string='International Zone')
     domestic_id = fields.Many2one('domestic.zone', string='Domestic Zone')
-    
+    removable = fields.Boolean(string='Removable', default=True)
+
     def action_create_partner(self):
         """ Create Partner.
         @return: True
@@ -61,18 +68,17 @@ class HrEmployee(models.Model):
 
     @api.model
     def create(self, data):
-        employee_id = super(HrEmployee, self).create(data)
+        employee_record = super(HrEmployee, self).create(data)
         if 'inter_id' in data and data['inter_id']:
-            self.env['hr.employee.list'].create({'employee_id': employee_id.id, 'inter_id': data['inter_id']})
+            self.env['hr.employee.list'].create({'employee_id': employee_record.id, 'inter_id': data['inter_id']})
         if 'domestic_id' in data and data['domestic_id']:
-            self.env['hr.employee.list'].create({'employee_id': employee_id.id, 'domestic_id':data['domestic_id']})
+            self.env['hr.employee.list'].create({'employee_id': employee_record.id, 'domestic_id':data['domestic_id']})
         try:
             mail_group_id = self.env['ir.model.data']._xmlid_to_res_id('mail.group_all_employees')
-            employee = self.browse(employee_id)
-            self.env['mail.group'].browse(mail_group_id).message_post(body='Welcome to %s! Please help them take the first steps with OpenERP!' % (employee.name))
-        except:
+            self.env['mail.group'].browse(mail_group_id).message_post(body='Welcome to %s! Please help them take the first steps with OpenERP!' % (employee_record.name))
+        except Exception:
             pass  # group deleted: do not push a message
-        return employee_id
+        return employee_record
 
     @api.onchange('country_id')
     def onchange_country_id(self):
@@ -84,7 +90,7 @@ class HrEmployee(models.Model):
         if region_ids:
             self.int_region = region_ids[0]
         
-    @api.onchange('state_id')  
+    @api.onchange('state_id')
     def onchange_state_id(self):
         # Odoo 18: Direct assignment instead of {'value': ...}
         if not self.state_id:
@@ -93,12 +99,12 @@ class HrEmployee(models.Model):
         region_ids = self.env['domestic.state'].search([('state_name', '=', self.state_id.id)])
         if region_ids:
             self.domt_region = region_ids[0]
-    
+
 
 class InternationZone(models.Model):
     _name = "internation.zone"
     _description = "Employee Internation Zone"
-    
+
     name = fields.Char(string='International Zone', required=True)
     code = fields.Char(string='Code', required=True)
     note = fields.Text(string='Description')
@@ -113,16 +119,15 @@ class InternationZone(models.Model):
         for each in inter_region_id.employee_list_ids:
             each.write({'inter_id': inter_region_id.id})
         return inter_region_id
-    
+
     def write(self, vals):
         if 'employee_list_ids' in vals:
             for each in self.employee_list_ids:
                 each.write({'inter_id': False})
         inter_id = super(InternationZone, self).write(vals)
         for each in self.employee_list_ids:
-            context = {'region': 1}
             each.write({'inter_id': self.id})
-        return inter_id 
+        return inter_id
 
 
 class DomesticZone(models.Model):
@@ -140,30 +145,22 @@ class DomesticZone(models.Model):
     working_hours = fields.Float(string='Working Hours')
     short_leave_hours = fields.Float(string='Short Leave Hours')
     domestic_region_bool = fields.Boolean(string='Dont Delete')
-    
-    # def unlink(self):
-    #     for rec in self:
-    #         if rec.domestic_region_bool:
-    #             raise UserError(_('You can not delete this record'))
-    #
-    #     return super(employee_domestic_region, rec).unlink()
-    
+
     @api.model
     def create(self, vals):
         domestic_region_id = super(DomesticZone, self).create(vals)
         for each in domestic_region_id.employee_list_ids:
             each.employee_id.write({'domestic_id': domestic_region_id.id})
         return domestic_region_id
-        
+
     def write(self, vals):
         if 'employee_list_ids' in vals:
             for each in self.employee_list_ids:
-                emp_write = self.env['hr.employee'].write({'domestic_id': False})
+                each.employee_id.write({'domestic_id': False})
         inter_id = super(DomesticZone, self).write(vals)
         for each in self.employee_list_ids:
-            context = {'region': 1}
-            emp_write = each.employee_id.write({'domestic_id': self.id})
-        return inter_id 
+            each.employee_id.write({'domestic_id': self.id})
+        return inter_id
 
 
 class InternationalCountry(models.Model):
@@ -346,10 +343,11 @@ class Ports(models.Model):
 class ContainerType(models.Model):
     _name = "container.type"
     _description = "Container Type"
-    
+
     name = fields.Char(string='Container Type')
     capacity = fields.Float(string='Container Capacity')
     description = fields.Char(string='Description')
+    sequence_size = fields.Integer(string='Sequence Size', default=10)
 
     # def name_get(self):
     #     result = []
@@ -369,6 +367,9 @@ class PointOfStuffing(models.Model):
     _description = "Point Of Stuffing"
 
     name = fields.Char(string='Name')
+    country_id = fields.Many2one('res.country', string='Country')
+    state_id = fields.Many2one('res.country.state', string='State')
+    city_id = fields.Many2one('cities.basic.masters', string='City')
 
 
 class ResIndustry(models.Model):
@@ -377,6 +378,8 @@ class ResIndustry(models.Model):
 
     name = fields.Char(string='Industry')
     company_id = fields.Many2one('res.company', string='Company', default=lambda self: self.env.user.company_id)
+    type = fields.Selection([('internal', 'Internal'), ('external', 'External')], string='Type', default='internal')
+    is_default = fields.Boolean(string='Is Default', default=False)
 
 
 

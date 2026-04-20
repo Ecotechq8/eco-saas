@@ -1,8 +1,4 @@
-from . import purchase
-from . import quote_comparision
+# -*- coding: utf-8 -*-
+
 from . import request_for_quotation
-from . import purchase_config
-from . import res_comapany
-
-
-
+from . import purchase_inherit

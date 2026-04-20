@@ -1,55 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<data>
-		<record id="verts_company" model="ir.ui.view">
-			<field name="name">res.company.mrp.config</field>
-			<field name="model">res.company</field>
-			<field name="inherit_id" ref="base.view_company_form" />
-			<field name="arch" type="xml">
-				<xpath expr="//field[@name='vat']" position="replace">
-					<field name="vat" string="GSTIN" />
-				</xpath>
-				<notebook position="inside">
-					<page string="Purchase Configuration">
-						<group name='purchase_grp'>
-							<field name="po_lead" />
-							<field name="po_double_validation" widget="radio" />
-							<field name="po_double_validation_amount"
-								attrs="{'invisible': [('po_double_validation', '=', 'one_step')]}" />
-							<field name="po_triple_validation_amount"
-								attrs="{'invisible': [('po_double_validation', 'in', ('one_step','two_step'))]}" />
-							<field name="po_fourth_validation_amount"
-								attrs="{'invisible': [('po_double_validation', 'in', ('one_step','two_step','three_step'))]}" />
-							<field name="po_fifth_validation_amount"
-								attrs="{'invisible': [('po_double_validation', 'in', ('one_step','two_step','three_step','four_step'))]}" />
-						    <field name="is_doc" invisible="1"/>
-						    <field name="doc_id_type" attrs="{'invisible':[('is_doc','=', False)]}"/>
-
-						</group>
-					</page>
-				</notebook>
-				<notebook position="inside">
-					<page string="Mail Configuration">
-						<group>
-							<field name="pi_submission" widget="radio" />
-							<field name="pi_submission_template_id"
-								options="{'no_create': True}" />
-							<field name="pi_approve" widget="radio" />
-							<field name="pi_approve_template_id"
-								options="{'no_create': True}" />
-						</group>
-						<group>
-							<field name="po_submission" widget="radio" />
-							<field name="po_submission_template_id"
-								options="{'no_create': True}" />
-							<field name="po_approve" widget="radio" />
-							<field name="po_approve_template_id"
-								options="{'no_create': True}" />
-						</group>
-					</page>
-				</notebook>
-			</field>
-		</record>
-
-	</data>
+    <data>
+        <!-- Res Company View Placeholder -->
+    </data>
 </odoo>

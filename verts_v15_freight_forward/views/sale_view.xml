@@ -11,48 +11,42 @@
                         <field name="authorized_transaction_ids" invisible="1"/>
                         <button name="payment_action_capture" type="object"
                                 string="Capture Transaction" class="oe_highlight"
-                                attrs="{'invisible': [('authorized_transaction_ids', '=', [])]}"/>
+                                invisible="authorized_transaction_ids == []"/>
                         <button name="payment_action_void" type="object"
                                 string="Void Transaction"
                                 confirm="Are you sure you want to void the authorized transaction? This action can't be undone."
-                                attrs="{'invisible': [('authorized_transaction_ids', '=', [])]}"/>
+                                invisible="authorized_transaction_ids == []"/>
                         <button name="action_quotation_send" string="Send by Email"
-                                type="object" states="draft" class="btn-primary"/>
+                                type="object" invisible="state != 'draft'" class="btn-primary"/>
                         <button name="action_quotation_send" type="object"
                                 string="Send PRO-FORMA Invoice"
                                 groups="sale.group_proforma_sales" class="btn-primary"
-                                attrs="{'invisible': ['|', ('state', '!=', 'draft'), ('invoice_count','&gt;=',1)]}"
+                                invisible="state != 'draft' or invoice_count &gt;= 1"
                                 context="{'proforma': True}"/>
                         <button name="action_confirm" id="action_confirm"
                                 string="Confirm" class="btn-primary" type="object"
-                                attrs="{'invisible': [('state', 'not in', ['sent'])]}"/>
+                                invisible="state not in ['sent']"/>
                         <button name="action_confirm" string="Confirm"
                                 type="object"
-                                attrs="{'invisible': [('state', 'not in', ['draft'])]}"/>
-                        <button name="preview_sale_order" type="object"
-                                string="Preview"/>
+                                invisible="state not in ['draft']"/>
+<!--                        <button name="preview_sale_order" type="object"-->
+<!--                                string="Preview"/>-->
                         <button name="action_quotation_send" type="object"
                                 string="Send PRO-FORMA Invoice"
                                 groups="sale.group_proforma_sales"
-                                attrs="{'invisible': ['|', ('state', '=', 'draft'), ('invoice_count','&gt;=',1)]}"
                                 context="{'proforma': True}"/>
                         <button name="action_quotation_send" string="Send by Email"
-                                type="object" states="sent,sale"/>
-                        <button name="action_cancel" states="draft,sent,sale"
+                                type="object"/>
+                        <button name="action_cancel"
                                 type="object" string="Cancel"/>
-                        <button name="action_draft" states="cancel" type="object"
+                        <button name="action_draft" type="object"
                                 string="Set to Quotation"/>
-                        <button name="action_done" type="object" string="Lock"
-                                states="sale"
-                                help="If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."/>
-                        <button name="action_unlock" type="object" string="Unlock"
-                                states="done" groups="sales_team.group_sale_manager"/>
+                        <!-- <button name="action_done" removed for Odoo 18 -->
+                        <!-- <button name="action_unlock" removed for Odoo 18 -->
                         <button name="create_cargo_order"
-                                string="Create Cargo Order"
-                                states="sale" type="object"/>
+                                string="Create Cargo Order" type="object"/>
                         <button name="create_job_order"
-                                string="Create Job Order"
-                                states="sale" type="object"/>
+                                string="Create Job Order" type="object"/>
                         <field name="is_load_ecgc_insurance" invisible="1"/>
                         <field name="state" widget="statusbar"
                                statusbar_visible="draft,sent,sale"/>
@@ -64,12 +58,12 @@
                                     name="action_view_delivery"
                                     class="oe_stat_button"
                                     icon="fa-truck"
-                                    attrs="{'invisible': [('delivery_count', '=', 0)]}" groups="base.group_user">
+                                    invisible="delivery_count == 0" groups="base.group_user">
                                 <field name="delivery_count" widget="statinfo" string="Delivery"/>
                             </button>
                             <button name="action_view_invoice" type="object"
                                     class="oe_stat_button" icon="fa-pencil-square-o"
-                                    attrs="{'invisible': [('invoice_count', '=', 0)]}">
+                                    invisible="invoice_count == 0">
                                 <field name="invoice_count" widget="statinfo"
                                        string="Invoices"/>
                             </button>
@@ -83,7 +77,6 @@
                         <group>
                             <group>
                                 <field name="partner_id" widget="res_partner_many2one"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        options='{"always_reload": true, "no_create": true, "no_open": true}'/>
                                 <field name="country_id" invisible="1"/>
                                 <field name="export" invisible="1"/>
@@ -95,51 +88,41 @@
                                        options='{"always_reload": true, "no_open": true}' invisible="1"/>
                                 <field name="consignor_id"
                                        options="{'no_create': True, 'no_open': True}"
-                                       required="1" attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                       required="1"/>
                                 <field name="consignee_id"
                                        options="{'no_create': True, 'no_open': True}"
-                                       required="1" attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                       required="1"/>
                                 <field name="notify_id"
-                                       options="{'no_create': True, 'no_open': True}"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                       options="{'no_create': True, 'no_open': True}"/>
                                 <field name="agent_id"
                                        options="{'no_create': True, 'no_open': True}"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        invisible="1"/>
                                 <field name="payable_to"
                                        options="{'no_create': True, 'no_open': True}"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        invisible="1"/>
                             </group>
                             <group>
-                                <field name="date_order" widget="date"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
-                                <field name="validity_date"
-                                       attrs="{'invisible': [('state', 'in', ['sale', 'done'])], 'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                <field name="date_order" widget="date"/>
+                                <field name="validity_date"/>
                                 <field name="pricelist_id"
                                        groups="product.group_sale_pricelist" required="0"
-                                       options='{"no_create": true, "no_open": true}'
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                       options='{"no_create": true, "no_open": true}'/>
                                 <field name="currency_id" readonly="0" invisible="0" groups="base.group_multi_currency"
                                        force_save="1"/>
 
-                                <field name='cha_id' options='{"no_create": true}'
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                <field name='cha_id' options='{"no_create": true}'/>
                                 <field name='reference_by_id'
-                                       options='{"no_create": true, "no_open": true}'
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                       options='{"no_create": true, "no_open": true}'/>
                             </group>
-                            <group string="Order Type" name="order_type" colspan="4" col="4">
+                            <group string="Order Type" name="order_type">
                                 <field name="order_type" readonly="1" required="1"/>
-                                <field name="mode" readonly="0"
-                                       attrs="{'required': [('order_type', '=', 'freight')], 'readonly': [('order_type', '=', 'custom')]}"/>
+                                <field name="mode" readonly="0"/>
                                 <field name="is_cargo_done" invisible="0"/>
                                 <field name="import_export" readonly="1"
-                                       attrs="{'required': [('order_type', '=', 'freight')]}"/>
-                                <field name="analytic_account_id"
-                                       context="{'default_partner_id':partner_invoice_id, 'default_name':name}"
-                                       attrs="{'readonly': [('invoice_count','!=',0),('state','=','sale')]}"
-                                       groups="analytic.group_analytic_accounting" force_save="1"/>
+                                       required="order_type == 'freight'"/>
+                                <!-- <field name="analytic_account_id" removed in Odoo 18, use analytic_distribution instead -->
+                                <!-- context="{'default_partner_id':partner_invoice_id, 'default_name':name}"
+                                       groups="analytic.group_analytic_accounting" force_save="1"/-->
                                 <field name="carrier_name"/>
                                 <field name="transit_time"/>
                                 <!--								<field name="validity_date" />-->
@@ -151,42 +134,35 @@
                                 <field name="cargo_id" force_save="1" readonly="1"/>
                                 <field name="purchase_id" force_save="1" readonly="1"/>
                             </group>
-                            <group string="Shipment Details" name="shipment_details" colspan="4" col="4">
+                            <group string="Shipment Details" name="shipment_details">
                                 <field name='stuffing_point_id'
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        required="0"/>
 
                                 <field name='incoterm_id'
-                                       options="{'no_create': True, 'no_open': True}"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                       options="{'no_create': True, 'no_open': True}"/>
 
                                 <field name='port_of_loading_id'
                                        required="0"
-                                       attrs="{'invisible': [('mode', 'in', ('air', 'courier'))], 'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        options='{"no_create": true, "no_open": true}'/>
 
                                 <field name='port_of_discharge_id'
                                        required="0"
-                                       attrs="{'invisible': [('mode', 'in', ('air', 'courier'))], 'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        options='{"no_create": true, "no_open": true}'/>
 
                                 <field name='port_of_loading_id'
                                        required="0"
-                                       attrs="{'invisible': [('mode', 'not in', ('air', 'courier'))], 'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        string="Departure Airport"
                                        options='{"no_create": true, "no_open": true}'/>
 
                                 <field name='port_of_discharge_id'
                                        required="0"
-                                       attrs="{'invisible': [('mode', 'not in', ('air', 'courier'))], 'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        string="Arrival Airport"
                                        options='{"no_create": true, "no_open": true}'/>
 
                                 <field name='dry_port_id'
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"
                                        options='{"no_create": true, "no_open": true}' invisible="1"/>
                             </group>
-                            <group string="Required Services" name="required_services" colspan="4" col="4">
+                            <group string="Required Services" name="required_services">
                                 <field name="freight_forwarding"/>
                                 <field name="pre_cargo_carriage"/>
                                 <field name="custom_clearance"/>
@@ -194,7 +170,7 @@
                                 <field name="genset"/>
                                 <field name="gsa_sales"/>
                             </group>
-                            <group string="Weight Details" name="weight_details" col="4" colspan="4">
+                            <group string="Weight Details" name="weight_details">
                                 <field name="total_pieces"/>
                                 <field name="total_gross_weight"/>
                                 <field name="total_value"/>
@@ -215,8 +191,7 @@
                                 <!--										class="btn btn-secondary"-->
                                 <!--										context="{'active_id': active_id}"/>-->
                                 <field name="order_line"
-                                       widget="section_and_note_one2many" mode="tree,kanban"
-                                       attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}">
+                                       widget="section_and_note_one2many" mode="list,kanban">
                                     <form>
                                         <field name="display_type" invisible="1"/>
                                         <!-- We need the sequence field to be here for new lines to be
@@ -225,21 +200,17 @@
                                         <field name="sequence" invisible="1"/>
                                         <group>
                                             <group
-                                                    attrs="{'invisible': [('display_type', '!=', False)]}">
+                                                    invisible="display_type != False">
                                                 <field name="product_updatable" invisible="1"/>
                                                 <field name="product_id"
                                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
-                                                       attrs="{
-                                                    'readonly': [('product_updatable', '=', False)],
-                                                    'required': [('display_type', '=', False)],
-                                                }"
                                                        force_save="1"/>
                                                 <field name="container_type_id"/>
                                                 <field name="capacity_in_mt"/>
                                                 <field name="invoice_status" invisible="1"/>
                                                 <field name="qty_to_invoice" invisible="1"/>
-                                                <field name="qty_delivered_manual" invisible="1"/>
-                                                <field name="qty_delivered_method" invisible="1"/>
+                                                <!-- <field name="qty_delivered_manual" removed in Odoo 18 -->
+                                                <!-- <field name="qty_delivered_method" removed in Odoo 18 -->
                                                 <field name="price_subtotal" invisible="1"/>
                                                 <label for="product_uom_qty" string="Ordered Quantity"/>
                                                 <div>
@@ -248,25 +219,16 @@
                                                             name="product_uom_qty" class="oe_inline"/>
                                                     <field name="product_uom_category_id" invisible="1"/>
                                                     <field name="product_uom" groups="uom.group_uom"
-                                                           class="oe_inline oe_no_button"
-                                                           attrs="{
-                                                        'readonly': [('state', 'in', ('sale', 'done', 'cancel'))],
-                                                        'required': [('display_type', '=', False)],
-                                                    }"/>
+                                                           class="oe_inline oe_no_button"/>
                                                 </div>
-                                                <label for="qty_delivered" string="Delivered Quantity"
-                                                       attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
-                                                <div
-                                                        attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
+                                                <label for="qty_delivered" string="Delivered Quantity"/>
+                                                <div>
                                                     <field name="qty_delivered"
-                                                           attrs="{'readonly': [('qty_delivered_method', '!=', 'manual')]}"/>
+                                                           />
                                                 </div>
-                                                <label for="qty_invoiced" string="Invoiced Quantity"
-                                                       attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
-                                                <div
-                                                        attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}">
-                                                    <field name="qty_invoiced"
-                                                           attrs="{'invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                                                <label for="qty_invoiced" string="Invoiced Quantity"/>
+                                                <div>
+                                                    <field name="qty_invoiced"/>
                                                 </div>
 
                                                 <field name="price_unit"/>
@@ -283,12 +245,11 @@
                                                 <field name="sequence" invisible="1"/>
                                             </group>
                                             <group
-                                                    attrs="{'invisible': [('display_type', '!=', False)]}">
+                                                    invisible="display_type != False">
                                                 <field name="tax_id" widget="many2many_tags"
                                                        options="{'no_create': True}"
                                                        context="{'search_view_ref': 'account.account_tax_view_search'}"
-                                                       domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
-                                                       attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                                                       domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"/>
                                                 <label for="customer_lead"/>
                                                 <div>
                                                     <field name="customer_lead" class="oe_inline"/>
@@ -305,15 +266,15 @@
                                             </group>
                                         </group>
                                         <label for="name" string="Description"
-                                               attrs="{'invisible': [('display_type', '!=', False)]}"/>
+                                               invisible="display_type != False"/>
                                         <label for="name"
                                                string="Section Name (eg. Products, Services)"
-                                               attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
+                                               invisible="display_type != 'line_section'"/>
                                         <label for="name" string="Note"
-                                               attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
+                                               invisible="display_type != 'line_note'"/>
                                         <field name="name"/>
                                         <div groups="base.group_no_one"
-                                             attrs="{'invisible': [('display_type', '!=', False)]}">
+                                             invisible="display_type != False">
                                             <label for="invoice_lines"/>
                                             <field name="invoice_lines"/>
                                         </div>
@@ -322,7 +283,7 @@
                                     <!-- This is inherited below to make the order lines non-editable
                                         (inline) for the members of some usability groups (packaging, event): Indeed
                                         in those cases we need a dialog because there are additional fields to input. -->
-                                    <list string="Sales Order Lines" editable="bottom"
+                                    <list editable="bottom"
                                           decoration-info="(not display_type and invoice_status == 'to invoice')">
                                         <control>
                                             <create string="Add a product"/>
@@ -342,10 +303,6 @@
                                         <field name="product_uom_category_id" invisible="1"/>
                                         <field name="product_updatable" invisible="1"/>
                                         <field name="product_id"
-                                               attrs="{
-                                            'readonly': [('product_updatable', '=', False)],
-                                            'required': [('display_type', '=', False)],
-                                        }"
                                                force_save="1"
                                                context="{
                                             'partner_id': parent.partner_id,
@@ -375,45 +332,26 @@
                                             'uom': product_uom,
                                             'company_id': parent.company_id
                                         }"/>
-                                        <field name="bag_box_qty"
-                                               attrs="{
-                                            'readonly': [('state', 'in', ('sale','done', 'cancel'))],
-                                        }"/>
-                                        <field name="packing_type"
-                                               attrs="{
-                                            'readonly': [('state', 'in', ('sale','done', 'cancel'))],
-                                        }"/>
-                                        <field name="qty_delivered" invisible="1"
-                                               attrs="{
-                                            'column_invisible': [('parent.state', 'not in', ['sale', 'done'])],
-                                            'readonly': [('qty_delivered_method', '!=', 'manual')]
-                                        }"/>
-                                        <field name="qty_delivered_manual" invisible="1"/>
-                                        <field name="qty_delivered_method" invisible="1"/>
-                                        <field name="qty_invoiced" invisible="1"
-                                               attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                                        <field name="bag_box_qty"/>
+                                        <field name="packing_type"/>
+                                        <field name="qty_delivered" invisible="1"/>
+                                        <!-- <field name="qty_delivered_manual" removed in Odoo 18 -->
+                                        <!-- <field name="qty_delivered_method" removed in Odoo 18 -->
+                                        <field name="qty_invoiced" invisible="1"/>
                                         <field name="qty_to_invoice" invisible="1"/>
                                         <field name="product_uom"
-                                               attrs="{
-                                            'readonly': [('state', 'in', ('sale','done', 'cancel'))],
-                                            'required': [('display_type', '=', False)],
-                                        }"
                                                context="{'company_id': parent.company_id}"
                                                groups="uom.group_uom" options='{"no_open": true}'/>
                                         <field name="analytic_tag_ids"
                                                groups="analytic.group_analytic_tags" widget="many2many_tags"/>
 
-                                        <field name="base_price"
-                                               attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
-                                        <field name="overhead_expenses"
-                                               attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])]}"/>
+                                        <field name="base_price"/>
+                                        <field name="overhead_expenses"/>
 
-                                        <field name="price_unit"
-                                               attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                                        <field name="price_unit"/>
                                         <field name="tax_id" widget="many2many_tags"
                                                options="{'no_create': True}"
-                                               domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"
-                                               attrs="{'readonly': [('qty_invoiced', '&gt;', 0)]}"/>
+                                               domain="[('type_tax_use','=','sale'),('company_id','=',parent.company_id)]"/>
                                         <field name="discount"
                                                groups="product.group_discount_per_so_line"/>
                                         <field name="price_subtotal" widget="monetary"
@@ -487,7 +425,7 @@
                                         </templates>
                                     </kanban>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right" colspan="2"
+                                <group class="oe_subtotal_footer oe_right"
                                        name="sale_total">
                                     <field name="amount_untaxed" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
@@ -499,8 +437,7 @@
                                     <field name="amount_total" nolabel="1"
                                            class="oe_subtotal_footer_separator" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
-                                    <field name='cur_rate' required="1"
-                                           attrs="{'readonly': [('state', 'in', ('sale', 'done','cancel'))]}"/>
+                                    <field name='cur_rate' required="1"/>
                                     <field name="total_cur_conversion_amount" class="oe_subtotal_footer_separator"
                                            readonly="1"/>
                                     <field name="company_currency_id" invisible="1"/>
@@ -511,7 +448,7 @@
                             </page>
                             <page name="package_details" string="Freight Details">
                                 <field name="sale_freight_line">
-                                    <list string="Sale Freight Line">
+                                    <list>
                                         <field name="product_id"
                                                options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                         <field name="goods_desc"/>
@@ -520,7 +457,7 @@
                                         <field name="total_chargeable_weight"/>
                                     </list>
                                     <form string="Sale Freight Line">
-                                        <group col="4" colspan="4">
+                                        <group>
                                             <field name="product_id" string="Service" required="1"
                                                    options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                             <field name="goods_desc" required="0"/>
@@ -536,58 +473,52 @@
                                                    options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                             <field name="loose_bool"/>
                                         </group>
-                                        <group col="4" colspan="4" string="Container Details" name="container_detail"
-                                               attrs="{'invisible': [('full_container_service', '=', False)]}">
+                                        <group string="Container Details" name="container_detail"
+                                               invisible="full_container_service == False">
                                             <field name="container_type_id"
-                                                   attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                                   invisible="full_container_service == False"/>
                                             <field name="capacity_in_mt"
-                                                   attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                                   invisible="full_container_service == False"/>
                                             <field name="container_qty"
-                                                   attrs="{'invisible': [('full_container_service', '=', False)]}"/>
+                                                   invisible="full_container_service == False"/>
                                         </group>
-                                        <group col="4" colspan="4" string="Gross Weight Per Pack" name="weight">
+                                        <group string="Gross Weight Per Pack" name="weight">
                                             <field name="weight_input"
-                                                   attrs="{'invisible': [('loose_bool', '=', True)]}"/>
+                                                   invisible="loose_bool == True"/>
                                             <field name="weight_uom_id" readonly="1" force_save="1"
                                                    domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"
                                                    options="{'no_open': True,'no_create':True,'no_edit':True}"
                                             />
                                             <field name="weight_per_package" string="Weight (KG)" readonly="1"
-                                                   force_save="1" attrs="{'invisible': [('loose_bool', '=', True)]}"/>
+                                                   force_save="1" invisible="loose_bool == True"/>
                                         </group>
-                                        <group col="4" colspan="4"
-                                               attrs="{'invisible': [('full_container_service', '=', True)]}"
+                                        <group
+                                               invisible="full_container_service == True"
                                                string="Volumetric Weight Per Pack" name="volumetric">
-                                            <field name="length_per_package" string="Length (cm)"
-                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
-                                            <field name="width_per_package" string="Width (cm)"
-                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
-                                            <field name="height_per_package" string="Height (cm)"
-                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
+                                            <field name="length_per_package" string="Length (cm)"/>
+                                            <field name="width_per_package" string="Width (cm)"/>
+                                            <field name="height_per_package" string="Height (cm)"/>
                                             <field name="dimension_uom_id" string="Length UoM" readonly="1"
                                                    force_save="1"
                                                    domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Length / Distance')]"
-                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"
-                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>
+                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                             <div class="o_td_label">
                                                 <label for="volume_cbcm" string="Volume (Cubic CM)"
                                                        style="font-weight:bold;"
-                                                       attrs="{'invisible': [('uom_name', '!=', 'cm')]}"/>
+                                                       invisible="uom_name != 'cm'"/>
                                                 <label for="volume_cbcm" string="Volume (Cubic Inches)"
                                                        style="font-weight:bold;"
-                                                       attrs="{'invisible': [('uom_name', '!=', 'in')]}"/>
+                                                       invisible="uom_name != 'in'"/>
                                             </div>
-                                            <field name="volume_cbcm" nolabel="1"
-                                                   attrs="{'invisible': [('uom_name', 'not in', ('in', 'cm'))]}"/>
+                                            <field name="volume_cbcm" nolabel="1"/>
                                             <field name="volume" string="Volume (cbm)"/>
                                             <field name="weight_factor" readonly="1" force_save="1"/>
                                             <field name="volumetric_weight"/>
                                             <field name="uom_name" invisible="1"/>
                                         </group>
-                                        <group col="4" colspan="4" string="Chargeable &amp; Total Weight"
+                                        <group string="Chargeable &amp; Total Weight"
                                                name="chargeable_weight">
-                                            <field name="total_weight" invisible="0" force_save="1"
-                                                   attrs="{'readonly': [('loose_bool', '!=', True)],'required': [('loose_bool', '=', True)]}"/>
+                                            <field name="total_weight" invisible="0" force_save="1"/>
                                             <field name="chargeable_weight" readonly="1" force_save="1"/>
                                             <field name="total_chargeable_weight"/>
                                             <field name="total_volume_cbm"/>
@@ -596,7 +527,7 @@
                                         </group>
                                     </form>
                                 </field>
-                                <!--								<group col="4" colspan="4" name="footer_total">-->
+                                <!--								<group name="footer_total">-->
                                 <!--                                <field name="total_gross_weight"/>-->
                                 <!--                                <field name="sum_total_volumetric_weight"/>-->
                                 <!--                                <field name="pivot_weight"/>-->
@@ -604,8 +535,8 @@
                                 <!--                            </group>-->
                             </page>
                             <page string="Container Details">
-                                <field name="container_detail_line" widget="one2many_list">
-                                    <list string="Container Details" editable="bottom">
+                                <field name="container_detail_line" >
+                                    <list editable="bottom">
                                         <field name='container_type_id' required="1"/>
                                         <field name='capacity_in_mt' readonly="1" force_save="1"/>
                                         <field name='container_qty'/>
@@ -614,8 +545,8 @@
                             </page>
                             <page string="Payment Details" invisible="1">
                                 <field name="payment_term_line"
-                                       context="{'country_id':country_id}" widget="one2many_list">
-                                    <list string="Payment Details" editable="bottom">
+                                       context="{'country_id':country_id}" >
+                                    <list editable="bottom">
                                         <field name='country_id' invisible="1"/>
                                         <field name='payment_id' required="1"/>
                                         <field name='value' required="1"/>
@@ -624,8 +555,8 @@
                                 </field>
                             </page>
                             <page string="Expenses" invisible="1">
-                                <field name="sale_expense_line" widget="one2many_list">
-                                    <list string="Expenses" editable="bottom" create="0"
+                                <field name="sale_expense_line" >
+                                    <list editable="bottom" create="0"
                                           delete="0">
                                         <field name='exp_related_to' readonly="1" force_save="1"/>
                                         <!--										<field name='product_class' readonly="1" force_save="1" />-->
@@ -640,7 +571,7 @@
                                         <field name='remark'/>
                                     </list>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right" colspan="2"
+                                <group class="oe_subtotal_footer oe_right"
                                        name="expense_total">
                                     <field name="total_expense" widget='monetary'
                                            readonly="1" options="{'currency_field': 'currency_id'}"/>
@@ -650,17 +581,16 @@
                             </page>
                             <page name="Export Documents" string="Export Documents" invisible="1">
                                 <field name="sale_export_document_line"
-                                       widget="one2many_list" readonly="1" force_save="1" create="0"
+                                        readonly="1" force_save="1" create="0"
                                        delete="0">
-                                    <list string="Export Documents" editable="bottom">
+                                    <list editable="bottom">
                                         <field name='export_document_id'/>
                                     </list>
                                 </field>
                             </page>
                             <page name="schedule_lines" string="Schedule" invisible="1">
-                                <field name="schedule_lines"
-                                       attrs="{'readonly': [('state', 'in', ('cancel','sale','done'))]}">
-                                    <list string="Schedule">
+                                <field name="schedule_lines">
+                                    <list>
                                         <field name="schedule_id" required="1"/>
                                         <field name="report_at_time"/>
                                         <field name="req_from"/>
@@ -673,7 +603,7 @@
                                         <field name="sale_export_attachment_lines"/>
                                     </list>
                                     <form>
-                                        <group colspan="4" col="4">
+                                        <group>
                                             <field name="schedule_id" required="1"/>
                                             <field name="report_at_time"/>
                                             <field name="req_from"/>
@@ -688,7 +618,7 @@
                                         <field name="sale_export_attachment_lines"
                                                context="{'tree_view_ref': 'verts_v15_freight_forward.sale_schedule_export_attachment_lines_tree'}">
                                             <form>
-                                                <group colspan="4" col="4">
+                                                <group>
                                                     <field name="sale_remark"/>
                                                     <field name="fname" invisible="1"/>
                                                     <field name="sale_attachment_value" filename="fname"/>
@@ -703,8 +633,8 @@
                             <page name="export_specification"
                                   string="Export Product Specification" invisible="1">
                                 <field name="qc_pro_specification_line"
-                                       widget="one2many_list">
-                                    <list string="Export Product Specification"
+                                       >
+                                    <list
                                           editable="bottom">
                                         <field name="product_id" required="1"/>
                                         <field name="qc_parameter_id" required="1"/>
@@ -731,18 +661,17 @@
                                         <field name="require_signature"/>
                                         <field name="require_payment"/>
                                         <field name="reference" readonly="1"
-                                               attrs="{'invisible': [('reference', '=', False)]}"/>
+                                               invisible="reference == False"/>
                                         <field name="company_id"
                                                options="{'no_create': True, 'no_open': True}"
                                                groups="base.group_multi_company"/>
                                     </group>
                                     <group name="sale_pay" string="Invoicing">
-                                        <!--<field name="date_order" attrs="{'invisible': [('state', 'in',
-                                            ['sale', 'done', 'cancel'])]}"/> -->
+                                        <!--<field name="date_order" invisible="state in ['sale', 'done', 'cancel']"/> -->
                                         <field name="fiscal_position_id"
                                                options="{'no_create': True, 'no_open': True}" readonly="1"
                                                force_save="1"/>
-                                        <field name="invoice_status" states="sale,done"
+                                        <field name="invoice_status"
                                                invisible="1"/>
                                     </group>
                                     <group string="Reporting" name="technical"
@@ -756,10 +685,10 @@
                                 <group>
                                     <field name="export_tc_set_ids" widget="many2many_tags"
                                            domain="[('tc_set_type','=', 'sale')]"
-                                           attrs="{'readonly': [('state','=','sale')]}"/>
+                                           readonly="state == 'sale'"/>
                                 </group>
                                 <field name="export_so_tc_set_line"
-                                       attrs="{'readonly': [('state','!=','draft')]}"
+                                       readonly="state != 'draft'"
                                        options="{'no_create': True, 'no_create_edit': True}">
                                     <list editable="bottom">
                                         <field name="s_no" readonly="1"/>
@@ -816,7 +745,7 @@
             <field name="name">sale.order.tree.view</field>
             <field name="model">sale.order</field>
             <field name="arch" type="xml">
-                <list string="Sale Order">
+                <list>
                     <field name="partner_id"/>
                     <field name="name"/>
                     <field name="state"/>
@@ -831,7 +760,7 @@
             <field name="name">Quotations</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.order</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="view_ids"
                    eval="[(5, 0, 0),
                (0, 0, {'view_mode': 'tree', 'view_id': ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit')}),
@@ -848,7 +777,7 @@
             <field name="name">Sale Order</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">sale.order</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
             <field name="view_ids"
                    eval="[(5, 0, 0),
                (0, 0, {'view_mode': 'tree', 'view_id': ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit')}),
@@ -864,7 +793,7 @@
             <field name="model">sale.schedule.attachment.line</field>
             <field name="priority">1000</field>
             <field name="arch" type="xml">
-                <tree>
+                <list>
                     <field name="sale_export_attachment_id" invisible="1"/>
                     <field name="sale_remark"/>
                 </list>

@@ -1,100 +1,128 @@
-from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+# -*- coding: utf-8 -*-
+
 import base64
-import io
 import csv
+import io
 
-
-class BoxDetailsLine(models.TransientModel):
-    _name = "box.details.line"
-    _description = "Box Details Line"
-
-    wizard_id = fields.Many2one('box.details.wizard', string="Wizard")
-    box_count = fields.Integer(string="Box Count")
-    hs_code = fields.Char(string="HS Code")
-    length = fields.Float(string="Length")
-    width = fields.Float(string="Width")
-    height = fields.Float(string="Height")
-    weight = fields.Float(string="Weight")
-    commodity_type = fields.Many2one('export.product.category', string="Commodity Type")
-
-    @api.onchange('commodity_type')
-    def _onchange_commodity_type(self):
-        for rec in self:
-            rec.hs_code = rec.commodity_type.hs_code
+from odoo import _, fields, models
+from odoo.exceptions import UserError
 
 
 class BoxDetailsWizard(models.TransientModel):
     _name = "box.details.wizard"
     _description = "Box Details Wizard"
 
-    total_boxes = fields.Integer(string="Total Boxes", required=True)
-    box_line_ids = fields.One2many('box.details.line', 'wizard_id', string="Box Lines")
-    lead_id = fields.Many2one('crm.lead', string="Lead")
+    total_boxes = fields.Integer(string="Total Boxes")
+    lead_id = fields.Many2one("crm.lead", string="Lead", required=True)
+    file = fields.Binary(string="File")
+    filename = fields.Char(string="Filename")
+    box_line_ids = fields.One2many("box.details.line", "wizard_id", string="Box Lines")
 
-    file = fields.Binary(string="Upload CSV File")
-    filename = fields.Char(string="File Name")
-
-    @api.onchange('file')
-    def _onchange_file(self):
-        print('_onchange_file=============')
+    def _load_csv_file(self):
+        self.ensure_one()
         if not self.file:
             return
 
-        # Decode the file
-        data = base64.b64decode(self.file)
-        file_input = io.StringIO(data.decode("utf-8"))
-        csv_reader = csv.DictReader(file_input)
+        try:
+            content = base64.b64decode(self.file)
+            text = content.decode("utf-8-sig")
+        except Exception as exc:
+            raise UserError(_("The uploaded file could not be decoded as UTF-8 CSV.")) from exc
 
-        lines = []
-        for row in csv_reader:
-            lines.append((0, 0, {
-                'box_count': int(row.get('box_count', 0)),
-                'hs_code': row.get('hs_code', ''),
-                'length': float(row.get('length', 0)),
-                'width': float(row.get('width', 0)),
-                'height': float(row.get('height', 0)),
-                'weight': float(row.get('weight', 0)),
-                'commodity_type': self.env['export.product.category'].search(
-                    [('name', '=', row.get('commodity_type', ''))], limit=1).id
-            }))
+        reader = csv.DictReader(io.StringIO(text))
+        required_columns = {"box_count", "commodity_type", "hs_code", "length", "width", "height", "weight"}
+        if not reader.fieldnames or not required_columns.issubset(set(reader.fieldnames)):
+            raise UserError(
+                _(
+                    "The CSV file must contain these columns: box_count, commodity_type, hs_code, "
+                    "length, width, height, weight."
+                )
+            )
 
-        self.box_line_ids = [(5, 0, 0)] + lines  # Clear existing and add new lines
-        self.total_boxes = len(lines)
+        self.box_line_ids.unlink()
+        product_category_model = self.env["export.product.category"]
+        total_boxes = 0.0
+        for row in reader:
+            commodity = False
+            commodity_name = (row.get("commodity_type") or "").strip()
+            if commodity_name:
+                commodity = product_category_model.search([("name", "=", commodity_name)], limit=1)
+
+            box_count = float(row.get("box_count") or 0.0)
+            total_boxes += box_count
+            self.env["box.details.line"].create(
+                {
+                    "wizard_id": self.id,
+                    "box_count": box_count,
+                    "commodity_type": commodity.id,
+                    "hs_code": row.get("hs_code"),
+                    "length": float(row.get("length") or 0.0),
+                    "width": float(row.get("width") or 0.0),
+                    "height": float(row.get("height") or 0.0),
+                    "weight": float(row.get("weight") or 0.0),
+                }
+            )
+        self.total_boxes = int(total_boxes)
 
     def action_submit(self):
-        line_box = sum(line.box_count for line in self.box_line_ids)
-        if line_box != self.total_boxes:
-            raise ValidationError(_("Line boxes should equal to total boxes."))
+        self.ensure_one()
+        self._load_csv_file()
 
-        prod = False
-        uom_id = False
-        if self.lead_id.order_line:
-            self.lead_id.order_line.unlink()
-        if self.lead_id and self.lead_id.service_type and self.lead_id.service_type.service:
-            product = self.lead_id.service_type.service
-            prod = product.id
-            uom_id = product.uom_id.id
+        if not self.box_line_ids:
+            raise UserError(_("Add at least one box line before submitting."))
+        total_line_boxes = sum(self.box_line_ids.mapped("box_count"))
+        if self.total_boxes and abs(total_line_boxes - self.total_boxes) > 1e-6:
+            raise UserError(_("Line boxes should equal the total boxes."))
 
-        lines = []
-        for line in self.box_line_ids:
-            lines.append((0, 0, {
-                'lead_id': self.lead_id.id,
-                'product_id': prod,
-                'product_uom': uom_id,
-                'product_uom_quantity': line.box_count,
-                'weight_input': line.weight,
-                'height_per_package': line.height,
-                'width_per_package': line.width,
-                'length_per_package': line.length,
-                'hs_code': line.hs_code,
-                'commodity_type': line.commodity_type.id if line.commodity_type else False,
-                'type':False,
-            }))
+        lead_lines = self.lead_id.order_line.sorted("id")
+        if not lead_lines:
+            raise UserError(_("Create at least one freight line before using bulk entry."))
 
-        self.lead_id.order_line = lines
+        for index, box_line in enumerate(self.box_line_ids):
+            lead_line = box_line.lead_line_id
+            if not lead_line and index < len(lead_lines):
+                lead_line = lead_lines[index]
+            if not lead_line:
+                lead_line = self.env["lead.order.line"].create(
+                    {
+                        "lead_id": self.lead_id.id,
+                        "product_id": lead_lines[0].product_id.id,
+                        "product_uom": lead_lines[0].product_uom.id,
+                        "service_type": lead_lines[0].service_type.id,
+                        "packing_type": lead_lines[0].packing_type.id,
+                        "type": lead_lines[0].type,
+                    }
+                )
+
+            lead_line.write(
+                {
+                    "product_uom_quantity": box_line.box_count,
+                    "commodity_type": box_line.commodity_type.id,
+                    "hs_code": box_line.hs_code,
+                    "length_per_package": box_line.length,
+                    "width_per_package": box_line.width,
+                    "height_per_package": box_line.height,
+                    "weight_input": box_line.weight,
+                }
+            )
+            lead_line.onchange_weight_input()
+            lead_line.onchange_get_weight_factor()
+            lead_line.onchange_get_uoms()
+
         self.lead_id.update_lead_line_Calculation()
-        self.lead_id.order_line._compute_volume_cbcm()
-        self.lead_id.order_line._compute_volume_cbm()
+        return {"type": "ir.actions.act_window_close"}
 
-        return {'type': 'ir.actions.act_window_close'}
+
+class BoxDetailsLine(models.TransientModel):
+    _name = "box.details.line"
+    _description = "Box Details Line"
+
+    wizard_id = fields.Many2one("box.details.wizard", string="Wizard", required=True, ondelete="cascade")
+    lead_line_id = fields.Many2one("lead.order.line", string="Lead Line")
+    box_count = fields.Float(string="Box Count")
+    commodity_type = fields.Many2one("export.product.category", string="Commodity Type")
+    hs_code = fields.Char(string="HS Code")
+    length = fields.Float(string="Length")
+    width = fields.Float(string="Width")
+    height = fields.Float(string="Height")
+    weight = fields.Float(string="Weight")

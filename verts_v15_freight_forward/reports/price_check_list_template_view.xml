@@ -188,7 +188,7 @@
                                       </tr>
                                     </t>
                                     <tr>
-                                        <td colspan="4" align="right"  style="font-size:10px;"><b>Total Expense</b></td>
+                                        <td align="right"  style="font-size:10px;"><b>Total Expense</b></td>
                                         <td align="right">
                                            <b><span t-out="'%.3f'%(o.total_expense)"/></b>
                                         </td>

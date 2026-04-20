@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<!--    <data noupdate="0">-->
-<!--        <record id="new_main_branch_id" model="res.branch">-->
-<!--            <field name="name">Main Branch</field>-->
-<!--        </record>        -->
-<!--    </data>-->
+    <data noupdate="1">
+        <!-- Branch Data -->
+    </data>
 </odoo>

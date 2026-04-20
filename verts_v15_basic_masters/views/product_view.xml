@@ -18,7 +18,7 @@
 			<field name="name">brands.info.tree</field>
 			<field name="model">brands.info</field>
 			<field name="arch" type="xml">
-				<list string="Brands">
+				<list>
 					<field name="name"/>
 				</list>
 			</field>
@@ -28,7 +28,7 @@
 			<field name="name">brands.info.form</field>
 			<field name="model">brands.info</field>
 			<field name="arch" type="xml">
-				<form string="Brands" version="7.0">
+				<form string="Brands">
 					<sheet>
 						<group>
 							<field name="name" required="1" />
