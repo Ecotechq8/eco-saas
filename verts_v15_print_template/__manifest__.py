@@ -20,10 +20,8 @@
     'assets': {
         'web.assets_backend': [
             'verts_v15_print_template/static/lib/jscolor/jscolor.js',
-            'verts_v15_print_template/static/src/js/**/*',
-        ],
-        'web.qweb_suite_reports': [
             'verts_v15_print_template/static/src/xml/widget_color.xml',
+            'verts_v15_print_template/static/src/js/**/*',
         ],
     },
     'license': 'LGPL-3',
