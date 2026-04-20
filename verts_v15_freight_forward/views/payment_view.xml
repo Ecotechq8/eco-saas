@@ -12,8 +12,7 @@
                                 type="object"
                                 string="Print Payment Receipt"
                                 class="btn-secondary"
-                                icon="fa-print"
-                                invisible="payment_type != 'inbound'"/>
+                                icon="fa-print"/>
 
 <!--                         Show this for outbound payments-->
                         <button name="print_payment_voucher"
@@ -23,24 +22,24 @@
                                 icon="fa-print"/>
 
 <!--                    <button name="proforma_voucher" type="object" string="Approve"-->
-<!--                            invisible="state != 'draft'" class="oe_highlight"/>-->
+<!-- class="oe_highlight"/>-->
                 </xpath>
                   <xpath expr="//field[@name='partner_bank_id']" position="after">
                     <field name="is_cheque"/>
-                    <field name="cheque_number" invisible="is_cheque == False"/>
-                    <field name="cheque_date" invisible="is_cheque == False"/>
-                    <field name="drawn_on" invisible="is_cheque == False"/>
+                    <field name="cheque_number"/>
+                    <field name="cheque_date"/>
+                    <field name="drawn_on"/>
                 </xpath>
                 <xpath expr="//sheet/group" position="after">
 
-                    <notebook invisible="state != 'posted'">
+                    <notebook>
                         <page string="Payment Information" name="payment_info">
                             <!-- <group>
-                         		<field name="load_invoices" readonly="state != 'draft'"/>
+                         		<field name="load_invoices"/>
                          		<field name="load_amount"/>
                          	</group>
-                            <field name="line_dr_ids" invisible="payment_type != 'outbound'" context="{'journal_id':journal_id, 'type':payment_type, 'partner_id':partner_id}">
-                                <list create="false" delete="false" editable="bottom" colors="gray:amount==0">
+                            <field name="line_dr_ids" context="{'journal_id':journal_id, 'type':payment_type, 'partner_id':partner_id}">
+                                <list string="Supplier Invoices and Outstanding transactions" create="false" delete="false" editable="bottom" colors="gray:amount==0">
                                     <field name="move_line_id" context="{'journal_id':parent.journal_id, 'partner_id':parent.partner_id}"
                                         domain="[('account_id.user_type_id.type','=','payable'), ('full_reconcile_id','=', False), ('partner_id','=',parent.partner_id)]"
                                         required="1"/>
@@ -54,9 +53,9 @@
                                     <field name="amount" sum="Total Allocation" on_change="onchange_amount(amount, amount_unreconciled, context)" force_save="1"/>
                                 </list>
                             </field> -->
-                            <!-- <label for="line_cr_ids" invisible="payment_type != 'inbound'"/>
-                            <field name="line_cr_ids" invisible="payment_type != 'inbound'" context="{'journal_id':journal_id, 'partner_id':partner_id}">
-                                <list create="false" delete="false" editable="bottom" colors="gray:amount==0">
+                            <!-- <label for="line_cr_ids"/>
+                            <field name="line_cr_ids" context="{'journal_id':journal_id, 'partner_id':partner_id}">
+                                <list string="Credits" create="false" delete="false" editable="bottom" colors="gray:amount==0">
                                     <field name="move_line_id" context="{'journal_id':parent.journal_id, 'partner_id':parent.partner_id}"
                                         domain="[('account_id.user_type_id.type','=','payable'), ('full_reconcile_id','=', False), ('partner_id','=',parent.partner_id)]"
                                         required="1"/>
@@ -74,12 +73,10 @@
                             <group>
                                 <group>
                                     <button name="get_vendor_invoices" type="object" string="Load Invoices"
-                                            class="btn-primary"
-                                            invisible="state != 'posted'"/>
+                                            class="btn-primary"/>
                                 </group>
                                 <group>
-                                    <button name="adjust_manual" type="object" string="Adjust" class="btn-primary"
-                                            invisible="state != 'posted'"/>
+                                    <button name="adjust_manual" type="object" string="Adjust" class="btn-primary"/>
                                 </group>
                             </group>
                             <field name="payment_invoice_ids">

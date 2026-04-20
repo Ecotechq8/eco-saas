@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="cargo_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <h1 align="center"><u>ADVANCE CARGO DECLARATION</u></h1>
+                    <table style=" position:relative; top:-500px">
+                        <tr>
+                            <td>1.  NAME OF THE VESSEL AND VOY. NUMBER:MAIPO V-6133</td><br/><br/>
+                            <td>:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>2.  BILL OF LODING NUMBER</td><br/><br/>
+                            <td>:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                          <td>3.  PLACE OF ORIGIN</td><br/><br/>
+                        <td>:</td>
+                        <td>India</td>
+                        </tr>
+                        <tr>
+                          <td>4.  PORT OF LOADING</td><br/><br/>
+                          <td>:</td>
+                          <td>NAVASHEVA(INDIA)</td>
+                        </tr>
+                        <tr>
+                          <td>5.  PORT OF DISCHARGE</td><br/><br/>
+                          <td>:</td>
+                          <td>New York</td>
+                        </tr>
+                        <tr>
+                          <td>6.  PLACE OF FINAL DELIVERY WITH ZIP CODE</td><br/><br/>
+                          <td>:</td>
+                          <td></td>
+                        </tr>
+                        <tr>
+                           <td>7.  ACTUAL SHIPPER ADDRESS AND CTC</td><br/><br/>
+                           <td>:</td>
+                           <td></td>
+                        </tr>
+                        <tr>
+                          <td>8.  CONSIGNEE NAME AND ADDRESS</td><br/><br/>
+                           <td>:</td><td>TO THE ORDER
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>9.  CARGO DESCRIPTION WITH 6 DIGIT HARMONIZED CODE WITH NO. OF CARTONS / PALLETS</td><br/><br/>
+                            <td>:</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>10.  GrossWT AND Net WT</td><br/><br/>
+                            <td>:</td>
+                            <td>Net Wt In Kg
+                              24,993.36</td>
+                            <td>Gross Wt In Kg
+                             5,070.00
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>11.  CONTAINER NO</td><br/><br/>
+                            <td>:</td>
+                            <td> TCNU4358153</td>
+                        </tr>
+                        <tr>
+                            <td>12.  SEAL NUMBER (CUSTOM AND LINER SEAL</td><br/><br/>
+                            <td>:</td>
+                            <td>0</td>
+                        </tr>
+                        <tr>
+                            <td>13.  FULL AND COMPLETE HAZARDOUS CARGO INFORMATION</td><br/><br/>
+                            <td>:</td>
+                            <br></br>
+                        <tr>
+                            <td>A) TECHNICAL NAME:</td>
+                        </tr>
+                        <tr>
+                            <td>B) IMO PAGE:</td>
+                        </tr>
+                        <tr>
+                            <td>C) UN NO:</td>
+                        </tr>
+                        <tr>
+                             <td>D) CLASS:</td>
+                        </tr>
+                        </tr>
+                        <tr>
+                            <td>14.  IF CARGO COVER UNDER</td><br/><br/>
+                        <tr>
+                            <td>
+                                Bioterrorism Act
+                            </td>
+                            <td>:</td>
+                            <td> YES / NO
+                            </td>
+                        </tr>
+                        </tr>
+
+                       <tr>
+                            <td>We hereby indemnify the carrier Mediterranean Shipping Company on any claims /loss for any mis-declearation of the
+                                 above information and all costs and consequences arising out of the shipment is on our (shipper’s) account.
+                            </td>
+                      </tr>
+                      <tr>
+                          <td>For SAMAY AGRO PRODUCTS</td>
+                      </tr>
+                </table>
+            </t></t>
+       </template>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <record id="inherit_view_account_payment_register_form_cheque_fields" model="ir.ui.view">
+      <field name="name">account.payment.register.form.inherit.cheque</field>
+      <field name="model">account.payment.register</field>
+      <field name="inherit_id" ref="account.view_account_payment_register_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='partner_bank_id']" position="after">
+          <field name="is_cheque"/>
+          <field name="cheque_number"/>
+          <field name="cheque_date"/>
+          <field name="drawn_on"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

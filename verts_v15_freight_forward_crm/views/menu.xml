@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <menuitem id="menu_action_crm_opp_freight_forw_crm" name="Enquiries" sequence="1" action="verts_v15_freight_forward_crm.freight_forward_crm_crm_lead_all_leads" parent="verts_v15_freight_forward.menu_exports_pro_header"/>
+    <menuitem id="menu_cargo_sales_report" name="Cargo Sales Report" parent="verts_v15_freight_forward.menu_export_invoice_details_parent" action="action_cargo_sales_report_wizard"/>
+    <menuitem id="menu_air_import_cargo_sales_report" name="Air Import Cargo Sales Report" parent="verts_v15_freight_forward.menu_export_invoice_details_parent" action="action_air_import_cargo_sales_report_wizard"/>
+    <menuitem id="menu_cargo_sea_freight_report" name="Cargo Sea Freight Report" parent="verts_v15_freight_forward.menu_export_invoice_details_parent" action="action_cargo_sea_freight_report_wizard"/>
+    <!--                  parent="crm.crm_menu_root"/>-->
+    <!--		<menuitem id="action_ff_config_setting_menu_id"-->
+    <!--                  name="Configuration"-->
+    <!--                  sequence="1"-->
+    <!--                  action="verts_v15_freight_forward_crm.action_ff_config_setting"-->
+    <!--                  parent="crm.crm_menu_config"/>-->
+  </data>
+</odoo>

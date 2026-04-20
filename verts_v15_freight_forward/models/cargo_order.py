@@ -18,7 +18,7 @@ import os
 import openpyxl
 import io
 import xlsxwriter
-# from xlutils.copy import copy
+from xlutils.copy import copy
 from openpyxl import load_workbook
 from openpyxl.styles import Font
 import tempfile
@@ -508,8 +508,6 @@ class CargoOrder(models.Model):
 
     amount_untaxed = fields.Monetary(string='Untaxed Amount', store=True, readonly=True, compute='_amount_all',
                                      tracking=5)
-    amount_by_group = fields.Binary(string="Tax amount by group", compute='_amount_by_group',
-                                    help="type: [(name, amount, base, formated amount, formated base)]")
     amount_tax = fields.Monetary(string='Taxes', store=True, readonly=True, compute='_amount_all')
     amount_total = fields.Monetary(string='Total', store=True, readonly=True, compute='_amount_all', tracking=4)
     currency_rate = fields.Float("Currency Rate", compute='_compute_currency_rate', compute_sudo=True, store=True,

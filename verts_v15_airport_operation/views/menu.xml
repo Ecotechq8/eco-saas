@@ -1,34 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <data>
-        <!-- Menu Actions -->
-        <record id="action_air_line" model="ir.actions.act_window">
-            <field name="name">Airlines</field>
-            <field name="res_model">air.line</field>
-            <field name="view_mode">list,form</field>
-        </record>
-
-        <record id="action_inbound_flight" model="ir.actions.act_window">
-            <field name="name">Inbound Flights</field>
-            <field name="res_model">inbound.flight</field>
-            <field name="view_mode">list,form</field>
-        </record>
-
-        <record id="action_gsa_invoice" model="ir.actions.act_window">
-            <field name="name">GSA Invoices</field>
-            <field name="res_model">gsa.invoice</field>
-            <field name="view_mode">list,form</field>
-        </record>
-
-        <!-- Menus -->
-        <menuitem id="menu_airport_operation_root" name="Airport Operations" sequence="50"/>
-
-        <menuitem id="menu_airport_operation_flight" name="Flights" parent="menu_airport_operation_root" sequence="10"/>
-        <menuitem id="menu_inbound_flight" name="Inbound Flights" parent="menu_airport_operation_flight" action="action_inbound_flight" sequence="10"/>
-
-        <menuitem id="menu_airport_operation_gsa" name="GSA Invoices" parent="menu_airport_operation_root" action="action_gsa_invoice" sequence="20"/>
-
-        <menuitem id="menu_airport_operation_config" name="Configuration" parent="menu_airport_operation_root" sequence="100"/>
-        <menuitem id="menu_air_line" name="Airlines" parent="menu_airport_operation_config" action="action_air_line" sequence="10"/>
-    </data>
+  <!-- Menu Item for Inbound Flight Master -->
+  <menuitem id="menu_inbound_flight_master" name="Airport Operations" sequence="10" groups="verts_v15_airport_operation.group_airport_operations_root"/>
+  <menuitem id="menu_inbound_flight" name="Flight Operation" parent="menu_inbound_flight_master" action="action_inbound_flight" sequence="1" groups="verts_v15_airport_operation.group_flight_operation"/>
+  <menuitem id="menu_gsa_invoice" name="GSA Invoice" parent="menu_inbound_flight_master" action="action_gsa_invoice_move" sequence="2" groups="verts_v15_airport_operation.group_gsa_invoice"/>
+  <menuitem id="menu_gsa_invoice_commission" name="GSA Export Commission" parent="menu_inbound_flight_master" action="action_gsa_commission_invoice_move" sequence="3" groups="verts_v15_airport_operation.group_gsa_commission"/>
+  <menuitem id="menu_configuration_menu" name="Configuration" parent="menu_inbound_flight_master" sequence="5" groups="verts_v15_airport_operation.group_airport_config"/>
+  <menuitem id="menu_airline_id" name="Airlines" parent="menu_configuration_menu" sequence="1" action="verts_v15_freight_forward.action_is_airline" groups="verts_v15_airport_operation.group_airlines"/>
 </odoo>

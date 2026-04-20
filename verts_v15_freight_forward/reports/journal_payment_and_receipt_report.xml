@@ -9,7 +9,7 @@
                             <div class="oe_structure"/>
                             <table style="width:100%;border-collapse:collapse;">
                                 <tr style="font-size:13px;">
-                                    <td style="border: 1px solid black;padding:7px;">
+                                    <td style="border: 1px solid black;padding:7px;" colspan="11">
                                         <!--                                        <center>Subject to Nagpur Jurisdiction.</center>-->
                                         <h5 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0;">
                                             <b>
@@ -55,7 +55,7 @@
                                     </td>
                                 </tr>
                                 <tr style="border: 1px solid black; width: 100%;font-size:13px">
-                                    <td align="left" style="width:60%;border: 1px solid black;padding:7px;">
+                                    <td align="left" colspan="6" style="width:60%;border: 1px solid black;padding:7px;">
                                         <span>
                                             <b>PARTY NAME</b>
                                         </span>
@@ -92,7 +92,7 @@
                                         </span>
                                         <!--                                    <br/>-->
                                     </td>
-                                    <td align="left" style="width:60%;border: 2px solid black;padding:5px;">
+                                    <td align="left" colspan="5" style="width:60%;border: 2px solid black;padding:5px;">
                                         <span>Vch No :</span>
                                         <t t-out="o.name"/>
                                         <br/>
@@ -162,10 +162,10 @@
                                     </tr>
                                 </t>
                                 <!--                                <tr style="width:100%;border: 1px solid black;font-size:10px">-->
-                                <!--                                    <td style="width:80%;border: 1px solid black">-->
+                                <!--                                    <td style="width:80%;border: 1px solid black" colspan="2">-->
                                 <!--                                        <center>Advance Payment</center>-->
                                 <!--                                    </td>-->
-                                <!--                                    <td align="right" style="width:20%;border: 1px solid black;padding:3px;">-->
+                                <!--                                    <td align="right" style="width:20%;border: 1px solid black;padding:3px;" colspan="3">-->
                                 <!--                                        &lt;!&ndash;                                        <t t-if="o.apply_tds">&ndash;&gt;-->
                                 <!--                                        &lt;!&ndash;                                    		<span t-out="'{0:,.2f}'.format(o.amount_to_be_paid)"/>&ndash;&gt;-->
                                 <!--                                        &lt;!&ndash;                                    	</t>&ndash;&gt;-->
@@ -234,7 +234,7 @@
                                 <!--                                        &lt;!&ndash;                                    TDS Rate : <span t-out="'{0:,.2f}'.format(o.account_tax_id.name)"/>&ndash;&gt;-->
                                 <!--                                        &lt;!&ndash;                                     </t>&ndash;&gt;-->
                                 <!--                                    </td>-->
-                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;" colspan="3">-->
 
                                 <!--                                    </td>-->
 
@@ -244,7 +244,7 @@
                                 <!--                                        height="27px;">-->
                                 <!--                                        &lt;!&ndash;                                        <span t-out="'{0:,.2f}'.format(o.tds_amount)"/>&ndash;&gt;-->
                                 <!--                                    </td>-->
-                                <!--                                    <td style="width:35%;border: 1px solid black;padding-right:3px;" height="27px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black;padding-right:3px;" height="27px;" colspan="3">-->
                                 <!--                                    </td>-->
                                 <!--                                </tr>-->
                                 <!--                                <tr style="font-size:10px;">-->
@@ -252,23 +252,23 @@
                                 <!--                                        height="27px;">-->
                                 <!--                                        &lt;!&ndash;                                        <span t-out="'{0:,.2f}'.format(o.after_tds_amount())"/>&ndash;&gt;-->
                                 <!--                                    </td>-->
-                                <!--                                    <td style="width:35%;border: 1px solid black;padding-right:3px;" height="27px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black;padding-right:3px;" height="27px;" colspan="3">-->
                                 <!--                                    </td>-->
                                 <!--                                </tr>-->
                                 <!--                                <tr style="font-size:10px;">-->
                                 <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
                                 <!--                                    </td>-->
-                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;" colspan="3">-->
                                 <!--                                    </td>-->
                                 <!--                                </tr>-->
                                 <!--                                <tr style="font-size:10px;">-->
                                 <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
                                 <!--                                    </td>-->
-                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;">-->
+                                <!--                                    <td style="width:35%;border: 1px solid black" height="27px;" colspan="3">-->
                                 <!--                                    </td>-->
                                 <!--                                </tr>-->
                                 <tr style="font-size:10px;width:100%;">
-                                    <td style="width:60%;border: 1px solid black text-align:right;">
+                                    <td style="width:60%;border: 1px solid black text-align:right;" colspan="3">
                                         <center>TOTAL PAID AMOUNT</center>
                                     </td>
                                     <td align="right" style="width:20%;border: 1px solid black;padding:3px;">
@@ -279,14 +279,14 @@
                                     </td>
                                 </tr>
                                 <tr style="width:100%;border-top: 1px solid black;font-size:10px;">
-                                    <td align="left" style="padding:7px;">
+                                    <td align="left" style="padding:7px;" colspan="2">
                                         <b>Remarks :</b>
                                         <span t-field="o.ref"/>
                                         <!--                                        <br/>-->
                                         <!--                                                                                <span t-field="o.ref"/>-->
                                         <!--                                        <br/>-->
                                     </td>
-                                    <td align="right" style="padding:7px;border-right: 1px solid black">
+                                    <td align="right" style="padding:7px;border-right: 1px solid black" colspan="3">
                                         <b>For
                                             <span t-field="o.company_id.name"/>
                                         </b>
@@ -303,7 +303,7 @@
                                         Receiver`s Signatory
                                         <br/>
                                     </td>
-                                    <td style="padding:7px;border-right: 1px solid black" align="right">
+                                    <td style="padding:7px;border-right: 1px solid black" colspan="4" align="right">
                                         <br/>
                                         <br/>
                                         <br/>

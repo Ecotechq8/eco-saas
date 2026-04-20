@@ -1,6 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <!-- Security rules placeholder -->
+    <data noupdate="0">
+        <!-- Service Order Menus -->
+        <record model="ir.module.category" id="module_service_order_category">
+            <field name="name">Service Order</field>
+            <field name="sequence">203</field>
+            <field name="visible" eval="1"/>
+        </record>
+            
+	    <record model="ir.module.category" id="module_purchase_requisition_category">
+            <field name="name">PR/PI  Menu Visibility</field>
+            <field name="sequence">201</field>
+            <field name="visible" eval="1"/>
+	    </record>
+			<record model="ir.module.category" id="module_work_order_category">
+            <field name="name">Non PO Item</field>
+            <field name="sequence">205</field>
+            <field name="visible" eval="1"/>
+	    </record>
+        <record model="ir.module.category" id="module_purchase_order_category">
+            <field name="name">PO Menu Visibility</field>
+            <field name="sequence">202</field>
+            <field name="visible" eval="1"/>
+	    </record>
+           
+	    <record model="ir.module.category" id="module_purchase_advance_category">
+            <field name="name">Advance Requests Menu Visibility</field>
+            <field name="sequence">206</field>
+            <field name="visible" eval="1"/>
+	    </record>
+        <record id="group_menu_service_order" model="res.groups">
+            <field name="name">01. Menu PO Service Order</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+
+        <record id="group_menu_service_order_cancel" model="res.groups">
+            <field name="name">02. Service Order Cancel Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_service_order_1st_approval" model="res.groups">
+            <field name="name">03. Service Order 1st Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_service_order_2nd_approval" model="res.groups">
+            <field name="name">04. Service Order 2nd Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+        <record id="group_menu_service_order_3rd_approval" model="res.groups">
+            <field name="name">05. Service Order 3rd Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+        <record id="group_menu_service_order_fourth_approval" model="res.groups">
+            <field name="name">06. Service Order Fourth Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+        <record id="group_menu_service_order_fifth_approval" model="res.groups">
+            <field name="name">07. Service Order Fifth Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_service_receipt" model="res.groups">
+            <field name="name">08. Menu Service Receipt</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_service_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+        <record id="group_menu_po_work_order" model="res.groups">
+            <field name="name">01. Menu Non PO Item Approval</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+        <record id="group_menu_work_order_cancel" model="res.groups">
+            <field name="name">02. Non PO Item Cancel Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+
+        <record id="group_menu_work_order_1st_approval" model="res.groups">
+            <field name="name">03. Non PO Item 1st Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_work_order_2nd_approval" model="res.groups">
+            <field name="name">04. Non PO Item 2nd Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_work_order_3rd_approval" model="res.groups">
+            <field name="name">05. Non PO Item 3rd Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_work_order_fourth_approval" model="res.groups">
+            <field name="name">06. Non PO Item Fourth Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        <record id="group_menu_work_order_fifth_approval" model="res.groups">
+            <field name="name">07. Non PO Item Fifth Approval Button</field>
+            <field name="category_id" ref="verts_v15_freight_purchase.module_work_order_category"/>
+<!--            <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+        </record>
+        		<record id="group_pr_first_level" model="res.groups">
+			<field name="name">11. PR First Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_requisition_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pr_second_level" model="res.groups">
+			<field name="name">12. PR Second Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_requisition_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pr_third_level" model="res.groups">
+			<field name="name">13. PR Third Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_requisition_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pr_fourth_level" model="res.groups">
+			<field name="name">14. PR Fourth Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_requisition_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pr_fifth_level" model="res.groups">
+			<field name="name">15. PR Fifth Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_requisition_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+        <record id="group_po_first_level" model="res.groups">
+			<field name="name">08. PO First Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_order_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_po_second_level" model="res.groups">
+			<field name="name">09. PO Second Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_order_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_po_third_level" model="res.groups">
+			<field name="name">10. PO Third Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_order_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_po_fourth_level" model="res.groups">
+			<field name="name">11. PO Fourth Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_order_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_po_fifth_level" model="res.groups">
+			<field name="name">12. PO Fifth Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_order_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+        	
+		<record id="group_pa_first_level" model="res.groups">
+			<field name="name">4. Advance Requests First Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_advance_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pa_second_level" model="res.groups">
+			<field name="name">5. Advance Requests Second Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_advance_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pa_third_level" model="res.groups">
+			<field name="name">6. Advance Requests Third Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_advance_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pa_fourth_level" model="res.groups">
+			<field name="name">7. Advance Requests Fourth Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_advance_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
+		<record id="group_pa_fifth_level" model="res.groups">
+			<field name="name">8. Advance Requests Fifth Level Approval</field>
+			<field name="category_id" ref="verts_v15_freight_purchase.module_purchase_advance_category"/>
+<!--			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>-->
+		</record>
     </data>
 </odoo>

@@ -101,22 +101,25 @@ class RequestForQuotation(models.Model):
     partner_ids = fields.Many2many('res.partner', 'rfq_partner_rel', 'rfq_id', 'partner_id',
                                    'Vendor(s)')
     #     type_id = fields.Many2one('request.for.quotation.type', string="Agreement Type", required=True, default=_get_type_id)
-    ordering_date = fields.Date(string="Ordering Date", tracking=True)
-    date_end = fields.Datetime(string='Agreement Deadline', tracking=True)
+    ordering_date = fields.Date(string="Ordering Date", track_visibility='onchange')
+    date_end = fields.Datetime(string='Agreement Deadline', track_visibility='onchange')
     schedule_date = fields.Date(string='Delivery Date', index=True,
                                 help="The expected and scheduled delivery date where all the products are received",
-                                tracking=True)
+                                track_visibility='onchange')
     user_id = fields.Many2one('res.users', string='Purchase Representative', default=lambda self: self.env.user)
     description = fields.Text()
     company_id = fields.Many2one('res.company', string='Company', required=True,
                                  default=lambda self: self.env['res.company']._company_default_get(
                                      'request.for.quotation'))
-    purchase_ids = fields.One2many('purchase.order', 'req_quot_id', string='Purchase Orders')
+    purchase_ids = fields.One2many('purchase.order', 'req_quot_id', string='Purchase Orders',
+                                   states={'done': [('readonly', True)]})
+    # requsition_ids = fields.Many2many('purchase.requisition', 'purchase_requisition_rfq_rel', 'req_quot_id',
+    #                                   'requisition_id', string='Purchase Requisition')
     line_ids = fields.One2many('request.for.quotation.line', 'req_quot_id', string='Products to Purchase',
-                               copy=True)
-    warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse', default=_get_warehouse_id)
+                               states={'done': [('readonly', True)]}, copy=True)
+    warehouse_id = fields.Many2one('stock.warehouse', string='Warehouse',default=_get_warehouse_id)
     state = fields.Selection(PURCHASE_REQUISITION_STATES,
-                             'Status', tracking=True, required=True,
+                             'Status', track_visibility='onchange', required=True,
                              copy=False, default='draft')
     state_blanket_order = fields.Selection(PURCHASE_REQUISITION_STATES, compute='_set_state')
     picking_type_id = fields.Many2one('stock.picking.type', 'Operation Type', required=True, default=_get_picking_in)
@@ -128,8 +131,7 @@ class RequestForQuotation(models.Model):
                                               ('gi', 'General Items'), ('fa', 'Fixed Assets'), ('mix', 'Mix')],
                                              'Internal Product Type')
     remarks = fields.Char('Remark')
-    advance_type = fields.Selection([('percentage', 'Percentage'), ('fix_amount', 'Fix Amount ')],
-                                    string='Advance Type', default='fix_amount')
+    advance_type = fields.Selection([('percentage', 'Percentage'), ('fix_amount', 'Fix Amount ')], string='Advance Type', default='fix_amount')
     advance_value = fields.Char(string='Advance Value')
     advance_remark = fields.Char(string='Advance Remark')
     used_for_readonly = fields.Boolean(string='Used for readonly')
@@ -202,8 +204,8 @@ class RequestForQuotation(models.Model):
 
         for indent in self:
             print('for')
-            new_date = []
-            aprrovers = []
+            new_date=[]
+            aprrovers=[]
             # if not indent.order_line:
             #     raise UserError(_('You cannot raise request without a line'))
             # if po_config and int(po_config.po_validation) > 0 and indent.amount_total >= po_config.po_double_validation_amt:
@@ -211,10 +213,10 @@ class RequestForQuotation(models.Model):
                 ########Next Approver###
                 # print("if")
                 approval_line_ids = self.env['users.approval.qc'].search(
-                    [('qc_id', '=', po_config.id), ('sequence', '=', '1st_lavels')], limit=1)
-                print('approval_line_ids', approval_line_ids)
+                    [('qc_id', '=', po_config.id), ('sequence', '=', '1st_lavels')],limit=1)
+                print('approval_line_ids',approval_line_ids)
                 for line in approval_line_ids:
-                    print('line', line.user_id.id)
+                    print('line',line.user_id.id)
                     aprrovers.append(line.user_id.id)
                     # week_after = datetime.strptime(str(DT.date.today()), "%Y-%m-%d") + DT.timedelta(days=line.sla_days)
                     # new_date.append(datetime.strftime(week_after, "%Y-%m-%d"))
@@ -479,8 +481,8 @@ class RequestForQuotationLine(models.Model):
     product_id = fields.Many2one('product.product', string='Product', domain=[('purchase_ok', '=', True)],
                                  required=True)
     product_uom_id = fields.Many2one('uom.uom', string='Product Unit of Measure')
-    product_qty = fields.Float(string='Quantity', digits='Product Unit of Measure')
-    price_unit = fields.Float(string='Unit Price', digits='Product Price',
+    product_qty = fields.Float(string='Quantity', digits=('16', 5))
+    price_unit = fields.Float(string='Unit Price', digits=('16', 2),
                               related='product_id.standard_price')
     #     qty_ordered = fields.Float(compute='_compute_ordered_qty', string='Ordered Quantities')
     req_quot_id = fields.Many2one('request.for.quotation', string='Purchase Agreement')
@@ -524,3 +526,6 @@ class RequestForQuotationLine(models.Model):
             'move_dest_ids': self.move_dest_id and [(4, self.move_dest_id.id)] or [],
             'req_quot_line_id': self.id
         }
+
+
+

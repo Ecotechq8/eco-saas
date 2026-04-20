@@ -1,6 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <data>
-        <!-- Purchase Views Placeholder -->
-    </data>
+  <data>
+    <!-- Purchase Order Inherit-->
+    <record id="purchase_order_form_inherit" model="ir.ui.view">
+      <field name="name">purchase.order.form.inherit</field>
+      <field name="model">purchase.order</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//notebook" position="before">
+          <h5 class="oe_highlight">Shipment Details</h5>
+          <group name="Shipment Details">
+            <group>
+              <field name="mode"/>
+              <field name="req_quot_id" invisible="1"/>
+              <field name="quote_comp_id" invisible="1"/>
+              <field name="enquiry"/>
+              <field name="service_type"/>
+              <field name="stuffing_point_id"/>
+              <field name="port_of_discharge_id"/>
+              <field name="import_export"/>
+              <field name="goods_category_id"/>
+              <field name="customer_id"/>
+              <field name="port_of_discharge_id"/>
+            </group>
+            <group>
+              <field name="port_of_loading_id"/>
+              <field name="incoterm_id"/>
+              <field name="total_pieces"/>
+              <field name="total_volume"/>
+              <field name="total_gross_weight"/>
+              <field name="total_cbm"/>
+              <field name="total_value"/>
+            </group>
+          </group>
+        </xpath>
+        <xpath expr="//field[@name='order_line']//list//field[@name='name']" position="after">
+          <field name="as_per_actual"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
 </odoo>

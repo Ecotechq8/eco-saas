@@ -50,7 +50,7 @@
                                <span t-field="o.partner_id.name"/>
                                 <br/>
                                 </p></td>
-                                <td style="padding: 5px;text-align: left;"><p><u>Proforma Invoice Number-<strong><span t-field="o.name"></span>,&#160;Dated&#160;:<span t-out="o.cal_date_order()"></span></strong></u><br></br><b><u>Party:</u></b><br/><span t-field="o.partner_id.name"/></p></td>
+                                <td colspan="2" style="padding: 5px;text-align: left;"><p><u>Proforma Invoice Number-<strong><span t-field="o.name"></span>,&#160;Dated&#160;:<span t-out="o.cal_date_order()"></span></strong></u><br></br><b><u>Party:</u></b><br/><span t-field="o.partner_id.name"/></p></td>
                             </tr>
                             <tr>
                                 <td style="padding: 5px;text-align: left;">
@@ -123,7 +123,7 @@
                     <td style="padding: 5px;text-align: right;"><span t-field="o.amount_total"/></td>
                     </tr>
                     <tr>
-                    <td><u>AMOUNT IN WORDS&#160;:</u><span t-out="o.convert_amount_in_word()"/></td>
+                    <td colspan="3"><u>AMOUNT IN WORDS&#160;:</u><span t-out="o.convert_amount_in_word()"/></td>
                     </tr>
                     </table>
                   </tr>

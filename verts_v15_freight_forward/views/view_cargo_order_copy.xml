@@ -5,7 +5,7 @@
 			<field name="name">Cargo Orders</field>
 			<field name="model">cargo.order</field>
 			<field name="arch" type="xml">
-				<list>
+				<list string="Voyages">
 					<field name="name" />
 					<field name="desc" />
 				</list>
@@ -33,7 +33,7 @@
 							    <field name="notify_id"
 									   options="{'no_create': True, 'no_open': True}"
 									   required="1"/>
-								<group string="Port Details">
+								<group string="Port Details" colspan="4" col="4">
 								    <field name='stuffing_point_id'
 									    domain="[('is_stuffing_point','=',True)]" required="1"
 									    options='{"no_create": true, "no_open": true}' />
@@ -46,28 +46,28 @@
 									    required="1" />
 								    <field name='dry_port_id'
 								    	options='{"no_create": true, "no_open": true}' invisible="1" />
-								    <field name='export_import'/>
-								    <field name='commodity'/>
-								    <field name='shipment_by'/>
-								    <field name='shipping_line'/>
-								    <field name='vessel'/>
-								    <field name='voyage'/>
-								    <field name='shipping_order_no'/>
-								    <field name='carrier_booking_no'/>
-								    <field name='eta_pol'/>
-								    <field name='cutoff_time'/>
-								    <field name='eta_departure'/>
-								    <field name='eta_destination'/>
-								    <field name='est_transit_days'/>
-								    <field name='bill_lading_type'/>
+								    <field name='export_import'>
+								    <field name='commodity'>
+								    <field name='shipment_by'>
+								    <field name='shipping_line'>
+								    <field name='vessel'>
+								    <field name='voyage'>
+								    <field name='shipping_order_no'>
+								    <field name='carrier_booking_no'>
+								    <field name='eta_pol'>
+								    <field name='cutoff_time'>
+								    <field name='eta_departure'>
+								    <field name='eta_destination'>
+								    <field name='est_transit_days'>
+								    <field name='bill_lading_type'>
 								    <field name='term_of_shipment_id' options="{'no_create': True, 'no_open': True}" required="1"/>
 							    </group>
 							    <group string="Required Services">
-								    <field name='freight_forwarding_reqd'/>
-								    <field name='pre_cargo_carriage_reqd'/>
-								    <field name='custom_clearance_reqd'/>
-								    <field name='reefer_dry'/>
-								    <field name='genset_reqd'/>
+								    <field name='freight_forwarding_reqd'>
+								    <field name='pre_cargo_carriage_reqd'>
+								    <field name='custom_clearance_reqd'>
+								    <field name='reefer_dry'>
+								    <field name='genset_reqd'>
 							    </group>
 						</group>
 					</sheet>

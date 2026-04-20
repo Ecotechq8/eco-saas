@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <!-- Inherited Customer For add Reporting Field -->
+    <record model="ir.ui.view" id="view_report_company_purchase_order_template">
+      <field name="name">purchase.order.template.form.inherit</field>
+      <field name="inherit_id" ref="purchase.purchase_order_form"/>
+      <field name="model">purchase.order</field>
+      <field name="arch" type="xml">
+        <xpath expr="//field[@name='date_order']" position="after">
+          <field name="report_template_id1" invisible="1"/>
+          <field name="report_template_id" invisible="1" domain="[('report_name', 'ilike', '%purchase_c%'')]" options="{'no_create': True}"/>
+        </xpath>
+      </field>
+    </record>
+  </data>
+</odoo>

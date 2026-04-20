@@ -1,0 +1,810 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data noupdate="1">
+    <record id="base.main_company" model="res.company">
+      <field name="report_sale_template_id" ref="verts_v15_print_template.report_sale_order_contemporary"/>
+      <field name="report_po_template_id" ref="verts_v15_print_template.report_purchase_contemporary"/>
+      <field name="report_template_id" ref="verts_v15_print_template.report_invoice_template_contemporary"/>
+      <field name="report_rfq_template_id" ref="verts_v15_print_template.report_purchase_contemporary"/>
+      <field name="report_delivery_template_id" ref="verts_v15_print_template.report_delivery_contemporary"/>
+      <field name="report_picking_template_id" ref="verts_v15_print_template.report_delivery_contemporary"/>
+    </record>
+  </data>
+  <data>
+    <template id="report_demo_professional">
+      <tr>
+        <td align="left" colspan="2" t-attf-style="color:#4D4D4F; font-size:12px; padding:9px 0px 9px 0px; border-bottom:2px solid #{o.theme_color or '#ffffff'};" valign="middle">
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tr>
+              <td align="left" style="color:#4D4D4F; font-size:12px; padding:0 0px; margin:0 " valign="middle">
+                <img style="max-height: 45px;" t-att-src="'data:image/png;base64,%s' % o.invoice_logo or o.logo" t-if="o.logo"/>
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td align="right" rowspan="3" style="font-size:14px; padding:0; width:33%;" valign="top">
+          <h2 t-attf-style="color:#fff; text-align:center;font-weight:bold; background-color:#{o.theme_color or '#ffffff'}; text-transform:uppercase; padding: 60px 0px;width: 177px; color:#{o.theme_text_color or '#ffffff'};">Invoice No:
+                        
+                        <br/>
+                        <p style="font-weight:normal; font-size:14px; margin:5px 0px">123456789135</p></h2>
+          <table border="0" cellpadding="0" cellspacing="0" style="color:#fff; background-color:#FF6340; text-transform:capitalize; font-size:14px;" width="100%"/>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" colspan="2" style="padding:15px 0px 15px 0px; width:50%; line-height:18px; border-bottom:1px solid #ececec;" valign="top">
+          <t t-if="o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+              <b>Biztech IT Consultancy Pvt. Ltd.</b>
+            </h1>
+          </t>
+          <t t-if="not o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+          </t>
+          <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                        
+                        <br/>
+                        Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                        
+                        <br/></p>
+          <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                        
+                        <br/><strong>Email:</strong>
+                        sales@biztechconsultancy.com</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" colspan="2" style="padding:15px 0px 15px 0px; width:50%; line-height:18px;" valign="top">
+          <p t-attf-style="text-transform:capitalize; font-size:14px; font-weight:bold;margin:0; margin-bottom:5px; color:#{o.theme_color or '#ffffff'};">Invoice to:</p>
+          <t t-if="o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+              <b>Biztech IT Consultancy Pvt. Ltd.</b>
+            </h1>
+          </t>
+          <t t-if="not o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+          </t>
+          <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                        
+                        <br/>
+                        Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                        
+                        <br/></p>
+          <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.customer_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                        
+                        <br/><strong>Email:</strong>
+                        sales@biztechconsultancy.com</p>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" t-attf-style="border-bottom:2px solid #{o.theme_color or '#ffffff'}; padding:0px;"/>
+      </tr>
+      <tr>
+        <td align="left" colspan="4" style="font-size:14px; padding:15px 0px; " valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" style="color:#fff; text-transform:capitalize; font-size:14px;" width="100%">
+            <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
+              <td t-attf-style="padding:9px 15px; font-weight:bold;background-color:#{o.theme_color or '#000000'};">
+                <b style="padding:10px 15px;">Invoice No: </b>
+                <br/>
+                <p style="font-weight:normal;    margin: 5px 0px;">123456789135</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Invoice Date:</b>
+                <br/>
+                <p style="font-weight:normal;    margin: 5px 0px;">15 March, 2016</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>PO:</b>
+                <br/>
+                <p style="font-weight:normal;    margin: 5px 0px;">SO/124/4567</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Due Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0px;">10 March, 2016</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Order Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0px;">20 March, 2016</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3" t-attf-style="border-bottom:2px solid #{o.theme_color or '#ffffff'}; padding:0px"/>
+      </tr>
+    </template>
+    <template id="report_demo_exclusive">
+      <tr>
+        <td align="left" colspan="2" t-attf-style="color:#4D4D4F; font-size:12px; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#ffffff'};" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" width="700">
+            <tr>
+              <td align="left" style="color: #{o.text_color or '#ffffff'}; font-size:12px;padding: 15px; border-right: 1px solid color: #{o.theme_color or '#ffffff'};" valign="middle">
+                <img style="max-height: 45px; margin-top: 37%;" t-att-src="'data:image/png;base64,%s' % o.invoice_logo or o.logo" t-if="o.logo"/>
+                <br/>
+              </td>
+              <td style="padding:15px;">
+                <h2 t-attf-style="text-transform:capitalize; font-size :13px; padding:0px; margin:0;color: #{o.theme_color or '#ffffff'};">Address</h2>
+                <t t-if="o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+                    <b>Biztech IT Consultancy Pvt. Ltd.</b>
+                  </h1>
+                </t>
+                <t t-if="not o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+                </t>
+                <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                                    
+                                    <br/>
+                                    Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                                    
+                                    <br/></p>
+                <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                                    
+                                    <br/><strong>Email:</strong>
+                                    sales@biztechconsultancy.com</p>
+              </td>
+              <td align="left" style="padding:15px 0px 15px 15px;">
+                <h2 t-attf-style="text-transform:capitalize; font-size :13px; padding:0px;margin:0;color:#{o.theme_color or '#ffffff'};">invoice to:</h2>
+                <t t-if="o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+                    <b>Biztech IT Consultancy Pvt. Ltd.</b>
+                  </h1>
+                </t>
+                <t t-if="not o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+                </t>
+                <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                                    
+                                    <br/>
+                                    Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                                    
+                                    <br/></p>
+                <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.customer_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                                    
+                                    <br/><strong>Email:</strong>
+                                    sales@biztechconsultancy.com</p>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3" t-attf-style="border-bottom:1px solid #{o.theme_color or '#ffffff'}; padding:0px;"/>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="3"/>
+      </tr>
+      <tr>
+        <td align="left" colspan="2" style="font-size:14px; padding:15px 0px; " valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; text-transform:capitalize; font-size:14px; border: 1px solid #{o.theme_color or '#000000'};" width="100%">
+            <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b style="padding:10px 15px 10px 0px;">Invoice No: </b>
+                <br/>
+                <p style="font-weight:normal;    margin: 5px 0px;">123456789135</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Invoice Date:</b>
+                <br/>
+                <p style="font-weight:normal;    margin: 5px 0px;">15 March, 2016</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>PO:</b>
+                <br/>
+                <p style="font-weight:normal;    margin: 5px 0px;">SO/124/4567</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Due Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0px;">10 March, 2016</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Order Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0px;">20 March, 2016</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </template>
+    <template id="report_demo_custom">
+      <tr>
+        <td align="left" colspan="2" t-attf-style="color:#4D4D4F; font-size:12px; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" width="700">
+            <tr>
+              <td align="left" style="color:#4D4D4F; font-size:12px; padding:0 0px; margin:0 " valign="middle">
+                <img style="max-height: 45px; margin-top: 22%;" t-att-src="'data:image/png;base64,%s' % o.invoice_logo or o.logo" t-if="o.logo"/>
+              </td>
+              <td align="right" style="color:#4D4D4F; font-size:12px; padding: 0 0 25px 0; line-height:16px; padding-top:16px" valign="top" width="570">
+                <t t-if="o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+                    <b>Biztech IT Consultancy Pvt. Ltd.</b>
+                  </h1>
+                </t>
+                <t t-if="not o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+                </t>
+                <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                                    
+                                    <br/>
+                                    Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                                    
+                                    <br/></p>
+                <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                                    
+                                    <br/><strong>Email:</strong>
+                                    sales@biztechconsultancy.com</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr bgcolor="#f2f2f2">
+        <td align="left" style="padding:15px; width:50%; line-height:18px;" valign="top">
+          <p t-attf-style="text-transform:capitalize; color: #{o.theme_color or '#000000'}; font-size:14px; font-weight:bold;margin:0; margin-bottom:5px;">Invoice to:</p>
+          <t t-if="o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+              <b>Biztech IT Consultancy Pvt. Ltd.</b>
+            </h1>
+          </t>
+          <t t-if="not o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+          </t>
+          <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                        
+                        <br/>
+                        Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                        
+                        <br/></p>
+          <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.customer_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                        
+                        <br/><strong>Email:</strong>
+                        sales@biztechconsultancy.com</p>
+        </td>
+        <td align="right" style="font-size:14px; padding:15px; width:50%; " valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" t-attf-style="background-color: #{o.theme_color or '#000000'}; color: #{'#ffffff'}; text-transform:capitalize; font-size:14px;" width="100%">
+            <tr>
+              <td t-attf-style="padding:9px 15px; font-weight:bold; color: #{o.theme_text_color or '#000000'};">Invoice No:</td>
+              <td t-attf-style="text-align:right; font-weight:bold;padding:9px 15px; color: #{o.theme_text_color or '#000000'};">123456789135</td>
+            </tr>
+            <tr>
+              <td colspan="2" style="background-color:#f2f2f2; height:4px;"/>
+            </tr>
+            <tr>
+              <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                <b>Invoice Date:</b>
+              </td>
+              <td t-attf-style="text-align:right; padding:5px 15px; color: #{o.theme_text_color or '#000000'};">15 March, 2016</td>
+            </tr>
+            <tr>
+              <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                <b>PO:</b>
+              </td>
+              <td t-attf-style="text-align:right;padding:5px 15px; color: #{o.theme_text_color or '#000000'};">SO/124/4567</td>
+            </tr>
+            <tr>
+              <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                <b>Order Date:</b>
+              </td>
+              <td t-attf-style="text-align:right; padding:5px 15px; color: #{o.theme_text_color or '#000000'};">10 March, 2016</td>
+            </tr>
+            <tr>
+              <td t-attf-style="padding:5px 15px; color: #{o.theme_text_color or '#000000'};">
+                <b>Due Date:</b>
+              </td>
+              <td t-attf-style="text-align:right; padding:5px 15px; color: #{o.theme_text_color or '#000000'};">20 March, 2016</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" t-attf-style="border-bottom:2px solid #{o.theme_color or '#000000'}; padding:0px"/>
+      </tr>
+    </template>
+    <template id="report_demo_creative">
+      <tr>
+        <td align="right" colspan="2" t-attf-style="color:#4D4D4F; font-size:12px; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" width="700">
+            <tr>
+              <td align="left" style="color:#4D4D4F; font-size:12px; padding: 0 0 25px 0; line-height:16px; padding-top:16px" valign="top" width="570">
+                <t t-if="o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+                    <b>Biztech IT Consultancy Pvt. Ltd.</b>
+                  </h1>
+                </t>
+                <t t-if="not o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+                </t>
+                <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                                    
+                                    <br/>
+                                    Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                                    
+                                    <br/></p>
+                <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                                    
+                                    <br/><strong>Email:</strong>
+                                    sales@biztechconsultancy.com</p>
+              </td>
+              <td align="left" style="color:#4D4D4F; font-size:12px; padding:0 0px; margin:0 " valign="middle">
+                <img style="max-height: 45px; margin-top: 18%;" t-att-src="'data:image/png;base64,%s' % o.invoice_logo or o.logo" t-if="o.logo"/>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr bgcolor="#f2f2f2">
+        <td align="left" style="padding:15px; width:50%; line-height:18px;" valign="top">
+          <p style="text-transform:capitalize; color:#0692C3; font-size:14px; font-weight:bold;margin:0; margin-bottom:5px;">invoice to:</p>
+          <t t-if="o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+              <b>Biztech IT Consultancy Pvt. Ltd.</b>
+            </h1>
+          </t>
+          <t t-if="not o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+          </t>
+          <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                        
+                        <br/>
+                        Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                        
+                        <br/></p>
+          <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.customer_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                        
+                        <br/><strong>Email:</strong>
+                        sales@biztechconsultancy.com</p>
+        </td>
+        <td align="right" style="font-size:14px; padding:15px; width:50%; " valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" t-attf-style="text-transform:capitalize; font-size:14px;    border: 1px solid #{o.theme_color or '#000000'}; " width="100%">
+            <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
+              <td style="padding:9px 15px; font-weight:bold;color:#fff">Invoice No:</td>
+              <td style="text-align:right; font-weight:bold;padding:9px 15px;color:#fff">123456789135</td>
+            </tr>
+            <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{o.theme_color or '#000000'};">
+              <td colspan="2" t-attf-style="background-color: #{o.theme_color or '#000000'}; height:2px;"/>
+            </tr>
+            <tr t-attf-style="color: #{o.text_color or '#000000'};">
+              <td style="padding:5px 15px;">
+                <b>Invoice Date:</b>
+              </td>
+              <td style="text-align:right; padding:5px 15px;">15 March, 2016</td>
+            </tr>
+            <tr/>
+            <tr t-attf-style="color: #{o.text_color or '#000000'};">
+              <td style="padding:5px 15px;">
+                <b>PO:</b>
+              </td>
+              <td style="text-align:right;padding:5px 15px;">SO/124/4567</td>
+            </tr>
+            <tr t-attf-style="color: #{o.text_color or '#000000'};">
+              <td style="padding:5px 15px;">
+                <b>Order Date:</b>
+              </td>
+              <td style="text-align:right; padding:5px 15px;">10 March, 2016</td>
+            </tr>
+            <tr t-attf-style="color: #{o.text_color or '#000000'};">
+              <td style="padding:5px 15px;">
+                <b>Due Date:</b>
+              </td>
+              <td style="text-align:right; padding:5px 15px;">20 March, 2016</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" t-attf-style="border-bottom:1px solid #{o.theme_color or '#000000'}; padding:0px;"/>
+      </tr>
+    </template>
+    <template id="report_demo_elegant">
+      <tr>
+        <td align="left" colspan="2" style="color:#4D4D4F; font-size:12px; padding:20px 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" t-attf-style="border-bottom:1px solid #{o.theme_color or '#000000'};" width="100%">
+            <tr>
+              <td align="center" style="color:#4D4D4F; font-size:12px; padding:0 0px; margin:0 " valign="middle">
+                <img style="max-height: 45px; margin-top: 4%;" t-att-src="'data:image/png;base64,%s' % o.invoice_logo or o.logo" t-if="o.logo"/>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr bgcolor="#f2f2f2">
+        <td align="left" style="padding:15px; width:50%; line-height:18px;" valign="top">
+          <p style="text-transform:capitalize; color:#EB5554; font-size:14px; font-weight:bold;margin:0; margin-bottom:5px;">invoice to:</p>
+          <t t-if="o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+              <b>Biztech IT Consultancy Pvt. Ltd.</b>
+            </h1>
+          </t>
+          <t t-if="not o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+          </t>
+          <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                        
+                        <br/>
+                        Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                        
+                        <br/></p>
+          <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.customer_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                        
+                        <br/><strong>Email:</strong>
+                        sales@biztechconsultancy.com</p>
+        </td>
+        <td align="right" style="color:#4D4D4F; font-size:12px; padding: 15px; line-height:18px; padding-top:40px;" valign="top">
+          <t t-if="o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+              <b>Biztech IT Consultancy Pvt. Ltd.</b>
+            </h1>
+          </t>
+          <t t-if="not o.is_company_bold">
+            <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+          </t>
+          <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+                        
+                        
+                        
+                        
+                        <br/>
+                        Prahalad Nagar, Gujarat, India.
+                        
+                        
+                        
+                        
+                        <br/></p>
+          <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+                        
+                        
+                        
+                        
+                        <br/><strong>Email:</strong>
+                        sales@biztechconsultancy.com</p>
+        </td>
+      </tr>
+      <tr>
+        <td align="left" colspan="2" style="font-size:14px; padding:15px 0px; " valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" t-attf-style="color:#fff; background-color:#{o.theme_color or '#000000'}; text-transform:capitalize; font-size:14px;" width="100%">
+            <tr t-attf-style="color: #{o.theme_text_color or '#000000'}; background-color: #{ o.theme_color or '#000000'};">
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Invoice No: </b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0;">123456789135</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Invoice Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0;">15 March, 2016</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>PO:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0;">SO/124/4567</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Due Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0;">10 March, 2016</p>
+              </td>
+              <td style="padding:9px 15px; font-weight:bold;">
+                <b>Order Date:</b>
+                <br/>
+                <p style="font-weight:normal;margin: 5px 0;">20 March, 2016</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2" t-attf-style="border-bottom:2px solid #{o.theme_color or '#000000'}; padding:0px"/>
+      </tr>
+    </template>
+    <template id="report_demo_advanced">
+      <tr>
+        <td align="left" colspan="2" t-attf-style="color:#4D4D4F; font-size:12px; padding:0 0px; border-bottom:2px solid #{o.theme_color or '#000000'};" valign="top">
+          <table border="0" cellpadding="0" cellspacing="0" width="700">
+            <tr>
+              <td valign="middle" align="left" style="color:#4D4D4F; font-size:12px; padding: 30px 0px 0px 0px; margin:0 ">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td valign="middle" align="left" style="color:#4D4D4F; font-size:12px; padding:0 0px; margin:0 ">
+                      <img t-if="o.logo" t-att-src="'data:image/png;base64,%s' % o.invoice_logo or o.logo" style="max-height: 45px;"/>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td valign="top" align="right" style="font-size:14px; padding:15px 0px 0px 15px; width:31.5%;">
+                <h2 t-attf-style="color: #{o.theme_text_color or '#000000'}; text-align:center;font-weight:bold; background-color: #{o.theme_color or '#000000'}; text-transform:uppercase; padding:10px 0px; width: 250px;">invoice</h2>
+              </td>
+            </tr>
+            <tr>
+              <td align="left" t-attf-style="padding:15px 0px 15px 0px;line-height:18px; border-top:1px solid #{o.theme_color or '#ececec'};">
+                <t t-if="o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">
+                    <b>Biztech IT Consultancy Pvt. Ltd.</b>
+                  </h1>
+                </t>
+                <t t-if="not o.is_company_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0; font-weight:normal">Biztech IT Consultancy Pvt. Ltd.</h1>
+                </t>
+                <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.company_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+            
+            
+            <br/>Prahalad Nagar, Gujarat, India.
+            
+            
+            <br/></p>
+                <p t-attf-style="text-transform:capitalize; font-size:13px; margin:8px 0px; padding:0;color: #{o.company_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+            
+            
+            <br/><strong>Email:</strong>sales@biztechconsultancy.com</p>
+              </td>
+              <td align="right" style="font-size:14px; padding:15px 0px 15px 15px; width:33%;" valign="top">
+                <table border="0" cellspacing="0" cellpadding="0" t-attf-style="color:#fff; text-transform:capitalize; font-size:14px; border-collapse: collapse; background-color: #{o.theme_color or '#000000'}; width: 250px;">
+                  <tr>
+                    <td t-attf-style="padding:9px 15px; font-weight:bold; color: #{o.theme_text_color or '#000000'};">Invoice No:</td>
+                    <td t-attf-style="text-align:right; font-weight:bold;padding:9px 15px;color: #{o.theme_text_color or '#000000'};">123456789135</td>
+                  </tr>
+                  <tr>
+                    <td colspan="2" style="background-color:#f2f2f2; height:4px;"/>
+                  </tr>
+                  <tr>
+                    <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                      <b>Invoice Date:</b>
+                    </td>
+                    <td t-attf-style="text-align:right; padding:5px 15px;color: #{o.theme_text_color or '#000000'};">15 March, 2016</td>
+                  </tr>
+                  <tr>
+                    <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                      <b>PO:</b>
+                    </td>
+                    <td t-attf-style="text-align:right;padding:5px 15px;color: #{o.theme_text_color or '#000000'};">SO/124/4567</td>
+                  </tr>
+                  <tr>
+                    <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                      <b>Order Date:</b>
+                    </td>
+                    <td t-attf-style="text-align:right; padding:5px 15px;color: #{o.theme_text_color or '#000000'};">10 March, 2016</td>
+                  </tr>
+                  <tr>
+                    <td t-attf-style="padding:5px 15px;color: #{o.theme_text_color or '#000000'};">
+                      <b>Due Date:</b>
+                    </td>
+                    <td t-attf-style="text-align:right; padding:5px 15px;color: #{o.theme_text_color or '#000000'};">20 March, 2016</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            <tr>
+              <td align="left" style="width:50%; padding:15px 0px 15px 0px; line-height:18px;border-top:1px solid #ececec;">
+                <p t-attf-style="text-transform:capitalize; color: #{o.theme_color or '#000000'}; font-size:14px; font-weight:bold;margin:0; margin-bottom:5px;">invoice to:</p>
+                <t t-if="o.is_customer_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0;">
+                    <b>Biztech IT Consultancy Pvt. Ltd.</b>
+                  </h1>
+                </t>
+                <t t-if="not o.is_customer_bold">
+                  <h1 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0;">Biztech IT Consultancy Pvt. Ltd.</h1>
+                </t>
+                <p t-attf-style="text-transform:capitalize;font-size :13px; margin:0; padding-top:0;color: #{o.customer_address_color or '#ffffff'};">C/801, Dev Aurum Commercial,
+
+
+
+                                    <br/>
+                                    Prahalad Nagar, Gujarat, India.
+
+
+
+                                    <br/></p>
+                <p t-attf-style="text-transform:capitalize; font-size:13px; margin:5px 0px; padding:0;color: #{o.customer_address_color or '#ffffff'};"><strong>Mobile:</strong>+91-987-962-2024
+
+
+
+                                    <br/><strong>Email:</strong>
+                                    sales@biztechconsultancy.com</p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </template>
+    <template id="report_demo_template_main">
+      <div class="page">
+        <t t-as="o" t-foreach="docs">
+          <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+          <div class="oe_structure"/>
+          <table border="0" cellpadding="0" cellspacing="0" width="100%">
+            <tbody>
+              <tr>
+                <td>
+                  <center>
+                    <table border="0" cellpadding="0" cellspacing="0" t-attf-style="padding:0px 20px 20px 20px; margin:0; font-family: Arial,Helvetica, sans-serif; background:#fff; text-transform:uppercase; line-height:20px; border:2px solid #{o.theme_color or '#000000'};" width="700">
+                      <t t-set="real_name" t-value="str('verts_v15_print_template.report_demo_')+str(o.standard_template)"/>
+                      <!-- <t t-call="#{real_name or 'verts_v15_print_template.report_demo_custom'}" t-lang="o.partner_id.lang"/> -->
+                      <t t-if="real_name == 'verts_v15_print_template.report_demo_custom'" t-call="verts_v15_print_template.report_demo_custom"/>
+                      <t t-if="real_name == 'verts_v15_print_template.report_demo_elegant'" t-call="verts_v15_print_template.report_demo_elegant"/>
+                      <t t-if="real_name == 'verts_v15_print_template.report_demo_creative'" t-call="verts_v15_print_template.report_demo_creative"/>
+                      <t t-if="real_name == 'verts_v15_print_template.report_demo_professional'" t-call="verts_v15_print_template.report_demo_professional"/>
+                      <t t-if="real_name == 'verts_v15_print_template.report_demo_advanced'" t-call="verts_v15_print_template.report_demo_advanced"/>
+                      <t t-if="real_name == 'verts_v15_print_template.report_demo_exclusive'" t-call="verts_v15_print_template.report_demo_exclusive"/>
+                      <tr>
+                        <td align="left" colspan="3" style="font-size:12px; padding:20px 0px 0 0; text-transform:uppercase; fnt-weight:bold; " valign="top">
+                          <table BORDERCOLOR="ff0000" border="1" cellpadding="0" cellspacing="0" t-attf-style="border:1px solid #{o.theme_color or '#000000'};  border-collapse: collapse; text-transform:capitalize; padding:15px;" width="100%">
+                            <tr t-attf-style="background-color: #{o.theme_color or '#000000'}; color: #{o.theme_text_color or '#000000'};">
+                              <td align="left" t-attf-style="padding:5px 10px; color:#fff; border:1px solid #{o.theme_color or '#000000'}; font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="5%">sr.</td>
+                              <td align="left" t-attf-style="padding:5px 10px; color:#fff; border:1px solid #{o.theme_color or '#000000'}; font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="49%">Description</td>
+                              <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="9%">quantity</td>
+                              <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="14%">Unit Price</td>
+                              <td align="center" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="9%">Taxes</td>
+                              <td align="right" t-attf-style="padding:5px 10px; color:#fff;border:1px solid #{o.theme_color or '#000000'};font-weight:bold;color: #{o.theme_text_color or '#000000'};" width="14%">Price</td>
+                            </tr>
+                            <tr style="font-size:12px; color:#232323">
+                              <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1</td>
+                              <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">Mackbook Pro</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.odd_party_color or '#000000'};">900.00</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.odd_party_color or '#000000'};"/>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.odd_party_color or '#000000'};">900.00</td>
+                            </tr>
+                            <tr style="font-size:12px; color:#232323;background-color:rgba(232, 230, 230, 0.62)">
+                              <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.even_party_color or '#000000'};">2</td>
+                              <td align="left" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.even_party_color or '#000000'};">Apple Mobile</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.even_party_color or '#000000'};">2</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.even_party_color or '#000000'};">500.00</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.even_party_color or '#000000'};">5.00%</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'};background-color: #{o.even_party_color or '#000000'};">1000.00</td>
+                            </tr>
+                          </table>
+                          <table align="right" style="font-size:13px; font-weight:bold;width:40%; text-transform:capitalize;">
+                            <tr>
+                              <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px;color: #{o.text_color or '#000000'};">SubTotal</td>
+                              <td align="right" t-attf-style="padding:9px 0px 7px 10px;color: #{o.text_color or '#000000'};">1900.00</td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" style="border-bottom:1px solid #959595"/>
+                            </tr>
+                            <tr>
+                              <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px;color: #{o.text_color or '#000000'};">taxes</td>
+                              <td align="right" t-attf-style="padding:9px 0px 7px 10px;color: #{o.text_color or '#000000'};">50.00</td>
+                            </tr>
+                            <tr>
+                              <td colspan="3" style="border-bottom:1px solid #959595"/>
+                            </tr>
+                            <tr>
+                              <td align="left" colspan="2" t-attf-style="padding:9px 10px 7px 0px; font-size:15px; text-transform:uppercase;color: #{o.text_color or '#000000'};">total</td>
+                              <td align="right" t-attf-style="padding:9px 0px 7px 10px;font-size:15px; text-transform:uppercase;color: #{o.text_color or '#000000'};">1950.00</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" style="border-bottom:2px solid #959595; padding:0px"/>
+                      </tr>
+                      <tr>
+                        <td>
+                          <h2 style="font-size:14px; font-weight:bold; color:#000; margin-bottom:0; text-transform:capitalize; margin-top:8px;">Payment History</h2>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" colspan="3" style="color:#4D4D4F; font-size:12px; padding:12px 0px 0 0; text-transform:uppercase;" valign="top">
+                          <table BORDERCOLOR="ff0000" border="1" cellpadding="0" cellspacing="0" t-attf-style="border:1px solid #{o.theme_color or '#000000'};  border-collapse: collapse; text-transform:capitalize;" width="100%">
+                            <tr t-attf-style="background-color: #{o.theme_color or '#000000'}; color: #{o.theme_text_color or '#000000'};">
+                              <td align="center" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; font-size:12px; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="6%">sr.</td>
+                              <td align="left" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; font-size:12px; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="19%">date</td>
+                              <td align="left" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; font-size:12px; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="39%">method</td>
+                              <td align="right" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; font-size:12px; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="23%">ref.</td>
+                              <td align="right" t-attf-style="padding:5px 10px; color:#fff; font-weight:bold; font-size:12px; border:1px solid #{o.theme_color or '#000000'};color: #{o.theme_text_color or '#000000'};" width="13%">amount</td>
+                            </tr>
+                            <tr style="font-size:12px; color:#232323">
+                              <td align="center" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1</td>
+                              <td t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">01 February, 2016</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">Online Bank Transfer</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">4569896347</td>
+                              <td align="right" t-attf-style="padding:5px 10px;color: #{o.text_color or '#000000'}; background-color: #{o.odd_party_color or '#000000'};">1500.00</td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" colspan="3" t-attf-style="font-size:13px; color: #{o.text_color or '#000000'}; padding-top:100px">
+                          <ul style="padding-left:15px; margin:0">
+                            <li><b>Payment Term:</b>30 Days</li>
+                            <li><b>Comment:</b>We are a highly qualified team of well-rounded software</li>
+                            <li><b>Fiscal Position Remart:</b>20% VAT applies to all Electronic Devices</li>
+                          </ul>
+                        </td>
+                      </tr>
+                    </table>
+                  </center>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="oe_structure"/>
+        </t>
+      </div>
+    </template>
+  </data>
+</odoo>

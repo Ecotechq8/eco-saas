@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="sales_contract_report">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <t>
+                        <div class="page">
+                            <div class="oe_structure"/>
+                                <h2 align="center">Sales Contract</h2>
+
+                                <table style="width:100%; border: 1px solid black;position:relative;">
+                                    <tr>
+                                        <td>
+                                    <img t-if="o.company_id.logo"
+                                        t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+                                        style="max-height: 80px;padding-bottom: 10px;" />
+                                        </td>
+                                        <td style="width:40%;border: 1px solid black;">
+                                            <u>Seller name and Address</u><br/><br/>
+                                            <b>SAMAY AGRO PRODUCTS</b><br/>
+                                            Plot No . 15 , Food Park ,Borgaon - 480108 ,Madhya Pradesh(INDIA)<br/>
+                                             Phone : 07165-226846<br/>
+                                              GSTIN NO : 23AIFPJ1162P1Z8<br/><br/>
+                                        </td>
+                                        <td style="width:60%;border: 1px solid black;">
+                                             <u>Consigner Name and Address</u><br/><br/>
+                                            <b>TO THE ORDER</b>
+                                        </td>
+                                            Certification
+                                    </tr>
+                                     <tr>
+                                       <td style="width:50%;border: 1px solid black;">
+                                           <u>Consignee Name and Address</u><br/><br/>
+                                           <b>TO THE ORDER</b>
+                                       </td>
+                                       <td style="width:50%;border: 1px solid black;" colspan="2">
+                                       <u>Notify Party Name and Addres</u><br/><br/>
+                                       <b>KALUSTYAN CORPORATION</b><br/>
+                                       855 RATHWAY AVENUE UNION NEW JERSEY USA<br/><br/>
+                                       </td>
+                                    </tr>
+                                </table>
+
+
+                                <h3 align="center">DESCRIPTION</h3>
+                                <table style="width:100%; border: 1px solid black;text-align: center;">
+                                    <tr>
+                                        <td style="width:20%;border: 1px solid black;">
+                                            ITEMS DESCRIPTION
+                                        </td>
+                                            <td style="width:15%;border: 1px solid black;">
+                                                QUANTITY
+                                            </td>
+                                        <td style="width:15%;border: 1px solid black;">
+                                                CONTAINER
+                                            </td>
+                                        <td style="width:20%;border: 1px solid black;">
+                                                PACKING
+                                        </td>
+                                        <td style="width:15%;border: 1px solid black;">
+                                                PRICE
+                                            </td>
+                                        <td style="width:15%;border: 1px solid black;">
+                                                    TOTAL PRICE
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                       <td style="width:20%;border: 1px solid black;font-size:14px">
+                                           CRUSHED CHILLY<br/>
+                                           CRUSHED CHILLY 1/8 ETO<br/>
+                                        TREATED 18 - 22 KSHU HS<br/>
+                                        CODE: 09042219 LOT NO:<br/>
+                                        SAP/KC-CC-19-20-000001 KAL<br/>
+                                        RAW CODE: IKCR1820BS<br/>
+                                        CONTRACT NO: IK201901<br/><br/><br/><br/><br/><br/><br/>
+
+                                       </td>
+                                       <td style="width:15%;border: 1px solid black;">
+                                           24.993360
+                                       </td>
+                                        <td style="width:15%;border: 1px solid black;">
+                                            Container Size<br/>
+                                            40"
+
+                                       </td>
+                                        <td style="width:20%;border: 1px solid black;">
+                                            1,102.00 <b>Bags , Packing :</b><br/>
+                                            22.68 kg / 50 lbs ,<br/>
+                                            <b> Packing Type : Paper</b><br/>
+                                            Bags
+                                       </td>
+                                        <td style="width:15%;border: 1px solid black;">
+                                        1,950.00
+                                        </td>
+                                        <td style="width:15%;border: 1px solid black;">
+                                        48,737.05
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; border: 1px solid black;text-align: center;">
+                                    <tr>
+                                        <td style="width:20%;font-size:14px">
+                                            <b>TOTAL QUANTITY IN MT </b>
+                                        </td>
+                                        <td style="width:15%;">
+                                            <b>  24.99</b>
+                                        </td>
+                                        <td style="width:15%;">
+                                            </td>
+                                        <td style="width:20%;">
+
+                                        </td>
+                                        <td style="width:15%;font-size:14px;">
+                                            <b>TOTAL CONTRACT VALUE</b>
+                                            </td>
+                                        <td style="width:15%;font-size:14px;">
+                                            <b>  $ 48737.05</b>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; border: 1px solid black;text-align: center;">
+                                    <tr>
+                                        <td style="width:20%;">
+                                           Dollar in word :
+                                        </td>
+                                        <td style="width:80%;">
+                                            Fourty Eight Thousand Seven Hundred Thirty Seven Dollar And Cent Five only.
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                <table style="width:100%; border: 1px solid black;text-align:left;">
+                                    <tr>
+                                        <td style="width:50%;text-align:left;font-size:14px;">
+                                            <u> DOCUMENTS</u><br/>
+                                            <br/>
+                                                1. SIGNED COMMERCIAL INVOICE<br/>
+                                                2. FULL SET OF 3/3 ORGINAL CLEAN ON BOARD/BL<br/>
+                                                3. FUMIGATION CERTIFICATE<br/>
+                                                4. PHYTOSANITARY CERTIFICATE<br/>
+                                                5. PACKING LIST<br/>
+                                                6. COO<br/>
+                                                7. INSURANCE CERTIFICATE<br/>
+                                                8. GEOCHEM INSPECTION CERTIFICATE<br/>
+                                            <br/>
+                                            <br/>
+                                            <u >OTHERS TERMS</u><br/>
+                                            <br/>
+                                            1) Mode of shipment by Sea subject to availability of the vessel<br/>
+                                            2) Quantity $ Value Tolerance +/-10% allowed in 3x40" HC<br/>
+                                            3) All Other charges except ocean Freight $ Insurance will be<br/>
+                                            on buyers account<br/>
+                                            4) Documents to be issued after shipment<br/>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <u>WE CONFIRM</u><br/>
+                                            <br/>
+                                            <u> SELLER'S SIGNATURE WITH COMPANY STAMP</u><br/>
+                                            Samay Agro Products , India
+                                        </td>
+                                        <td style="width:50%;font-size:14px;">
+                                            <u>LOGO</u><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/><br/>
+                                            <br/>
+                                            <br/><br/>
+                                            <u> WE CONFIRM</u><br/>
+                                            <br/><u>BUYER'S SIGNATURE WITH COMPANY STAMP</u><br/>
+                                            TO THE ORDER<br/><br/>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <table style="width:100%; border: 1px solid black;text-align: center;">
+                                    <tr>
+                                        <td style="width:100%;font-size:10px;">
+                                           Plot No . 15 , Food Park ,Borgaon - 480108 ,Madhya Pradesh (INDIA) | E-mail : export@suruchispices.net | Website : www.suruchiinternational.com
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+                            </div>
+                        </t>
+                    </t>
+                </t>
+        </template>
+    </data>
+</odoo>

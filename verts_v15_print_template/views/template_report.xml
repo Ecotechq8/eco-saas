@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <!-- Invoice Template -->
+    <report id="report_invoice_template_contemporary" string="Contemporary" model="account.move" report_type="qweb-pdf" file="verts_v15_print_template.report_invoice_template_custom" name="verts_v15_print_template.report_invoice_template_custom" menu="False"/>
+    <report id="report_invoice_template_elegant" string="Elegant" model="account.move" report_type="qweb-pdf" file="verts_v15_print_template.report_invoice_template_custom_elegant" name="verts_v15_print_template.report_invoice_template_custom_elegant" menu="False"/>
+    <report id="report_invoice_template_creative" string="Creative" model="account.move" report_type="qweb-pdf" file="verts_v15_print_template.report_invoice_template_custom_creative" name="verts_v15_print_template.report_invoice_template_custom_creative" menu="False"/>
+    <report id="report_invoice_template_professional" string="Professional" model="account.move" report_type="qweb-pdf" file="verts_v15_print_template.report_invoice_template_custom_professional" name="verts_v15_print_template.report_invoice_template_custom_professional" menu="False"/>
+    <report id="report_invoice_template_advanced" string="Advanced" model="account.move" report_type="qweb-pdf" file="verts_v15_print_template.report_invoice_template_custom_advanced" name="verts_v15_print_template.report_invoice_template_custom_advanced" menu="False"/>
+    <report id="report_invoice_template_exclusive" string="Exclusive" model="account.move" report_type="qweb-pdf" file="verts_v15_print_template.report_invoice_template_custom_exclusive" name="verts_v15_print_template.report_invoice_template_custom_exclusive" menu="False"/>
+    <!-- <report 
+            id="report_invoice_template_gst"
+            string="GST Invoice"
+            model="account.move"
+            report_type="qweb-pdf"
+            file="verts_v15_print_template.report_invoice_template_custom_gst"
+            name="verts_v15_print_template.report_invoice_template_custom_gst"
+            menu="False"
+            />
+        <report 
+            id="report_invoice_template_gst_landscape"
+            string="GST Invoice Landscape"
+            model="account.move"
+            report_type="qweb-pdf"
+            file="verts_v15_print_template.report_invoice_gst_main_landscape"
+            name="verts_v15_print_template.report_invoice_gst_main_landscape"
+			 header="False" 
+			 menu="False"       
+            />
+        <report 
+            id="report_invoice_template_gst_portrait"
+            string="GST Invoice Portrait"
+            model="account.move"
+            report_type="qweb-pdf"
+            file="verts_v15_print_template.report_invoice_gst_main_portrait"
+             name="verts_v15_print_template.report_invoice_gst_main_portrait"
+			header="False"  
+			menu="False"      
+            />
+		<record id="report_invoice_template_gst_landscape" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="verts_v15_print_template.paperformat_gstsummary"/>
+        </record> 
+        <record id="report_invoice_template_gst_portrait" model="ir.actions.report.xml">
+            <field name="paperformat_id" ref="verts_v15_print_template.paperformat_gstsummary_portrait"/>
+        </record>  -->
+    <!-- Sale Order Template -->
+    <report id="report_sale_order_contemporary" string="Contemporary" model="sale.order" report_type="qweb-pdf" file="verts_v15_print_template.report_sale_order_custom" name="verts_v15_print_template.report_sale_order_custom" menu="False"/>
+    <report id="report_sale_order_elegant" string="Elegant" model="sale.order" report_type="qweb-pdf" file="verts_v15_print_template.report_sale_order_custom_elegant" name="verts_v15_print_template.report_sale_order_custom_elegant" menu="False"/>
+    <report id="report_sale_order_creative" string="Creative" model="sale.order" report_type="qweb-pdf" file="verts_v15_print_template.report_sale_order_custom_creative" name="verts_v15_print_template.report_sale_order_custom_creative" menu="False"/>
+    <report id="report_sale_order_professional" string="Professional" model="sale.order" report_type="qweb-pdf" file="verts_v15_print_template.report_sale_order_custom_professional" name="verts_v15_print_template.report_sale_order_custom_professional" menu="False"/>
+    <report id="report_sale_order_advanced" string="Advanced" model="sale.order" report_type="qweb-pdf" file="verts_v15_print_template.report_sale_order_custom_advanced" name="verts_v15_print_template.report_sale_order_custom_advanced" menu="False"/>
+    <report id="report_sale_order_exclusive" string="Exclusive" model="sale.order" report_type="qweb-pdf" file="verts_v15_print_template.report_sale_order_custom_exclusive" name="verts_v15_print_template.report_sale_order_custom_exclusive" menu="False"/>
+    <!-- Delivery Template -->
+    <report id="report_delivery_contemporary" string="Contemporary" model="stock.picking" report_type="qweb-pdf" file="verts_v15_print_template.report_delivery_custom" name="verts_v15_print_template.report_delivery_custom" menu="False"/>
+    <report id="report_delivery_elegant" string="Elegant" model="stock.picking" report_type="qweb-pdf" file="verts_v15_print_template.report_delivery_custom_elegant" name="verts_v15_print_template.report_delivery_custom_elegant" menu="False"/>
+    <report id="report_delivery_creative" string="Creative" model="stock.picking" report_type="qweb-pdf" file="verts_v15_print_template.report_delivery_custom_creative" name="verts_v15_print_template.report_delivery_custom_creative" menu="False"/>
+    <report id="report_delivery_professional" string="Professional" model="stock.picking" report_type="qweb-pdf" file="verts_v15_print_template.report_delivery_custom_professional" name="verts_v15_print_template.report_delivery_custom_professional" menu="False"/>
+    <report id="report_delivery_advanced" string="Advanced" model="stock.picking" report_type="qweb-pdf" file="verts_v15_print_template.report_delivery_custom_advanced" name="verts_v15_print_template.report_delivery_custom_advanced" menu="False"/>
+    <report id="report_delivery_exclusive" string="Exclusive" model="stock.picking" report_type="qweb-pdf" file="verts_v15_print_template.report_delivery_custom_exclusive" name="verts_v15_print_template.report_delivery_custom_exclusive" menu="False"/>
+    <!-- Purchase Template -->
+    <report id="report_purchase_contemporary" string="Contemporary" model="purchase.order" report_type="qweb-pdf" file="verts_v15_print_template.report_purchase_custom" name="verts_v15_print_template.report_purchase_custom" menu="False"/>
+    <report id="report_purchase_elegant" string="Elegant" model="purchase.order" report_type="qweb-pdf" file="verts_v15_print_template.report_purchase_custom_elegant" name="verts_v15_print_template.report_purchase_custom_elegant" menu="False"/>
+    <report id="report_purchase_creative" string="Creative" model="purchase.order" report_type="qweb-pdf" file="verts_v15_print_template.report_purchase_custom_creative" name="verts_v15_print_template.report_purchase_custom_creative" menu="False"/>
+    <report id="report_purchase_professional" string="Professional" model="purchase.order" report_type="qweb-pdf" file="verts_v15_print_template.report_purchase_custom_professional" name="verts_v15_print_template.report_purchase_custom_professional" menu="False"/>
+    <report id="report_purchase_advanced" string="Advanced" model="purchase.order" report_type="qweb-pdf" file="verts_v15_print_template.report_purchase_custom_advanced" name="verts_v15_print_template.report_purchase_custom_advanced" menu="False"/>
+    <report id="report_purchase_exclusive" string="Exclusive" model="purchase.order" report_type="qweb-pdf" file="verts_v15_print_template.report_purchase_custom_exclusive" name="verts_v15_print_template.report_purchase_custom_exclusive" menu="False"/>
+    <!-- demo template -->
+    <report id="report_demo_template" model="res.company" string="Preview Template" report_type="qweb-html" name="verts_v15_print_template.report_demo_template_main" file="verts_v15_print_template.report_demo_template_main" menu="False"/>
+  </data>
+</odoo>

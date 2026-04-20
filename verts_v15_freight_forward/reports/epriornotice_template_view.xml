@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="description_pdf_report">
+            <t t-call="web.basic_layout">
+                <t t-foreach="docs" t-as="o">
+                    <table style="width:100%; border: 1px solid black;">
+                        <tr>
+                            <td>
+							    <img t-if="o.company_id.logo"
+								    t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+								    style="max-height: 80px;padding-bottom: 10px;" />
+						    </td>
+                            <td style="width:100%;border: 1px solid black;" colspan="4">
+                               <p align="center"><b>E PRIOR NOTICE</b></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:100%;border: 1px solid black;" colspan="4">
+                                <p align="left"><b>Country of Origin/ Export&#160;&#160;&#160;&#160;&#160;INDIA:</b></p>
+
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="width:50%;border: 1px solid black;" rowspan="3">
+                                DESCRIPTION OF EXPORTER/
+                                <br></br>
+                                REPRESENTATIVE</td>
+                                <br></br>
+                                <br></br>
+                            <td style="width:10%;border: 1px solid black;">
+                                NAME
+                            </td>
+                            <td style="width:20%;border: 1px solid black;">
+                                Mr. Mayank Jain
+                            </td>
+                            <td style="width:20%;border: 1px solid black;">
+                                Samay Agro Products
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width:10%;border: 1px solid black;">
+                                Adress
+                            </td>
+                            <td style="width:40%;border: 1px solid black;" colspan="2">
+                                Plot No . 15 , Food Park ,Borgaon - 480108 ,Madhya Pradesh<br></br>
+                                Phone : 07165-226846 , GSTIN NO : 23AIFPJ1162P1Z8
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table style="width:100%; border: 1px solid black;">
+                        <tr>
+                            <td style="width:10%;border: 1px solid black;">
+
+                            </td>
+                            <td style="width:90%;" colspan="4">
+                                <p align="center"><b>DESCRIPTION OF FFPO/CONSIGNMENT</b></p>
+                            </td>
+                        </tr>
+
+                         <tr>
+                            <td style="width:10%;border: 1px solid black;">
+                                Sr. No.
+                            </td>
+                             <td style="width:20%;border: 1px solid black;">
+                                 Common Name and Variety
+
+                            </td>
+                             <td style="width:20%;border: 1px solid black;">
+                                 Botanical Name
+
+                            </td>
+                             <td style="width:20%;border: 1px solid black;">
+                                 Quantity (KG)
+
+                            </td>
+                            <td style="width:20%;border: 1px solid black;">
+                                <p align="center">Packing Unit</p>
+                            </td>
+                         </tr>
+
+                         <tr>
+                            <td style="width:10%;border: 1px solid black;">
+                                1.
+                            </td>
+                             <td style="width:20%;border: 1px solid black;">
+                                 CRUSHED CHILLY (E)
+
+                            </td>
+                             <td style="width:20%;border: 1px solid black;">
+
+
+                            </td>
+                             <td style="width:20%;border: 1px solid black;">
+                                 24,993.36
+
+                            </td>
+                            <td style="width:20%;border: 1px solid black;">
+                                <p> 1,102.00 Bags , Packing : 22.68kg / 50 lbs ,</p>
+                            </td>
+                         </tr>
+                        <tr></tr>
+                    </table>
+                            <br></br>
+
+                    <table style="width:100%; border: 1px solid black;">
+                        <tr>
+                            <td style="width:25%;border: 1px solid black;">
+                                Means of Conveyance
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+                                 Ocean Vessel
+
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+                                 Means of Conveyance
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+
+                             </td>
+                        </tr>
+                        <tr>
+                            <td style="width:25%;border: 1px solid black;">
+                                Port Of Loading
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+                                 NAVASHEVA(INDIA
+
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+                                 Date Of Loading
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+
+                             </td>
+
+                        </tr>
+                        <tr>
+                            <td style="width:25%;border: 1px solid black;">
+                                Place of destination
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+                                 New York
+
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+                                 Date Of estimated arrival
+                            </td>
+                             <td style="width:25%;border: 1px solid black;">
+
+                             </td>
+
+                        </tr>
+                        <tr>
+                            <td style="width:25%;border: 1px solid black;">
+                                 <b>EXPORT PURPOSE</b>
+                            </td>
+                             <td style="width:75%;border: 1px solid black;" colspan="3">
+                                > Consumption <br></br>
+                                 > Raw Material<br></br>
+                                 > Other (Please Describe)
+                             </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%; border: 1px solid black;">
+                        <td>
+                            <b><u>Additional Information</u></b> <br></br>
+                             <br></br>
+                            <b>Container Identification Number</b>
+                            &#160;&#160;&#160;&#160;&#160;
+                            &#160;&#160;&#160;&#160;&#160;
+                            <b>Container Size 40"</b><br></br>
+                            <b>Phytosanitary Certificate Number</b><br></br>
+                            <b>Certificate of Analysis Number</b><br></br>
+                        </td>
+                    </table>
+                    <table style="width:100%; border: 1px solid black;">
+                        <tr>
+                            <td style="width:50%;border: 1px solid black;">
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                                <br></br>
+                            </td>
+                            <td style="width:50%;border: 1px solid black;">
+                                <p align="right">Place :&#160;&#160;&#160;&#160;&#160;&#160;</p><br></br>
+                                <p align="right">Date :&#160;&#160;&#160;&#160;&#160;&#160;</p>
+                            </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

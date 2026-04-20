@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<template id="template_index_report">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<t>
+						<div class="page">
+							 <div class="oe_structure"/>
+								<h1 align="center">
+									<b>INDEX</b>
+								</h1>
+								<table align="center">
+									<tr>
+										<td align="center">
+											<span><b>For Invoice No.</b>&#160;&#160;</span><span t-field="o.partner_id.name" />
+
+										</td>
+									</tr>
+							
+									<tr>
+										<td align="center">
+											<p><span><b>and</b></span></p><br/><br/>
+										</td>
+									</tr>
+								</table >
+								<table align="center" width="50%" t-attf-style="
+											border: 1px solid">
+									<tr>
+										<td align="left">
+											<img
+												t-if="o.company_id.logo"
+												t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+												style="max-height: 50px;padding-bottom: 10px;" />
+										</td>
+										<td align="center">
+											<span><b>Document List (INDEX)</b></span>
+										</td>
+										<td align="right">
+											<img
+												t-if="o.company_id.logo"
+												t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+												style="max-height: 50px;padding-bottom: 10px;" />
+										</td>
+									</tr>
+
+								</table>
+								<table align="center" width="50%" t-attf-style="
+												border: 1px solid">
+									<tr>
+										<td align="center">
+											<span><b>Bill of Exchange)</b></span>
+											<br/>
+											<span><b>Invoice</b></span>
+											<br/>
+											<span><b>Packing List</b></span>
+											<br/>
+											<span><b>PO Internal Order</b></span>
+											<br/>
+											<br/>
+											<br/>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</t>
+					</t>
+				</t>
+			</template>
+		</data>
+</odoo>

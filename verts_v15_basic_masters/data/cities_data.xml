@@ -1,6 +1,1372 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <!-- Cities Data -->
-    </data>
+	<data noupdate="1">
+		<!-- ===== Andhra city ===== -->
+		<record id="city_master_ap1" model="cities.basic.masters">
+			<field name="name">Vijayawada</field>
+			<field name="state_id" ref="base.state_in_ap" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_ap2" model="cities.basic.masters">
+			<field name="name">Visakhapatnam</field>
+			<field name="state_id" ref="base.state_in_ap" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Bihar city ===== -->
+		<record id="city_master_br1" model="cities.basic.masters">
+			<field name="name">Aurangabad (E)</field>
+			<field name="state_id" ref="base.state_in_br" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_br2" model="cities.basic.masters">
+			<field name="name">Patna</field>
+			<field name="state_id" ref="base.state_in_br" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Chhattisgarh city ===== -->
+		<record id="city_master_chh1" model="cities.basic.masters">
+			<field name="name">Bhilai</field>
+			<field name="state_id" ref="base.state_in_cg" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_chh2" model="cities.basic.masters">
+			<field name="name">Bilaspur</field>
+			<field name="state_id" ref="base.state_in_cg" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_chh3" model="cities.basic.masters">
+			<field name="name">Durg</field>
+			<field name="state_id" ref="base.state_in_cg" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_chh4" model="cities.basic.masters">
+			<field name="name">Korba</field>
+			<field name="state_id" ref="base.state_in_cg" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_chh5" model="cities.basic.masters">
+			<field name="name">Raipur</field>
+			<field name="state_id" ref="base.state_in_cg" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_chh6" model="cities.basic.masters">
+			<field name="name">Rajnandgaon</field>
+			<field name="state_id" ref="base.state_in_cg" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Delhi city ===== -->
+		<record id="city_master_delhi" model="cities.basic.masters">
+			<field name="name">Delhi</field>
+			<field name="state_id" ref="base.state_in_dl" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Goa city ===== -->
+		<record id="city_master_goa" model="cities.basic.masters">
+			<field name="name">Goa</field>
+			<field name="state_id" ref="base.state_in_ga" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Gujrat city ===== -->
+		<record id="city_master_guj1" model="cities.basic.masters">
+			<field name="name">Ahmedabad</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj2" model="cities.basic.masters">
+			<field name="name">Bhavnagar</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj3" model="cities.basic.masters">
+			<field name="name">Dahej</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj4" model="cities.basic.masters">
+			<field name="name">Hazira</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj5" model="cities.basic.masters">
+			<field name="name">Indrad</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj6" model="cities.basic.masters">
+			<field name="name">Kalol</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj7" model="cities.basic.masters">
+			<field name="name">Navsari</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj8" model="cities.basic.masters">
+			<field name="name">Sanand</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj9" model="cities.basic.masters">
+			<field name="name">Silvassa</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj10" model="cities.basic.masters">
+			<field name="name">Surat</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj11" model="cities.basic.masters">
+			<field name="name">V V Nagar</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj12" model="cities.basic.masters">
+			<field name="name">Vadodara</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_guj13" model="cities.basic.masters">
+			<field name="name">Vapi</field>
+			<field name="state_id" ref="base.state_in_gj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Haryana city ===== -->
+		<record id="city_master_hr1" model="cities.basic.masters">
+			<field name="name">Ambala</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr2" model="cities.basic.masters">
+			<field name="name">Bahadurgarh</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr3" model="cities.basic.masters">
+			<field name="name">Ballabhgarh</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr4" model="cities.basic.masters">
+			<field name="name">Faridabad</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr5" model="cities.basic.masters">
+			<field name="name">Gurgaon</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr6" model="cities.basic.masters">
+			<field name="name">Hisar</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr7" model="cities.basic.masters">
+			<field name="name">Jhajjar</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr8" model="cities.basic.masters">
+			<field name="name">Palwal</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr9" model="cities.basic.masters">
+			<field name="name">Sonipat</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_hr10" model="cities.basic.masters">
+			<field name="name">Yamunanagar</field>
+			<field name="state_id" ref="base.state_in_hr" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Jharkhand city ===== -->
+		<record id="city_master_jh1" model="cities.basic.masters">
+			<field name="name">Jamshedpur</field>
+			<field name="state_id" ref="base.state_in_jh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_jh2" model="cities.basic.masters">
+			<field name="name">Ranchi</field>
+			<field name="state_id" ref="base.state_in_jh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Karnataka city ===== -->
+		<record id="city_master_kr1" model="cities.basic.masters">
+			<field name="name">Bangalore</field>
+			<field name="state_id" ref="base.state_in_ka" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_kr2" model="cities.basic.masters">
+			<field name="name">Belgaum</field>
+			<field name="state_id" ref="base.state_in_ka" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_kr3" model="cities.basic.masters">
+			<field name="name">Dharwad</field>
+			<field name="state_id" ref="base.state_in_ka" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_kr4" model="cities.basic.masters">
+			<field name="name">Hubli</field>
+			<field name="state_id" ref="base.state_in_ka" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_kr5" model="cities.basic.masters">
+			<field name="name">Mysore</field>
+			<field name="state_id" ref="base.state_in_ka" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Kerala city ===== -->
+		<record id="city_master_krl1" model="cities.basic.masters">
+			<field name="name">Aroor</field>
+			<field name="state_id" ref="base.state_in_kl" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_krl2" model="cities.basic.masters">
+			<field name="name">Kochi</field>
+			<field name="state_id" ref="base.state_in_kl" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_krl3" model="cities.basic.masters">
+			<field name="name">Meladoor</field>
+			<field name="state_id" ref="base.state_in_kl" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Madhya Pradesh city ===== -->
+		<record id="city_master_mp1" model="cities.basic.masters">
+			<field name="name">Bhopal</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mp2" model="cities.basic.masters">
+			<field name="name">Chhindwara</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mp3" model="cities.basic.masters">
+			<field name="name">Dewas</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mp4" model="cities.basic.masters">
+			<field name="name">Gwalior</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mp5" model="cities.basic.masters">
+			<field name="name">Indore</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mp6" model="cities.basic.masters">
+			<field name="name">Jabalpur</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mp7" model="cities.basic.masters">
+			<field name="name">Katni</field>
+			<field name="state_id" ref="base.state_in_mp" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Maharashtra city ===== -->
+		<record id="city_master_mh1" model="cities.basic.masters">
+			<field name="name">Ahmednagar</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh2" model="cities.basic.masters">
+			<field name="name">Alandi</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh3" model="cities.basic.masters">
+			<field name="name">Ambernath</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh4" model="cities.basic.masters">
+			<field name="name">Aurangabad (W)</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh5" model="cities.basic.masters">
+			<field name="name">Baramati</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh6" model="cities.basic.masters">
+			<field name="name">Chakan</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh7" model="cities.basic.masters">
+			<field name="name">Chikhli</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh8" model="cities.basic.masters">
+			<field name="name">Chimbali</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh9" model="cities.basic.masters">
+			<field name="name">Chinchwad</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh10" model="cities.basic.masters">
+			<field name="name">Dehu</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh11" model="cities.basic.masters">
+			<field name="name">Fursungi</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh12" model="cities.basic.masters">
+			<field name="name">Indapur</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh13" model="cities.basic.masters">
+			<field name="name">Hasur</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh14" model="cities.basic.masters">
+			<field name="name">Khopoli</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh15" model="cities.basic.masters">
+			<field name="name">Kolhapur</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh16" model="cities.basic.masters">
+			<field name="name">Mumbai</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh17" model="cities.basic.masters">
+			<field name="name">Nagpur</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh18" model="cities.basic.masters">
+			<field name="name">Nashik</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh19" model="cities.basic.masters">
+			<field name="name">Navi Mumbai</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh20" model="cities.basic.masters">
+			<field name="name">Palghar</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh21" model="cities.basic.masters">
+			<field name="name">Panvel</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh22" model="cities.basic.masters">
+			<field name="name">Pimpri</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh23" model="cities.basic.masters">
+			<field name="name">Pune</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh25" model="cities.basic.masters">
+			<field name="name">Raigad </field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh26" model="cities.basic.masters">
+			<field name="name">Sangli</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh27" model="cities.basic.masters">
+			<field name="name">Satara</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh28" model="cities.basic.masters">
+			<field name="name">Shrirampur</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh29" model="cities.basic.masters">
+			<field name="name">Solapur</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh30" model="cities.basic.masters">
+			<field name="name">Talegaon Dabhade</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh31" model="cities.basic.masters">
+			<field name="name">Talwade</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh32" model="cities.basic.masters">
+			<field name="name">Thane</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh33" model="cities.basic.masters">
+			<field name="name">Vashi Mumbai</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh34" model="cities.basic.masters">
+			<field name="name">Vada</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh35" model="cities.basic.masters">
+			<field name="name">Walchandnagar</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_mh36" model="cities.basic.masters">
+			<field name="name">Wardha</field>
+			<field name="state_id" ref="base.state_in_mh" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Orissa city ===== -->
+		<record id="city_master_orissa" model="cities.basic.masters">
+			<field name="name">Rourkela</field>
+			<field name="state_id" ref="base.state_in_or" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Punjab city ===== -->
+		<record id="city_master_pun1" model="cities.basic.masters">
+			<field name="name">Amritsar</field>
+			<field name="state_id" ref="base.state_in_pb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_pun2" model="cities.basic.masters">
+			<field name="name">Chandigarh</field>
+			<field name="state_id" ref="base.state_in_pb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_pun3" model="cities.basic.masters">
+			<field name="name">Jalandhar</field>
+			<field name="state_id" ref="base.state_in_pb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_pun4" model="cities.basic.masters">
+			<field name="name">Ludhiana</field>
+			<field name="state_id" ref="base.state_in_pb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_pun5" model="cities.basic.masters">
+			<field name="name">Mandi Gobindgarh</field>
+			<field name="state_id" ref="base.state_in_pb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_pun6" model="cities.basic.masters">
+			<field name="name">Mohali</field>
+			<field name="state_id" ref="base.state_in_pb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Rajasthan city ===== -->
+		<record id="city_master_rj1" model="cities.basic.masters">
+			<field name="name">Alwar</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_rj2" model="cities.basic.masters">
+			<field name="name">Behror</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_rj3" model="cities.basic.masters">
+			<field name="name">Bhilwara</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_rj4" model="cities.basic.masters">
+			<field name="name">Bhiwadi</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_rj5" model="cities.basic.masters">
+			<field name="name">Jaipur</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_rj6" model="cities.basic.masters">
+			<field name="name">Kota</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_rj7" model="cities.basic.masters">
+			<field name="name">Udaipur</field>
+			<field name="state_id" ref="base.state_in_rj" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Tamilnadu city ===== -->
+		<record id="city_master_tn1" model="cities.basic.masters">
+			<field name="name">Chennai</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn2" model="cities.basic.masters">
+			<field name="name">Coimbatore</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn3" model="cities.basic.masters">
+			<field name="name">Hosur</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn4" model="cities.basic.masters">
+			<field name="name">Madurai</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn5" model="cities.basic.masters">
+			<field name="name">Pondicherry</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn6" model="cities.basic.masters">
+			<field name="name">Pudukkottai</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn7" model="cities.basic.masters">
+			<field name="name">Ranipet</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn8" model="cities.basic.masters">
+			<field name="name">Tiruchirappalli (Trichy)</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn9" model="cities.basic.masters">
+			<field name="name">Vallur</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn10" model="cities.basic.masters">
+			<field name="name">Vellore</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tn11" model="cities.basic.masters">
+			<field name="name">Kanchipuram</field>
+			<field name="state_id" ref="base.state_in_tn" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Telangana city ===== -->
+		<record id="city_master_tel1" model="cities.basic.masters">
+			<field name="name">Hyderabad</field>
+			<field name="state_id" ref="base.state_in_ts" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tel2" model="cities.basic.masters">
+			<field name="name">Isnapur</field>
+			<field name="state_id" ref="base.state_in_ts" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tel3" model="cities.basic.masters">
+			<field name="name">Medak</field>
+			<field name="state_id" ref="base.state_in_ts" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tel4" model="cities.basic.masters">
+			<field name="name">Patancheru</field>
+			<field name="state_id" ref="base.state_in_ts" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_tel5" model="cities.basic.masters">
+			<field name="name">Secunderabad</field>
+			<field name="state_id" ref="base.state_in_ts" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Uttar Pradesh city ===== -->
+		<record id="city_master_up1" model="cities.basic.masters">
+			<field name="name">Aligarh</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up2" model="cities.basic.masters">
+			<field name="name">Bulandshahr</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up3" model="cities.basic.masters">
+			<field name="name">Ghaziabad</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up4" model="cities.basic.masters">
+			<field name="name">Gorakhpur</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up5" model="cities.basic.masters">
+			<field name="name">Greater Noida</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up6" model="cities.basic.masters">
+			<field name="name">Hapur</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up7" model="cities.basic.masters">
+			<field name="name">Lucknow</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up8" model="cities.basic.masters">
+			<field name="name">Mathura</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up9" model="cities.basic.masters">
+			<field name="name">Meerut</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up10" model="cities.basic.masters">
+			<field name="name">Muzaffarnagar </field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up11" model="cities.basic.masters">
+			<field name="name">Noida</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up12" model="cities.basic.masters">
+			<field name="name">Pilkhuwa</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up13" model="cities.basic.masters">
+			<field name="name">Renukoot</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up14" model="cities.basic.masters">
+			<field name="name">Saharanpur</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up15" model="cities.basic.masters">
+			<field name="name">Sahibabad</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up16" model="cities.basic.masters">
+			<field name="name">Shamli</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_up17" model="cities.basic.masters">
+			<field name="name">Sikandrabad</field>
+			<field name="state_id" ref="base.state_in_up" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== Uttarakhand city ===== -->
+		<record id="city_master_uk1" model="cities.basic.masters">
+			<field name="name">Dehradun</field>
+			<field name="state_id" ref="base.state_in_uk" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_uk2" model="cities.basic.masters">
+			<field name="name">Sitarganj</field>
+			<field name="state_id" ref="base.state_in_uk" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_uk3" model="cities.basic.masters">
+			<field name="name">Udham Singh Nagar</field>
+			<field name="state_id" ref="base.state_in_uk" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<!-- ===== West Bengal city ===== -->
+		<record id="city_master_wb1" model="cities.basic.masters">
+			<field name="name">Durgapur</field>
+			<field name="state_id" ref="base.state_in_wb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_wb2" model="cities.basic.masters">
+			<field name="name">Howrah</field>
+			<field name="state_id" ref="base.state_in_wb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_wb3" model="cities.basic.masters">
+			<field name="name">Kharagpur</field>
+			<field name="state_id" ref="base.state_in_wb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_wb4" model="cities.basic.masters">
+			<field name="name">Kolkata</field>
+			<field name="state_id" ref="base.state_in_wb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+		<record id="city_master_wb5" model="cities.basic.masters">
+			<field name="name">Madhyamgram</field>
+			<field name="state_id" ref="base.state_in_wb" />
+			<field name="cities_bool" eval="True"/>
+		</record>
+
+	   <!--Saudi Arabia City-->
+        <record id="abha_city_id" model="cities.basic.masters">
+            <field name="name">Abha</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="ad_dilam_city_id" model="cities.basic.masters">
+            <field name="name">Ad-Dilam</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_abwa_city_id" model="cities.basic.masters">
+            <field name="name">Al-Abwa</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_artaweeiyah_city_id" model="cities.basic.masters">
+            <field name="name">Al Artaweeiyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_bukayriyah_city_id" model="cities.basic.masters">
+            <field name="name">Al Bukayriyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="badr_city_id" model="cities.basic.masters">
+            <field name="name">Badr</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="baljurashi_city_id" model="cities.basic.masters">
+            <field name="name">Baljurashi</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_bukayriyah_city_id" model="cities.basic.masters">
+            <field name="name">Al Bukayriyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="bisha_city_id" model="cities.basic.masters">
+            <field name="name">Bisha</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="bareg_city_id" model="cities.basic.masters">
+            <field name="name">Bareg</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_bukayriyah_id" model="cities.basic.masters">
+            <field name="name">Al Bukayriyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="buraydah_city_id" model="cities.basic.masters">
+            <field name="name">Buraydah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_bahah_city_id" model="cities.basic.masters">
+            <field name="name">Al Bahah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="buq_a_city_id" model="cities.basic.masters">
+            <field name="name">Buq a</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dammam_city_id" model="cities.basic.masters">
+            <field name="name">Dammam</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="Dhahran_city_id" model="cities.basic.masters">
+            <field name="name">Dhahran</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dhurma_city_id" model="cities.basic.masters">
+            <field name="name">Dhurma</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dahaban_city_id" model="cities.basic.masters">
+            <field name="name">Dahaban</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="diriyah_city_id" model="cities.basic.masters">
+            <field name="name">Diriyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="duba_city_id" model="cities.basic.masters">
+            <field name="name">Duba</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dhurma_city_id" model="cities.basic.masters">
+            <field name="name">Dhurma</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dhurma_city_id" model="cities.basic.masters">
+            <field name="name">Dhurma</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dhurma_city_id" model="cities.basic.masters">
+            <field name="name">Dhurma</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dumat_al_jandal_city_id" model="cities.basic.masters">
+            <field name="name">Dumat Al-Jandal</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dawadmi_city_id" model="cities.basic.masters">
+            <field name="name">Dawadmi</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="farasan_city_city_id" model="cities.basic.masters">
+            <field name="name">Farasan city</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="gatgat_city_id" model="cities.basic.masters">
+            <field name="name">Gatgat</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="gerrha_city_id" model="cities.basic.masters">
+            <field name="name">Gerrha</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="gurayat_city_id" model="cities.basic.masters">
+            <field name="name">Gurayat</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_gweiiyyah_city_id" model="cities.basic.masters">
+            <field name="name">Al-Gwei'iyyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hautat_sudair_city_id" model="cities.basic.masters">
+            <field name="name">Hautat Sudair</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="habaala_city_id" model="cities.basic.masters">
+            <field name="name">Habaala</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hajrah_city_id" model="cities.basic.masters">
+            <field name="name">Hajrah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="haql_city_id" model="cities.basic.masters">
+            <field name="name">Haql</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_hareeq_city_id" model="cities.basic.masters">
+            <field name="name">Al-Hareeq</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="dhurma_city_id" model="cities.basic.masters">
+            <field name="name">Dhurma</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="harmah_city_id" model="cities.basic.masters">
+            <field name="name">Harmah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="ha_il_city_id" model="cities.basic.masters">
+            <field name="name">Ha'il</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hotat_bani_tamim_city_id" model="cities.basic.masters">
+            <field name="name">Hotat Bani Tamim</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hofuf_city_id" model="cities.basic.masters">
+            <field name="name">Hofuf</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="huraymila_city_id" model="cities.basic.masters">
+            <field name="name">Huraymila</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hafr_al_batin_city_id" model="cities.basic.masters">
+            <field name="name">Hafr Al-Batin</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="jabal_umm_al_ruus_city_id" model="cities.basic.masters">
+            <field name="name">Jabal Umm al Ruus</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="Jalajil_city_id" model="cities.basic.masters">
+            <field name="name">Jalajil</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_jawf_city_id" model="cities.basic.masters">
+            <field name="name">Al Jawf</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="jeddah_city_id" model="cities.basic.masters">
+            <field name="name">Jeddah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="jizan_city_id" model="cities.basic.masters">
+            <field name="name">Jizan</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="harmajizan_economic_city_city_id" model="cities.basic.masters">
+            <field name="name">Jizan Economic City</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="Jubail_city_id" model="cities.basic.masters">
+            <field name="name">Jubail</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_jafr_id" model="cities.basic.masters">
+            <field name="name">Al Jafr</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="khafji_city_id" model="cities.basic.masters">
+            <field name="name">Khafji</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="khaybar_city_id" model="cities.basic.masters">
+            <field name="name">Khaybar</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="king_abdullah_economic_city_city_id" model="cities.basic.masters">
+            <field name="name">King Abdullah Economic City</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="khamis_mushayt_city_id" model="cities.basic.masters">
+            <field name="name">Khamis Mushayt</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_Saih_city_id" model="cities.basic.masters">
+            <field name="name">Al-Saih</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="knowledge_economic_city_medina_city_id" model="cities.basic.masters">
+            <field name="name">Knowledge Economic City, Medina</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="khobar_city_id" model="cities.basic.masters">
+            <field name="name">Khobar</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="al_khutt_city_id" model="cities.basic.masters">
+            <field name="name">Al-Khutt</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="layla_city_id" model="cities.basic.masters">
+            <field name="name">Layla</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="lihyan_city_id" model="cities.basic.masters">
+            <field name="name">Lihyan</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="al_lith_city_id" model="cities.basic.masters">
+            <field name="name">Al Lith</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="al_majmaah_city_id" model="cities.basic.masters">
+            <field name="name">Al Majma'ah</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="mastoorah_city_id" model="cities.basic.masters">
+            <field name="name">Mastoorah</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="al_mikhwah_city_id" model="cities.basic.masters">
+            <field name="name">Al Mikhwah</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="almubarraz_city_id" model="cities.basic.masters">
+            <field name="name">Al-Mubarraz</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="al_mawain_city_id" model="cities.basic.masters">
+            <field name="name">Al Mawain</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="mecca_city_id" model="cities.basic.masters">
+            <field name="name">Mecca</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+         <record id="medina_city_id" model="cities.basic.masters">
+            <field name="name">Medina</field>
+             <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="muzahmiyya_city_id" model="cities.basic.masters">
+            <field name="name">Muzahmiyya</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="najran_city_id" model="cities.basic.masters">
+            <field name="name">Najran</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hofuf_city_id" model="cities.basic.masters">
+            <field name="name">Hofuf</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_namas_city_id" model="cities.basic.masters">
+            <field name="name">Al-Namas</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="omloj_city_id" model="cities.basic.masters">
+            <field name="name">Omloj</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_omran_city_id" model="cities.basic.masters">
+            <field name="name">Al-Omran</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_oyoon_city_id" model="cities.basic.masters">
+            <field name="name">Al-Oyoon</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="qadeimah_city_id" model="cities.basic.masters">
+            <field name="name">Qadeimah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="qatif_city_id" model="cities.basic.masters">
+            <field name="name">Qatif</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="qaisumah_city_id" model="cities.basic.masters">
+            <field name="name">Qaisumah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_qunfudhah_city_id" model="cities.basic.masters">
+            <field name="name">Al Qunfudhah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="rabigh_city_id" model="cities.basic.masters">
+            <field name="name">Rabigh</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="rafha_city_id" model="cities.basic.masters">
+            <field name="name">Rafha</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="ar_rass_city_id" model="cities.basic.masters">
+            <field name="name">Ar Rass</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="ras_tanura_city_id" model="cities.basic.masters">
+            <field name="name">Ras Tanura</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="riyadh_city_id" model="cities.basic.masters">
+            <field name="name">Riyadh</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="riyadh_al_Khabra_city_id" model="cities.basic.masters">
+            <field name="name">Riyadh Al-Khabra</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="rumailah_city_id" model="cities.basic.masters">
+            <field name="name">Rumailah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="sabt_al_alaya_city_id" model="cities.basic.masters">
+            <field name="name">Sabt Al Alaya</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="sarat_abidah_city_id" model="cities.basic.masters">
+            <field name="name">Sarat Abidah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="saihat_city_id" model="cities.basic.masters">
+            <field name="name">Saihat</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="safwa_city_city_id" model="cities.basic.masters">
+            <field name="name">Safwa city</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="hofuf_city_id" model="cities.basic.masters">
+            <field name="name">Hofuf</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="sakakah_city_id" model="cities.basic.masters">
+            <field name="name">Sakakah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="sharurah_city_id" model="cities.basic.masters">
+            <field name="name">Sharurah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="shaqraa_city_id" model="cities.basic.masters">
+            <field name="name">Shaqraa</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="shaybah_city_id" model="cities.basic.masters">
+            <field name="name">Shaybah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="as_sulayyil_city_id" model="cities.basic.masters">
+            <field name="name">As Sulayyil</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="taif_city_id" model="cities.basic.masters">
+            <field name="name">Taif</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="tabuk_city_id" model="cities.basic.masters">
+            <field name="name">Tabuk</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="tanomah_city_id" model="cities.basic.masters">
+            <field name="name">Tanomah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="tarout_city_id" model="cities.basic.masters">
+            <field name="name">Tarout</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="tayma_city_id" model="cities.basic.masters">
+            <field name="name">Tayma</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="thadiq_city_id" model="cities.basic.masters">
+            <field name="name">Thadiq</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="thuwal_city_id" model="cities.basic.masters">
+            <field name="name">Thuwal</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="thuqbah_city_id" model="cities.basic.masters">
+            <field name="name">Thuqbah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="turaif_city_id" model="cities.basic.masters">
+            <field name="name">Turaif</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="tabarjal_city_id" model="cities.basic.masters">
+            <field name="name">Tabarjal</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="udhailiyah_city_id" model="cities.basic.masters">
+            <field name="name">Udhailiyah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="al_Ula_city_id" model="cities.basic.masters">
+            <field name="name">Al-`Ula</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="hofuf_city_id" model="cities.basic.masters">
+            <field name="name">Hofuf</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="um_al_sahek_city_id" model="cities.basic.masters">
+            <field name="name">Um Al-Sahek</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="unaizah_city_id" model="cities.basic.masters">
+            <field name="name">Unaizah</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+        <record id="uqair_city_id" model="cities.basic.masters">
+            <field name="name">Uqair</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="uyayna_city_id" model="cities.basic.masters">
+            <field name="name">Uyayna</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="wadi_al_dawasir_city_id" model="cities.basic.masters">
+            <field name="name">Wadi Al-Dawasir</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="al_wajhcity_city_id" model="cities.basic.masters">
+            <field name="name">Al Wajh</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="hofuf_city_id" model="cities.basic.masters">
+            <field name="name">Hofuf</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="yanbu_city_id" model="cities.basic.masters">
+            <field name="name">Yanbu</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="hofuf_city_id" model="cities.basic.masters">
+            <field name="name">Hofuf</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="az_zaimah_city_id" model="cities.basic.masters">
+            <field name="name">Az Zaimah</field>
+            <field name="country_id" ref='base.sa'/>
+
+        </record>
+        <record id="zulfi_city_id" model="cities.basic.masters">
+            <field name="name">Zulfi</field>
+            <field name="country_id" ref='base.sa'/>
+        </record>
+	</data>
 </odoo>
+
+

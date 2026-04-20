@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <data>
+    <!-- Assets are now loaded via __manifest__.py 'assets' key in Odoo 18 -->
+  </data>
+</odoo>
