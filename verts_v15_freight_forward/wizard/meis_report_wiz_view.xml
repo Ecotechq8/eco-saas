@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	<data>
+		<!--MEIS Report Wizard View-->
+		<record id="meis_report_wiz_form_view" model="ir.ui.view">
+			<field name="name">meis.report.wiz.form</field>
+			<field name="model">meis.report.wiz</field>
+			<field name="arch" type="xml">
+				<form string="MEIS Report Wizard">
+					<group>
+						<group col="4" colspan="4">
+							<field name="from_date" required="1" />
+							<field name="to_date" required="1" />
+						</group>
+					</group>
+					<footer>
+						<h2>
+							<button name="get_meis_data" string="Generate MEIS Report" type="object"
+								class="badge badge-success" icon="fa-download"
+								style="width: 88px; height: 40px;">
+<!--								<span class="badge badge-pill badge-light">1</span>-->
+							</button>
+							or
+							<button string="Cancel"
+								class="badge badge-pill badge-danger" special="cancel"
+								icon="fa-times-circle" style="width: 88px; height: 40px;" />
+						</h2>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<!--MEIS Report Wizard Action View-->
+		<record id="action_meis_report_wiz"
+			model="ir.actions.act_window">
+			<field name="name">Generate MEIS Report</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">meis.report.wiz</field>
+			<field name="view_id" ref="meis_report_wiz_form_view" />
+			<field name="view_mode">form</field>
+			<field name="target">new</field>
+		</record>
+
+
+	</data>
+</odoo>

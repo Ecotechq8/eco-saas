@@ -1,6 +1,231 @@
-<?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <data noupdate="1">
-        <!-- Mode Transport Data -->
-    </data>
+	<data noupdate="1">
+		<!-- ************************Mode Of Transport ************************************* -->
+		<record id="mode_transport_road" model="mode.transport">
+			<field name="mode_of_transport">Road</field>
+			<field name="mode_transport_bool" eval="True"/>
+		</record>
+		<record id="mode_transport_rail" model="mode.transport">
+			<field name="mode_of_transport">Rail</field>
+			<field name="mode_transport_bool" eval="True"/>
+		</record>
+		<record id="mode_transport_sea" model="mode.transport">
+			<field name="mode_of_transport">Sea</field>
+			<field name="mode_transport_bool" eval="True"/>
+		</record>
+		<record id="mode_transport_air" model="mode.transport">
+			<field name="mode_of_transport">Air</field>
+			<field name="mode_transport_bool" eval="True"/>
+		</record>
+
+		<!-- ************************Domestic Region ************************************* -->
+		<record id="domestic_region_zones_east" model="domestic.zone">
+			<field name="name">East</field>
+			<field name="code">E</field>
+			<field name="country_id" ref="base.in"/>
+			<field name="domestic_region_bool" eval="True"/>
+		</record>
+		<record id="domestic_region_zones_west" model="domestic.zone">
+			<field name="name">West</field>
+			<field name="code">W</field>
+			<field name="country_id" ref="base.in"/>
+			<field name="domestic_region_bool" eval="True"/>
+		</record>
+		<record id="domestic_region_zones_north" model="domestic.zone">
+			<field name="name">North</field>
+			<field name="code">N</field>
+			<field name="country_id" ref="base.in"/>
+			<field name="domestic_region_bool" eval="True"/>
+		</record>
+		<record id="domestic_region_zones_south" model="domestic.zone">
+			<field name="name">South</field>
+			<field name="code">S</field>
+			<field name="country_id" ref="base.in"/>
+			<field name="domestic_region_bool" eval="True"/>
+		</record>
+		<record id="domestic_region_zones_central" model="domestic.zone">
+			<field name="name">Central</field>
+			<field name="code">C</field>
+			<field name="country_id" ref="base.in"/>
+			<field name="domestic_region_bool" eval="True"/>
+		</record>
+		<!-- ************************Domestic Region Lines East ************************************* -->
+		<record id="state_lines_1" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_east"/>
+            <field name="state_name" ref="base.state_in_br"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_2" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_east"/>
+            <field name="state_name" ref="base.state_in_jh"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_3" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_east"/>
+            <field name="state_name" ref="base.state_in_or"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_4" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_east"/>
+            <field name="state_name" ref="base.state_in_wb"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <!-- ************************Domestic Region Lines West ************************************* -->
+		<record id="state_lines_2_1" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_west"/>
+            <field name="state_name" ref="base.state_in_gj"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_2_2" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_west"/>
+            <field name="state_name" ref="base.state_in_mh"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <!-- ************************Domestic Region Lines North ************************************* -->
+		<record id="state_lines_3_1" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_north"/>
+            <field name="state_name" ref="base.state_in_dl"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_3_2" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_north"/>
+            <field name="state_name" ref="base.state_in_hr"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_3_3" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_north"/>
+            <field name="state_name" ref="base.state_in_pb"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_3_4" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_north"/>
+            <field name="state_name" ref="base.state_in_rj"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_3_5" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_north"/>
+            <field name="state_name" ref="base.state_in_up"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_3_6" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_north"/>
+            <field name="state_name" ref="base.state_in_uk"/>
+            <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <!-- ************************Domestic Region Lines South ************************************* -->
+		<record id="state_lines_4_1" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_south"/>
+            <field name="state_name" ref="base.state_in_ap"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_4_2" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_south"/>
+            <field name="state_name" ref="base.state_in_ga"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_4_3" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_south"/>
+            <field name="state_name" ref="base.state_in_ka"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_4_4" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_south"/>
+            <field name="state_name" ref="base.state_in_kl"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_4_5" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_south"/>
+            <field name="state_name" ref="base.state_in_tn"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_4_6" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_south"/>
+            <field name="state_name" ref="base.state_in_ts"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+         <!-- ************************Domestic Region Lines Central ************************************* -->
+		<record id="state_lines_5_1" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_central"/>
+            <field name="state_name" ref="base.state_in_cg"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <record id="state_lines_5_2" model="domestic.state">
+            <field name="state_id" ref="domestic_region_zones_central"/>
+            <field name="state_name" ref="base.state_in_mp"/>
+             <field name="domestic_region_bool_line" eval="True"/>
+        </record>
+        
+        <!-- ************************Ports Data ************************************* -->
+        <record id="ports_1" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Bangalore ICD</field>
+            <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_2" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Chennai ICD</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_3" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Dadri ICD</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_4" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Gurgaon ICD</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_5" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Kolkata ICD</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_6" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Sonepat DICT</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_7" model="ports">
+            <field name="port_type_id" ref="mode_transport_rail"/>
+            <field name="name" >Tughlaqabad ICD</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        
+        <record id="ports_8" model="ports">
+            <field name="port_type_id" ref="mode_transport_sea"/>
+            <field name="name" >Mumbai Port</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_9" model="ports">
+            <field name="port_type_id" ref="mode_transport_sea"/>
+            <field name="name" >Mundra Port</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        <record id="ports_10" model="ports">
+            <field name="port_type_id" ref="mode_transport_sea"/>
+            <field name="name" >Nhava Sheva</field>
+             <field name="ports_bool" eval="True"/>
+        </record>
+        
+	</data>
 </odoo>

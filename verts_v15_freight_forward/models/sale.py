@@ -76,7 +76,7 @@ class SaleOrder(models.Model):
     team_id = fields.Many2one('crm.team', 'Sales Team', change_default=True, default=_get_default_team,
                               oldname='section_id')
     user_id = fields.Many2one('res.users', string='Salesperson', index=True, tracking=True,
-                               default=_get_default_user)
+                              , default=_get_default_user)
     export_tc_set_ids = fields.Many2many('term.and.condition.set', string="Terms & Condtions Set")
     export_so_tc_set_line = fields.One2many('export.so.tc.set.lines', 'export_so_tc_set_id',
                                             string='Terms And Condition Set Lines')

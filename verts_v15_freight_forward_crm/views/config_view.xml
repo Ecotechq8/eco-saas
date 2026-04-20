@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="view_ff_config_setting" model="ir.ui.view">
+			<field name="name">FF Settings</field>
+			<field name="model">ff.crm.config</field>
+			<field name="arch" type="xml">
+				<form string="Configuration" class="oe_form_configuration">
+					<header>
+						<button string="Apply" type="object" name="execute" class="oe_highlight"/>
+						<button string="Cancel" class="oe_link" special="cancel"/>
+					</header>
+					<group name="main_group" col="4" colspan="4">
+						<field name="air_price_request_email" widget="many2many_tags"/>
+						<field name="sea_price_request_email" widget="many2many_tags"/>
+						<field name="land_price_request_email" widget="many2many_tags"/>
+					</group>
+				</form>
+			</field>
+		</record>
+		
+		<record id="action_ff_config_setting" model="ir.actions.act_window">
+			<field name="name">Configuration</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">ff.crm.config</field>
+			<field name="view_mode">form</field>
+			<field name="target">inline</field>
+		</record>
+	</data>
+</odoo>

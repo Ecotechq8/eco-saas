@@ -408,7 +408,7 @@
 											or '#000000'}; font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color
 											or '#000000'}; color: #{o.company_id and o.company_id.theme_text_color
 											or '#000000'};">
-											<td
+											<td colspan="4"
 											t-attf-style="padding:5px 10px; color: #{o.company_id
 												and o.company_id.theme_text_color or '#000000'}; border:1px solid #{o.company_id
 												and o.company_id.theme_color or '#000000'} !important; border-right:0px
@@ -483,7 +483,7 @@
 											or '#000000'}; font-weight:bold; background-color: #{o.company_id and o.company_id.theme_color
 											or '#000000'}; color: #{o.company_id and o.company_id.theme_text_color
 											or '#000000'};">
-											<td
+											<td colspan="4"
 											t-attf-style="padding:5px 10px; color: #{o.company_id
 												and o.company_id.theme_text_color or '#000000'}; border:1px solid #{o.company_id
 												and o.company_id.theme_color or '#000000'} !important; border-right:0px
@@ -554,13 +554,13 @@
 								t-attf-style="font-size:12px;padding:0px 20px 20px 20px; margin:0; font-family: Arial,Helvetica, sans-serif; background:#fff;
 								line-height:20px; border-top:1px solid #{o.company_id and o.company_id.theme_color or '#000000'};">
 								<tr>
-									<td
+									<td colspan="2"
 										t-attf-style="border-bottom:1px solid #{o.company_id and o.company_id.theme_color
 									or '#000000'}; padding:0px;">
 									</td>
 								</tr>
 								<tr>
-									<td valign="top" align="right"
+									<td colspan="2" valign="top" align="right"
 										style=" font-size:12px; padding:20px 0px
 									0 0; text-transform:uppercase; fnt-weight:bold; ">
 										<table class="table table-bordered" width="102%"

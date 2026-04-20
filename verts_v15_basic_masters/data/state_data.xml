@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- State Data -->
+        <record id="state_1" model="res.country.state">
+            <field name="name">'Asir</field>
+            <field name="code">AS</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_2" model="res.country.state">
+            <field name="name">Bahah</field>
+            <field name="code">BA</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_3" model="res.country.state">
+            <field name="name">Eastern Province</field>
+            <field name="code">EP</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_4" model="res.country.state">
+            <field name="name">Ha'il</field>
+            <field name="code">HA</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_5" model="res.country.state">
+            <field name="name">Jawf</field>
+            <field name="code">JA</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_6" model="res.country.state">
+            <field name="name">Jizan</field>
+            <field name="code">JI</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_7" model="res.country.state">
+            <field name="name">Madinah</field>
+            <field name="code">MD</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_8" model="res.country.state">
+            <field name="name">Makkah</field>
+            <field name="code">MK</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_9" model="res.country.state">
+            <field name="name">Najran</field>
+            <field name="code">NA</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_10" model="res.country.state">
+            <field name="name">Northern Borders</field>
+            <field name="code">NB</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_11" model="res.country.state">
+            <field name="name">Qassim</field>
+            <field name="code">QA</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_12" model="res.country.state">
+            <field name="name">Riyadh</field>
+            <field name="code">RI</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="state_13" model="res.country.state">
+            <field name="name">Tabuk</field>
+            <field name="code">TA</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
     </data>
 </odoo>

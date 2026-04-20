@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="gmo_declaration_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <h1  align="center"> <u>GMO DECLARATION </u></h1>
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0">
+                        <tr>
+                            <td><p style="text-align:justify;">Hereby declare that <strong> CRUSHED CHILLY (E) (24,993.36MT) </strong>,Supplied to <strong>KALUSTYAN
+    CORPORATION 855 RATHWAY AVENUE UNION </strong> NEW JERSEY USA 07083 is not derived from or
+    produced using GMOs or their derivatves either directly or indirectly (for example ,genetcally
+    modifed substrates , genetcally modifes organisms etc), and that all reasonable steps have
+    modifed substrates , genetcally modifes organisms etc), and that all reasonable steps have
+    been taken to avoid contaminaton from GMOs or their derivatves.</p></td>
+                        </tr>
+                    </table>
+
+                    <table style="margin-top:70px;">
+                        <tr>
+                            <td>Contract Number</td>
+                            <td width="14%">:</td>
+                            <td ><strong>A19/SAP/E/000071</strong></td>
+                        </tr>
+
+                        <tr>
+                            <td>Container No</td>
+                            <td width="14%">:</td>
+                            <td ><strong>TCNU4358153</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Date</td>
+                            <td width="14%">:</td>
+                            <td ><strong>02/04/2019</strong></td>
+                        </tr>
+                    </table>
+
+                    <table style="margin-top:50px;">
+                        <tr>
+                            <td><p style="text-align:justify;">Company name and address - SPlot No . 15 , Food Park ,Borgaon - 480108 ,Madhya
+                                Pradesh,India Phone : 07165-226846 , GSTIN NO : 23AIFPJ1162P1Z8</p></td></tr></table>
+                    <table style="margin-top:50px;">
+                        <tr>
+                            <td>Authorized Signatory</td>
+                        </tr>
+                    </table>
+                    <table style="margin-top:50px;">
+                        <tr>
+                            <td>For Samay Agro Products.</td>
+                        </tr>
+                   </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

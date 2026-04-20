@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="export_credit_report">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0">
+                        <tr>
+                            <td>
+                                <h3><center>EXPORT CREDIT GUARANTEE CORPORATION OF INDIA LIMITED</center></h3>
+                                <h3><center>(A GOVT. OF INDIA ENTERPRISE)</center></h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align:right;">
+                                <span style="padding:3px 20px 3px 20px;border:1px solid #ccc;">Form No. 144</span>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0" style="position:relative;margin-top:50px;">
+                        <tr>
+                            <td width="100%" style="border:1px solid #ccc;">
+                                <center><span style="font-weight:bold;">Credit Limit Application for the first time on a buyer</span></center>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p>(The Application should be submitted to the branch office of the Corporation along with a fee of Rs.500/-.)</p>
+
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0" style="position:relative;margin-top:50px; border:1px solid #ccc;" >
+                        <tr>
+                            <td><h3><u>INSTRUCTIONS:</u></h3></td>
+                        </tr>
+
+                        <tr>
+                            <td><p> &#160; (i) Fill in all columns of the application legibly or if possible send in typewritten.</p></td>
+                        </tr>
+                        <tr>
+                            <td><p> &#160; (ii) Attach wherever possible a bank report in original/copy bank certified to your application.</p></td>
+                        </tr>
+                        <tr>
+                            <td><p> &#160;(iii) Mention the name and address of the Buyer/bank in the caption, with reference number and write separate letter<br>&#160;in respect of each of your oversea buyer, in all your future correspondence, concerning the credit limit applications.</br></p></td>
+                        </tr>
+                        <tr>
+                            <td><p> &#160; (iv) Terms of payment means DP/CAD/DA/Open Delivery, Please specify the terms of payment with period clearly.</p></td>
+                        </tr>
+                        <tr>
+                            <td><p> &#160;(v) In case you are making shipments directly to the buyer, please ensure necessary approvals from the RBI / <br> &#160;Authorized Dealers</br></p></td>
+                        </tr>
+                        <tr>
+                            <td><p> &#160; (vi) Provide additional information on the buyer, if available in the format provided at the end of the application form.</p></td>
+                        </tr>
+                        <tr>
+                            <td><h4> &#160; (vi)Please note a buyer is on who is responsible for making the payment and on whom you would be<br> &#160;maintaining recourse. Accordingly the documents should be drawn and credit limit should be obtained.</br></h4></td>
+                        </tr>
+
+                    </table>
+
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0" style="position:relative;margin-top:50px;">
+                        <tr>
+                            <td width="50%"> 1. Name of the Policy Holder:</td>
+                            <td>Samay Agro Products</td>
+                        </tr>
+
+                         <tr>
+                            <td width="50%"> 2. Contact Person Name:</td>
+                            <td>Mayank Jain</td>
+                        </tr>
+                         <tr>
+                            <td width="50%"> 3. Cell No/Tele No:</td>
+                            <td>9422806493</td>
+                        </tr>
+                         <tr>
+                            <td width="50%"> 4. Email:</td>
+                            <td>mayank.jain@suruchispices.net</td>
+                        </tr>
+                         <tr>
+                            <td width="50%">5. Policy Number :</td>
+                            <td> </td>
+                        </tr>
+                         <tr>
+                            <td width="50%"> 6. Policy period from</td>
+                            <td> </td>
+                        </tr>
+                         <tr>
+                            <td width="50%"> 7. Maximum Liability (M.L.) :</td>
+                            <td> </td>
+                        </tr>
+                        <tr><td width="100%"> &#160; &#160; (For enhancement of M.L., if required, you may apply separately, in the specified format)</td></tr>
+                        <tr>
+                            <td width="50%">8. Shipments Declaration submitted up to</td>
+                            <td> </td>
+                        </tr>
+                        <tr><td width="100%"> &#160; &#160; (For enhancement of M.L., if required, you may apply separately, in the specified format)</td></tr>
+
+                        <tr>
+                            <td width="50%">9. Name of the Buyer:</td>
+                            <td> TO THE ORDER </td>
+
+                        </tr>
+                        <tr><td width="100%"> &#160; &#160; Address:-</td> <td> </td></tr>
+                    </table>
+
+                    <table width="100%" border="0" cellspacing="0"
+								cellpadding="0" style="position:relative;margin-top:50px;">
+                        <tr>
+                            <td width="50%"> &#160; &#160; City : </td>
+                            <td align="center"> Country:</td>
+                        </tr>
+
+                         <tr>
+                            <td> &#160; &#160; Phone Number : </td>
+                            <td align="center"> Fax Number:</td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; E-Mail : </td>
+                            <td align="center"> </td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; Contact Person: </td>
+                            <td align="center"> Mobile No:</td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; Buyer registration No: </td>
+                            <td align="center"> VAT No:</td>
+                        </tr>
+                        <tr>
+                            <td> &#160; &#160; Alternate address, if any:</td>
+                            <td> ________________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">   &#160; &#160; &#160; &#160; _____________________________________________________________________________________________ </td>
+                        </tr>
+                    </table>
+
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0" style="position:relative;margin-top:50px;">
+                        <tr>
+                            <td width="50%"> &#160; &#160; City : </td>
+                            <td align="center"> Country:</td>
+                        </tr>
+
+                         <tr>
+                            <td> &#160; &#160; Phone Number : </td>
+                            <td align="center"> Fax Number:</td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; E-Mail : </td>
+                            <td align="center"> </td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; Contact Person: </td>
+                            <td align="center"> Mobile No:</td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; Buyer registration No: </td>
+                            <td align="center"> VAT No:</td>
+                        </tr>
+                        <tr>
+                            <td> &#160; &#160; Alternate address, if any: </td>
+                            <td> ________________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">   &#160; &#160; &#160; &#160; _____________________________________________________________________________________________ </td>
+                        </tr>
+                    </table>
+                    <table width="100%" border="0" cellspacing="0"
+                                    cellpadding="0" style="position:relative;margin-top:50px;">
+                        <tr>
+                            <td width="50%"> &#160; &#160; City : </td>
+                            <td align="center"> Country:</td>
+                        </tr>
+
+                         <tr>
+                            <td> &#160; &#160; Phone Number : </td>
+                            <td align="center"> Fax Number:</td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; E-Mail : </td>
+                            <td align="center"> </td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; Contact Person: </td>
+                            <td align="center"> Mobile No:</td>
+                        </tr>
+                         <tr>
+                            <td> &#160; &#160; Buyer registration No: </td>
+                            <td align="center"> VAT No:</td>
+                        </tr>
+                        <tr>
+                            <td><strong> &#160; &#160; Alternate address, if any: </strong></td>
+                            <td> ________________________________________________________________</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">   &#160; &#160; &#160; &#160; _____________________________________________________________________________________________ </td>
+                        </tr>
+                    </table>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

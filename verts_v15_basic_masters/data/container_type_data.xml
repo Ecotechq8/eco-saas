@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Container Type Data -->
+        <record id="8feet_id" model="container.type">
+            <field name="name">8 Feet</field>
+        </record>
+        <record id="10feet_id" model="container.type">
+            <field name="name">10 Feet</field>
+        </record>
+        <record id="20feet_id" model="container.type">
+            <field name="name">20 Feet</field>
+        </record>
+        <record id="40feet_id" model="container.type">
+            <field name="name">40 Feet</field>
+        </record>
+        <record id="reefer_id" model="container.type">
+            <field name="name">Reefer</field>
+        </record>
     </data>
 </odoo>

@@ -6,7 +6,7 @@
 			<field name="name">Spice Board Rate Master</field>
 			<field name="model">spice.board.rate.master</field>
 			<field name="arch" type="xml">
-				<list>
+				<list string="Spice Board Rate Master">
 					<field name="country_id" />
 					<field name="qc_id" />
 					<!--<field name="rate_small_five" />-->
@@ -23,7 +23,7 @@
 			<field name="arch" type="xml">
 				<form string="Spice Board Rate Master">
 					<sheet>
-						<group>
+						<group colspan="4" col="4">
 							<field name="country_id" />
 							<field name="qc_id" />
 							<!--<field name="rate_small_five" />-->
@@ -31,8 +31,8 @@
 							<field name="product_id" options='{"no_create": true}' domain="[('is_export_expense','=',True)]"/>
 							<!--<field name="categ_id" readonly="1" force_save="1"/>-->
 						</group>
-						<field name="spice_board_line" >
-							<list editable="bottom">
+						<field name="spice_board_line" widget="one2many_list">
+							<list string="Spice Board Line" editable="bottom">
 								<field name="product_id" options='{"no_create": true}'/>
 								<!--<field name="categ_id" />-->
 								<field name="from_qty"/>
@@ -50,7 +50,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">spice.board.rate.master</field>
 			<field name="view_id" ref="verts_v15_freight_forward.spice_board_rate_master_tree_view" />
-			<field name="view_mode">list,form</field>
+			<field name="view_mode">tree,form</field>
 		</record>
 
 	</data>

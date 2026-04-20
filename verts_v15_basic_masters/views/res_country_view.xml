@@ -10,8 +10,8 @@
 			<xpath expr="//form/sheet/label[@for='state_ids']" position="before">
 				<notebook >
 					<page name="states" string="States">
-						<field name="state_ids" >
-							<list editable="bottom">
+						<field name="state_ids" widget="one2many_list">
+							<list string="States" editable="bottom">
 								<field name='name' />
 								<field name='code'/>
 							</list>

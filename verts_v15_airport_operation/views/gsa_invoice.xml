@@ -4,7 +4,7 @@
         <field name="name">gsa.invoice.tree</field>
         <field name="model">gsa.invoice</field>
         <field name="arch" type="xml">
-            <list sample="1">
+            <list string="GSA Invoice" sample="1">
                 <field name="name"/>
                 <field name="company_id"/>
                 <field name="doc_number"/>
@@ -95,7 +95,7 @@
     <record id="action_gsa_invoice" model="ir.actions.act_window">
         <field name="name">GSA Invoice</field>
         <field name="res_model">gsa.invoice</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
 </odoo>

@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- qc_parameter_data.xml data placeholder -->
+
+        <!-- QC Parameter -->
+        
+        <record id="exports_qc_parameter_01" model="qc.parameter">
+            <field name="name">Aflatoxin</field>
+        </record>
+        <record id="exports_qc_parameter_02" model="qc.parameter">
+            <field name="name">Salmonella</field>
+        </record>
+        <record id="exports_qc_parameter_03" model="qc.parameter">
+            <field name="name">Sudan I - IV</field>
+        </record>
+        <record id="exports_qc_parameter_04" model="qc.parameter">
+            <field name="name">Sudan (HPLC)</field>
+        </record>
+        <record id="exports_qc_parameter_05" model="qc.parameter">
+            <field name="name">Para Red Dye</field>
+        </record>
+        <record id="exports_qc_parameter_06" model="qc.parameter">
+            <field name="name">Profenofos</field>
+        </record>
+        <record id="exports_qc_parameter_07" model="qc.parameter">
+            <field name="name">Triazophos</field>
+        </record>
+        <record id="exports_qc_parameter_08" model="qc.parameter">
+            <field name="name">Endosulfan</field>
+        </record>
+        <record id="exports_qc_parameter_09" model="qc.parameter">
+            <field name="name">Extraneous</field>
+        </record>
+        <record id="exports_qc_parameter_10" model="qc.parameter">
+            <field name="name">Matter</field>
+        </record>
+        <record id="exports_qc_parameter_11" model="qc.parameter">
+            <field name="name">Other Seeds</field>
+        </record>
+        <record id="exports_qc_parameter_12" model="qc.parameter">
+            <field name="name">Sunset Yellow</field>
+        </record>
+        <record id="exports_qc_parameter_13" model="qc.parameter">
+            <field name="name">Ethion</field>
+        </record>
+        <record id="exports_qc_parameter_14" model="qc.parameter">
+            <field name="name">Iprobenphos</field>
+        </record>
+        <record id="exports_qc_parameter_15" model="qc.parameter">
+            <field name="name">Triazophos</field>
+        </record>
+        <record id="exports_qc_parameter_16" model="qc.parameter">
+            <field name="name">Profenofos</field>
+        </record>
     </data>
 </odoo>

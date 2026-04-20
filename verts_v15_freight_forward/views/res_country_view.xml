@@ -15,7 +15,7 @@
 				<xpath expr="//notebook" position="inside">
 					<page name="Export Expenses" string="Export Expenses">
 
-						<group string="Import Export Expence">
+						<group col="3" string="Import Export Expence">
 							<group>
 								<field name="load_export_expense_values" />
 							</group>
@@ -26,18 +26,18 @@
 						</group>
 
 						<field name="country_export_expense_line"
-							>
-							<list editable="bottom">
+							widget="one2many_list">
+							<list string="Export Expenses" editable="bottom">
 								<field name='expense_id' options='{"no_create": true}'
 									domain="[('is_export_expense','=',True)]" />
 								<field name='price' />
-<!--								<field name='currency' />-->
+								<field name='currency' />
 							</list>
 						</field>
 					</page>
 					<page name="Export Documents" string="Export Documents">
 
-						<group string="Import Export Document">
+						<group col="3" string="Import Export Document">
 							<group>
 								<field name="load_export_doc_values" />
 							</group>
@@ -46,17 +46,17 @@
 									type="object" class="oe_highlight" />
 							</group>
 						</group>
-<!--						<field name="country_export_document_line"-->
-<!--							>-->
-<!--							<list editable="bottom">-->
-<!--								<field name='export_document_id' />-->
-<!--								<field name='copies' />-->
-<!--							</list>-->
-<!--						</field>-->
+						<field name="country_export_document_line"
+							widget="one2many_list">
+							<list string="Export Documents" editable="bottom">
+								<field name='export_document_id' />
+								<field name='copies' />
+							</list>
+						</field>
 					</page>
 					<page name="fumigation_master" string="Fumigation Master">
 					
-					<group string="Import Fumigation Master">
+					<group col="3" string="Import Fumigation Master">
 							<group>
 								<field name="load_fumigation_values" />
 							</group>
@@ -65,8 +65,8 @@
 									type="object" class="oe_highlight" />
 							</group>
 						</group>
-						<field name="fumigation_lines" >
-							<list editable="bottom">
+						<field name="fumigation_lines" widget="one2many_list">
+							<list string="Fumigation Master" editable="bottom">
 								<field name="container_type_id" />
 								<field name="alp_dosage" />
 								<field name="alp_hours" />
@@ -85,26 +85,26 @@
 						</field>
 					</page>
 					<page name="schedule_lines" string="Schedule">
-					    <group string="Import Schedule">
-<!--							<group>-->
-<!--								<field name="load_schedule_values" />-->
-<!--							</group>-->
-<!--							<group>-->
-<!--								<button name="upload_schedule" string="Import"-->
-<!--									type="object" class="oe_highlight" />-->
-<!--							</group>-->
+					    <group col="3" string="Import Schedule">
+							<group>
+								<field name="load_schedule_values" />
+							</group>
+							<group>
+								<button name="upload_schedule" string="Import"
+									type="object" class="oe_highlight" />
+							</group>
 						</group>
-<!--						<field name="schedule_lines" >-->
-<!--							<list editable="bottom">-->
-<!--								<field name="schedule_id" required="1" />-->
-<!--								<field name="report_at_time" />-->
-<!--								<field name="req_from" />-->
-<!--								<field name="country_specific" no_label="1"-->
-<!--									class="oe_inline" />-->
-<!--								<field name="port_of_loading_specific" no_label="1"-->
-<!--									class="oe_inline" />-->
-<!--							</list>-->
-<!--						</field>-->
+						<field name="schedule_lines" widget="one2many_list">
+							<list string="Schedule" editable="bottom">
+								<field name="schedule_id" required="1" />
+								<field name="report_at_time" />
+								<field name="req_from" />
+								<field name="country_specific" no_label="1"
+									class="oe_inline" />
+								<field name="port_of_loading_specific" no_label="1"
+									class="oe_inline" />
+							</list>
+						</field>
 					</page>
 				</xpath>
 
@@ -113,7 +113,7 @@
 					position="before">
 
 
-					<group string="Import State">
+					<group col="3" string="Import State">
 						<group>
 							<field name="load_state_values" />
 						</group>

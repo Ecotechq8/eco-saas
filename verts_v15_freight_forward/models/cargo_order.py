@@ -18,7 +18,7 @@ import os
 import openpyxl
 import io
 import xlsxwriter
-# from xlutils.copy import copy
+from xlutils.copy import copy
 from openpyxl import load_workbook
 from openpyxl.styles import Font
 import tempfile

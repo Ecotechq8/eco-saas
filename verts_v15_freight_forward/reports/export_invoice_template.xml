@@ -15,7 +15,7 @@
 										<table>
 											<t t-if="not o.branch_id">
 												<tr>
-													<td valign="top" align="left"
+													<td colspan="2" valign="top" align="left"
 														style="color:#4D4D4F; font-size:12px; padding: 0 0 0px 0; line-height:16px; padding-top:16px;">
 														<img
 															t-if="o.company_id.invoice_logo or o.company_id.logo"
@@ -33,7 +33,7 @@
 													</td>
 												</tr>
 												<tr>
-													<td width="50%" style="font-size:13px;">
+													<td colspan="2" width="50%" style="font-size:13px;">
 														<span
 															t-attf-style="color: #{o.company_id and o.company_id and o.company_id.company_color or '#ffffff'};"
 															t-field="o.company_id.street" />
@@ -95,7 +95,7 @@
 											</t>
 											<t t-if="o.branch_id">
 												<tr>
-													<td valign="top" align="left"
+													<td colspan="2" valign="top" align="left"
 														style="color:#4D4D4F; font-size:12px; padding: 0 0 0px 0; line-height:16px; padding-top:16px;">
 														<img t-if="o.branch_id.logo_branch"
 															t-attf-src="data:image/*;base64,{{o.branch_id.logo_branch}}"
@@ -183,7 +183,7 @@
 											t-attf-style="color:#fff; text-transform:capitalize; font-size:14px; border: 1px solid black;">
 											<tr
 												t-attf-style="color: black; background-color: gainsboro;border-bottom:1px solid">
-												<td align="center"
+												<td align="center" colspan="4"
 													style="padding:9px 15px; font-weight:bold;font-size:12px;border-bottom:1px solid">
 													EXPORT INVOICE
 													<br />

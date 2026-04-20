@@ -43,7 +43,7 @@ class MeisReportWiz(models.TransientModel):
                     sr_no += 1
 
         return {'name': _('MEIS Report'),
-                'view_mode': 'list',
+                'view_mode': 'tree',
                 'view_id': self.env.ref('verts_v15_freight_forward.meis_report_account_invoice_tree_view').id,
                 'view_type': 'form',
                 'res_model': 'account.invoice',

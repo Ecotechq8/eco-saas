@@ -6,7 +6,7 @@
 			<field name="name">common.schedule.tree</field>
 			<field name="model">common.schedule</field>
 			<field name="arch" type="xml">
-				<list>
+				<list string="Common Schedule">
 					<field name="name" />
 					<field name="report_at_time" />
 					<field name="req_from" />
@@ -26,7 +26,7 @@
 						<h1>
 							<field name="name" required="1"/>
 						</h1>
-						<group>
+						<group colspan="4" col="4">
 							<field name="report_at_time" />
 							<field name="req_from" />
 							<field name="country_specific" no_label="1" class="oe_inline"/>
@@ -42,7 +42,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">common.schedule</field>
 			<field name="view_id" ref="verts_v15_freight_forward.common_schedule_tree_view" />
-			<field name="view_mode">list,form</field>
+			<field name="view_mode">tree,form</field>
 		</record>
 		<!--Stop Common Schedule View-->
 
@@ -51,7 +51,7 @@
 			<field name="name">product.mix.variants.tree</field>
 			<field name="model">product.mix.variants</field>
 			<field name="arch" type="xml">
-				<list>
+				<list string="Product Mix Variants">
 					<field name="qc_parameter_id" />
 					<field name="value" />
 				</list>
@@ -64,7 +64,7 @@
 			<field name="arch" type="xml">
 				<form string="Product Mix Variants">
 					<sheet>
-						<group>
+						<group colspan="4" col="4">
 							<field name="qc_parameter_id" />
 							<field name="value" />
 						</group>
@@ -78,7 +78,7 @@
 			<field name="type">ir.actions.act_window</field>
 			<field name="res_model">product.mix.variants</field>
 			<field name="view_id" ref="verts_v15_freight_forward.product_mix_variants_tree_view" />
-			<field name="view_mode">list,form</field>
+			<field name="view_mode">tree,form</field>
 		</record>
 		<!--Stop Product Mix Variants -->
 
@@ -87,7 +87,7 @@
             <field name="name">export.packing.type.tree</field>
             <field name="model">export.packing.type</field>
             <field name="arch" type="xml">
-                <list>
+                <list string="Export Packing Type">
                     <field name="name" />
                 </list>
             </field>
@@ -112,7 +112,7 @@
             <field name="name">Export Packing Type</field>
             <field name="res_model">export.packing.type</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="view_id" ref="export_packing_type_tree_view"/>
         </record>
 

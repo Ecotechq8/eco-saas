@@ -1,6 +1,447 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Purchase Config Wizard View Placeholder -->
+
+        <record id="view_purchase_config_setting" model="ir.ui.view">
+            <field name="name">Purchase settings</field>
+            <field name="model">purchase.config.wiz</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <form string="Configure Product" class="oe_form_configuration">
+                    <header>
+                        <button string="Apply" type="object" name="save" class="oe_highlight"/>
+                        <button name="cancel" string="Cancel" class="oe_link" special="cancel"/>
+                    </header>
+                    <group col="3">
+                        <group string="Purchase Requisition Configuration">
+                            <!--							<field name="all_pr_disable"/>-->
+                            <field name="allow_inv_from_pr"/>
+                            <field name="mandatory_forecast"/>
+                            <field name="mandatory_estimated_price"/>
+                            <field name="pr_validation" widget="radio"/>
+                        </group>
+                        <group string="Button Label Name For Purchase Requisition">
+                            <field name="pr_label_button_name_1st" attrs="{'invisible':[('pr_validation','=',0)]}"/>
+                            <field name="pr_label_button_name_2nd"
+                                   attrs="{'invisible':[('pr_validation','in',(False,0,1))]}"/>
+                            <field name="pr_label_button_name_3rd"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,0))]}"/>
+                            <field name="pr_label_button_name_4th"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="pr_label_button_name_5th"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="States Label Name For Purchase Requisition">
+                            <field name="pr_label_state_name_1st" attrs="{'invisible':[('pr_validation','=',0)]}"/>
+                            <field name="pr_label_state_name_2nd"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,0))]}"/>
+                            <field name="pr_label_state_name_3rd"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,0))]}"/>
+                            <field name="pr_label_state_name_4th"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="pr_label_state_name_5th"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Amount Validation Configuration"
+                               attrs="{'invisible':[('pr_validation','in',(False,0))]}">
+                            <field name="pr_double_validation_amt"
+                                   attrs="{'invisible':[('pr_validation','in',(False,0))]}"/>
+                            <field name="pr_triple_validation_amount"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,0))]}"/>
+                            <field name="pr_fourth_validation_amount"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,0))]}"/>
+                            <field name="pr_fifth_validation_amount"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="pr_sixth_validation_amount"
+                                   attrs="{'invisible':[('pr_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="PR Users Approval">
+                            <field name="users_approval_line_pr" nolabel="1" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="sequence" required="1"/>
+                                    <field name="user_id" required="1" options="{'no_create': True}"/>
+                                    <field name="pr_mail_template"/>
+                                </list>
+                            </field>
+                        </group>
+                        <newline/>
+                        <group string="PR Sequence Numbers">
+                            <field name="company_id" invisible="1"/>
+                            <field name="pr_sequence_number" readonly="0" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="pr_common_prefix" readonly="0"
+                                   attrs="{'invisible':[('pr_sequence_number','=',1)]}"/>
+                        </group>
+                        <group string="PR Sequence Prefix" attrs="{'invisible':[('pr_sequence_number','!=',1)]}">
+                            <field name="pr_raw_prefix"/>
+                            <field name="pr_gi_prefix"/>
+                            <field name="pr_consu_prefix"/>
+                            <field name="pr_fa_prefix"/>
+                            <field name="pr_service_prefix"/>
+                            <field name="pr_fg_prefix"/>
+                            <field name="pr_mix_prefix"/>
+                            <field name="pr_semi_fg_wip_prefix"/>
+                        </group>
+                        <newline/>
+                        <group string="Document ID">
+                            <field name="is_doc"/>
+                        </group>
+                        <newline/>
+                        <newline/>
+                        <group string="For Mandatory and Readonly Values ">
+                            <field name="make_hsn_code_mandatory"/>
+                            <field name="make_taxes_mandatory"/>
+                            <field name="make_hsn_code_readonly"/>
+                            <field name="make_tnc_mandatory"/>
+                            <field name="hide_vendor_in_pr"/>
+                            <field name="show_customer_in_pr"/>
+                            <field name="show_sale_order_in_pr"/>
+                            <field name="invisible_estimated_price_value"/>
+                            <field name="last_purchase_price"/>
+                        </group>
+                        <!-- <group string="Email templates for Approvers">
+                            <field name="pr_mail_template_1st" attrs="{'invisible':[('pr_validation','=',0)]}"/>
+                            <field name="pr_mail_template_2nd" attrs="{'invisible':[('pr_validation','in',(False,1,0))]}"/>
+                            <field name="pr_mail_template_3rd" attrs="{'invisible':[('pr_validation','in',(False,1,2,0))]}"/>
+                            <field name="pr_mail_template_4th" attrs="{'invisible':[('pr_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="pr_mail_template_5th" attrs="{'invisible':[('pr_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>-->
+                        <newline/>
+                        <group string="PR Product ON/OFF">
+                            <field name="product_on_off" widget="radio"/>
+                        </group>
+                        <group string="PR Description ON/OFF">
+                            <field name="description_on_off" widget="radio"/>
+                        </group>
+                        <group string="PR Date Configuration">
+                            <field name="pr_date_readonly"/>
+                        </group>
+                        <newline/>
+                        <group string="Purchase Order Configuration">
+                            <!--							<field name="all_po_disable"/>-->
+                            <field name="po_validation" widget="radio"/>
+                        </group>
+                        <group string="Button Label Name For Purchase Order">
+                            <field name="po_label_button_name_1st" attrs="{'invisible':[('po_validation','=',0)]}"/>
+                            <field name="po_label_button_name_2nd"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,0))]}"/>
+                            <field name="po_label_button_name_3rd"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,0))]}"/>
+                            <field name="po_label_button_name_4th"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="po_label_button_name_5th"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="States Label Name For Purchase Order">
+                            <field name="po_label_state_name_1st" attrs="{'invisible':[('po_validation','=',0)]}"/>
+                            <field name="po_label_state_name_2nd"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,0))]}"/>
+                            <field name="po_label_state_name_3rd"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,0))]}"/>
+                            <field name="po_label_state_name_4th"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="po_label_state_name_5th"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Amount Validation Configuration"
+                               attrs="{'invisible':[('po_validation','in',(False,0))]}">
+                            <field name="po_double_validation_amt"
+                                   attrs="{'invisible':[('po_validation','in',(False,0))]}"/>
+                            <field name="po_triple_validation_amount"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,0))]}"/>
+                            <field name="po_fourth_validation_amount"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,0))]}"/>
+                            <field name="po_fifth_validation_amount"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="po_sixth_validation_amount"
+                                   attrs="{'invisible':[('po_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="PO Users Approval">
+                            <field name="users_approval_line_po" nolabel="1" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="sequence" required="1"/>
+                                    <field name="user_id" required="1" options="{'no_create': True}"/>
+                                    <field name="po_mail_template"/>
+                                    <!--Next Approver-->
+                                    <field name="sla_days"/>
+                                </list>
+                            </field>
+                        </group>
+                        <newline/>
+                        <group string="PO Description ON/OFF">
+                            <field name="po_description" widget="radio"/>
+                        </group>
+                        <group string="PO Sequence Numbers">
+                            <field name="po_sequence_number" widget="radio"/>
+                        </group>
+                        <group>
+                            <field name="po_common_prefix" attrs="{'invisible':[('po_sequence_number','=',1)]}"/>
+                        </group>
+                        <group string="PO Sequence Prefix" attrs="{'invisible':[('po_sequence_number','!=',1)]}">
+                            <field name="po_raw_prefix"/>
+                            <field name="po_gi_prefix"/>
+                            <field name="po_consu_prefix"/>
+                            <field name="po_fa_prefix"/>
+                        </group>
+                        <newline/>
+                        <group string="Advance Requests Configuration">
+                            <field name="all_pa_disable"/>
+                            <field name="pa_validation" widget="radio"/>
+                        </group>
+                        <group string="Button Label Name For Advance Requests">
+                            <field name="po_label_button_name_1st" attrs="{'invisible':[('pa_validation','=',0)]}"/>
+                            <field name="po_label_button_name_2nd"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,0))]}"/>
+                            <field name="po_label_button_name_3rd"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,2,0))]}"/>
+                            <field name="po_label_button_name_4th"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="po_label_button_name_5th"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="States Label Name For Advance Requests">
+                            <field name="po_label_state_name_1st" attrs="{'invisible':[('pa_validation','=',0)]}"/>
+                            <field name="po_label_state_name_2nd"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,0))]}"/>
+                            <field name="po_label_state_name_3rd"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,2,0))]}"/>
+                            <field name="po_label_state_name_4th"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="po_label_state_name_5th"
+                                   attrs="{'invisible':[('pa_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Advance Requests Approval">
+                            <field name="users_approval_line_pa" nolabel="1" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="sequence" required="1"/>
+                                    <field name="user_id" required="1" options="{'no_create': True}"/>
+                                    <field name="pa_mail_template"/>
+                                </list>
+                            </field>
+                        </group>
+                        <newline/>
+                        <group string="SO Description ON/OFF">
+                            <field name="so_description" widget="radio"/>
+                        </group>
+                        <group string="Service Order Configuration">
+                            <field name="all_so_disable"/>
+                            <field name="so_validation" widget="radio"/>
+                        </group>
+                        <group string="Button Label Name For Service Order">
+                            <field name="so_label_button_name_1st" attrs="{'invisible':[('so_validation','=',0)]}"/>
+                            <field name="so_label_button_name_2nd"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,0))]}"/>
+                            <field name="so_label_button_name_3rd"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,0))]}"/>
+                            <field name="so_label_button_name_4th"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="so_label_button_name_5th"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="States Label Name For Service Order">
+                            <field name="so_label_state_name_1st" attrs="{'invisible':[('so_validation','=',0)]}"/>
+                            <field name="so_label_state_name_2nd"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,0))]}"/>
+                            <field name="so_label_state_name_3rd"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,0))]}"/>
+                            <field name="so_label_state_name_4th"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="so_label_state_name_5th"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Amount Validation Configuration"
+                               attrs="{'invisible':[('so_validation','in',(False,0))]}">
+                            <field name="so_double_validation_amt"
+                                   attrs="{'invisible':[('so_validation','in',(False,0))]}"/>
+                            <field name="so_triple_validation_amount"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,0))]}"/>
+                            <field name="so_fourth_validation_amount"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,0))]}"/>
+                            <field name="so_fifth_validation_amount"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="so_sixth_validation_amount"
+                                   attrs="{'invisible':[('so_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Service Order Approval">
+                            <field name="users_approval_line_so" nolabel="1" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="sequence" required="1"/>
+                                    <field name="user_id" required="1" options="{'no_create': True}"/>
+                                    <field name="so_mail_template"/>
+                                </list>
+                            </field>
+                        </group>
+                    </group>
+                    <!-- This field comment as per Purchase doc -->
+                    <!-- <group col="3">
+                        <group string="T&amp;C For Service Order">
+                            <field name="tc_lines" nolabel="1" widget="one2many_list" >
+                                <list editable="bottom">
+                                    <field name="item" required="1"/>
+                                    <field name="tc" required="1"/>
+                                </list>
+                            </field>
+                        </group>
+                    </group> -->
+                    <group col="3">
+                        <group string="Non PO Item Configuration">
+                            <field name="all_npo_disable"/>
+                            <field name="npo_validation" widget="radio"/>
+                        </group>
+                        <group string="Button Label Name For Non PO Item">
+                            <field name="so_label_button_name_1st" attrs="{'invisible':[('npo_validation','=',0)]}"/>
+                            <field name="so_label_button_name_2nd"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,0))]}"/>
+                            <field name="so_label_button_name_3rd"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,0))]}"/>
+                            <field name="so_label_button_name_4th"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="so_label_button_name_5th"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="States Label Name For Non PO Item">
+                            <field name="npo_label_state_name_1st" attrs="{'invisible':[('npo_validation','=',0)]}"/>
+                            <field name="npo_label_state_name_2nd"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,0))]}"/>
+                            <field name="npo_label_state_name_3rd"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,0))]}"/>
+                            <field name="npo_label_state_name_4th"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="npo_label_state_name_5th"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Amount Validation Configuration"
+                               attrs="{'invisible':[('npo_validation','in',(False,0))]}">
+                            <field name="npo_double_validation_amt"
+                                   attrs="{'invisible':[('npo_validation','in',(False,0))]}"/>
+                            <field name="npo_triple_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,0))]}"/>
+                            <field name="npo_fourth_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,0))]}"/>
+                            <field name="npo_fifth_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="npo_sixth_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Non PO Item Approval">
+                            <field name="users_approval_line_npo" nolabel="1" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="sequence" required="1"/>
+                                    <field name="user_id" required="1" options="{'no_create': True}"/>
+                                    <field name="npo_mail_template"/>
+                                </list>
+                            </field>
+                        </group>
+                    </group>
+                    <group col="3">
+                        <group string="PO Date Configuration">
+                            <field name="po_date_readonly" widget="radio"/>
+                        </group>
+                    </group>
+                    <group string="Create Multiple RFQ by Quote Comparison">
+                        <field name="create_multiple_rfq"/>
+                    </group>
+                    <group string="Unit Price">
+                        <field name="unit_price_in_po" widget="radio"/>
+                        <field name="unit_price_non_zero_only" widget="radio"/>
+                    </group>
+                    <group string="Supplier Taxes">
+                        <field name="supplier_taxes_in_po" widget="radio"/>
+                    </group>
+                    <group string="HSN/SAC Code" invisible="1">
+                        <field name="hsn_sac_code_in_po" widget="radio"/>
+                    </group>
+                    <group string="GRN Mandatory">
+                        <field name="grn_mandatory" widget="radio"/>
+                    </group>
+                    <group string="Supplier Rating">
+                        <div class="o_row">
+                            <span string="Supplier Rating formula"/>
+                            <field name="supplier_rating_formula_div"/>
+                            <field name="supplier_rating_formula_val1"/>
+                            <field name="supplier_rating_formula_add"/>
+                            <field name="supplier_rating_formula_val2"/>
+                            <field name="supplier_rating_formula_mul"/>
+                            <field name="supplier_rating_formula_val3"/>
+                        </div>
+                    </group>
+                    <!--					<group string="Quote Comparison">-->
+                    <!--						<field name="quote_comparision"/>-->
+                    <!--					</group>-->
+                    <group col="3">
+                        <group string="Quote Comparision Configuration">
+                            <field name="all_npo_disable"/>
+                            <field name="quote_validation" widget="radio"/>
+                        </group>
+                        <group string="Button Label Name For Non QC Item">
+                            <field name="so_label_button_name_1st" attrs="{'invisible':[('quote_validation','=',0)]}"/>
+                            <field name="so_label_button_name_2nd"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,0))]}"/>
+                            <field name="so_label_button_name_3rd"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,2,0))]}"/>
+                            <field name="so_label_button_name_4th"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="so_label_button_name_5th"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="States Label Name For Non QC Item">
+                            <field name="npo_label_state_name_1st" attrs="{'invisible':[('quote_validation','=',0)]}"/>
+                            <field name="npo_label_state_name_2nd"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,0))]}"/>
+                            <field name="npo_label_state_name_3rd"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,2,0))]}"/>
+                            <field name="npo_label_state_name_4th"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="npo_label_state_name_5th"
+                                   attrs="{'invisible':[('quote_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Amount Validation Configuration"
+                               attrs="{'invisible':[('npo_validation','in',(False,0))]}">
+                            <field name="npo_double_validation_amt"
+                                   attrs="{'invisible':[('npo_validation','in',(False,0))]}"/>
+                            <field name="npo_triple_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,0))]}"/>
+                            <field name="npo_fourth_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,0))]}"/>
+                            <field name="npo_fifth_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,0))]}"/>
+                            <field name="npo_sixth_validation_amount"
+                                   attrs="{'invisible':[('npo_validation','in',(False,1,2,3,4,0))]}"/>
+                        </group>
+                        <group string="Non QC Item Approval">
+                            <field name="users_approval_line_qc" nolabel="1" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="sequence" required="1"/>
+                                    <field name="user_id" required="1" options="{'no_create': True}"/>
+                                    <field name="qc_mail_template"/>
+                                </list>
+                            </field>
+                        </group>
+                    </group>
+                </form>
+            </field>
+        </record>
+        <!-- 		<function id="automatic_load_configuration_file_changes_execute_id" model="purchase.config"
+                    name="_automatic_load_configuration_file_changes_execute" eval="[['xy']]"/> -->
+        <record id="action_purchase_config_setting" model="ir.actions.act_window">
+            <field name="name">Configure Purchase</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.config.wiz</field>
+            <field name="view_mode">form</field>
+            <field name="target">inline</field>
+        </record>
+
+        <record id="action_purchase_config_setting_view_form" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_purchase_config_setting"/>
+            <field name="act_window_id" ref="action_purchase_config_setting"/>
+        </record>
+        <menuitem id="menu_configuration_for_purchase"
+                  name="Configuration"
+                  parent="purchase.menu_purchase_config"
+                  action="action_purchase_config_setting"
+                  sequence="0"/>
     </data>
 </odoo>

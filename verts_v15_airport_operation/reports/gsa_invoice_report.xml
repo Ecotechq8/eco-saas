@@ -11,7 +11,7 @@
                                 <td valign="top" width="33%" align="left"
                                     style="color:#4D4D4F; font-size:12px; padding:
 												0 0 0px 0; line-height:16px; padding-top:16px;">
-                                    <img
+                                    <img t-if="o.company_id.logo"
                                          t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
                                          style="max-height: 80px;"/>
                                 </td>
@@ -43,36 +43,36 @@
                                 <td style="width: 60%; vertical-align: top;">
                                     <div style="display: flex; flex-direction: column;">
                                         <strong>Customer:</strong>
-                                        <span/>
+                                        <span t-out="o.partner_id.name"/>
                                     </div>
                                     <div style="margin-left: 76px;">
-                                        <t>
-                                            <t/>
+                                        <t t-if="o.partner_id.street">
+                                            <t t-out="o.partner_id.street"/>
                                             ,
                                         </t>
-                                        <t>
-                                            <t/>
+                                        <t t-if="o.partner_id.street2">
+                                            <t t-out="o.partner_id.street2"/>
                                             ,
                                         </t>
-                                        <t>
-                                            <t/>
+                                        <t t-if="o.partner_id.city_id">
+                                            <t t-out="o.partner_id.city_id.name"/>
                                             ,
                                         </t>
-                                        <t>
-                                            <t/>
+                                        <t t-if="o.partner_id.zip">
+                                            <t t-out="o.partner_id.zip"/>
                                             ,
                                         </t>
-                                        <t>
-                                            <t/>
+                                        <t t-if="o.partner_id.state_id">
+                                            <t t-out="o.partner_id.state_id.name"/>
                                             ,
                                         </t>
-                                        <t/>
+                                        <t t-out="o.partner_id.country_id.name"/>
                                     </div>
                                 </td>
                                 <td>
                                     <strong>Invoice Number:</strong>
                                 </td>
-                                <td/>
+                                <td t-out="o.name"/>
                             </tr>
                             <tr>
                                 <td></td>
@@ -80,17 +80,17 @@
                                     <strong>Invoice Date:</strong>
                                 </td>
                                 <td>
-                                    <t/>
+                                    <t t-if="o.invoice_date" t-out="o.invoice_date.strftime('%d/%m/%Y')"/>
                                 </td>
                             </tr>
                         </table>
                     </div>
 
-                    <t>
+                    <t t-if="o.remarks">
                         <div style="border: 1px solid #000; padding: 10px; margin: 10px 0;">
                             <strong>Remarks:</strong>
                             <br/>
-                            <p/>
+                            <p t-out="o.remarks"/>
                         </div>
                     </t>
                     <br/>
@@ -108,31 +108,31 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-value="1"/>
+                            <t t-set="counter" t-value="1"/>
                             <tr t-foreach="o.flt_details_ids" t-as="flt">
                                 <td>
-                                    <span/>
+                                    <span t-out="counter"/>
                                 </td>
                                 <td>
-                                    <span/>
+                                    <span t-out="flt.flt_date.strftime('%d/%m/%Y')"/>
                                 </td>
                                 <td>
-                                    <span/>
+                                    <span t-out="flt.flt_number"/>
                                 </td>
                                 <td>
-                                    <span/>
+                                    <span t-out="flt.route"/>
                                 </td>
                                 <!--                                    <td>-->
-                                <!--                                        <span/>-->
+                                <!--                                        <span t-out="flt.gross_wt"/>-->
                                 <!--                                    </td>-->
                                 <!--                                    <td>-->
-                                <!--                                        <span/>-->
+                                <!--                                        <span t-out="flt.chg_wt"/>-->
                                 <!--                                    </td>-->
-                                <t t-value="counter + 1"/>
+                                <t t-set="counter" t-value="counter + 1"/>
                             </tr>
                             <!--                                <tr>-->
-                            <!--                                    <td style="text-align: right;"><strong>Total Chargeable Weight:</strong></td>-->
-                            <!--                                    <td><span/></td>-->
+                            <!--                                    <td colspan="5" style="text-align: right;"><strong>Total Chargeable Weight:</strong></td>-->
+                            <!--                                    <td><span t-out="o.total_chg_wt"/></td>-->
                             <!--                                </tr>-->
                         </tbody>
                     </table>
@@ -141,8 +141,8 @@
                     <h4>Invoice Details</h4>
 
                     <!-- Initialize total accumulators -->
-                    <t t-value="0.0"/>
-                    <t t-value="0.0"/>
+                    <t t-set="total_subtotal" t-value="0.0"/>
+                    <t t-set="total_amt_kwd" t-value="0.0"/>
 
                     <table class="table table-sm table-bordered">
                         <thead style="background-color: #d3d3d3;">
@@ -160,84 +160,84 @@
                                 <!-- Accumulate totals -->
 
                                 <td>
-                                    <span/>
+                                    <span t-out="line.product_id.name"/>
                                 </td>
                                 <td>
-                                    <span/>
+                                    <span t-out="line.quantity"/>
                                 </td>
                                 <td>
-                                    <span field="line.price_unit"/>
+                                    <span t-field="line.price_unit"/>
                                 </td>
                                 <td>
-                                    <span field="line.price_subtotal"/>
+                                    <span t-field="line.price_subtotal"/>
                                 </td>
                                 <td>
-                                    <t>
-                                        <span/>
+                                    <t t-if="line.debit">
+                                        <span t-out="'{:.12g}'.format(line.debit / line.price_subtotal) if line.price_subtotal else 0"/>
                                     </t>
-                                    <t>
-                                        <span/>
+                                    <t t-if="line.credit">
+                                        <span t-out="'{:.12g}'.format(line.credit / line.price_subtotal) if line.price_subtotal else 0"/>
                                     </t>
                                 </td>
                                 <td>
-                                    <t
+                                    <t t-if="line.debit" t-out="line.debit"
                                        t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
-                                    <t
+                                    <t t-if="line.credit" t-out="line.credit"
                                        t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
                                 </td>
                             </tr>
 
                             <!-- Totals row for Subtotal, ROE, and Amt in KWD -->
                             <tr>
-                                <td style="text-align: right; font-weight: bold;">Total:</td>
+                                <td colspan="3" style="text-align: right; font-weight: bold;">Total:</td>
                                 <td>
-                                    <span field="o.amount_untaxed"/>
+                                    <span t-field="o.amount_untaxed"/>
                                 </td>
                                 <td>
                                 </td>
                                 <td>
-                                    <span field="o.amount_untaxed_signed"/>
+                                    <span t-field="o.amount_untaxed_signed"/>
                                 </td>
                             </tr>
                             <tr>
-                                <td>
+                                <td colspan="6">
                                     <strong>
-                                        <span/>
+                                        <span t-out="o.company_currency_id.amount_to_text(o.amount_total_signed)"/>
                                         Only
                                     </strong>
                                 </td>
                             </tr>
 
                             <!-- Standard Invoice Totals -->
-                            <!-- <t>
+                            <!-- <t t-if="o.tax_totals_json">
                                 <tr>
-                                    <td style="text-align: right;">
+                                    <td colspan="4" style="text-align: right;">
                                         <strong>Untaxed Total:</strong>
                                     </td>
-                                    <td>
-                                        <span field="o.amount_untaxed"/>
+                                    <td colspan="2">
+                                        <span t-field="o.amount_untaxed"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: right;">
+                                    <td colspan="4" style="text-align: right;">
                                         <strong>Tax:</strong>
                                     </td>
-                                    <td>
-                                        <span field="o.amount_tax"/>
+                                    <td colspan="2">
+                                        <span t-field="o.amount_tax"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td style="text-align: right;">
+                                    <td colspan="4" style="text-align: right;">
                                         <strong>Total:</strong>
                                     </td>
-                                    <td>
-                                        <span field="o.amount_total"/>
+                                    <td colspan="2">
+                                        <span t-field="o.amount_total"/>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td colspan="6">
                                         <strong>
-                                            <span/>
+                                            <span t-out="o.company_currency_id.amount_to_text(o.amount_total_signed)"/>
                                             Only
                                         </strong>
                                     </td>
@@ -254,54 +254,54 @@
                         <tr>
                             <td style="font-weight: bold; width: 20%;">Beneficiary Name</td>
                             <td style="width: 5px;">:</td>
-                            <td style="width: 75px;"/>
+                            <td style="width: 75px;" t-out="o.company_id.name"/>
                         </tr>
-                        <t>
+                        <t t-if="o.partner_bank_id">
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Bank Name</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;"/>
+                                <td style="width: 75px;" t-out="o.partner_bank_id.bank_id.name"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Bank Address</td>
                                 <td style="width: 5px;">:</td>
                                 <td style="width: 75px;">
-                                    <t>
-                                        <t/> <br/>
+                                    <t t-if="o.partner_bank_id.bank_id.street">
+                                        <t t-out="o.partner_bank_id.bank_id.street"/> <br/>
                                     </t>
-                                    <t>
-                                        <t/> <br/>
+                                    <t t-if="o.partner_bank_id.bank_id.street2">
+                                        <t t-out="o.partner_bank_id.bank_id.street2"/> <br/>
                                     </t>
-                                    <t>
-                                        <t/>,
+                                    <t t-if="o.partner_bank_id.bank_id.city">
+                                        <t t-out="o.partner_bank_id.bank_id.city"/>,
                                     </t>
-                                    <t>
-                                        <t/>,
+                                    <t t-if="o.partner_bank_id.bank_id.country">
+                                        <t t-out="o.partner_bank_id.bank_id.country.name"/>,
                                     </t>
-                                     <t>
-                                        <t/>
+                                     <t t-if="o.partner_bank_id.bank_id.zip">
+                                        <t t-out="o.partner_bank_id.bank_id.zip"/>
                                     </t>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Account #</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;"/>
+                                <td style="width: 75px;" t-out="o.partner_bank_id.acc_number"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">IBAN #</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;"/>
+                                <td style="width: 75px;" t-out="o.partner_bank_id.bank_id.iban"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">SWIFT Code</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;"/>
+                                <td style="width: 75px;" t-out="o.partner_bank_id.bank_id.swift_code"/>
                             </tr>
                             <tr>
                                 <td style="font-weight: bold;width: 20%;">Account Currency</td>
                                 <td style="width: 5px;">:</td>
-                                <td style="width: 75px;"/>
+                                <td style="width: 75px;" t-out="o.partner_bank_id.currency_id.name"/>
                             </tr>
                         </t>
                     </table>

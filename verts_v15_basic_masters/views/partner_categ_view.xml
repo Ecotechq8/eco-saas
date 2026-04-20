@@ -27,9 +27,9 @@
 		<record model="ir.ui.view" id="partner_categories_trees">
 			<field name="name">Partner Categories</field>
 			<field name="model">partner.categories</field>
-			<field name="type">list</field>
+			<field name="type">tree</field>
 			<field name="arch" type="xml">
-				<list>
+				<list string='Partners Type'>
 					<field name="name" />
 <!--					<field name="account_receivable" />-->
 <!--					<field name="account_payable" />-->
@@ -45,7 +45,7 @@
 			<field name="type">form</field>
 			<field name="arch" type="xml">
 				<form string='Partners Type'>
-					<group>
+					<group colspan="6" col="4">
 						<field name="name" />
 						<field name="sequence_size" />
 						<field name="prefix" />
@@ -61,7 +61,7 @@
 		<record id="supplier_categories_actions" model="ir.actions.act_window">
 			<field name="name">Supplier Categories</field>
 			<field name="res_model">partner.categories</field>
-			<field name="view_mode">kanban,list,form</field>
+			<field name="view_mode">kanban,tree,form</field>
 			<field name="domain">[('type','=','supplier')]</field>
 			<field name="context">{'default_type': 'supplier'}</field>
 			<field name="view_id" ref="view_partner_categories_filter" />
@@ -140,7 +140,7 @@
 		<record id="customer_categories_actions" model="ir.actions.act_window">
 			<field name="name">Partner Categories</field>
 			<field name="res_model">partner.categories</field>
-			<field name="view_mode">kanban,list,form</field>
+			<field name="view_mode">kanban,tree,form</field>
 			<field name="domain">[('type','=','customer')]</field>
 			 <field name="context">{'default_type': 'customer'}
             </field>

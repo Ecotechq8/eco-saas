@@ -8,92 +8,131 @@
                 <form string="Cargo Order" class="o_sale_order">
                     <header>
                         <button name="action_cro_requested"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','cargo_ready')]}"
                                 type="object" string="CRO Requested"/>
                         <button name="action_cro_released"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','cro_requested')]}"
                                 type="object" string="CRO Released"/>
                         <button name="action_stuff_started"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','cro_released')]}"
                                 type="object" string="Stuff Started"/>
                         <button name="action_stuffing_completed"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','stuff_started')]}"
                                 type="object" string="Stuffing Completed"/>
                         <button name="action_sent_to_port"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','stuffing_completed')]}"
                                 type="object" string="Sent to Port"/>
                         <button name="action_custom_clearance"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','sent_to_port')]}"
                                 type="object" string="Custom Clearance"/>
                         <button name="action_sealing_done"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','custom_clearance')]}"
                                 type="object" string="Sealing Done"/>
                         <button name="action_bill_of_lading_completed"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','sealing_done')]}"
                                 type="object" string="Bill of Lading Completed"/>
                         <button name="action_vessel_set_to_sail"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','bill_of_lading_completed')]}"
                                 type="object" string="Vessel Set to Sail"/>
                         <button name="action_pre_alert"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','vessel_set_to_sail')]}"
                                 type="object" string="PreAlert"/>
                         <button name="action_destination_arrival"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','pre_alert')]}"
                                 type="object" string="Destination Arrival"/>
                         <button name="action_destination_clearance"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','destination_arrival')]}"
                                 type="object" string="Destination Clearance"/>
                         <button name="action_delivery"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','!=','destination_clearance')]}"
                                 type="object" string="Delivery"/>
                         <button name="action_completed"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','sea'), ('state','not in',('delivery','destination_arrival'))]}"
                                 type="object" string="Completed"/>
 
 
                         <!-- Air mode -->
                         <button name="action_book_with_flight"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','cargo_ready')]}"
                                 type="object" string="Book with the flight"/>
                         <button name="action_arrange_the_airway_bill"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','book_with_the_flight')]}"
                                 type="object" string="Arrange the Airway Bill"/>
                         <button name="action_pickup"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','arrange_the_airway_bill')]}"
                                 type="object" string="Pickup"/>
                         <button name="action_sent_to_port"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','pickup')]}"
                                 type="object" string="Sent to the port"/>
                         <button name="action_custom_clearance"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','sent_to_port')]}"
                                 type="object" string="Custom Clearance"/>
                         <button name="action_booking_flight_schedule_confirmation"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','custom_clearance')]}"
                                 type="object" string="Booking/Flight Schedule Confirmation"/>
                         <button name="action_pre_alert"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','booking_flight_schedule_confirmation')]}"
                                 type="object" string="PreAlert"/>
                         <button name="action_destination_arrival"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','pre_alert')]}"
                                 type="object" string="Destination Arrival"/>
                         <button name="action_destination_clearance"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','destination_arrival')]}"
                                 type="object" string="Destination Clearance"/>
                         <button name="action_delivery"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','!=','destination_clearance')]}"
                                 type="object" string="Delivery"/>
                         <button name="action_completed"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('mode','!=','air'), ('state','not in',('delivery','destination_arrival'))]}"
                                 type="object" string="Completed"/>
                          <button name="action_completed"
+                                    attrs="{'invisible': ['|', ('gsa_sales', '!=', True), ('state', '!=', 'cargo_ready')]}"
                                     type="object"
                                     string="Completed"/>
 
 
                         <!-- Custom order type -->
                         <button name="action_eta_shipment_arrival"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','prealert_received')]}"
                                 type="object" string="ETA - Shipment Arrival"/>
                         <button name="action_document_readiness"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','eta_shipment_arrival')]}"
                                 type="object" string="Document Readiness"/>
                         <button name="action_cargo_arrival_notice"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','document_readiness')]}"
                                 type="object" string="Cargo Arrival Notice"/>
                         <button name="action_forward_for_clearance"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','cargo_arrival_notice')]}"
                                 type="object" string="Forward for Clearance"/>
                         <button name="action_under_clearance"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','forward_for_clearance')]}"
                                 type="object" string="Under Clearance"/>
                         <button name="action_awaiting_approval"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','under_clearance')]}"
                                 type="object" string="Awaiting Approval"/>
                         <button name="action_custom_declaration_completed"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','awaiting_approval')]}"
                                 type="object" string="Custom Declaration Completed"/>
                         <button name="action_under_custom_inspection"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','custom_declaration_completed')]}"
                                 type="object" string="Under Custom Inspection"/>
                         <button name="action_out_for_delivery"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','under_custom_inspection')]}"
                                 type="object" string="Out for Delivery"/>
                         <button name="action_delivery"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','!=','out_for_delivery')]}"
                                 type="object" string="Delivery"/>
                         <button name="action_completed"
+                                attrs="{'invisible': ['|', ('gsa_sales', '=', True), '|', ('order_type','!=','custom'), ('state','not in',('delivery','prealert_received','destination_arrival','out_for_delivery'))]}"
                                 type="object" string="Completed"/>
 
                         <!--Third Type-->
                         <button name="action_send_to_finance"
+                                attrs="{'invisible':['|',('state','!=','completed'), ('move_id','!=',False)]}"
                                 type="object" string="Create Invoice"/>
 
                          <button name="action_set_to_draft"
+                                attrs="{'invisible':[('state','!=','completed')]}"
                                 type="object" string="Set to Draft"/>
 
                         <button name="action_download_excel" type="object" string="Download AWB" class="btn-primary"/>
@@ -114,12 +153,12 @@
                         <!--									name="action_view_delivery"-->
                         <!--									class="oe_stat_button"-->
                         <!--									icon="fa-truck"-->
-                        <!--									invisible="delivery_count == 0" groups="base.group_user">-->
+                        <!--									attrs="{'invisible': [('delivery_count', '=', 0)]}" groups="base.group_user">-->
                         <!--									<field name="delivery_count" widget="statinfo" string="Delivery"/>-->
                         <!--								</button>-->
                         <!--							<button name="action_view_invoice" type="object"-->
                         <!--								class="oe_stat_button" icon="fa-pencil-square-o"-->
-                        <!--								invisible="invoice_count == 0">-->
+                        <!--								attrs="{'invisible': [('invoice_count', '=', 0)]}">-->
                         <!--								<field name="invoice_count" widget="statinfo"-->
                         <!--									string="Invoices" />-->
                         <!--							</button>-->
@@ -160,7 +199,7 @@
                                 <field name='reference_by_id'
                                        options='{"no_create": true, "no_open": true}'/>
                             </group>
-                            <group string="Shipper and Consignee details" name="shipper_details">
+                            <group string="Shipper and Consignee details" name="shipper_details" colspan="4" col="4">
                                 <field name="consignee_id"
                                        options="{'no_create': True, 'no_open': True}"
                                 />
@@ -170,11 +209,12 @@
                                 <field name="consignee_account"/>
                                 <field name="consignor_account"/>
                             </group>
-                            <group string="Order Type" name="order_type">
+                            <group string="Order Type" name="order_type" colspan="4" col="4">
                                 <field name="order_type" readonly="0" required="1" force_save="1"/>
-                                <field name="mode" readonly="1" force_save="1"/>
+                                <field name="mode" readonly="1" force_save="1"
+                                       attrs="{'required': [('order_type', '=', 'freight')], 'readonly': [('order_type', '=', 'custom')]}"/>
                                 <field name="import_export" readonly="1" force_save="1"
-                                       required="order_type == 'freight'"/>
+                                       attrs="{'required': [('order_type', '=', 'freight')]}"/>
                                 <field name="opportunity_id"  readonly="1" force_save="1"/>
                                 <field name="sale_id"  readonly="1" force_save="1"/>
                                 <field name="purchase_id"  readonly="1" force_save="1"/>
@@ -183,7 +223,7 @@
                                 <!--								<field name="profitability" invisible="0" groups="verts_v15_freight_forward.group_cha_profitable"/>--><!--by kajal-->
                                 <!--								<field name="origin1" invisible="1" />--><!--by kajal-->
                             </group>
-                            <group string="Shipment Details" name="shipment_details">
+                            <group string="Shipment Details" name="shipment_details" colspan="4" col="4">
                                 <field name="weight_uom_id"
                                        domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"
                                        options="{'no_open': True,'no_create':True,'no_edit':True}" invisible="1"/>
@@ -194,8 +234,10 @@
                                        options="{'no_open': True,'no_create':True,'no_edit':True}"/>
                                 <field name="shipment_by"/>
                                 <field name='port_of_loading_id'
+                                       attrs="{'invisible': [('mode', '!=', 'air')], 'required': [('mode', '=', 'air')]}"
                                        string="Departure Airport" options='{"no_create": true, "no_open": true}'/>
                                 <field name='port_of_discharge_id'
+                                       attrs="{'invisible': [('mode', '!=', 'air')], 'required': [('mode', '=', 'air')]}"
                                        string="Arrival Airport" options='{"no_create": true, "no_open": true}'/>
                                 <!-- <field name="dept_date"/> -->
                                 <field name="incoterm_id"/>
@@ -203,7 +245,8 @@
                                 <field name="hs_code"/>
                                 <field name="dimension_volume"/>
                                 <field name='stuffing_point_id'
-                                       options='{"no_create": true, "no_open": true}'/>
+                                       options='{"no_create": true, "no_open": true}'
+                                       attrs="{'invisible': [('mode', '=', 'air')], 'required': [('mode', '!=', 'air')]}"/>
                                 <!-- <field name='port_of_loading_id'
                                        options='{"no_create": true, "no_open": true}'
                                        required="1"/>
@@ -213,10 +256,12 @@
 
 
                                 <field name='port_of_loading_id'
+                                       attrs="{'invisible': [('mode', '=', 'air')], 'required': [('mode', '!=', 'air')]}"
                                        options='{"no_create": true, "no_open": true}'/>
 
 
                                 <field name='port_of_discharge_id'
+                                       attrs="{'invisible': [('mode', '=', 'air')], 'required': [('mode', '!=', 'air')]}"
                                        options='{"no_create": true, "no_open": true}'/>
 
 
@@ -224,39 +269,39 @@
 
 
                                 <field name="shipping_line" domain="[('is_shipping_line','=',True)]"
-                                       invisible="mode == 'air'"/>
+                                       attrs="{'invisible': [('mode', '=', 'air')]}"/>
 
-                                <field name="vessel_id" invisible="mode == 'air'"/>
-                                <field name="voyage_id" invisible="mode == 'air'"/>
-                                <field name="shipping_order_no" invisible="mode == 'air'"/>
+                                <field name="vessel_id" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="voyage_id" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="shipping_order_no" attrs="{'invisible': [('mode', '=', 'air')]}"/>
 
-                                <field name="eta_port_of_loading" invisible="mode == 'air'"/>
-                                <field name="cut_off_time" invisible="mode == 'air'"/>
-                                <field name="estimated_time_departure" invisible="mode == 'air'"/>
-                                <field name="actual_time_sailing" invisible="mode == 'air'"/>
-                                <field name="eta_port_of_destination" invisible="mode == 'air'"/>
-                                <field name="est_transit_days" invisible="mode == 'air'"/>
-                                <field name="bill_of_lading_type" invisible="mode == 'air'"/>
-                                <field name="bill_of_lading_no" invisible="mode == 'air'"/>
+                                <field name="eta_port_of_loading" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="cut_off_time" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="estimated_time_departure" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="actual_time_sailing" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="eta_port_of_destination" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="est_transit_days" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="bill_of_lading_type" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="bill_of_lading_no" attrs="{'invisible': [('mode', '=', 'air')]}"/>
 
                                 <field name='dry_port_id'
                                        options='{"no_create": true, "no_open": true}' invisible="1"/>
                             </group>
-                            <group string="Airline Details" name="airline_details">
+                            <group string="Airline Details" name="airline_details" colspan="4" col="4">
                                 <field name="shipping_line" string="Air line" domain="[('is_airline','=',True)]"
-                                       invisible="mode != 'air'"/>
-                                <field name="air_airline_code" invisible="mode != 'air'"/>
-                                <field name="air_airline_no" invisible="mode != 'air'"/>
+                                       attrs="{'invisible': [('mode', '!=', 'air')]}"/>
+                                <field name="air_airline_code" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
+                                <field name="air_airline_no" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                 <field name="carrier_booking_no"/>
                                 <!--<field name="airway_master"/>-->
-<!--                                <field name="mawb_land" invisible="mode == 'air'"/>-->
-<!--                                <field name="mawb" domain="[('airline_id', '=', shipping_line), ('state', '=', 'open')]"-->
-<!--                                       invisible="mode != 'air'"/>-->
+                                <field name="mawb_land" attrs="{'invisible': [('mode', '=', 'air')]}"/>
+                                <field name="mawb" domain="[('airline_id', '=', shipping_line), ('state', '=', 'open')]"
+                                       attrs="{'invisible': [('mode', '!=', 'air')]}"/>
 
-<!--                                <field name="hawb"/>-->
-<!--                                <field name="check_digit" readonly="1" force_save="1"/>-->
+                                <field name="hawb"/>
+                                <field name="check_digit" readonly="1" force_save="1"/>
                             </group>
-                            <!--                            <group string="Weight Details" name="weight_details">-->
+                            <!--                            <group string="Weight Details" name="weight_details" col="4" colspan="4">-->
                             <!--                                <field name="total_pieces"/>-->
                             <!--                                <field name="total_gross_weight"/>-->
                             <!--                                <field name="total_value"/>-->
@@ -265,7 +310,7 @@
                             <!--                                <field name="total_volumetric_weight"/>-->
                             <!--                                <field name="total_cbm" invisible="1"/>-->
                             <!--                            </group>-->
-                            <group string="Required Services" name="required_services">
+                            <group string="Required Services" name="required_services" col="4" colspan="4">
                                 <!-- <field name="freight_forwarding_reqd"/> -->
                                 <!-- <field name="pre_cargo_carriage_reqd"/> -->
                                 <!-- <field name="custom_clearance_reqd"/> -->
@@ -307,10 +352,10 @@
                                                 <field name="flight_date_1" class="oe_inline"/>
                                             </div>
                                             <div name="flight1_read" class="o_row oe_read_only">
-                                                <span invisible="flight_number_1 == False">
+                                                <span attrs="{'invisible': [('flight_number_1', '=', False)]}">
                                                     <field name="flight_number_1" class="oe_inline"/>
                                                 </span>
-                                                <span invisible="flight_date_1 == False">
+                                                <span attrs="{'invisible': [('flight_date_1', '=', False)]}">
                                                     <field name="flight_date_1" class="oe_inline"/>
                                                 </span>
                                             </div>
@@ -324,10 +369,10 @@
                                                 <field name="flight_date_2" class="oe_inline"/>
                                             </div>
                                             <div name="flight2_read" class="o_row oe_read_only">
-                                                <span invisible="flight_number_2 == False">
+                                                <span attrs="{'invisible': [('flight_number_2', '=', False)]}">
                                                     <field name="flight_number_2" class="oe_inline"/>
                                                 </span>
-                                                <span invisible="flight_date_2 == False">
+                                                <span attrs="{'invisible': [('flight_date_2', '=', False)]}">
                                                     <field name="flight_date_2" class="oe_inline"/>
                                                 </span>
                                             </div>
@@ -336,65 +381,65 @@
                                     </group>
                                     <group string="Routing and Destination">
 
-                                        <field name="to_1" invisible="mode != 'air'"/>
+                                        <field name="to_1" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                         <label for="by_1" string="By First Carrier"/>
                                         <div>
                                             <div name="by_edit_only" class="o_row oe_edit_only">
                                                 <field name="by_1" class='oe_inline' domain="[('is_airline','=',True)]"
-                                                       invisible="mode != 'air'"/>
+                                                       attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                                 <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon"
                                                    title="Arrow"/>
                                                 <field name="airline_code_1" class='oe_inline'
-                                                       readonly="1" invisible="mode != 'air'"/>
+                                                       readonly="1" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                             </div>
                                             <div name="by_read_only" class="o_row oe_read_only">
-                                                <span invisible="by_1 == False">
+                                                <span attrs="{'invisible': [('by_1', '=', False)]}">
                                                     <field name="by_1" class='oe_inline'/>
                                                 </span>
-                                                <span invisible="airline_code_1 == False">
+                                                <span attrs="{'invisible': [('airline_code_1', '=', False)]}">
                                                     <field name="airline_code_1" class='oe_inline'/>
                                                 </span>
                                             </div>
 
                                         </div>
 
-                                        <field name="to_2" invisible="mode != 'air'"/>
+                                        <field name="to_2" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                         <label for="by_2" string="By"/>
                                         <div>
                                             <div name="by_edit_only" class="o_row oe_edit_only">
                                                 <field name="by_2" class='oe_inline' domain="[('is_airline','=',True)]"
-                                                       invisible="mode != 'air'"/>
+                                                       attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                                 <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon"
                                                    title="Arrow"/>
                                                 <field name="airline_code_2" class='oe_inline'
-                                                       readonly="1" invisible="mode != 'air'"/>
+                                                       readonly="1" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                             </div>
                                             <div name="by_read_only" class="o_row oe_read_only">
-                                                <span invisible="by_2 == False">
+                                                <span attrs="{'invisible': [('by_2', '=', False)]}">
                                                     <field name="by_2" class='oe_inline'/>
                                                 </span>
-                                                <span invisible="airline_code_2 == False">
+                                                <span attrs="{'invisible': [('airline_code_2', '=', False)]}">
                                                     <field name="airline_code_2" class='oe_inline'/>
                                                 </span>
                                             </div>
                                         </div>
 
-                                        <field name="to_3" invisible="mode != 'air'"/>
+                                        <field name="to_3" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                         <label for="by_3" string="By"/>
                                         <div>
                                             <div name="by_edit_only" class="o_row oe_edit_only">
                                                 <field name="by_3" class='oe_inline' domain="[('is_airline','=',True)]"
-                                                       invisible="mode != 'air'"/>
+                                                       attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                                 <i class="fa fa-long-arrow-right mx-2" aria-label="Arrow icon"
                                                    title="Arrow"/>
                                                 <field name="airline_code_3" class='oe_inline'
-                                                       readonly="1" invisible="mode != 'air'"/>
+                                                       readonly="1" attrs="{'invisible': [('mode', '!=', 'air')]}"/>
                                             </div>
                                             <div name="by_read_only" class="o_row oe_read_only">
-                                                <span invisible="by_3 == False">
+                                                <span attrs="{'invisible': [('by_3', '=', False)]}">
                                                     <field name="by_3" class='oe_inline'/>
                                                 </span>
-                                                <span invisible="airline_code_3 == False">
+                                                <span attrs="{'invisible': [('airline_code_3', '=', False)]}">
                                                     <field name="airline_code_3" class='oe_inline'/>
                                                 </span>
                                             </div>
@@ -404,7 +449,7 @@
                                 <group>
                                     <field name="handling_info"/>
                                 </group>
-                                <group>
+                                <group col="4" colspan="4">
                                     <field name="ref_num"/>
                                     <field name="optional_shipping"/>
                                     <field name="sign_of_shipper"/>
@@ -455,7 +500,7 @@
                                         <field name="nature_goods"/>
                                         <field name="other_remarks"/>
                                     </group>
-                                    <group class="oe_subtotal_footer oe_right">
+                                    <group class="oe_subtotal_footer oe_right" colspan="2">
                                         <field name="total_gross_weight_cargo" readonly="1"/>
                                         <field name="total_chargeable_weight_cargo" readonly="1"/>
                                         <field name="total_amount_cargo" readonly="1"/>
@@ -469,7 +514,7 @@
 
                             <page string="Service Details" name="order_lines">
                                 <field name="order_line"
-                                       widget="section_and_note_one2many" mode="list,kanban">
+                                       widget="section_and_note_one2many" mode="tree,kanban">
                                     <form>
                                         <field name="display_type" invisible="1"/>
                                         <!-- We need the sequence field to be here for new lines to be
@@ -478,10 +523,10 @@
                                         <field name="sequence" invisible="1"/>
                                         <group>
                                             <group
-                                                    invisible="display_type != False">
+                                                    attrs="{'invisible': [('display_type', '!=', False)]}">
                                                 <field name="product_id"
                                                        context="{'partner_id':parent.partner_id, 'quantity':product_uom_qty, 'pricelist':parent.pricelist_id, 'uom':product_uom, 'company_id': parent.company_id}"
-                                                       required="display_type == False"
+                                                       attrs="{'required': [('display_type', '=', False)]}"
                                                        force_save="1"/>
                                                 <field name="gross_weight"/>
                                                 <field name="rate_class"/>
@@ -498,7 +543,7 @@
                                                     <field name="product_uom_category_id" invisible="1"/>
                                                     <field name="product_uom" groups="uom.group_uom"
                                                            class="oe_inline oe_no_button"
-                                                           required="display_type == False"/>
+                                                           attrs="{'required': [('display_type', '=', False)]}"/>
                                                 </div>
                                                 <field name="price_unit"/>
                                                 <label for="discount"
@@ -509,21 +554,21 @@
                                                 </div>
                                             </group>
                                             <group
-                                                    invisible="display_type != False">
+                                                    attrs="{'invisible': [('display_type', '!=', False)]}">
                                                 <field name="company_id" invisible="1"/>
                                             </group>
                                         </group>
                                         <label for="name" string="Description"
-                                               invisible="display_type != False"/>
+                                               attrs="{'invisible': [('display_type', '!=', False)]}"/>
                                         <label for="name"
                                                string="Section Name (eg. Products, Services)"
-                                               invisible="display_type != 'line_section'"/>
+                                               attrs="{'invisible': [('display_type', '!=', 'line_section')]}"/>
                                         <label for="name" string="Note"
-                                               invisible="display_type != 'line_note'"/>
+                                               attrs="{'invisible': [('display_type', '!=', 'line_note')]}"/>
                                         <field name="name"/>
                                         <field name="state" invisible="1"/>
                                     </form>
-                                    <list editable="bottom">
+                                    <list string="Service Details" editable="bottom">
                                         <control>
                                             <create string="Add a product"/>
                                             <!--<create string="Configure a product" context="{'open_product_configurator':
@@ -538,6 +583,9 @@
                                         <field name="company_id" invisible="1"/>
                                         <field name="product_uom_category_id" invisible="1"/>
                                         <field name="product_id"
+                                               attrs="{
+                                            'required': [('display_type', '=', False)],
+                                        }"
                                                force_save="1"
                                                context="{
                                             'partner_id': parent.partner_id,
@@ -568,12 +616,15 @@
                                         <field name="bag_box_qty" invisible="1"/>
                                         <field name="packing_type" invisible="1"/>
                                         <field name="product_uom"
+                                               attrs="{
+                                            'required': [('display_type', '=', False)],
+                                        }"
                                                context="{'company_id': parent.company_id}"
                                                groups="uom.group_uom" options='{"no_open": true}'/>
                                         <!--										<field name="base_price"-->
-                                        <!-- />-->
+                                        <!--											attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])]}" />-->
                                         <!--										<field name="overhead_expenses"-->
-                                        <!-- />-->
+                                        <!--											attrs="{'column_invisible': [('parent.state', 'not in', ['sale', 'done'])]}" />-->
 
                                         <field name="price_unit"/>
                                         <field name="tax_id" widget="many2many_tags"
@@ -590,7 +641,7 @@
                                         <field name="currency_id" invisible="1"/>
                                     </list>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right"
+                                <group class="oe_subtotal_footer oe_right" colspan="2"
                                        name="sale_total">
                                     <field name="amount_untaxed" widget='monetary'
                                            options="{'currency_field': 'currency_id'}"/>
@@ -628,13 +679,13 @@
 
                             <page string="Service Through" name="service_through" invisible="1">
                                 <group>
-                                    <group>
+                                    <group colspan="6" col="6">
                                         <field name="total_gross_weight_cargo"/>
                                         <field name="total_chargeable_weight_cargo"/>
                                         <field name="total_purchase_charge"/>
                                     </group>
                                     <separator/>
-                                    <group>
+                                    <group colspan="4" col="4">
                                         <field name="iata_rt"/>
                                         <field name="special_rt"/>
                                         <field name="due_carrier"/>
@@ -644,12 +695,12 @@
                                         <field name="other_remarks"/>
                                     </group>
                                     <separator/>
-                                    <group>
+                                    <group colspan="6" col="6">
                                         <field name="payable_to"/>
                                         <field name="comm_perc"/>
                                         <field name="comm_amount" string="Amount"/>
                                     </group>
-                                    <group>
+                                    <group colspan="4" col="4">
                                         <field name="f_c_amt"/>
                                         <field name="amt_total"/>
                                     </group>
@@ -657,12 +708,12 @@
                             </page>
 
                             <page string="Billing Info" name="billing_info" invisible="1">
-                                <group>
+                                <group colspan="4" col="4">
                                     <field name="partner_id"/>
                                     <field name="mode_of_pay"/>
                                     <field name="purchase_amt"/>
                                 </group>
-                                <group>
+                                <group colspan="4" col="4">
                                     <field name="service_percent"/>
                                     <field name="service_amt"/>
                                     <field name="disc_percent"/>
@@ -690,7 +741,7 @@
 		                                <field name="trx_amt"/> -->
                                     </list>
                                 </field>
-                                <group>
+                                <group colspan="4" col="4">
                                     <field name="account_code"/>
                                     <field name="account_description"/>
                                     <field name="sub_code"/>
@@ -701,7 +752,7 @@
 
                             <!--                            <page name="package_details" string="Package Details">-->
                             <!--                                <field name="cargo_freight_line">-->
-                            <!--                                    <list>-->
+                            <!--                                    <list string="Cargo Freight Line">-->
                             <!--                                        <field name="product_id"-->
                             <!--                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>-->
                             <!--                                        <field name="goods_desc"/>-->
@@ -711,7 +762,7 @@
                             <!--                                        <field name="total_chargeable_weight"/>-->
                             <!--                                    </list>-->
                             <!--                                    <form string="Cargo Freight Line">-->
-                            <!--                                        <group>-->
+                            <!--                                        <group col="4" colspan="4">-->
                             <!--                                            <field name="product_id" string="Service" required="1"-->
                             <!--                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>-->
                             <!--                                            <field name="goods_desc" required="0"/>-->
@@ -725,58 +776,58 @@
                             <!--                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"/>-->
                             <!--                                            <field name="loose_bool"/>-->
                             <!--                                        </group>-->
-                            <!--                                        <group string="Container Details" name="container_detail"-->
-                            <!--                                               invisible="full_container_service == False">-->
+                            <!--                                        <group col="4" colspan="4" string="Container Details" name="container_detail"-->
+                            <!--                                               attrs="{'invisible': [('full_container_service', '=', False)]}">-->
                             <!--                                            <field name="container_type_id"-->
-                            <!--                                                   invisible="full_container_service == False"/>-->
+                            <!--                                                   attrs="{'invisible': [('full_container_service', '=', False)]}"/>-->
                             <!--                                            <field name="capacity_in_mt"-->
-                            <!--                                                   invisible="full_container_service == False"/>-->
+                            <!--                                                   attrs="{'invisible': [('full_container_service', '=', False)]}"/>-->
                             <!--                                            <field name="container_qty"-->
-                            <!--                                                   invisible="full_container_service == False"/>-->
+                            <!--                                                   attrs="{'invisible': [('full_container_service', '=', False)]}"/>-->
                             <!--                                        </group>-->
-                            <!--                                        <group string="Gross Weight Per Pack" name="weight">-->
+                            <!--                                        <group col="4" colspan="4" string="Gross Weight Per Pack" name="weight">-->
                             <!--                                            <field name="weight_input"-->
-                            <!--                                                   invisible="loose_bool == True"/>-->
+                            <!--                                                   attrs="{'invisible': [('loose_bool', '=', True)]}"/>-->
                             <!--                                            <field name="weight_uom_id" readonly="1" force_save="1"-->
                             <!--                                                   domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Weight')]"-->
                             <!--                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"-->
                             <!--                                            />-->
                             <!--                                            <field name="weight_per_package" string="Weight (KG)" readonly="1"-->
-                            <!--                                                   force_save="1" invisible="loose_bool == True"/>-->
+                            <!--                                                   force_save="1" attrs="{'invisible': [('loose_bool', '=', True)]}"/>-->
                             <!--                                        </group>-->
-                            <!--                                        <group-->
-                            <!--                                               invisible="full_container_service == True"-->
+                            <!--                                        <group col="4" colspan="4"-->
+                            <!--                                               attrs="{'invisible': [('full_container_service', '=', True)]}"-->
                             <!--                                               string="Volumetric Weight Per Pack" name="volumetric">-->
                             <!--                                            <field name="length_per_package" string="Length (cm)"-->
-                            <!--/>-->
+                            <!--                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>-->
                             <!--                                            <field name="width_per_package" string="Width (cm)"-->
-                            <!--/>-->
+                            <!--                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>-->
                             <!--                                            <field name="height_per_package" string="Height (cm)"-->
-                            <!--/>-->
+                            <!--                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>-->
                             <!--                                            <field name="dimension_uom_id" string="Length UoM" readonly="1"-->
                             <!--                                                   force_save="1"-->
                             <!--                                                   domain="[('freight_forward_forms', '=', True),('category_id.name', '=', 'Length / Distance')]"-->
                             <!--                                                   options="{'no_open': True,'no_create':True,'no_edit':True}"-->
-                            <!--/>-->
+                            <!--                                                   attrs="{'invisible': [('loose_bool', '=', True)],'required': [('loose_bool', '!=', True)]}"/>-->
                             <!--                                            <div class="o_td_label">-->
                             <!--                                                <label for="volume_cbcm" string="Volume (Cubic CM)"-->
                             <!--                                                       style="font-weight:bold;"-->
-                            <!--                                                       invisible="uom_name != 'cm'"/>-->
+                            <!--                                                       attrs="{'invisible': [('uom_name', '!=', 'cm')]}"/>-->
                             <!--                                                <label for="volume_cbcm" string="Volume (Cubic Inches)"-->
                             <!--                                                       style="font-weight:bold;"-->
-                            <!--                                                       invisible="uom_name != 'in'"/>-->
+                            <!--                                                       attrs="{'invisible': [('uom_name', '!=', 'in')]}"/>-->
                             <!--                                            </div>-->
                             <!--                                            <field name="volume_cbcm" nolabel="1"-->
-                            <!--/>-->
+                            <!--                                                   attrs="{'invisible': [('uom_name', 'not in', ('in', 'cm'))]}"/>-->
                             <!--                                            <field name="volume" string="Volume (cbm)"/>-->
                             <!--                                            <field name="weight_factor" readonly="1" force_save="1"/>-->
                             <!--                                            <field name="volumetric_weight"/>-->
                             <!--                                            <field name="uom_name" invisible="1"/>-->
                             <!--                                        </group>-->
-                            <!--                                        <group string="Chargeable &amp; Total Weight"-->
+                            <!--                                        <group col="4" colspan="4" string="Chargeable &amp; Total Weight"-->
                             <!--                                               name="chargeable_weight">-->
                             <!--                                            <field name="total_weight" invisible="0" force_save="1"-->
-                            <!--/>-->
+                            <!--                                                   attrs="{'readonly': [('loose_bool', '!=', True)],'required': [('loose_bool', '=', True)]}"/>-->
                             <!--                                            <field name="chargeable_weight" readonly="1" force_save="1"/>-->
                             <!--                                            <field name="total_chargeable_weight"/>-->
                             <!--                                            <field name="total_volume_cbm"/>-->
@@ -784,7 +835,7 @@
                             <!--                                        </group>-->
                             <!--                                    </form>-->
                             <!--                                </field>-->
-                            <!--                                    <group name="footer_total">-->
+                            <!--                                    <group col="4" colspan="4" name="footer_total">-->
                             <!--                                        <field name="total_pieces"/>-->
                             <!--                                        <field name="total_gross_weight"/>-->
                             <!--                                        <field name="total_cbm"/>-->
@@ -802,7 +853,7 @@
 
                             <!--                                </group>-->
                             <!--                                <field name="cargo_container_line">-->
-                            <!--                                    <list editable="bottom">-->
+                            <!--                                    <list string="Container Line" editable="bottom">-->
                             <!--                                        <field name="container_type_id" required="1"-->
                             <!--                                               options="{'no_open': True,'no_create':True,'no_edit':True}"/>-->
                             <!--                                        <field name="count"/>-->
@@ -829,7 +880,7 @@
                             <!--                                                <field name="cmc_cd"/>-->
                             <!--                                                <field name="exchange_rate"/>-->
                             <!--                                            </group>-->
-                            <!--                                            <group class="oe_subtotal_footer oe_right">-->
+                            <!--                                            <group class="oe_subtotal_footer oe_right" colspan="2">-->
                             <!--                                                <field name="total_sales_amount"/>-->
                             <!--                                                <field name="total_charge_total"/>-->
                             <!--                                            </group>-->
@@ -839,8 +890,8 @@
 
                             <page string="Payment Details" invisible="1">
                                 <field name="payment_term_line"
-                                       context="{'country_id':country_id}" >
-                                    <list editable="bottom">
+                                       context="{'country_id':country_id}" widget="one2many_list">
+                                    <list string="Payment Details" editable="bottom">
                                         <field name='country_id' invisible="1"/>
                                         <field name='payment_id' required="1"/>
                                         <field name='value' required="1"/>
@@ -851,15 +902,15 @@
 
                             <!--                            <page name="Export Documents" string="Export Documents">-->
                             <!--                                <field name="sale_export_document_line"-->
-                            <!--                                        create="1" delete="1">-->
-                            <!--                                    <list editable="bottom">-->
+                            <!--                                       widget="one2many_list" create="1" delete="1">-->
+                            <!--                                    <list string="Export Documents" editable="bottom">-->
                             <!--                                        <field name='export_document_id'/>-->
                             <!--                                    </list>-->
                             <!--                                </field>-->
                             <!--                            </page>-->
                             <!--                            <page name="schedule_lines" string="Schedule">-->
                             <!--                                <field name="schedule_lines">-->
-                            <!--                                    <list>-->
+                            <!--                                    <list string="Schedule">-->
                             <!--                                        <field name="schedule_id" required="1"/>-->
                             <!--                                        <field name="report_at_time"/>-->
                             <!--                                        <field name="req_from"/>-->
@@ -872,7 +923,7 @@
                             <!--                                        <field name="sale_export_attachment_lines"/>-->
                             <!--                                    </list>-->
                             <!--                                    <form>-->
-                            <!--                                        <group>-->
+                            <!--                                        <group colspan="4" col="4">-->
                             <!--                                            <field name="schedule_id" required="1"/>-->
                             <!--                                            <field name="report_at_time"/>-->
                             <!--                                            <field name="req_from"/>-->
@@ -887,7 +938,7 @@
                             <!--                                        <field name="sale_export_attachment_lines"-->
                             <!--                                               context="{'tree_view_ref': 'verts_v15_freight_forward.sale_schedule_export_attachment_lines_tree'}">-->
                             <!--                                            <form>-->
-                            <!--                                                <group>-->
+                            <!--                                                <group colspan="4" col="4">-->
                             <!--                                                    <field name="sale_remark"/>-->
                             <!--                                                    <field name="fname" invisible="1"/>-->
                             <!--                                                    <field name="sale_attachment_value" filename="fname"/>-->
@@ -902,8 +953,8 @@
                             <!--                            <page name="export_specification"-->
                             <!--                                  string="Export Product Specification">-->
                             <!--                                <field name="qc_pro_specification_line"-->
-                            <!--                                       >-->
-                            <!--                                    <list-->
+                            <!--                                       widget="one2many_list">-->
+                            <!--                                    <list string="Export Product Specification"-->
                             <!--                                          editable="bottom">-->
                             <!--                                        <field name="product_id" required="1"/>-->
                             <!--                                        <field name="qc_parameter_id" required="1"/>-->
@@ -928,7 +979,7 @@
                                                domain="[('sale_team_id','=',team_id)]"/>
                                         <field name="client_order_ref"/>
                                         <field name="reference" readonly="1"
-                                               invisible="reference == False"/>
+                                               attrs="{'invisible': [('reference', '=', False)]}"/>
                                         <field name="company_id"
                                                options="{'no_create': True, 'no_open': True}"
                                                groups="base.group_multi_company"/>
@@ -967,7 +1018,7 @@
                             </page>
                             <page string="Track and Trace">
                                 <field name="track_trace_ids" readonly="1">
-                                    <list>
+                                    <tree>
                                         <field name="date"/>
                                         <field name="user_id"/>
                                         <field name="status"/>
@@ -995,8 +1046,8 @@
                                             string="View Vendor Orders"
                                             class="btn btn-primary"/>
                                 </group>
-                                <field name="sale_expense_line" >
-                                    <list editable="bottom" create="1"
+                                <field name="sale_expense_line" widget="one2many_list">
+                                    <list string="Expenses" editable="bottom" create="1"
                                           delete="1">
                                         <field name='exp_related_to' readonly="0" force_save="1"/>
                                         <!--										<field name='product_class' readonly="0" force_save="1" />-->
@@ -1011,7 +1062,7 @@
                                         <field name='remark'/>
                                     </list>
                                 </field>
-                                <group class="oe_subtotal_footer oe_right"
+                                <group class="oe_subtotal_footer oe_right" colspan="2"
                                        name="expense_total">
                                     <field name="total_expense" widget='monetary'
                                            readonly="1" options="{'currency_field': 'currency_id'}"/>
@@ -1034,7 +1085,7 @@
             <field name="name">cargo.order.tree.view</field>
             <field name="model">cargo.order</field>
             <field name="arch" type="xml">
-                <list>
+                <list string="Cargo Orders">
                     <field name="partner_id"/>
                     <field name="name"/>
                     <field name="state"/>
@@ -1049,7 +1100,7 @@
             <field name="name">Air Freight Import</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">cargo.order</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'air'),('import_export', '=',
                 'import')]
             </field>
@@ -1067,7 +1118,7 @@
 
         <record model="ir.actions.act_window.view" id="air_freight_tree_view_id">
             <field name="sequence" eval="0"/>
-            <field name="view_mode">list</field>
+            <field name="view_mode">tree</field>
             <field name="view_id" ref="cargo_order_tree_view_air_freight_import_inherit"/>
             <field name="act_window_id" ref="action_cargo_air_freight_import_custom_id"/>
         </record>
@@ -1076,7 +1127,7 @@
             <field name="name">Air Freight Export</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">cargo.order</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">tree,form</field>
             <field name="domain">[('order_type', '=', 'freight'),('mode', '=', 'air'),('import_export', '=',
                 'export')]
             </field>
@@ -1094,7 +1145,7 @@
 
         <record model="ir.actions.act_window.view" id="air_freight_tree_view_export_id">
             <field name="sequence" eval="0"/>
-            <field name="view_mode">list</field>
+            <field name="view_mode">tree</field>
             <field name="view_id" ref="cargo_order_tree_view_air_freight_import_inherit"/>
             <field name="act_window_id" ref="action_cargo_air_freight_export_custom_id"/>
         </record>

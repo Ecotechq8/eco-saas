@@ -9,7 +9,7 @@
                             <div class="oe_structure"/>
                             <table style="width:100%;border: 1px solid black;border-collapse:collapse;">
                                 <tr style="font-size:13px;">
-                                    <td style="border: 1px solid black;padding:7px;">
+                                    <td style="border: 1px solid black;padding:7px;" colspan="11">
 <!--                                        <center>Subject to Nagpur Jurisdiction.</center>-->
                                         <h5 style="text-transform:capitalize; font-size :13px; padding:0px; margin:0;">
                                             <b>
@@ -55,7 +55,7 @@
                                     </td>
                                 </tr>
                                 <tr style="border: 1px solid black; width: 100%;font-size:13px">
-                                    <td align="left" style="width:60%;border: 1px solid black;padding:7px;">
+                                    <td align="left" colspan="6" style="width:60%;border: 1px solid black;padding:7px;">
                                         <span>
                                             <b>PARTY NAME</b>
                                         </span>
@@ -85,7 +85,7 @@
                                         </span>
                                         <!--                                    <br/>-->
                                     </td>
-                                    <td align="left" style="width:60%;border: 1px solid black;padding:5px;">
+                                    <td align="left" colspan="5" style="width:60%;border: 1px solid black;padding:5px;">
                                         <span>Vch No :</span>
                                         <t t-out="o.name"/>
                                         <br/>
@@ -186,7 +186,7 @@
                                 <!--	                                </tr>-->
                                 <!--	                            </t>-->
 <!--                                <tr style="width:100%;border: 1px solid black;font-size:10px">-->
-<!--                                    <td style="width:80%;border: 1px solid black">-->
+<!--                                    <td style="width:80%;border: 1px solid black" colspan="2">-->
 <!--                                        <center>Advance Payment</center>-->
 <!--                                    </td>-->
 <!--                                    <td align="right" style="width:20%;border: 1px solid black;padding:3px;">-->
@@ -313,7 +313,7 @@
 <!--&lt;!&ndash;                                        <span t-field="o.communication"/>&ndash;&gt;-->
 <!--                                        <br/>-->
                                     </td>
-                                    <td align="right" style="padding:7px;border-right: 1px solid black">
+                                    <td align="right" style="padding:7px;border-right: 1px solid black" colspan="4">
                                         <b>For
                                             <span t-field="o.company_id.name"/>
                                         </b>
@@ -329,7 +329,7 @@
                                         Receiver`s Signatory
                                         <br/>
                                     </td>
-                                    <td style="padding:7px;border-right: 1px solid black" align="right">
+                                    <td style="padding:7px;border-right: 1px solid black" colspan="2" align="right">
                                         <br/>
                                         <br/>
                                         <br/>
