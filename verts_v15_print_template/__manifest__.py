@@ -18,13 +18,13 @@
     'installable': True,
     'auto_install': False,
     'assets': {
-        'web.assets_backend': [
-            'verts_v15_print_template/static/lib/jscolor/jscolor.js',
-            'verts_v15_print_template/static/src/js/**/*',
-        ],
-        'web.qweb_suite_reports': [
-            'verts_v15_print_template/static/src/xml/widget_color.xml',
-        ],
+        # 'web.assets_backend': [
+        #     'verts_v15_print_template/static/lib/jscolor/jscolor.js',
+        #     'verts_v15_print_template/static/src/js/**/*',
+        # ],
+        # 'web.qweb_suite_reports': [
+        #     'verts_v15_print_template/static/src/xml/widget_color.xml',
+        # ],
     },
     'license': 'LGPL-3',
 }

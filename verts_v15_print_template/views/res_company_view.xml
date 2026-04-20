@@ -23,38 +23,20 @@
                             <field name="header_logo1" widget="image" invisible="1"/>
                             <field name="header_logo2" widget="image" invisible="1"/>
                             <!-- <field name="standard_template"/> -->
-                            <field name="theme_color" placeholder="like #d4d2d2"  class="mb-4 o_im_livechat_field_widget_color"/>
-                            <field name="theme_text_color" placeholder=" like #5cc2d2"  class="mb-4 o_im_livechat_field_widget_color"/>
-                            <field name="text_color" placeholder=" like #5bb3d2"  class="mb-4 o_im_livechat_field_widget_color"/>
-                            <field name="company_color" placeholder=" like #b30000"  class="mb-4 o_im_livechat_field_widget_color"/>
-                            <field name="company_address_color" placeholder=" like #b30010"  class="mb-4 o_im_livechat_field_widget_color"/>
-<!--                            <field name="theme_color" placeholder=" like #d4d2d2" widget="color"/>-->
-<!--                            <field name="theme_text_color" placeholder=" like #5cc2d2" widget="color"/>-->
-<!--                            <field name="text_color" placeholder=" like #5bb3d2" widget="color"/>-->
-<!--                            <field name="company_color" placeholder=" like #b30000" widget="color"/>-->
-<!--                            <field name="company_address_color" placeholder=" like #b30010" widget="color"/>-->
-                            <field name="theme_color" placeholder=" like #d4d2d2"/>
-                            <field name="theme_text_color" placeholder=" like #5cc2d2"/>
-                            <field name="text_color" placeholder=" like #5bb3d2"/>
-                            <field name="company_color" placeholder=" like #b30000"/>
-                            <field name="company_address_color" placeholder=" like #b30010"/>
+                            <field name="theme_color" placeholder="like #d4d2d2" widget="color"/>
+                            <field name="theme_text_color" placeholder=" like #5cc2d2" widget="color"/>
+                            <field name="text_color" placeholder=" like #5bb3d2" widget="color"/>
+                            <field name="company_color" placeholder=" like #b30000" widget="color"/>
+                            <field name="company_address_color" placeholder=" like #b30010" widget="color"/>
                             <field name="is_company_bold"/>
                         </group>
                         <group>
                             <field name="watermark_logo" widget="image"  class="oe_avatar"/>
                             <field name="header_logo2" widget="image"  class="oe_avatar"/>
-                            <field name="odd_party_color" placeholder=" like #aea8a8" />
-                            <field name="even_party_color" placeholder=" like #aea8aa" />
-                            <field name="customer_color" placeholder=" like #2763a1" />
-                            <field name="customer_address_color" placeholder=" like #2763c1" />
-<!--                            <field name="odd_party_color" placeholder=" like #aea8a8" widget="color"/>-->
-<!--                            <field name="even_party_color" placeholder=" like #aea8aa" widget="color"/>-->
-<!--                            <field name="customer_color" placeholder=" like #2763a1" widget="color"/>-->
-<!--                            <field name="customer_address_color" placeholder=" like #2763c1" widget="color"/>-->
-                            <field name="odd_party_color" placeholder=" like #aea8a8"/>
-                            <field name="even_party_color" placeholder=" like #aea8aa"/>
-                            <field name="customer_color" placeholder=" like #2763a1"/>
-                            <field name="customer_address_color" placeholder=" like #2763c1"/>
+                            <field name="odd_party_color" placeholder=" like #aea8a8" widget="color"/>
+                            <field name="even_party_color" placeholder=" like #aea8aa" widget="color"/>
+                            <field name="customer_color" placeholder=" like #2763a1" widget="color"/>
+                            <field name="customer_address_color" placeholder=" like #2763c1" widget="color"/>
                             <field name="is_description"/>
                             <field name="is_customer_bold"/>
                         </group>
