@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<data noupdate="1">
+    <record id="base.main_company" model="res.company">
+        <field name="invoice_logo" type="base64" file="base/static/img/company_image.png"/>
+    </record>
+</data>
+<data>
+    <!-- Inherited Customer For add Reporting Field --> 
+    <record model="ir.ui.view" id="view_report_company_sale_order">
+        <field name="name">res.company.invoice.template.form.inherit</field>
+        <field name="inherit_id" ref="base.view_company_form"/>
+        <field name="model">res.company</field>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page" position="after">
+                <page string="Default Report Settings">
+                    <group string="Default Report Settings">
+                        <group>
+                           <!--  <button name="template_print1" type="object" string="Preview Template"/><br/> -->
+                            <field name="invoice_logo" widget="image"  class="oe_avatar"/>
+                            <field name="header_logo1" widget="image"  class="oe_avatar"/>
+                            <field name="header_logo1" widget="image" invisible="1"/>
+                            <field name="header_logo2" widget="image" invisible="1"/>
+                            <!-- <field name="standard_template"/> -->
+                            <field name="theme_color" placeholder="like #d4d2d2"  class="mb-4 o_im_livechat_field_widget_color"/>
+                            <field name="theme_text_color" placeholder=" like #5cc2d2"  class="mb-4 o_im_livechat_field_widget_color"/>
+                            <field name="text_color" placeholder=" like #5bb3d2"  class="mb-4 o_im_livechat_field_widget_color"/>
+                            <field name="company_color" placeholder=" like #b30000"  class="mb-4 o_im_livechat_field_widget_color"/>
+                            <field name="company_address_color" placeholder=" like #b30010"  class="mb-4 o_im_livechat_field_widget_color"/>
+<!--                            <field name="theme_color" placeholder=" like #d4d2d2" widget="color"/>-->
+<!--                            <field name="theme_text_color" placeholder=" like #5cc2d2" widget="color"/>-->
+<!--                            <field name="text_color" placeholder=" like #5bb3d2" widget="color"/>-->
+<!--                            <field name="company_color" placeholder=" like #b30000" widget="color"/>-->
+<!--                            <field name="company_address_color" placeholder=" like #b30010" widget="color"/>-->
+                            <field name="theme_color" placeholder=" like #d4d2d2"/>
+                            <field name="theme_text_color" placeholder=" like #5cc2d2"/>
+                            <field name="text_color" placeholder=" like #5bb3d2"/>
+                            <field name="company_color" placeholder=" like #b30000"/>
+                            <field name="company_address_color" placeholder=" like #b30010"/>
+                            <field name="is_company_bold"/>
+                        </group>
+                        <group>
+                            <field name="watermark_logo" widget="image"  class="oe_avatar"/>
+                            <field name="header_logo2" widget="image"  class="oe_avatar"/>
+                            <field name="odd_party_color" placeholder=" like #aea8a8" />
+                            <field name="even_party_color" placeholder=" like #aea8aa" />
+                            <field name="customer_color" placeholder=" like #2763a1" />
+                            <field name="customer_address_color" placeholder=" like #2763c1" />
+<!--                            <field name="odd_party_color" placeholder=" like #aea8a8" widget="color"/>-->
+<!--                            <field name="even_party_color" placeholder=" like #aea8aa" widget="color"/>-->
+<!--                            <field name="customer_color" placeholder=" like #2763a1" widget="color"/>-->
+<!--                            <field name="customer_address_color" placeholder=" like #2763c1" widget="color"/>-->
+                            <field name="odd_party_color" placeholder=" like #aea8a8"/>
+                            <field name="even_party_color" placeholder=" like #aea8aa"/>
+                            <field name="customer_color" placeholder=" like #2763a1"/>
+                            <field name="customer_address_color" placeholder=" like #2763c1"/>
+                            <field name="is_description"/>
+                            <field name="is_customer_bold"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</data>
+</odoo>

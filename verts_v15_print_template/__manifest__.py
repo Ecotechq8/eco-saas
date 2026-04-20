@@ -12,18 +12,19 @@
     'summary': 'Prinouts & Reports Related Configurations',
     'data': [
         ##'views/web_widget_color_view.xml',
-        # 'views/res_company_view.xml',
+        'views/res_company_view.xml',
     ],
     'images': [],
     'installable': True,
     'auto_install': False,
-    # 'assets': {
-    #     'web.assets_backend': [
-    #         'verts_v15_print_template/static/src/js/**/*',
-    #     ],
-    #     'web.qweb_suite_reports': [
-    #         'verts_v15_print_template/static/src/xml/widget_color.xml',
-    #     ],
-    # },
+    'assets': {
+        'web.assets_backend': [
+            'verts_v15_print_template/static/lib/jscolor/jscolor.js',
+            'verts_v15_print_template/static/src/js/**/*',
+        ],
+        'web.qweb_suite_reports': [
+            'verts_v15_print_template/static/src/xml/widget_color.xml',
+        ],
+    },
     'license': 'LGPL-3',
 }
