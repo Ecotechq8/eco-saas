@@ -12,7 +12,7 @@
     'summary': 'Prinouts & Reports Related Configurations',
     'data': [
         ##'views/web_widget_color_view.xml',
-        'views/res_company_view.xml',
+        # 'views/res_company_view.xml',
     ],
     'images': [],
     'installable': True,
