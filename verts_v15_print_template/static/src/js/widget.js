@@ -3,6 +3,7 @@
 import { Component } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
+import { _t } from "@web/core/l10n/translation";
 
 export class FieldColor extends Component {
     static template = "verts_v15_print_template.FieldColor";
@@ -17,10 +18,12 @@ export class FieldColor extends Component {
     get readonly() {
         return this.props.readonly;
     }
-
-    get widgetClass() {
-        return "oe_form_field";
-    }
 }
 
-registry.category("fields").add("color", FieldColor);
+export const fieldColor = {
+    component: FieldColor,
+    displayName: _t("Color"),
+    supportedTypes: ["char"],
+};
+
+registry.category("fields").add("color", fieldColor);
