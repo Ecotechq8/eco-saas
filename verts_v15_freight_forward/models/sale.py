@@ -383,10 +383,11 @@ class SaleOrder(models.Model):
                         job_line_id = self.env['job.freight.line'].create(vals2)
                         job_line_id.onchange_product_id()
                 view = self.env.ref('verts_v15_freight_forward.job_order_export_form_view_inherit')
+                default_plan = self.env['account.analytic.plan'].search([], limit=1)
                 analytic_account = self.env["account.analytic.account"].create({
                     "name": job_id.name,
-                    "partner_id": res.partner_id and res.partner_id.id or False
-
+                    "partner_id": res.partner_id and res.partner_id.id or False,
+                    "plan_id": default_plan.id,
                 })
                 job_id.account_analytic_id = analytic_account.id
                 res.job_order_id = job_id.id
@@ -776,7 +777,7 @@ class SaleOrder(models.Model):
                 'port_of_discharge_id': res.port_of_discharge_id and res.port_of_discharge_id.id or False,
                 'client_order_ref': res.client_order_ref,
                 'incoterm_id': res.incoterm_id and res.incoterm_id.id or False,
-                'account_analytic_id': res.analytic_account_id and res.analytic_account_id.id or False,
+                'account_analytic_id': res.opportunity_id.analytic_account_id and res.opportunity_id.analytic_account_id.id or False,
                 'state': state,
                 'service_type': res.opportunity_id and res.opportunity_id.service_type and res.opportunity_id.service_type.id or False,
                 'weight_uom_id': res.opportunity_id and res.opportunity_id.weight_uom_id and res.opportunity_id.weight_uom_id.id or False,
