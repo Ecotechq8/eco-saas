@@ -23,9 +23,6 @@ from openpyxl import load_workbook
 from openpyxl.styles import Font
 import tempfile
 from dataclasses import field
-from odoo import models, api, fields, _
-from odoo.exceptions import ValidationError
-from odoo.fields import Command
 
 
 class CargoOrder(models.Model):
@@ -1276,98 +1273,75 @@ class CargoOrder(models.Model):
         self.state = 'out_for_delivery'
 
     def action_send_to_finance(self):
+        action = False
+
         for res in self:
+            # ---------------------------
+            # Basic validations
+            # ---------------------------
             if not res.sale_id or not res.sale_id.order_line:
                 raise ValidationError(_('No Lines To Send Finance!'))
+
             if not res.partner_id:
                 raise ValidationError(_(
-                    'You can not make invoice without partner. Please select customer in case there is no customer.'))
+                    'You can not make invoice without partner. Please select customer in case there is no customer.'
+                ))
 
-            journal_id = self.env['account.journal'].sudo()
+            # ---------------------------
+            # Journal selection
+            # ---------------------------
+            journal = False
 
             if res.order_type:
-                journal_id = journal_id.search([
-                    ('type', '=', 'sale'),
-                    ('company_id', '=', res.company_id.id),
-                    ('order_type', '=', res.order_type),
-                    ('mode', '=', res.mode),
-                    ('import_export', '=', res.import_export),
-                ], limit=1)
+                journal = self.env['account.journal'].sudo().search(
+                    [
+                        ('type', '=', 'sale'),
+                        ('order_type', '=', res.order_type),
+                        ('mode', '=', res.mode),
+                        ('import_export', '=', res.import_export)
+                    ],
+                    limit=1
+                )
 
-            if not journal_id:
-                journal_id = self.env['account.journal'].sudo().search([
-                    ('type', '=', 'sale'),
-                    ('company_id', '=', res.company_id.id),
-                ], limit=1)
+            # fallback
+            if not journal:
+                journal = self.env['account.journal'].sudo().search(
+                    [('type', '=', 'sale')],
+                    limit=1
+                )
 
-            if not journal_id:
-                raise ValidationError(_(
-                    'No Sales journal found for company "%s". '
-                    'Please go to Accounting → Configuration → Journals '
-                    'and create one with type "Sales".'
-                ) % res.company_id.name)
+            # 🚨 HARD validation (mandatory)
+            if not journal:
+                raise ValidationError(_("No Sales Journal found. Please configure a Sales Journal."))
 
-            analytic_distribution = {}
-            if res.account_analytic_id:
-                analytic_distribution = {str(res.account_analytic_id.id): 100}
-
-            total_pieces = 0.0
-            for cl in res.cargo_details_ids:
-                total_pieces += cl.no_of_pieces
-
-            invoice_line_ids = []
-
-            for lines in res.sale_id.order_line:
-                line_vals = {
-                    'name': lines.name,
-                    'product_uom_id': lines.product_uom.id,
-                    'product_id': lines.product_id.id,
-                    'price_unit': lines.price_unit,
-                    'quantity': lines.product_uom_qty,
-                    'tax_ids': [Command.set(lines.tax_id.ids)],
-                    'sale_line_ids': [Command.set([lines.id])],
-                }
-                if analytic_distribution:
-                    line_vals['analytic_distribution'] = analytic_distribution
-                invoice_line_ids.append(Command.create(line_vals))
-
-            for exp_line in res.sale_expense_line:
-                exp_vals = {
-                    'name': exp_line.exp_related_to,
-                    'product_id': exp_line.expense_id.id if exp_line.expense_id else False,
-                    'product_uom_id': exp_line.expense_id.uom_id.id if exp_line.expense_id and exp_line.expense_id.uom_id else False,
-                    'price_unit': exp_line.rate,
-                    'quantity': exp_line.qty,
-                }
-                if analytic_distribution:
-                    exp_vals['analytic_distribution'] = analytic_distribution
-                invoice_line_ids.append(Command.create(exp_vals))
-
+            # ---------------------------
+            # Invoice values
+            # ---------------------------
             invoice_vals = {
                 'partner_id': res.partner_id.id,
                 'move_type': 'out_invoice',
-                'invoice_date': fields.Date.today(),
-                'journal_id': journal_id.id,
-                'invoice_line_ids': invoice_line_ids,
+                'invoice_date': datetime.today(),
+                'journal_id': journal.id,
+                'invoice_line_ids': [],
                 'is_export': True,
                 'ref': res.name,
-                'consignee_id': res.consignee_id.id if res.consignee_id else False,
-                'consignor_id': res.consignor_id.id if res.consignor_id else False,
-                'notify_id': res.notify_id.id if res.notify_id else False,
-                'cha_id': res.cha_id.id if res.cha_id else False,
-                'reference_by_id': res.reference_by_id.id if res.reference_by_id else False,
+                'consignee_id': res.consignee_id.id or False,
+                'consignor_id': res.consignor_id.id or False,
+                'notify_id': res.notify_id.id or False,
+                'cha_id': res.cha_id.id or False,
+                'reference_by_id': res.reference_by_id.id or False,
                 'cur_rate': res.sale_id.cur_rate or res.cur_rate,
-                'stuffing_point_id': res.stuffing_point_id.id if res.stuffing_point_id else False,
-                'port_of_loading_id': res.port_of_loading_id.id if res.port_of_loading_id else False,
-                'port_of_discharge_id': res.port_of_discharge_id.id if res.port_of_discharge_id else False,
+                'stuffing_point_id': res.stuffing_point_id.id or False,
+                'port_of_loading_id': res.port_of_loading_id.id or False,
+                'port_of_discharge_id': res.port_of_discharge_id.id or False,
                 'order_type': res.order_type,
                 'mode': res.mode,
                 'import_export': res.import_export,
-                'invoice_incoterm_id': res.incoterm_id.id if res.incoterm_id else False,
-                'account_analytic_id': res.account_analytic_id.id if res.account_analytic_id else False,
+                'invoice_incoterm_id': res.incoterm_id.id or False,
+                'account_analytic_id': res.account_analytic_id.id or False,
                 'customer_po_ref': res.customer_po_ref,
                 'bill_of_lading_no': res.bill_of_lading_no,
-                'mawb': res.mawb.id if res.mawb else False,
+                'mawb': res.mawb.id or False,
                 'hawb': res.hawb,
                 'mawb_land': res.mawb_land,
                 'estimated_time_departure': res.estimated_time_departure,
@@ -1384,10 +1358,10 @@ class CargoOrder(models.Model):
                 'flight_date_1': res.flight_date_1,
                 'flight_number_1': res.flight_number_1,
                 'cargo_id': res.id,
-                'shipping_line': res.shipping_line.id if res.shipping_line else False,
+                'shipping_line': res.shipping_line.id or False,
                 'air_airline_code': res.air_airline_code,
                 'air_airline_no': res.air_airline_no,
-                'currency_id': res.currency_id.id if res.currency_id else False,
+                'currency_id': res.currency_id.id or False,
                 'freight_forwarding': res.freight_forwarding,
                 'pre_cargo_carriage': res.pre_cargo_carriage,
                 'custom_clearance': res.custom_clearance,
@@ -1396,32 +1370,63 @@ class CargoOrder(models.Model):
                 'gsa_sales': res.gsa_sales,
             }
 
-            # In Odoo 18 the journal_id default is computed and can override
-            # what is passed in vals. Passing it via context as default_journal_id
-            # AND in vals ensures it is always respected.
-            inv_id = self.env['account.move'].with_context(
-                manual_currency_rate=invoice_vals.get('cur_rate'),
-                default_move_type='out_invoice',
-                default_journal_id=journal_id.id,
+            # ---------------------------
+            # Sale Order lines (linked)
+            # ---------------------------
+            for line in res.sale_id.order_line:
+                invoice_vals['invoice_line_ids'].append((0, 0, {
+                    'name': line.name,
+                    'product_id': line.product_id.id,
+                    'product_uom_id': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'quantity': line.product_uom_qty,
+                    'tax_ids': [(6, 0, line.tax_id.ids)],
+                    'sale_line_ids': [(6, 0, [line.id])],
+                }))
+
+            # ---------------------------
+            # Expense lines (not linked)
+            # ---------------------------
+            for exp_line in res.sale_expense_line:
+                invoice_vals['invoice_line_ids'].append((0, 0, {
+                    'name': exp_line.exp_related_to,
+                    'product_id': exp_line.expense_id.id,
+                    'product_uom_id': exp_line.expense_id.uom_id.id,
+                    'price_unit': exp_line.rate,
+                    'quantity': exp_line.qty,
+                }))
+
+            # ---------------------------
+            # Create Invoice
+            # ---------------------------
+            inv = self.env['account.move'].with_context(
+                manual_currency_rate=invoice_vals.get('cur_rate')
             ).create(invoice_vals)
 
-            if inv_id:
-                res.move_id = inv_id.id
-                for lines in res.cargo_container_line:
+            # ---------------------------
+            # Post creation logic
+            # ---------------------------
+            if inv:
+                res.move_id = inv.id
+
+                for container in res.cargo_container_line:
                     self.env['move.container.lines'].create({
-                        'move_id': inv_id.id,
-                        'container_type_id': lines.container_type_id.id if lines.container_type_id else False,
-                        'count': lines.count,
-                        'container_qty': lines.container_qty,
+                        'move_id': inv.id,
+                        'container_type_id': container.container_type_id.id or False,
+                        'count': container.count,
+                        'container_qty': container.container_qty,
                     })
 
-            return {
-                'type': 'ir.actions.act_window',
-                'view_mode': 'form',
-                'res_model': 'account.move',
-                'target': 'current',
-                'res_id': inv_id.id,
-            }
+                # prepare action (only last one will open)
+                action = {
+                    'type': 'ir.actions.act_window',
+                    'view_mode': 'form',
+                    'res_model': 'account.move',
+                    'target': 'current',
+                    'res_id': inv.id,
+                }
+
+        return action
 
 
 class CargoOrderLine(models.Model):
