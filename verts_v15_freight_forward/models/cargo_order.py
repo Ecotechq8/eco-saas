@@ -1274,138 +1274,98 @@ class CargoOrder(models.Model):
 
     def action_send_to_finance(self):
         for res in self:
+            # 1. Validation
             if not res.sale_id or not res.sale_id.order_line:
-                raise ValidationError(_('No Lines To Send Finance!'))
+                raise ValidationError(_('No Lines found on the related Sale Order to invoice!'))
             if not res.partner_id:
-                raise ValidationError(_('You can not make invoice without partner. Please select customer.'))
+                raise ValidationError(_('Please select a Customer on the Cargo Order before invoicing.'))
 
-            # --- FAIL-SAFE JOURNAL SEARCH ---
-            # Attempt 1: Search based on custom logic (Order Type, Mode, etc.)
-            journal = self.env['account.journal'].sudo().search([
+            # 2. FIND JOURNAL (The "Normal" Way)
+            # We look for the first 'sale' journal belonging to the company of this order.
+            journal = self.env['account.journal'].search([
                 ('type', '=', 'sale'),
-                ('company_id', '=', res.company_id.id),
-                ('order_type', '=', res.order_type),
-                ('mode', '=', res.mode),
-                ('import_export', '=', res.import_export)
+                ('company_id', '=', res.company_id.id)
             ], limit=1)
 
-            # Attempt 2: Fallback to ANY 'sale' journal in the current company
+            # If no journal is found for that specific company, grab ANY sale journal in the system
             if not journal:
-                journal = self.env['account.journal'].sudo().search([
-                    ('type', '=', 'sale'),
-                    ('company_id', '=', res.company_id.id)
-                ], limit=1)
+                journal = self.env['account.journal'].search([('type', '=', 'sale')], limit=1)
 
-            # Attempt 3: Fallback to the first available 'sale' journal in the entire system (all companies)
+            # CRITICAL CHECK: If there are NO sale journals in the whole system, we must stop.
             if not journal:
-                journal = self.env['account.journal'].sudo().search([('type', '=', 'sale')], limit=1)
+                raise UserError(_("Search Failed: No 'Sales' journal exists in your accounting settings. "
+                                  "Please go to Accounting > Configuration > Journals and create one."))
 
-            # Final Validation: If even Attempt 3 fails, the database has NO journals configured.
-            if not journal:
-                raise UserError(
-                    _("Configuration Error: No 'Sale' journal found in the system. Please create one in Accounting > Configuration > Journals."))
-
-            # Prepare Invoice Values
+            # 3. PREPARE INVOICE VALUES
             invoice_vals = {
                 'move_type': 'out_invoice',
+                'journal_id': journal.id,  # Mandatory field
                 'partner_id': res.partner_id.id,
-                'journal_id': journal.id,  # This is now guaranteed to have a value
                 'invoice_date': fields.Date.context_today(self),
                 'currency_id': res.currency_id.id or res.company_id.currency_id.id,
-                'is_export': True,
                 'ref': res.name,
+                'is_export': True,
+                # Mapping Cargo Fields
                 'consignee_id': res.consignee_id.id or False,
                 'consignor_id': res.consignor_id.id or False,
                 'notify_id': res.notify_id.id or False,
-                'cha_id': res.cha_id.id or False,
-                'reference_by_id': res.reference_by_id.id or False,
-                'cur_rate': res.sale_id.cur_rate or res.cur_rate,
-                'stuffing_point_id': res.stuffing_point_id.id or False,
                 'port_of_loading_id': res.port_of_loading_id.id or False,
                 'port_of_discharge_id': res.port_of_discharge_id.id or False,
-                'order_type': res.order_type,
-                'mode': res.mode,
-                'import_export': res.import_export,
-                'invoice_incoterm_id': res.incoterm_id.id or False,
-                'account_analytic_id': res.account_analytic_id.id or False,
-                'customer_po_ref': res.customer_po_ref,
-                'bill_of_lading_no': res.bill_of_lading_no,
-                'mawb': res.mawb.id or False,
-                'hawb': res.hawb,
-                'mawb_land': res.mawb_land,
-                'estimated_time_departure': res.estimated_time_departure,
-                'eta_port_of_destination': res.eta_port_of_destination,
-                'total_pieces': res.total_pieces,
-                'total_gross_weight': res.total_gross_weight if res.mode != 'air' else res.total_gross_weight_cargo,
-                'total_chargeable_weight': res.total_chargeable_weight if res.mode != 'air' else res.total_chargeable_weight_cargo,
-                'total_cbm': res.total_cbm,
-                'total_value': res.total_value,
-                'total_volume_cbm': res.total_volume_cbm,
-                'total_volumetric_weight': res.total_volumetric_weight,
-                'ref_num': res.ref_num,
-                'date_order': res.date_order,
-                'flight_date_1': res.flight_date_1,
-                'flight_number_1': res.flight_number_1,
-                'cargo_id': res.id,
                 'shipping_line': res.shipping_line.id or False,
-                'air_airline_code': res.air_airline_code,
-                'air_airline_no': res.air_airline_no,
-                'freight_forwarding': res.freight_forwarding,
-                'pre_cargo_carriage': res.pre_cargo_carriage,
-                'custom_clearance': res.custom_clearance,
-                'reefer_dry': res.reefer_dry,
-                'genset': res.genset,
-                'gsa_sales': res.gsa_sales,
+                'mawb': res.mawb.id or False,
+                'cargo_id': res.id,
                 'invoice_line_ids': [],
             }
 
-            # Map Sale Order Lines
-            for lines in res.sale_id.order_line:
+            # 4. ADD LINES (Normal Sale Lines)
+            for line in res.sale_id.order_line:
                 invoice_vals['invoice_line_ids'].append((0, 0, {
-                    'name': lines.name,
-                    'product_id': lines.product_id.id,
-                    'product_uom_id': lines.product_uom.id,
-                    'quantity': lines.product_uom_qty,
-                    'price_unit': lines.price_unit,
-                    'tax_ids': [(6, 0, lines.tax_id.ids)],
-                    'sale_line_ids': [(6, 0, [lines.id])],
+                    'name': line.name,
+                    'product_id': line.product_id.id,
+                    'quantity': line.product_uom_qty,
+                    'product_uom_id': line.product_uom.id,
+                    'price_unit': line.price_unit,
+                    'tax_ids': [(6, 0, line.tax_id.ids)],
+                    'sale_line_ids': [(6, 0, [line.id])],
                 }))
 
-            # Map Expense Lines
-            for exp_line in res.sale_expense_line:
+            # 5. ADD EXPENSE LINES
+            for exp in res.sale_expense_line:
                 invoice_vals['invoice_line_ids'].append((0, 0, {
-                    'name': exp_line.exp_related_to or exp_line.expense_id.name,
-                    'product_id': exp_line.expense_id.id,
-                    'product_uom_id': exp_line.expense_id.uom_id.id,
-                    'quantity': exp_line.qty,
-                    'price_unit': exp_line.rate,
+                    'name': exp.exp_related_to or exp.expense_id.name,
+                    'product_id': exp.expense_id.id,
+                    'quantity': exp.qty,
+                    'price_unit': exp.rate,
                 }))
 
-            # Create Invoice with SUDO to bypass any potential access/journal rules
-            inv_id = self.env['account.move'].sudo().with_context(
-                manual_currency_rate=invoice_vals.get('cur_rate'),
-                default_move_type='out_invoice'
+            # 6. CREATE INVOICE
+            # Use sudo() to ensure no "Access Error" or "Record Rule" stops the journal assignment
+            new_invoice = self.env['account.move'].sudo().with_context(
+                default_move_type='out_invoice',
+                manual_currency_rate=res.cur_rate
             ).create(invoice_vals)
 
-            if inv_id:
-                res.move_id = inv_id.id
-                # Link Container Lines
-                for lines in res.cargo_container_line:
+            # 7. LINK AND REDIRECT
+            res.move_id = new_invoice.id
+
+            # Optional: Link container lines if the model exists in your DB
+            if hasattr(self.env['account.move'], 'container_line_ids') or res.cargo_container_line:
+                for c_line in res.cargo_container_line:
                     self.env['move.container.lines'].sudo().create({
-                        'move_id': inv_id.id,
-                        'container_type_id': lines.container_type_id.id or False,
-                        'count': lines.count,
-                        'container_qty': lines.container_qty,
+                        'move_id': new_invoice.id,
+                        'container_type_id': c_line.container_type_id.id,
+                        'count': c_line.count,
+                        'container_qty': c_line.container_qty,
                     })
 
             return {
-                'type': 'ir.actions.act_window',
+                'name': _('Customer Invoice'),
                 'view_mode': 'form',
                 'res_model': 'account.move',
+                'type': 'ir.actions.act_window',
+                'res_id': new_invoice.id,
                 'target': 'current',
-                'res_id': inv_id.id,
             }
-
 
 class CargoOrderLine(models.Model):
     _name = 'cargo.order.line'
