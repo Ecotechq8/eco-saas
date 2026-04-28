@@ -359,9 +359,9 @@ class CrmLead(models.Model):
             "res_model": "purchase.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '!=', 'purchase')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.custom_purchase_order_form').id, 'form'),
             ],
         }
@@ -374,9 +374,9 @@ class CrmLead(models.Model):
             "res_model": "purchase.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '=', 'purchase')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.ff_agent_order_tree').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.custom_purchase_order_form').id, 'form'),
             ],
         }
@@ -389,9 +389,9 @@ class CrmLead(models.Model):
             "res_model": "sale.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '!=', 'sale')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.sale_order_export_form_view_inherit').id, 'form'),
             ],
         }
@@ -404,9 +404,9 @@ class CrmLead(models.Model):
             "res_model": "sale.order",
             "domain": [('opportunity_id', '=', self.id), ('state', '=', 'sale')],
             "context": {"create": False},
-            "view_mode": "tree,form",
+            "view_mode": "list,form",
             "views": [
-                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'tree'),
+                (self.env.ref('verts_v15_freight_forward.sale_export_order_tree_view_inherit').id, 'list'),
                 (self.env.ref('verts_v15_freight_forward.sale_order_export_form_view_inherit').id, 'form'),
             ],
         }
