@@ -531,28 +531,54 @@ class JobOrder(models.Model):
         self.state = 'out_for_delivery'
 
     def action_send_to_finance(self):
-        name_list = []
         for res in self:
             if not res.order_line:
                 raise ValidationError(_('No Lines To Send Finance!'))
             if not res.partner_id:
                 raise ValidationError(_(
                     'You can not make invoice without partner. Please select customer in case there is no customer.'))
+
+            # 1. FIND JOURNAL (The Improved Way)
+            journal = False
             if res.order_type:
-                journal_id = self.env['account.journal'].sudo().search(
-                    [('type', '=', 'sale'), ('order_type', '=', res.order_type),
-                     ('mode', '=', res.mode), ('import_export', '=', res.import_export)], limit=1)
-            else:
-                journal_id = self.env['account.journal'].sudo().search(
-                    [('type', '=', 'sale')], limit=1)
-                print('-------id',journal_id)
+                journal = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale'),
+                    ('order_type', '=', res.order_type),
+                    ('mode', '=', res.mode),
+                    ('import_export', '=', res.import_export),
+                    ('company_id', '=', res.company_id.id)
+                ], limit=1)
+
+            if not journal:
+                # Fallback: We initialize a move to let Odoo's internal logic find the default journal for this company
+                move_ctx = self.env['account.move'].with_context(
+                    default_move_type='out_invoice',
+                    default_company_id=res.company_id.id
+                )
+                journal = move_ctx._get_default_journal()
+
+            if not journal:
+                # Second Fallback: try a manual company-specific search for any sale journal
+                journal = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale'),
+                    ('company_id', '=', res.company_id.id)
+                ], limit=1)
+
+            # Permanent Fix: Raise a user-friendly error instead of a technical validation crash
+            if not journal:
+                raise UserError(_(
+                    "No 'Sales' journal found for company %s. "
+                    "Please check Accounting > Configuration > Journals."
+                ) % res.company_id.name)
+
+            # 2. PREPARE INVOICE VALUES
             invoice_vals = {
-                'partner_id': res.partner_id and res.partner_id.id or False,
-                # 'pricelist_id': res.pricelist_id and res.pricelist_id.id or False,  #commented by kajal
+                'partner_id': res.partner_id.id,
                 'move_type': 'out_invoice',
                 'state': 'draft',
-                'invoice_date': datetime.today(),
-                'journal_id': journal_id and journal_id.id or False, #commented by kajal
+                'invoice_date': fields.Date.context_today(self),
+                'journal_id': journal.id,
+                'company_id': res.company_id.id,
                 'invoice_line_ids': [],
                 'is_export': True,
                 'consignee_id': res.consignee_id and res.consignee_id.id or False,
@@ -574,7 +600,7 @@ class JobOrder(models.Model):
                 'mawb': res.mawb,
                 'hawb': res.hawb,
                 'estimated_time_departure': res.estimated_time_departure,
-                'eta_port_of_destination':res.eta_port_of_destination,
+                'eta_port_of_destination': res.eta_port_of_destination,
                 'total_pieces': res.total_pieces,
                 'total_gross_weight': res.total_gross_weight,
                 'total_cbm': res.total_cbm,
@@ -583,7 +609,6 @@ class JobOrder(models.Model):
                 'total_volume_cbm': res.total_volume_cbm,
                 'total_volumetric_weight': res.total_volumetric_weight,
             }
-            print('=========',invoice_vals)
             for lines in res.order_line:
                 dict1 = {}
                 dict1.update({
@@ -592,7 +617,7 @@ class JobOrder(models.Model):
                     'product_id': lines.product_id.id,
                     'price_unit': lines.price_unit,
                     'quantity': lines.product_uom_qty,
-                    'tax_ids': [(6, False, lines.tax_id.ids)],
+                    'tax_ids': [(6, 0, lines.tax_id.ids)],
                 })
                 invoice_vals['invoice_line_ids'].append((0, 0, dict1))
             for exp_line in res.sale_expense_line:

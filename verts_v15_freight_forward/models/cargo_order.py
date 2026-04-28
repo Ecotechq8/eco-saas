@@ -1280,15 +1280,26 @@ class CargoOrder(models.Model):
             if not res.partner_id:
                 raise ValidationError(_('Please select a customer before invoicing.'))
 
-            # 2. FIND JOURNAL (The "Odoo 18 Normal Way")
-            # We initialize a move to let Odoo's internal logic find the default journal for this company
-            move_ctx = self.env['account.move'].with_context(
-                default_move_type='out_invoice',
-                default_company_id=res.company_id.id
-            )
-            journal = move_ctx._get_default_journal()
+            # 2. FIND JOURNAL (The Improved "Normal" Way)
+            journal = False
+            if res.order_type:
+                journal = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale'),
+                    ('order_type', '=', res.order_type),
+                    ('mode', '=', res.mode),
+                    ('import_export', '=', res.import_export),
+                    ('company_id', '=', res.company_id.id)
+                ], limit=1)
 
-            # Fallback: if Odoo's helper fails, try a manual company-specific search
+            if not journal:
+                # Fallback: We initialize a move to let Odoo's internal logic find the default journal for this company
+                move_ctx = self.env['account.move'].with_context(
+                    default_move_type='out_invoice',
+                    default_company_id=res.company_id.id
+                )
+                journal = move_ctx._get_default_journal()
+
+            # Final Fallback: if Odoo's helper fails, try a manual company-specific search
             if not journal:
                 journal = self.env['account.journal'].sudo().search([
                     ('type', '=', 'sale'),
