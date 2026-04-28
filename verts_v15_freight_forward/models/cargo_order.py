@@ -1274,50 +1274,63 @@ class CargoOrder(models.Model):
 
     def action_send_to_finance(self):
         for res in self:
-            # 1. Basic Validations
             if not res.sale_id or not res.sale_id.order_line:
-                raise ValidationError(_('No lines found to invoice!'))
+                raise ValidationError(_('No Lines To Send Finance!'))
             if not res.partner_id:
-                raise ValidationError(_('Please select a customer before invoicing.'))
+                raise ValidationError(_('You cannot make an invoice without a partner. Please select a customer.'))
 
-            # 2. FIND JOURNAL (Mirroring Odoo 18 Sale logic)
-            # We search for the 'sale' journal with the lowest sequence in the current company.
-            journal = self.env['account.journal'].sudo().search([
-                ('type', '=', 'sale'),
-                ('company_id', '=', res.company_id.id)
-            ], limit=1)
+            # --- THE PERMANENT ODOO 18 JOURNAL FIX ---
+            # 1. First priority: Use the journal set on the linked Sale Order (if any)
+            journal = res.sale_id.journal_id
 
-            # Fallback: If no journal in this company, find ANY sale journal
+            # 2. Second priority: Use Odoo's built-in logic to find the 'Normal' default journal
             if not journal:
-                journal = self.env['account.journal'].sudo().search([('type', '=', 'sale')], limit=1)
+                # This call mimics the standard 'Create' button in Odoo 18 Accounting
+                journal = self.env['account.move'].with_context(
+                    default_move_type='out_invoice',
+                    default_company_id=res.company_id.id
+                )._get_default_journal()
 
-            # Check if we found anything. If journal is still empty, the DB is misconfigured.
+            # 3. Final fallback: Search manually for any Sale journal in the specific company
+            if not journal:
+                journal = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale'),
+                    ('company_id', '=', res.company_id.id)
+                ], limit=1)
+
+            # Check if we still have no journal
             if not journal:
                 raise UserError(
-                    _("No 'Sales' journal found. Please create one in Accounting > Configuration > Journals."))
+                    _("No Sales Journal found for company %s. Please check Accounting > Configuration > Journals.") % res.company_id.name)
 
-            # 3. PREPARE INVOICE VALUES (Mirroring _prepare_invoice in sale.order)
+            # Build the Invoice Values
             invoice_vals = {
                 'move_type': 'out_invoice',
-                'journal_id': journal.id,  # Set the mandatory field explicitly
+                'journal_id': journal.id,  # Set explicitly to avoid mandatory field error
+                'company_id': res.company_id.id,  # Mandatory for multi-company
                 'partner_id': res.partner_id.id,
                 'invoice_date': fields.Date.context_today(self),
                 'currency_id': res.currency_id.id or res.company_id.currency_id.id,
-                'ref': res.name,
                 'is_export': True,
-                # Custom Cargo Fields
+                'ref': res.name,
+                'invoice_origin': res.name,
                 'consignee_id': res.consignee_id.id or False,
                 'consignor_id': res.consignor_id.id or False,
                 'notify_id': res.notify_id.id or False,
                 'cha_id': res.cha_id.id or False,
+                'reference_by_id': res.reference_by_id.id or False,
+                'cur_rate': res.sale_id.cur_rate or res.cur_rate,
                 'port_of_loading_id': res.port_of_loading_id.id or False,
                 'port_of_discharge_id': res.port_of_discharge_id.id or False,
+                'order_type': res.order_type,
+                'mode': res.mode,
+                'import_export': res.import_export,
                 'mawb': res.mawb.id or False,
                 'cargo_id': res.id,
                 'invoice_line_ids': [],
             }
 
-            # 4. MAP LINES (Ensure lines follow standard Odoo 18 format)
+            # Map Sale Order Lines
             for lines in res.sale_id.order_line:
                 invoice_vals['invoice_line_ids'].append((0, 0, {
                     'name': lines.name,
@@ -1326,10 +1339,10 @@ class CargoOrder(models.Model):
                     'quantity': lines.product_uom_qty,
                     'price_unit': lines.price_unit,
                     'tax_ids': [(6, 0, lines.tax_id.ids)],
-                    'sale_line_ids': [(6, 0, [lines.id])],  # Links back to SO for status update
+                    'sale_line_ids': [(6, 0, [lines.id])],  # Link to SO line
                 }))
 
-            # Map Expenses
+            # Map Expense lines
             for exp_line in res.sale_expense_line:
                 invoice_vals['invoice_line_ids'].append((0, 0, {
                     'name': exp_line.exp_related_to or exp_line.expense_id.name,
@@ -1339,35 +1352,31 @@ class CargoOrder(models.Model):
                     'price_unit': exp_line.rate,
                 }))
 
-            # 5. CREATE THE INVOICE
-            # We use sudo() and with_context to bypass UI-level mandatory checks
-            # that might be failing due to field visibility or company rules.
+            # CREATE INVOICE (Sudo is standard for SO-to-Invoice conversion)
             inv_id = self.env['account.move'].sudo().with_context(
                 default_move_type='out_invoice',
-                manual_currency_rate=res.cur_rate or 1.0
+                manual_currency_rate=res.cur_rate
             ).create(invoice_vals)
 
             if inv_id:
                 res.move_id = inv_id.id
-                # Handle Container Lines if they exist
-                for container in res.cargo_container_line:
+                # Link Container Lines
+                for lines in res.cargo_container_line:
                     self.env['move.container.lines'].sudo().create({
                         'move_id': inv_id.id,
-                        'container_type_id': container.container_type_id.id,
-                        'count': container.count,
-                        'container_qty': container.container_qty,
+                        'container_type_id': lines.container_type_id.id or False,
+                        'count': lines.count,
+                        'container_qty': lines.container_qty,
                     })
 
-            # 6. RETURN VIEW (Same as Odoo standard)
+            # Open the newly created invoice
             return {
-                'name': _('Customer Invoice'),
                 'type': 'ir.actions.act_window',
                 'view_mode': 'form',
                 'res_model': 'account.move',
                 'res_id': inv_id.id,
                 'target': 'current',
             }
-
 
 class CargoOrderLine(models.Model):
     _name = 'cargo.order.line'
