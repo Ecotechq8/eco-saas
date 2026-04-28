@@ -1272,47 +1272,70 @@ class CargoOrder(models.Model):
     def action_out_for_delivery(self):
         self.state = 'out_for_delivery'
 
+    def _get_or_create_sales_journal(self, company):
+        Journal = self.env['account.journal'].sudo()
+
+        # 1️⃣ Try to find existing journal
+        journal = Journal.search([
+            ('type', '=', 'sale'),
+            ('company_id', '=', company.id)
+        ], limit=1)
+
+        if journal:
+            return journal
+
+        # 2️⃣ Find default accounts (REQUIRED)
+        Account = self.env['account.account'].sudo()
+
+        income_account = Account.search([
+            ('company_id', '=', company.id),
+            ('account_type', '=', 'income'),
+            ('deprecated', '=', False)
+        ], limit=1)
+
+        receivable_account = Account.search([
+            ('company_id', '=', company.id),
+            ('account_type', '=', 'asset_receivable'),
+            ('deprecated', '=', False)
+        ], limit=1)
+
+        if not income_account or not receivable_account:
+            raise ValidationError(_(
+                "Cannot create Sales Journal automatically.\n"
+                "Missing required accounts (Income / Receivable). "
+                "Please configure Chart of Accounts first."
+            ))
+
+        # 3️⃣ Create journal
+        journal = Journal.create({
+            'name': 'Sales Journal',
+            'code': 'AUTO_SALE',
+            'type': 'sale',
+            'company_id': company.id,
+            'default_account_id': income_account.id,
+        })
+
+        return journal
+
     def action_send_to_finance(self):
         action = False
 
         for res in self:
             # ---------------------------
-            # Basic validations
+            # Validations
             # ---------------------------
             if not res.sale_id or not res.sale_id.order_line:
                 raise ValidationError(_('No Lines To Send Finance!'))
 
             if not res.partner_id:
                 raise ValidationError(_(
-                    'You can not make invoice without partner. Please select customer in case there is no customer.'
+                    'You can not make invoice without partner.'
                 ))
 
             # ---------------------------
-            # Journal selection
+            # Journal (SAFE)
             # ---------------------------
-            journal = False
-
-            if res.order_type:
-                journal = self.env['account.journal'].sudo().search(
-                    [
-                        ('type', '=', 'sale'),
-                        ('order_type', '=', res.order_type),
-                        ('mode', '=', res.mode),
-                        ('import_export', '=', res.import_export)
-                    ],
-                    limit=1
-                )
-
-            # fallback
-            if not journal:
-                journal = self.env['account.journal'].sudo().search(
-                    [('type', '=', 'sale')],
-                    limit=1
-                )
-
-            # 🚨 HARD validation (mandatory)
-            if not journal:
-                raise ValidationError(_("No Sales Journal found. Please configure a Sales Journal."))
+            journal = self._get_or_create_sales_journal(res.company_id)
 
             # ---------------------------
             # Invoice values
@@ -1322,58 +1345,27 @@ class CargoOrder(models.Model):
                 'move_type': 'out_invoice',
                 'invoice_date': datetime.today(),
                 'journal_id': journal.id,
+                'company_id': res.company_id.id,
+                'currency_id': res.currency_id.id,
                 'invoice_line_ids': [],
-                'is_export': True,
                 'ref': res.name,
-                'consignee_id': res.consignee_id.id or False,
-                'consignor_id': res.consignor_id.id or False,
-                'notify_id': res.notify_id.id or False,
-                'cha_id': res.cha_id.id or False,
-                'reference_by_id': res.reference_by_id.id or False,
-                'cur_rate': res.sale_id.cur_rate or res.cur_rate,
-                'stuffing_point_id': res.stuffing_point_id.id or False,
-                'port_of_loading_id': res.port_of_loading_id.id or False,
-                'port_of_discharge_id': res.port_of_discharge_id.id or False,
-                'order_type': res.order_type,
-                'mode': res.mode,
-                'import_export': res.import_export,
-                'invoice_incoterm_id': res.incoterm_id.id or False,
-                'account_analytic_id': res.account_analytic_id.id or False,
-                'customer_po_ref': res.customer_po_ref,
-                'bill_of_lading_no': res.bill_of_lading_no,
-                'mawb': res.mawb.id or False,
-                'hawb': res.hawb,
-                'mawb_land': res.mawb_land,
-                'estimated_time_departure': res.estimated_time_departure,
-                'eta_port_of_destination': res.eta_port_of_destination,
-                'total_pieces': res.total_pieces,
-                'total_gross_weight': res.total_gross_weight if res.mode != 'air' else res.total_gross_weight_cargo,
-                'total_chargeable_weight': res.total_chargeable_weight if res.mode != 'air' else res.total_chargeable_weight_cargo,
-                'total_cbm': res.total_cbm,
-                'total_value': res.total_value,
-                'total_volume_cbm': res.total_volume_cbm,
-                'total_volumetric_weight': res.total_volumetric_weight,
-                'ref_num': res.ref_num,
-                'date_order': res.date_order,
-                'flight_date_1': res.flight_date_1,
-                'flight_number_1': res.flight_number_1,
-                'cargo_id': res.id,
-                'shipping_line': res.shipping_line.id or False,
-                'air_airline_code': res.air_airline_code,
-                'air_airline_no': res.air_airline_no,
-                'currency_id': res.currency_id.id or False,
-                'freight_forwarding': res.freight_forwarding,
-                'pre_cargo_carriage': res.pre_cargo_carriage,
-                'custom_clearance': res.custom_clearance,
-                'reefer_dry': res.reefer_dry,
-                'genset': res.genset,
-                'gsa_sales': res.gsa_sales,
             }
 
             # ---------------------------
-            # Sale Order lines (linked)
+            # Sale Order lines
             # ---------------------------
             for line in res.sale_id.order_line:
+                account = (
+                        line.product_id.property_account_income_id
+                        or line.product_id.categ_id.property_account_income_categ_id
+                )
+
+                if not account:
+                    raise ValidationError(
+                        _("Missing income account for product: %s") %
+                        line.product_id.display_name
+                    )
+
                 invoice_vals['invoice_line_ids'].append((0, 0, {
                     'name': line.name,
                     'product_id': line.product_id.id,
@@ -1382,49 +1374,58 @@ class CargoOrder(models.Model):
                     'quantity': line.product_uom_qty,
                     'tax_ids': [(6, 0, line.tax_id.ids)],
                     'sale_line_ids': [(6, 0, [line.id])],
+                    'account_id': account.id,
                 }))
 
             # ---------------------------
-            # Expense lines (not linked)
+            # Expense lines
             # ---------------------------
             for exp_line in res.sale_expense_line:
+                account = (
+                        exp_line.expense_id.property_account_income_id
+                        or exp_line.expense_id.categ_id.property_account_income_categ_id
+                )
+
+                if not account:
+                    raise ValidationError(
+                        _("Missing income account for product: %s") %
+                        exp_line.expense_id.display_name
+                    )
+
                 invoice_vals['invoice_line_ids'].append((0, 0, {
                     'name': exp_line.exp_related_to,
                     'product_id': exp_line.expense_id.id,
                     'product_uom_id': exp_line.expense_id.uom_id.id,
                     'price_unit': exp_line.rate,
                     'quantity': exp_line.qty,
+                    'account_id': account.id,
                 }))
 
             # ---------------------------
             # Create Invoice
             # ---------------------------
-            inv = self.env['account.move'].with_context(
-                manual_currency_rate=invoice_vals.get('cur_rate')
-            ).create(invoice_vals)
+            inv = self.env['account.move'].sudo().create(invoice_vals)
+
+            if not inv:
+                raise ValidationError(_("Invoice creation failed."))
+
+            res.move_id = inv.id
 
             # ---------------------------
-            # Post creation logic
+            # Optional: Post invoice
             # ---------------------------
-            if inv:
-                res.move_id = inv.id
+            inv.action_post()
 
-                for container in res.cargo_container_line:
-                    self.env['move.container.lines'].create({
-                        'move_id': inv.id,
-                        'container_type_id': container.container_type_id.id or False,
-                        'count': container.count,
-                        'container_qty': container.container_qty,
-                    })
-
-                # prepare action (only last one will open)
-                action = {
-                    'type': 'ir.actions.act_window',
-                    'view_mode': 'form',
-                    'res_model': 'account.move',
-                    'target': 'current',
-                    'res_id': inv.id,
-                }
+            # ---------------------------
+            # Open form
+            # ---------------------------
+            action = {
+                'type': 'ir.actions.act_window',
+                'view_mode': 'form',
+                'res_model': 'account.move',
+                'target': 'current',
+                'res_id': inv.id,
+            }
 
         return action
 
