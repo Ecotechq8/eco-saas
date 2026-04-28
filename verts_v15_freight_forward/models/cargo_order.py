@@ -59,14 +59,14 @@ class CargoOrder(models.Model):
         if self.mawb and self.mawb.awb_no:
             awb_no = self.mawb.awb_no
 
-        if airline_no and len(airline_no) >2:
+        if airline_no and len(airline_no) > 2:
             ws["A1"] = airline_no[0] or ''
             ws["B1"] = airline_no[1] or ''
             ws["C1"] = airline_no[2] or ''
 
         ws["D1"] = origin_port_code or ''
         ws["G1"] = awb_no or ''
-        ws["AK1"] = airline_no+'-'+awb_no
+        ws["AK1"] = airline_no + '-' + awb_no
         ws["AH58"] = origin_port_code or ''
         ws["AC61"] = airline_no + '-' + awb_no
 
@@ -155,7 +155,7 @@ class CargoOrder(models.Model):
         ws["X23"] = self.ref_num or ''
         ws["AM44"] = self.other_remarks or ''
 
-        combined_value1 =''
+        combined_value1 = ''
         combined_value2 = ''
         if self.flight_date_1:
             day = self.flight_date_1.day
@@ -218,7 +218,7 @@ class CargoOrder(models.Model):
         # if self.commodity:
         #     nature_goods += f"{self.commodity.name}, "
 
-        if self.dimension_volume =='dimension' and self.opportunity_id:
+        if self.dimension_volume == 'dimension' and self.opportunity_id:
             for line in self.opportunity_id.order_line:
                 nature_goods += f"\n{line.length_per_package}×{line.width_per_package}×{line.height_per_package},"
         elif self.dimension_volume == 'volume':
@@ -231,7 +231,7 @@ class CargoOrder(models.Model):
 
         filter_lines = self.order_line.filtered(lambda line: line.show_in_awb == True)
         # oth_charges = ''
-        count =1
+        count = 1
         for fl in filter_lines:
             if count == 1:
                 ws["T46"] = fl.product_id.charge_code or ''
@@ -251,7 +251,7 @@ class CargoOrder(models.Model):
             if count == 6:
                 ws["AN48"] = fl.product_id.charge_code or ''
                 ws["AR48"] = fl.price_total or ''
-            count +=1
+            count += 1
 
             # oth_charges += f"{fl.product_id.charge_code}-{fl.price_total},\n"
         # ws["T46"] = oth_charges or ''
@@ -274,7 +274,7 @@ class CargoOrder(models.Model):
             ws["AI26"] = ""  # Clear other_coll
             ws["A52"] = self.due_agent
             ws["A54"] = self.due_carrier
-            ws["A58"] = self.due_agent+self.total_amount_cargo+self.due_carrier
+            ws["A58"] = self.due_agent + self.total_amount_cargo + self.due_carrier
             ws["A46"] = self.total_amount_cargo
 
         elif self.code == 'cc':
@@ -285,9 +285,8 @@ class CargoOrder(models.Model):
             ws["AE26"] = ""  # Clear other_ppd
             ws["J52"] = self.due_agent
             ws["J54"] = self.due_carrier
-            ws["J58"] = self.due_agent+self.total_amount_cargo+self.due_carrier
+            ws["J58"] = self.due_agent + self.total_amount_cargo + self.due_carrier
             ws["J46"] = self.total_amount_cargo
-
 
             # Apply font size 6 to all filled cells
         # small_font = Font(size=6)
@@ -338,7 +337,6 @@ class CargoOrder(models.Model):
             'url': f'/web/content/{attachment.id}?download=true',
             'target': 'self',
         }
-
 
     def _default_validity_date(self):
         if self.env['ir.config_parameter'].get_param('sale.use_quotation_validity_days'):
@@ -499,7 +497,8 @@ class CargoOrder(models.Model):
         'product.pricelist', string='Pricelist', check_company=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", tracking=1,
         help="If you change the pricelist, only newly added lines will be affected.")
-    currency_id = fields.Many2one(related='pricelist_id.currency_id', depends=["pricelist_id"], store=True, string='Currency')
+    currency_id = fields.Many2one(related='pricelist_id.currency_id', depends=["pricelist_id"], store=True,
+                                  string='Currency')
     order_line = fields.One2many('cargo.order.line', 'order_id', string='Order Lines',
                                  states={'cancel': [('readonly', True)], 'done': [('readonly', True)]}, copy=True,
                                  auto_join=True)
@@ -549,10 +548,10 @@ class CargoOrder(models.Model):
     other_ppd = fields.Float(string="PPD")
     other_coll = fields.Float(string="COLL")
     code = fields.Selection(
-                selection = [
-                    ('pp', 'PP'),
-                    ('cc', 'CC'),
-        ],     string = "CHGS Code")
+        selection=[
+            ('pp', 'PP'),
+            ('cc', 'CC'),
+        ], string="CHGS Code")
 
     declare_value = fields.Char(string="Declared value for carriage")
     declare_value_custom = fields.Char(string="Declared value for custom")
@@ -564,8 +563,8 @@ class CargoOrder(models.Model):
     port_of_loading_id = fields.Many2one('ports', 'Port of Loading')
     port_of_discharge_id = fields.Many2one('ports', 'Port of Discharge')
     cha_id = fields.Many2one('res.partner', 'Custom House Agent ')
-    agent_code = fields.Char(string = 'Agent IATA Code')
-    agent_account_number = fields.Char(string = 'Agent Account No.')
+    agent_code = fields.Char(string='Agent IATA Code')
+    agent_account_number = fields.Char(string='Agent Account No.')
     freight_forwarder_id = fields.Many2one('res.partner', 'Freight Forwarder')
     stuffing_point_id = fields.Many2one('ports', 'Stuffing Point')
     cur_rate = fields.Float('Currency  Exchange Rate.')
@@ -757,9 +756,9 @@ class CargoOrder(models.Model):
     sign_of_shipper = fields.Char(string='Signature of Shipper or Agent')
     sign_of_carrier = fields.Char(string='Signature of Issuing Carrier or Agent')
     dimension_volume = fields.Selection([
-                                        ('dimension', 'All Dimensions'),
-                                        ('volume', 'Total Volume')
-                                        ], string='Dimension/Volume')
+        ('dimension', 'All Dimensions'),
+        ('volume', 'Total Volume')
+    ], string='Dimension/Volume')
     company_currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
     total_cur_conversion_amount = fields.Monetary(
         string='Total After Currency Conversion',
@@ -773,16 +772,18 @@ class CargoOrder(models.Model):
         compute='_compute_total_after_currency_conversion',
         store=True
     )
-    move_id = fields.Many2one('account.move', string="Origin")#by kajal
+    move_id = fields.Many2one('account.move', string="Origin")  # by kajal
 
     def unlink(self):
         for rec in self:
             # Check the linked invoice via move_id
             if rec.move_id:
                 if rec.move_id.state == 'posted':
-                    raise ValidationError(f"Cannot delete the Cargo Order: related invoice {rec.move_id.name} is posted.")
+                    raise ValidationError(
+                        f"Cannot delete the Cargo Order: related invoice {rec.move_id.name} is posted.")
                 elif rec.move_id.state == 'draft':
-                    raise ValidationError(f"Cannot delete the Cargo Order: please cancel the draft invoice {rec.move_id.name} first.")
+                    raise ValidationError(
+                        f"Cannot delete the Cargo Order: please cancel the draft invoice {rec.move_id.name} first.")
             # Reset MAWB state if used
             if rec.mawb and rec.mawb.state == 'used':
                 rec.mawb.state = 'open'
@@ -811,7 +812,6 @@ class CargoOrder(models.Model):
             record.due_agent = agent_total
             record.due_carrier = carrier_total
 
-
     @api.depends('by_1.airline_code', 'by_2.airline_code', 'by_3.airline_code')
     def _compute_airline_codes(self):
         for rec in self:
@@ -825,7 +825,8 @@ class CargoOrder(models.Model):
     #         record.total_sales_amount = sum(line.sales_amount for line in record.service_details_ids)
     #         record.total_charge_total = sum(line.total_charge for line in record.service_details_ids)
 
-    @api.depends('cargo_details_ids', 'cargo_details_ids.gross_weight', 'cargo_details_ids.chargeable_weight', 'cargo_details_ids.total')
+    @api.depends('cargo_details_ids', 'cargo_details_ids.gross_weight', 'cargo_details_ids.chargeable_weight',
+                 'cargo_details_ids.total')
     def _compute_totals_cargo(self):
         for rec in self:
             rec.total_gross_weight_cargo = sum(line.gross_weight for line in rec.cargo_details_ids)
@@ -869,7 +870,7 @@ class CargoOrder(models.Model):
         result = {
             "type": "ir.actions.act_window",
             "res_model": "purchase.order",
-            "domain": [('opportunity_id', '=',  self.opportunity_id.id), ('state', "=", 'purchase')],
+            "domain": [('opportunity_id', '=', self.opportunity_id.id), ('state', "=", 'purchase')],
             "context": {"create": False},
             "name": "Vendor Orders",
             'view_mode': 'tree,form',
@@ -893,12 +894,14 @@ class CargoOrder(models.Model):
         for order in self:
             total_amount_so = total_amount_po = total_amount_inv = total_amount_bill = 0.0
             if order.opportunity_id:
-                sale_orders = self.env['sale.order'].search([('opportunity_id', '=', self.opportunity_id.id), ('state', '=', 'sale')])
+                sale_orders = self.env['sale.order'].search(
+                    [('opportunity_id', '=', self.opportunity_id.id), ('state', '=', 'sale')])
                 # total_amount_so = sum(order.amount_total for order in sale_orders)
 
                 if sale_orders:
                     for so in sale_orders:
-                        invs = so.invoice_ids.filtered(lambda inv: inv.state == 'posted' and inv.payment_state == 'not_paid')
+                        invs = so.invoice_ids.filtered(
+                            lambda inv: inv.state == 'posted' and inv.payment_state == 'not_paid')
                         total_amount_inv = sum(i.amount_total_signed for i in invs)
 
                         if so.currency_id == so.company_currency_id:
@@ -906,7 +909,8 @@ class CargoOrder(models.Model):
                         else:
                             total_amount_so += so.total_cur_conversion_amount
 
-                purchase_orders = self.env['purchase.order'].search([('opportunity_id', '=', self.opportunity_id.id), ('state', '=', 'purchase')])
+                purchase_orders = self.env['purchase.order'].search(
+                    [('opportunity_id', '=', self.opportunity_id.id), ('state', '=', 'purchase')])
                 # total_amount_po = sum(order.amount_total for order in purchase_orders)
                 # for po in purchase_orders:
                 #     if order.currency_id == order.company_currency_id:
@@ -915,14 +919,14 @@ class CargoOrder(models.Model):
                 #         total_amount_po += order.total_cur_conversion_amount
                 if purchase_orders:
                     for po in purchase_orders:
-                        invs = po.invoice_ids.filtered(lambda inv: inv.state == 'posted' and inv.payment_state == 'not_paid')
+                        invs = po.invoice_ids.filtered(
+                            lambda inv: inv.state == 'posted' and inv.payment_state == 'not_paid')
                         total_amount_bill = sum(i.amount_total_signed for i in invs)
 
                         if po.currency_id == po.company_currency_id:
                             total_amount_po += po.amount_total
                         else:
                             total_amount_po += po.total_cur_conversion_amount
-
 
             order.total_sale_amount = total_amount_so
             order.total_po_amount = total_amount_po
@@ -1214,7 +1218,7 @@ class CargoOrder(models.Model):
                 if rec.mawb:
                     rec.mawb.state = 'used'
             rec.state = 'completed'
-   
+
     def action_set_to_draft(self):
         if self.move_id:
             raise UserError(
@@ -1224,9 +1228,8 @@ class CargoOrder(models.Model):
             if self.order_type == 'freight':
                 self.state = 'cargo_ready'
             if self.order_type == 'custom':
-                self.state = 'prealert_received' 
+                self.state = 'prealert_received'
 
-    
     def action_book_with_flight(self):
         self.state = 'book_with_the_flight'
 
@@ -1269,8 +1272,11 @@ class CargoOrder(models.Model):
     def action_out_for_delivery(self):
         self.state = 'out_for_delivery'
 
+    from odoo import models, api, fields, _
+    from odoo.exceptions import ValidationError
+    from odoo.fields import Command
+
     def action_send_to_finance(self):
-        name_list = []
         for res in self:
             if not res.sale_id or not res.sale_id.order_line:
                 raise ValidationError(_('No Lines To Send Finance!'))
@@ -1278,46 +1284,91 @@ class CargoOrder(models.Model):
                 raise ValidationError(_(
                     'You can not make invoice without partner. Please select customer in case there is no customer.'))
 
+            journal_id = self.env['account.journal'].sudo()
+
             if res.order_type:
-                journal_id = self.env['account.journal'].sudo().search(
-                    [('type', '=', 'sale'),
-                     ('order_type', '=', res.order_type),
-                     ('mode', '=', res.mode),
-                     ('import_export', '=', res.import_export)], limit=1)
-                if not journal_id:
-                    journal_id = self.env['account.journal'].sudo().search([('type', '=', 'sale')], limit=1)
-            else:
-                journal_id = self.env['account.journal'].sudo().search([('type', '=', 'sale')], limit=1)
+                journal_id = journal_id.search([
+                    ('type', '=', 'sale'),
+                    ('company_id', '=', res.company_id.id),
+                    ('order_type', '=', res.order_type),
+                    ('mode', '=', res.mode),
+                    ('import_export', '=', res.import_export),
+                ], limit=1)
+
+            if not journal_id:
+                journal_id = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale'),
+                    ('company_id', '=', res.company_id.id),
+                ], limit=1)
+
+            if not journal_id:
+                raise ValidationError(_(
+                    'No Sales journal found for company "%s". '
+                    'Please go to Accounting → Configuration → Journals '
+                    'and create one with type "Sales".'
+                ) % res.company_id.name)
+
+            analytic_distribution = {}
+            if res.account_analytic_id:
+                analytic_distribution = {str(res.account_analytic_id.id): 100}
 
             total_pieces = 0.0
             for cl in res.cargo_details_ids:
                 total_pieces += cl.no_of_pieces
 
+            invoice_line_ids = []
+
+            for lines in res.sale_id.order_line:
+                line_vals = {
+                    'name': lines.name,
+                    'product_uom_id': lines.product_uom.id,
+                    'product_id': lines.product_id.id,
+                    'price_unit': lines.price_unit,
+                    'quantity': lines.product_uom_qty,
+                    'tax_ids': [Command.set(lines.tax_id.ids)],
+                    'sale_line_ids': [Command.set([lines.id])],
+                }
+                if analytic_distribution:
+                    line_vals['analytic_distribution'] = analytic_distribution
+                invoice_line_ids.append(Command.create(line_vals))
+
+            for exp_line in res.sale_expense_line:
+                exp_vals = {
+                    'name': exp_line.exp_related_to,
+                    'product_id': exp_line.expense_id.id if exp_line.expense_id else False,
+                    'product_uom_id': exp_line.expense_id.uom_id.id if exp_line.expense_id and exp_line.expense_id.uom_id else False,
+                    'price_unit': exp_line.rate,
+                    'quantity': exp_line.qty,
+                }
+                if analytic_distribution:
+                    exp_vals['analytic_distribution'] = analytic_distribution
+                invoice_line_ids.append(Command.create(exp_vals))
+
             invoice_vals = {
-                'partner_id': res.partner_id.id or False,
+                'partner_id': res.partner_id.id,
                 'move_type': 'out_invoice',
-                'invoice_date': datetime.today(),
-                'journal_id': journal_id.id or False,
-                'invoice_line_ids': [],
+                'invoice_date': fields.Date.today(),
+                'journal_id': journal_id.id,
+                'invoice_line_ids': invoice_line_ids,
                 'is_export': True,
                 'ref': res.name,
-                'consignee_id': res.consignee_id.id or False,
-                'consignor_id': res.consignor_id.id or False,
-                'notify_id': res.notify_id.id or False,
-                'cha_id': res.cha_id.id or False,
-                'reference_by_id': res.reference_by_id.id or False,
+                'consignee_id': res.consignee_id.id if res.consignee_id else False,
+                'consignor_id': res.consignor_id.id if res.consignor_id else False,
+                'notify_id': res.notify_id.id if res.notify_id else False,
+                'cha_id': res.cha_id.id if res.cha_id else False,
+                'reference_by_id': res.reference_by_id.id if res.reference_by_id else False,
                 'cur_rate': res.sale_id.cur_rate or res.cur_rate,
-                'stuffing_point_id': res.stuffing_point_id.id or False,
-                'port_of_loading_id': res.port_of_loading_id.id or False,
-                'port_of_discharge_id': res.port_of_discharge_id.id or False,
+                'stuffing_point_id': res.stuffing_point_id.id if res.stuffing_point_id else False,
+                'port_of_loading_id': res.port_of_loading_id.id if res.port_of_loading_id else False,
+                'port_of_discharge_id': res.port_of_discharge_id.id if res.port_of_discharge_id else False,
                 'order_type': res.order_type,
                 'mode': res.mode,
                 'import_export': res.import_export,
-                'invoice_incoterm_id': res.incoterm_id.id or False,
-                'account_analytic_id': res.account_analytic_id.id or False,
+                'invoice_incoterm_id': res.incoterm_id.id if res.incoterm_id else False,
+                'account_analytic_id': res.account_analytic_id.id if res.account_analytic_id else False,
                 'customer_po_ref': res.customer_po_ref,
                 'bill_of_lading_no': res.bill_of_lading_no,
-                'mawb': res.mawb.id or False,
+                'mawb': res.mawb.id if res.mawb else False,
                 'hawb': res.hawb,
                 'mawb_land': res.mawb_land,
                 'estimated_time_departure': res.estimated_time_departure,
@@ -1334,10 +1385,10 @@ class CargoOrder(models.Model):
                 'flight_date_1': res.flight_date_1,
                 'flight_number_1': res.flight_number_1,
                 'cargo_id': res.id,
-                'shipping_line': res.shipping_line.id or False,
+                'shipping_line': res.shipping_line.id if res.shipping_line else False,
                 'air_airline_code': res.air_airline_code,
                 'air_airline_no': res.air_airline_no,
-                'currency_id': res.currency_id.id or False,
+                'currency_id': res.currency_id.id if res.currency_id else False,
                 'freight_forwarding': res.freight_forwarding,
                 'pre_cargo_carriage': res.pre_cargo_carriage,
                 'custom_clearance': res.custom_clearance,
@@ -1346,45 +1397,20 @@ class CargoOrder(models.Model):
                 'gsa_sales': res.gsa_sales,
             }
 
-            # ✅ Properly link SO lines so invoice_status is updated
-            for lines in res.sale_id.order_line:
-                dict1 = {
-                    'name': lines.name,
-                    'product_uom_id': lines.product_uom.id,
-                    'product_id': lines.product_id.id,
-                    'price_unit': lines.price_unit,
-                    'quantity': lines.product_uom_qty,
-                    'tax_ids': [(6, 0, lines.tax_id.ids)],
-                    'sale_line_ids': [(6, 0, [lines.id])],
-                }
-                invoice_vals['invoice_line_ids'].append((0, 0, dict1))
-
-            # Expense lines (not linked to SO lines, so don’t affect invoice_status)
-            for exp_line in res.sale_expense_line:
-                dict2 = {
-                    'name': exp_line.exp_related_to,
-                    'product_id': exp_line.expense_id.id,
-                    'product_uom_id': exp_line.expense_id.uom_id.id,
-                    'price_unit': exp_line.rate,
-                    'quantity': exp_line.qty,
-                }
-                invoice_vals['invoice_line_ids'].append((0, 0, dict2))
-
-            # Create invoice
             inv_id = self.env['account.move'].with_context(
-                manual_currency_rate=invoice_vals.get('cur_rate')
+                manual_currency_rate=invoice_vals.get('cur_rate'),
+                default_move_type='out_invoice',
             ).create(invoice_vals)
 
             if inv_id:
                 res.move_id = inv_id.id
                 for lines in res.cargo_container_line:
-                    vals = {
+                    self.env['move.container.lines'].create({
                         'move_id': inv_id.id,
-                        'container_type_id': lines.container_type_id.id or False,
+                        'container_type_id': lines.container_type_id.id if lines.container_type_id else False,
                         'count': lines.count,
                         'container_qty': lines.container_qty,
-                    }
-                    self.env['move.container.lines'].create(vals)
+                    })
 
             return {
                 'type': 'ir.actions.act_window',
@@ -1475,8 +1501,8 @@ class CargoOrderLine(models.Model):
     capacity_in_mt = fields.Float('Capacity(MT)')
     show_in_awb = fields.Boolean('Show in AWB', defalt=False)
     charge_type = fields.Selection([
-                                    ('due_agent', "Due Agent"),
-                                    ('due_carrier', "Due Carrier")], string="Charge Type")
+        ('due_agent', "Due Agent"),
+        ('due_carrier', "Due Carrier")], string="Charge Type")
 
     def _compute_tax_id(self):
         for line in self:
@@ -1800,6 +1826,7 @@ class CargoDetailsLine(models.Model):
         for line in self:
             line.total = line.chargeable_weight * line.rate
 
+
 # class ServiceDetailsLine(models.Model):
 #     _name = 'service.details.line'
 #     _description = 'Service Details Line'
@@ -1810,8 +1837,6 @@ class CargoDetailsLine(models.Model):
 #     total_charge = fields.Float(string='Total Charge')
 #     sales_rate = fields.Float(string='Sales rate')
 #     sales_amount = fields.Float(string='Sales Amount')
-
-
 
 
 class ClosingDetailLine(models.Model):
