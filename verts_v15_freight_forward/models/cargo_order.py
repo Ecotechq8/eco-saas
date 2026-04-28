@@ -27,6 +27,7 @@ from odoo import models, api, fields, _
 from odoo.exceptions import ValidationError
 from odoo.fields import Command
 
+
 class CargoOrder(models.Model):
     _name = "cargo.order"
     _inherit = ['portal.mixin', 'mail.thread', 'mail.activity.mixin', 'utm.mixin']
