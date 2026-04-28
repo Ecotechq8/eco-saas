@@ -1274,109 +1274,107 @@ class CargoOrder(models.Model):
 
     def action_send_to_finance(self):
         for res in self:
+            # 1. Standard Odoo Validations
             if not res.sale_id or not res.sale_id.order_line:
-                raise ValidationError(_('No Lines To Send Finance!'))
+                raise ValidationError(_('No Lines found on the related Sale Order to invoice!'))
             if not res.partner_id:
-                raise ValidationError(_('You cannot make an invoice without a partner. Please select a customer.'))
+                raise ValidationError(_('Please select a customer before invoicing.'))
 
-            # --- THE PERMANENT ODOO 18 JOURNAL FIX ---
-            # 1. First priority: Use the journal set on the linked Sale Order (if any)
-            journal = res.sale_id.journal_id
+            # 2. FIND JOURNAL (The "Odoo 18 Normal Way")
+            # We initialize a move to let Odoo's internal logic find the default journal for this company
+            move_ctx = self.env['account.move'].with_context(
+                default_move_type='out_invoice',
+                default_company_id=res.company_id.id
+            )
+            journal = move_ctx._get_default_journal()
 
-            # 2. Second priority: Use Odoo's built-in logic to find the 'Normal' default journal
-            if not journal:
-                # This call mimics the standard 'Create' button in Odoo 18 Accounting
-                journal = self.env['account.move'].with_context(
-                    default_move_type='out_invoice',
-                    default_company_id=res.company_id.id
-                )._get_default_journal()
-
-            # 3. Final fallback: Search manually for any Sale journal in the specific company
+            # Fallback: if Odoo's helper fails, try a manual company-specific search
             if not journal:
                 journal = self.env['account.journal'].sudo().search([
                     ('type', '=', 'sale'),
                     ('company_id', '=', res.company_id.id)
                 ], limit=1)
 
-            # Check if we still have no journal
+            # Permanent Fix: Raise a user-friendly error instead of a technical validation crash
             if not journal:
-                raise UserError(
-                    _("No Sales Journal found for company %s. Please check Accounting > Configuration > Journals.") % res.company_id.name)
+                raise UserError(_(
+                    "No 'Sales' journal found for company %s. "
+                    "Please check Accounting > Configuration > Journals."
+                ) % res.company_id.name)
 
-            # Build the Invoice Values
+            # 3. PREPARE INVOICE VALUES
             invoice_vals = {
                 'move_type': 'out_invoice',
-                'journal_id': journal.id,  # Set explicitly to avoid mandatory field error
-                'company_id': res.company_id.id,  # Mandatory for multi-company
+                'journal_id': journal.id,  # Set the journal explicitly
+                'company_id': res.company_id.id,
                 'partner_id': res.partner_id.id,
                 'invoice_date': fields.Date.context_today(self),
                 'currency_id': res.currency_id.id or res.company_id.currency_id.id,
-                'is_export': True,
                 'ref': res.name,
                 'invoice_origin': res.name,
+                'is_export': True,
+                # Link Cargo Fields
                 'consignee_id': res.consignee_id.id or False,
                 'consignor_id': res.consignor_id.id or False,
                 'notify_id': res.notify_id.id or False,
                 'cha_id': res.cha_id.id or False,
-                'reference_by_id': res.reference_by_id.id or False,
-                'cur_rate': res.sale_id.cur_rate or res.cur_rate,
                 'port_of_loading_id': res.port_of_loading_id.id or False,
                 'port_of_discharge_id': res.port_of_discharge_id.id or False,
-                'order_type': res.order_type,
-                'mode': res.mode,
-                'import_export': res.import_export,
                 'mawb': res.mawb.id or False,
                 'cargo_id': res.id,
                 'invoice_line_ids': [],
             }
 
-            # Map Sale Order Lines
-            for lines in res.sale_id.order_line:
+            # 4. ADD JOB ORDER LINES (Linking to Sale Order Lines)
+            for sol in res.sale_id.order_line:
                 invoice_vals['invoice_line_ids'].append((0, 0, {
-                    'name': lines.name,
-                    'product_id': lines.product_id.id,
-                    'product_uom_id': lines.product_uom.id,
-                    'quantity': lines.product_uom_qty,
-                    'price_unit': lines.price_unit,
-                    'tax_ids': [(6, 0, lines.tax_id.ids)],
-                    'sale_line_ids': [(6, 0, [lines.id])],  # Link to SO line
+                    'name': sol.name,
+                    'product_id': sol.product_id.id,
+                    'product_uom_id': sol.product_uom.id,
+                    'quantity': sol.product_uom_qty,
+                    'price_unit': sol.price_unit,
+                    'tax_ids': [(6, 0, sol.tax_id.ids)],
+                    'sale_line_ids': [(6, 0, [sol.id])],  # This is what makes it a "Normal" SO Invoice
                 }))
 
-            # Map Expense lines
-            for exp_line in res.sale_expense_line:
+            # 5. ADD CARGO EXPENSE LINES
+            for exp in res.sale_expense_line:
                 invoice_vals['invoice_line_ids'].append((0, 0, {
-                    'name': exp_line.exp_related_to or exp_line.expense_id.name,
-                    'product_id': exp_line.expense_id.id,
-                    'product_uom_id': exp_line.expense_id.uom_id.id,
-                    'quantity': exp_line.qty,
-                    'price_unit': exp_line.rate,
+                    'name': exp.exp_related_to or exp.expense_id.name,
+                    'product_id': exp.expense_id.id,
+                    'product_uom_id': exp.expense_id.uom_id.id,
+                    'quantity': exp.qty,
+                    'price_unit': exp.rate,
                 }))
 
-            # CREATE INVOICE (Sudo is standard for SO-to-Invoice conversion)
-            inv_id = self.env['account.move'].sudo().with_context(
+            # 6. CREATE INVOICE
+            # Sudo is used to ensure permissions don't block the journal assignment
+            new_invoice = self.env['account.move'].sudo().with_context(
                 default_move_type='out_invoice',
-                manual_currency_rate=res.cur_rate
+                manual_currency_rate=res.cur_rate or 1.0
             ).create(invoice_vals)
 
-            if inv_id:
-                res.move_id = inv_id.id
-                # Link Container Lines
-                for lines in res.cargo_container_line:
-                    self.env['move.container.lines'].sudo().create({
-                        'move_id': inv_id.id,
-                        'container_type_id': lines.container_type_id.id or False,
-                        'count': lines.count,
-                        'container_qty': lines.container_qty,
-                    })
+            # 7. LINK AND REDIRECT
+            res.move_id = new_invoice.id
 
-            # Open the newly created invoice
+            # Handle Container Lines
+            for c_line in res.cargo_container_line:
+                self.env['move.container.lines'].sudo().create({
+                    'move_id': new_invoice.id,
+                    'container_type_id': c_line.container_type_id.id,
+                    'count': c_line.count,
+                    'container_qty': c_line.container_qty,
+                })
+
             return {
-                'type': 'ir.actions.act_window',
+                'name': _('Customer Invoice'),
                 'view_mode': 'form',
                 'res_model': 'account.move',
-                'res_id': inv_id.id,
+                'type': 'ir.actions.act_window',
+                'res_id': new_invoice.id,
                 'target': 'current',
             }
+
 
 class CargoOrderLine(models.Model):
     _name = 'cargo.order.line'
