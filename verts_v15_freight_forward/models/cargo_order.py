@@ -1395,9 +1395,13 @@ class CargoOrder(models.Model):
                 'gsa_sales': res.gsa_sales,
             }
 
+            # In Odoo 18 the journal_id default is computed and can override
+            # what is passed in vals. Passing it via context as default_journal_id
+            # AND in vals ensures it is always respected.
             inv_id = self.env['account.move'].with_context(
                 manual_currency_rate=invoice_vals.get('cur_rate'),
                 default_move_type='out_invoice',
+                default_journal_id=journal_id.id,
             ).create(invoice_vals)
 
             if inv_id:
