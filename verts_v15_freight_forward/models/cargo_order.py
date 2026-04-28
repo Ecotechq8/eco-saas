@@ -1322,38 +1322,31 @@ class CargoOrder(models.Model):
 
         for res in self:
             # ---------------------------
-            # Validations
+            # Basic validation
             # ---------------------------
             if not res.sale_id or not res.sale_id.order_line:
                 raise ValidationError(_('No Lines To Send Finance!'))
 
             if not res.partner_id:
-                raise ValidationError(_(
-                    'You can not make invoice without partner.'
-                ))
+                raise ValidationError(_('Customer is required.'))
+
+            if not res.company_id:
+                raise ValidationError(_('Company is required.'))
 
             # ---------------------------
-            # Journal (SAFE)
+            # Journal (guaranteed)
             # ---------------------------
             journal = self._get_or_create_sales_journal(res.company_id)
 
-            # ---------------------------
-            # Invoice values
-            # ---------------------------
-            invoice_vals = {
-                'partner_id': res.partner_id.id,
-                'move_type': 'out_invoice',
-                'invoice_date': datetime.today(),
-                'journal_id': journal.id,
-                'company_id': res.company_id.id,
-                'currency_id': res.currency_id.id,
-                'invoice_line_ids': [],
-                'ref': res.name,
-            }
+            if journal.company_id.id != res.company_id.id:
+                raise ValidationError(_("Journal company mismatch."))
 
             # ---------------------------
-            # Sale Order lines
+            # Build invoice lines
             # ---------------------------
+            invoice_lines = []
+
+            # Sale Order lines
             for line in res.sale_id.order_line:
                 account = (
                         line.product_id.property_account_income_id
@@ -1362,69 +1355,82 @@ class CargoOrder(models.Model):
 
                 if not account:
                     raise ValidationError(
-                        _("Missing income account for product: %s") %
-                        line.product_id.display_name
+                        _("Missing income account for product: %s")
+                        % line.product_id.display_name
                     )
 
-                invoice_vals['invoice_line_ids'].append((0, 0, {
+                invoice_lines.append((0, 0, {
                     'name': line.name,
                     'product_id': line.product_id.id,
                     'product_uom_id': line.product_uom.id,
-                    'price_unit': line.price_unit,
                     'quantity': line.product_uom_qty,
+                    'price_unit': line.price_unit,
                     'tax_ids': [(6, 0, line.tax_id.ids)],
                     'sale_line_ids': [(6, 0, [line.id])],
                     'account_id': account.id,
                 }))
 
-            # ---------------------------
             # Expense lines
-            # ---------------------------
-            for exp_line in res.sale_expense_line:
+            for exp in res.sale_expense_line:
                 account = (
-                        exp_line.expense_id.property_account_income_id
-                        or exp_line.expense_id.categ_id.property_account_income_categ_id
+                        exp.expense_id.property_account_income_id
+                        or exp.expense_id.categ_id.property_account_income_categ_id
                 )
 
                 if not account:
                     raise ValidationError(
-                        _("Missing income account for product: %s") %
-                        exp_line.expense_id.display_name
+                        _("Missing income account for product: %s")
+                        % exp.expense_id.display_name
                     )
 
-                invoice_vals['invoice_line_ids'].append((0, 0, {
-                    'name': exp_line.exp_related_to,
-                    'product_id': exp_line.expense_id.id,
-                    'product_uom_id': exp_line.expense_id.uom_id.id,
-                    'price_unit': exp_line.rate,
-                    'quantity': exp_line.qty,
+                invoice_lines.append((0, 0, {
+                    'name': exp.exp_related_to,
+                    'product_id': exp.expense_id.id,
+                    'product_uom_id': exp.expense_id.uom_id.id,
+                    'quantity': exp.qty,
+                    'price_unit': exp.rate,
                     'account_id': account.id,
                 }))
 
+            if not invoice_lines:
+                raise ValidationError(_("No invoice lines generated."))
+
             # ---------------------------
-            # Create Invoice
+            # Correct Odoo 18 creation
             # ---------------------------
-            inv = self.env['account.move'].sudo().create(invoice_vals)
+            move_env = self.env['account.move'] \
+                .sudo() \
+                .with_company(res.company_id) \
+                .with_context(
+                default_move_type='out_invoice',
+                default_journal_id=journal.id,
+                default_company_id=res.company_id.id,
+            )
+
+            inv = move_env.create({
+                'partner_id': res.partner_id.id,
+                'invoice_date': fields.Date.context_today(self),
+                'invoice_line_ids': invoice_lines,
+                'currency_id': res.currency_id.id,
+                'ref': res.name,
+            })
 
             if not inv:
                 raise ValidationError(_("Invoice creation failed."))
 
+            # Link invoice
             res.move_id = inv.id
 
-            # ---------------------------
-            # Optional: Post invoice
-            # ---------------------------
-            inv.action_post()
+            # Optional: post
+            # inv.action_post()
 
-            # ---------------------------
-            # Open form
-            # ---------------------------
+            # Open invoice
             action = {
                 'type': 'ir.actions.act_window',
-                'view_mode': 'form',
                 'res_model': 'account.move',
-                'target': 'current',
+                'view_mode': 'form',
                 'res_id': inv.id,
+                'target': 'current',
             }
 
         return action
