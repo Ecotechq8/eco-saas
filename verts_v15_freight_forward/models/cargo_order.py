@@ -23,7 +23,9 @@ from openpyxl import load_workbook
 from openpyxl.styles import Font
 import tempfile
 from dataclasses import field
-
+from odoo import models, api, fields, _
+from odoo.exceptions import ValidationError
+from odoo.fields import Command
 
 class CargoOrder(models.Model):
     _name = "cargo.order"
@@ -1271,10 +1273,6 @@ class CargoOrder(models.Model):
 
     def action_out_for_delivery(self):
         self.state = 'out_for_delivery'
-
-    from odoo import models, api, fields, _
-    from odoo.exceptions import ValidationError
-    from odoo.fields import Command
 
     def action_send_to_finance(self):
         for res in self:
