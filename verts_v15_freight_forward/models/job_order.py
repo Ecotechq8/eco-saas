@@ -550,18 +550,16 @@ class JobOrder(models.Model):
                 ], limit=1)
 
             if not journal:
-                # Fallback: We initialize a move to let Odoo's internal logic find the default journal for this company
-                move_ctx = self.env['account.move'].with_context(
-                    default_move_type='out_invoice',
-                    default_company_id=res.company_id.id
-                )
-                journal = move_ctx._get_default_journal()
-
-            if not journal:
-                # Second Fallback: try a manual company-specific search for any sale journal
+                # Fallback: Manual search for any sale journal in this company
                 journal = self.env['account.journal'].sudo().search([
                     ('type', '=', 'sale'),
                     ('company_id', '=', res.company_id.id)
+                ], limit=1)
+
+            if not journal:
+                # Second Fallback: search for any sale journal (ignoring company if none found for company)
+                journal = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale')
                 ], limit=1)
 
             # Permanent Fix: Raise a user-friendly error instead of a technical validation crash

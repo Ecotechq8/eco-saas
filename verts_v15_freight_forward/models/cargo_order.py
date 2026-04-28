@@ -1292,18 +1292,16 @@ class CargoOrder(models.Model):
                 ], limit=1)
 
             if not journal:
-                # Fallback: We initialize a move to let Odoo's internal logic find the default journal for this company
-                move_ctx = self.env['account.move'].with_context(
-                    default_move_type='out_invoice',
-                    default_company_id=res.company_id.id
-                )
-                journal = move_ctx._get_default_journal()
-
-            # Final Fallback: if Odoo's helper fails, try a manual company-specific search
-            if not journal:
+                # Fallback: Manual search for any sale journal in this company
                 journal = self.env['account.journal'].sudo().search([
                     ('type', '=', 'sale'),
                     ('company_id', '=', res.company_id.id)
+                ], limit=1)
+
+            # Final Fallback: if no journal found for company, search for any sale journal
+            if not journal:
+                journal = self.env['account.journal'].sudo().search([
+                    ('type', '=', 'sale')
                 ], limit=1)
 
             # Permanent Fix: Raise a user-friendly error instead of a technical validation crash
