@@ -37,7 +37,13 @@
             <xpath expr="//sheet/notebook" position="inside">
                 <page string="Signature">
                     <group>
-                        <field name="custom_signature" widget="signature"/>
+                        <field
+                                name="custom_signature"
+                                widget="signature"
+                                readonly="0"
+                                string="Handwriting Signature"
+                                options="{'size': [400, 200]}"
+                        />
                     </group>
                 </page>
             </xpath>
