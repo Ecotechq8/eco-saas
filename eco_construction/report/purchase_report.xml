@@ -5,25 +5,18 @@
                   inherit_id="purchase.report_purchaseorder_document">
 
             <xpath expr="//div[@class='page']" position="inside">
-
-                <!-- ================= SIGNATURE SECTION ================= -->
                 <div style="margin-top:60px;">
-
                     <table style="width:100%; text-align:center; border-collapse:collapse;">
-
                         <tr>
-
                             <!-- PURCHASE ADMIN -->
                             <td>
                                 <strong>Purchase Admin</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.purchase_approved_by and o.purchase_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.purchase_approved_by.custom_signature"
+                                        <img t-att-src="image_data_uri(o.purchase_approved_by.custom_signature)"
                                              style="max-height:80px;"/>
                                     </t>
-                                    <t t-else="">
-                                        ____________________
-                                    </t>
+                                    <t t-else="">____________________</t>
                                 </div>
                             </td>
 
@@ -32,12 +25,10 @@
                                 <strong>Project Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.project_id and o.project_id.user_id and o.project_id.user_id.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.project_id.user_id.custom_signature"
+                                        <img t-att-src="image_data_uri(o.project_id.user_id.custom_signature)"
                                              style="max-height:80px;"/>
                                     </t>
-                                    <t t-else="">
-                                        ____________________
-                                    </t>
+                                    <t t-else="">____________________</t>
                                 </div>
                             </td>
 
@@ -46,12 +37,10 @@
                                 <strong>Planning Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.planning_approved_by and o.planning_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.planning_approved_by.custom_signature"
+                                        <img t-att-src="image_data_uri(o.planning_approved_by.custom_signature)"
                                              style="max-height:80px;"/>
                                     </t>
-                                    <t t-else="">
-                                        ____________________
-                                    </t>
+                                    <t t-else="">____________________</t>
                                 </div>
                             </td>
 
@@ -60,12 +49,10 @@
                                 <strong>Operation Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.operation_approved_by and o.operation_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.operation_approved_by.custom_signature"
+                                        <img t-att-src="image_data_uri(o.operation_approved_by.custom_signature)"
                                              style="max-height:80px;"/>
                                     </t>
-                                    <t t-else="">
-                                        ____________________
-                                    </t>
+                                    <t t-else="">____________________</t>
                                 </div>
                             </td>
 
@@ -74,22 +61,17 @@
                                 <strong>General Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.general_approved_by and o.general_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.general_approved_by.custom_signature"
+                                        <img t-att-src="image_data_uri(o.general_approved_by.custom_signature)"
                                              style="max-height:80px;"/>
                                     </t>
-                                    <t t-else="">
-                                        ____________________
-                                    </t>
+                                    <t t-else="">____________________</t>
                                 </div>
                             </td>
                         </tr>
-
                     </table>
-
                 </div>
             </xpath>
 
         </template>
-
     </data>
 </odoo>

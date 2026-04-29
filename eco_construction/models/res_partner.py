@@ -33,4 +33,4 @@ class ResCompany(models.Model):
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    custom_signature = fields.Binary("Custom Signature")
+    custom_signature = fields.Binary(string="Custom Signature", attachment=True)
