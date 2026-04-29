@@ -17,8 +17,9 @@
                             <td>
                                 <strong>Purchase Admin</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.purchase_approved_by and o.state in ['purchase_admin','planning','operation','general']">
-                                        <span t-esc="o.purchase_approved_by.name"/>
+                                    <t t-if="o.purchase_approved_by and o.purchase_approved_by.signature">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.purchase_approved_by.signature"
+                                             style="max-height:80px;"/>
                                     </t>
                                     <t t-else="">
                                         ____________________
@@ -43,11 +44,9 @@
                             <td>
                                 <strong>Planning Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.planning_approved_by and o.state in ['planning','operation','general']">
-                                        <span t-esc="o.planning_approved_by.name"/>
-                                    </t>
-                                    <t t-else="">
-                                        ____________________
+                                    <t t-if="o.planning_approved_by and o.planning_approved_by.signature">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.planning_approved_by.signature"
+                                             style="max-height:80px;"/>
                                     </t>
                                 </div>
                             </td>
@@ -56,11 +55,9 @@
                             <td>
                                 <strong>Operation Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.operation_approved_by and o.state in ['operation','general']">
-                                        <span t-esc="o.operation_approved_by.name"/>
-                                    </t>
-                                    <t t-else="">
-                                        ____________________
+                                    <t t-if="o.operation_approved_by and o.operation_approved_by.signature">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.operation_approved_by.signature"
+                                             style="max-height:80px;"/>
                                     </t>
                                 </div>
                             </td>
@@ -69,11 +66,9 @@
                             <td>
                                 <strong>General Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.general_approved_by and o.state == 'general'">
-                                        <span t-esc="o.general_approved_by.name"/>
-                                    </t>
-                                    <t t-else="">
-                                        ____________________
+                                    <t t-if="o.general_approved_by and o.general_approved_by.signature">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.general_approved_by.signature"
+                                             style="max-height:80px;"/>
                                     </t>
                                 </div>
                             </td>
