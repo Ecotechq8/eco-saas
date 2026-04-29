@@ -24,16 +24,16 @@
                                     <t t-else="">
                                         ____________________
                                     </t>
-
                                 </div>
                             </td>
 
-                            <!-- PROJECT MANAGER (ALWAYS) -->
+                            <!-- PROJECT MANAGER -->
                             <td>
                                 <strong>Project Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.project_id and o.project_id.user_id">
-                                        <span t-esc="o.project_id.user_id.name"/>
+                                    <t t-if="o.project_id and o.project_id.user_id and o.project_id.user_id.custom_signature">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.project_id.user_id.custom_signature"
+                                             style="max-height:80px;"/>
                                     </t>
                                     <t t-else="">
                                         ____________________
@@ -46,8 +46,11 @@
                                 <strong>Planning Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.planning_approved_by and o.planning_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.planning_approved_by.signature"
+                                        <img t-att-src="'data:image/png;base64,%s' % o.planning_approved_by.custom_signature"
                                              style="max-height:80px;"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
                                     </t>
                                 </div>
                             </td>
@@ -57,8 +60,11 @@
                                 <strong>Operation Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.operation_approved_by and o.operation_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.operation_approved_by.signature"
+                                        <img t-att-src="'data:image/png;base64,%s' % o.operation_approved_by.custom_signature"
                                              style="max-height:80px;"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
                                     </t>
                                 </div>
                             </td>
@@ -68,12 +74,14 @@
                                 <strong>General Manager</strong>
                                 <div style="margin-top:30px;">
                                     <t t-if="o.general_approved_by and o.general_approved_by.custom_signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.general_approved_by.signature"
+                                        <img t-att-src="'data:image/png;base64,%s' % o.general_approved_by.custom_signature"
                                              style="max-height:80px;"/>
+                                    </t>
+                                    <t t-else="">
+                                        ____________________
                                     </t>
                                 </div>
                             </td>
-
                         </tr>
 
                     </table>
