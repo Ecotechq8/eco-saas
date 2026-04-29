@@ -17,13 +17,14 @@
                             <td>
                                 <strong>Purchase Admin</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.purchase_approved_by and o.purchase_approved_by.signature">
-                                        <img t-att-src="'data:image/png;base64,%s' % o.purchase_approved_by.signature"
+                                    <t t-if="o.purchase_approved_by and o.purchase_approved_by.custom_signature">
+                                        <img t-att-src="'data:image/png;base64,%s' % o.purchase_approved_by.custom_signature"
                                              style="max-height:80px;"/>
                                     </t>
                                     <t t-else="">
                                         ____________________
                                     </t>
+
                                 </div>
                             </td>
 
@@ -44,7 +45,7 @@
                             <td>
                                 <strong>Planning Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.planning_approved_by and o.planning_approved_by.signature">
+                                    <t t-if="o.planning_approved_by and o.planning_approved_by.custom_signature">
                                         <img t-att-src="'data:image/png;base64,%s' % o.planning_approved_by.signature"
                                              style="max-height:80px;"/>
                                     </t>
@@ -55,7 +56,7 @@
                             <td>
                                 <strong>Operation Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.operation_approved_by and o.operation_approved_by.signature">
+                                    <t t-if="o.operation_approved_by and o.operation_approved_by.custom_signature">
                                         <img t-att-src="'data:image/png;base64,%s' % o.operation_approved_by.signature"
                                              style="max-height:80px;"/>
                                     </t>
@@ -66,7 +67,7 @@
                             <td>
                                 <strong>General Manager</strong>
                                 <div style="margin-top:30px;">
-                                    <t t-if="o.general_approved_by and o.general_approved_by.signature">
+                                    <t t-if="o.general_approved_by and o.general_approved_by.custom_signature">
                                         <img t-att-src="'data:image/png;base64,%s' % o.general_approved_by.signature"
                                              style="max-height:80px;"/>
                                     </t>

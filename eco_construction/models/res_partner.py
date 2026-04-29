@@ -28,3 +28,9 @@ class ResCompany(models.Model):
     is_construction = fields.Boolean(string='Allow Construction')
     adv_customer = fields.Many2one('account.account', string='Advanced Customer', required=False)
     customer_retention = fields.Many2one('account.account', string='Customer Retention', required=False)
+
+
+class ResUsers(models.Model):
+    _inherit = 'res.users'
+
+    custom_signature = fields.Binary("Custom Signature")
