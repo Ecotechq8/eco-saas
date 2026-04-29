@@ -9,6 +9,7 @@
                     <table style="width:100%; text-align:center; border-collapse:collapse;">
                         <tr>
                             <!-- PURCHASE ADMIN -->
+                            <!-- PURCHASE ADMIN -->
                             <td>
                                 <strong>Purchase Admin</strong>
                                 <div style="margin-top:30px;">
@@ -17,6 +18,13 @@
                                              style="max-height:80px;"/>
                                     </t>
                                     <t t-else="">____________________</t>
+                                </div>
+                                <!-- NAME -->
+                                <div style="margin-top:5px;">
+                                    <t t-if="o.purchase_approved_by">
+                                        <span t-esc="o.purchase_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">-</t>
                                 </div>
                             </td>
 
@@ -30,6 +38,13 @@
                                     </t>
                                     <t t-else="">____________________</t>
                                 </div>
+                                <!-- NAME -->
+                                <div style="margin-top:5px;">
+                                    <t t-if="o.project_id and o.project_id.user_id">
+                                        <span t-esc="o.project_id.user_id.name"/>
+                                    </t>
+                                    <t t-else="">-</t>
+                                </div>
                             </td>
 
                             <!-- PLANNING -->
@@ -41,6 +56,13 @@
                                              style="max-height:80px;"/>
                                     </t>
                                     <t t-else="">____________________</t>
+                                </div>
+                                <!-- NAME -->
+                                <div style="margin-top:5px;">
+                                    <t t-if="o.planning_approved_by">
+                                        <span t-esc="o.planning_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">-</t>
                                 </div>
                             </td>
 
@@ -54,6 +76,13 @@
                                     </t>
                                     <t t-else="">____________________</t>
                                 </div>
+                                <!-- NAME -->
+                                <div style="margin-top:5px;">
+                                    <t t-if="o.operation_approved_by">
+                                        <span t-esc="o.operation_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">-</t>
+                                </div>
                             </td>
 
                             <!-- GENERAL -->
@@ -65,6 +94,13 @@
                                              style="max-height:80px;"/>
                                     </t>
                                     <t t-else="">____________________</t>
+                                </div>
+                                <!-- NAME -->
+                                <div style="margin-top:5px;">
+                                    <t t-if="o.general_approved_by">
+                                        <span t-esc="o.general_approved_by.name"/>
+                                    </t>
+                                    <t t-else="">-</t>
                                 </div>
                             </td>
                         </tr>
