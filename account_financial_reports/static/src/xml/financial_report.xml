@@ -4,7 +4,7 @@
 <!-- ═══════════════════════════════════════════════════════════════════════════
      Main wrapper template
      ═══════════════════════════════════════════════════════════════════════ -->
-<t t-name="account_financial_reports.ReportPreview">
+    <t t-name="account_financial_reports.ReportPreview">
     <div class="o_fr_wrapper">
 
         <!-- ── Toolbar ──────────────────────────────────────────────────── -->
@@ -70,10 +70,10 @@
     </div>
 </t>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     General Ledger
-     ═══════════════════════════════════════════════════════════════════════ -->
-<t t-name="account_financial_reports.GeneralLedger">
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         General Ledger
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <t t-name="account_financial_reports.GeneralLedger">
     <table class="o_fr_table">
         <thead>
             <tr>
@@ -116,16 +116,17 @@
                 <td colspan="5"><b>GRAND TOTAL</b></td>
                 <td class="o_fr_num" t-esc="fmt(state.data.grand_totals.debit)"/>
                 <td class="o_fr_num" t-esc="fmt(state.data.grand_totals.credit)"/>
-                <td class="o_fr_num" t-att-class="fmtClass(state.data.grand_totals.balance)" t-esc="fmt(state.data.grand_totals.balance)"/>
+                <td class="o_fr_num" t-att-class="fmtClass(state.data.grand_totals.balance)"
+                    t-esc="fmt(state.data.grand_totals.balance)"/>
             </tr>
         </tfoot>
     </table>
 </t>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     Trial Balance
-     ═══════════════════════════════════════════════════════════════════════ -->
-<t t-name="account_financial_reports.TrialBalance">
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         Trial Balance
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <t t-name="account_financial_reports.TrialBalance">
     <table class="o_fr_table">
         <thead>
             <tr>
@@ -164,10 +165,10 @@
     </table>
 </t>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     Balance Sheet (Dynamic Journal Columns)
-     ═══════════════════════════════════════════════════════════════════════ -->
-<t t-name="account_financial_reports.BalanceSheet">
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         Balance Sheet (Dynamic Journal Columns)
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <t t-name="account_financial_reports.BalanceSheet">
     <table class="o_fr_table">
         <t t-set="journals" t-value="journalColumns"/>
         <thead>
@@ -184,7 +185,8 @@
             <t t-foreach="['asset','liability','equity']" t-as="skey" t-key="skey">
                 <t t-set="sec" t-value="state.data.sections[skey]"/>
                 <tr class="o_fr_section_row">
-                    <td t-att-colspan="3 + journals.length" t-esc="sec.label ? sec.label.toUpperCase() : skey.toUpperCase()"/>
+                    <td t-att-colspan="3 + journals.length"
+                        t-esc="sec.label ? sec.label.toUpperCase() : skey.toUpperCase()"/>
                 </tr>
                 <t t-foreach="sec.accounts" t-as="acc" t-key="acc.account_id">
                     <tr class="o_fr_line_row">
@@ -220,10 +222,10 @@
     </table>
 </t>
 
-<!-- ═══════════════════════════════════════════════════════════════════════════
-     Profit & Loss (Dynamic Journal Columns)
-     ═══════════════════════════════════════════════════════════════════════ -->
-<t t-name="account_financial_reports.ProfitLoss">
+    <!-- ═══════════════════════════════════════════════════════════════════════════
+         Profit & Loss (Dynamic Journal Columns)
+         ═══════════════════════════════════════════════════════════════════════ -->
+    <t t-name="account_financial_reports.ProfitLoss">
     <table class="o_fr_table">
         <t t-set="journals" t-value="journalColumns"/>
         <thead>
@@ -240,7 +242,8 @@
             <t t-foreach="['income','expense']" t-as="skey" t-key="skey">
                 <t t-set="sec" t-value="state.data.sections[skey]"/>
                 <tr class="o_fr_section_row">
-                    <td t-att-colspan="3 + journals.length" t-esc="sec.label ? sec.label.toUpperCase() : skey.toUpperCase()"/>
+                    <!-- Spans across Code + Name + Journal Count + Total Balance -->
+                    <td t-att-colspan="3 + journals.length" t-esc="sec.label.toUpperCase()"/>
                 </tr>
                 <t t-foreach="sec.accounts" t-as="acc" t-key="acc.account_id">
                     <tr class="o_fr_line_row">
@@ -254,22 +257,24 @@
                         <td class="o_fr_num" t-att-class="fmtClass(acc.total_balance)" t-esc="fmt(acc.total_balance)"/>
                     </tr>
                 </t>
+                <!-- Section Totals row -->
                 <tr class="o_fr_subtotal_row">
-                    <td colspan="2"><b t-esc="'Total ' + (sec.label || skey)"/></td>
+                    <td colspan="2"><b t-esc="'Total ' + sec.label"/></td>
                     <t t-foreach="journals" t-as="j" t-key="j">
-                        <td class="o_fr_num"><t t-esc="fmt(sec.journal_totals[j])"/></td>
+                        <td class="o_fr_num" t-att-class="fmtClass(sec.journal_totals[j])">
+                            <t t-esc="fmt(sec.journal_totals[j])"/>
+                        </td>
                     </t>
-                    <td class="o_fr_num"><t t-esc="fmt(sec.total)"/></td>
+                    <td class="o_fr_num" t-att-class="fmtClass(sec.total)" t-esc="fmt(sec.total)"/>
                 </tr>
             </t>
         </tbody>
         <tfoot>
             <tr class="o_fr_grand_total">
                 <td t-att-colspan="2 + journals.length"><b>NET PROFIT / (LOSS)</b></td>
-                <td class="o_fr_num" t-esc="fmt(state.data.net_income)"/>
+                <td class="o_fr_num" t-att-class="fmtClass(state.data.net_income)" t-esc="fmt(state.data.net_income)"/>
             </tr>
         </tfoot>
     </table>
 </t>
-
 </templates>

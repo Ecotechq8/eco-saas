@@ -10,7 +10,7 @@ class FinancialReportEngine(models.AbstractModel):
     _description = 'Financial Report Engine'
 
     # ─────────────────────────────────────────────────────────────────────────
-    # General Ledger
+    # General Ledger (Standard activity-based)
     # ─────────────────────────────────────────────────────────────────────────
     @api.model
     def get_general_ledger(self, options):
@@ -60,33 +60,26 @@ class FinancialReportEngine(models.AbstractModel):
         }
 
     # ─────────────────────────────────────────────────────────────────────────
-    # Trial Balance (FIXED: No more super() call)
+    # Trial Balance (Standard activity-based)
     # ─────────────────────────────────────────────────────────────────────────
     @api.model
     def get_trial_balance(self, options):
-        # 1. Opening Balance Domain (Before start date)
         domain_open = [('parent_state', '=', 'posted')]
-        if options.get('date_from'):
-            domain_open.append(('date', '<', options['date_from']))
-        if options.get('journal_ids'):
-            domain_open.append(('journal_id', 'in', options['journal_ids']))
+        if options.get('date_from'): domain_open.append(('date', '<', options['date_from']))
+        if options.get('journal_ids'): domain_open.append(('journal_id', 'in', options['journal_ids']))
 
-        # 2. Period Domain (Within range)
         domain_period = [('parent_state', '=', 'posted')]
         if options.get('date_from'): domain_period.append(('date', '>=', options['date_from']))
         if options.get('date_to'): domain_period.append(('date', '<=', options['date_to']))
         if options.get('journal_ids'): domain_period.append(('journal_id', 'in', options['journal_ids']))
 
         accounts = {}
-
-        # Process Opening
         lines_open = self.env['account.move.line'].search(domain_open)
         for line in lines_open:
             aid = line.account_id.id
             if aid not in accounts: accounts[aid] = self._empty_tb_row(line.account_id)
             accounts[aid]['open_balance'] += line.balance
 
-        # Process Period
         lines_period = self.env['account.move.line'].search(domain_period)
         for line in lines_period:
             aid = line.account_id.id
@@ -95,7 +88,6 @@ class FinancialReportEngine(models.AbstractModel):
             accounts[aid]['period_credit'] += line.credit
             accounts[aid]['period_balance'] += line.balance
 
-        # Finalize
         result = []
         for aid in accounts:
             row = accounts[aid]
@@ -103,25 +95,19 @@ class FinancialReportEngine(models.AbstractModel):
             result.append(row)
 
         result.sort(key=lambda x: x['account_code'])
-
         totals = {k: sum(r[k] for r in result) for k in
                   ['open_balance', 'period_debit', 'period_credit', 'period_balance', 'close_balance']}
         return {'lines': result, 'totals': totals}
 
     def _empty_tb_row(self, acc):
         return {
-            'account_id': acc.id,
-            'account_code': acc.code or acc.display_name,
-            'account_name': acc.name,
-            'open_balance': 0.0,
-            'period_debit': 0.0,
-            'period_credit': 0.0,
-            'period_balance': 0.0,
-            'close_balance': 0.0,
+            'account_id': acc.id, 'account_code': acc.code or acc.display_name,
+            'account_name': acc.name, 'open_balance': 0.0, 'period_debit': 0.0,
+            'period_credit': 0.0, 'period_balance': 0.0, 'close_balance': 0.0,
         }
 
     # ─────────────────────────────────────────────────────────────────────────
-    # Balance Sheet & Profit Loss (With Dynamic Journal Columns)
+    # Balance Sheet & Profit Loss (STRUCTURE-FIRST: Shows everything)
     # ─────────────────────────────────────────────────────────────────────────
     @api.model
     def get_balance_sheet(self, options):
@@ -133,49 +119,66 @@ class FinancialReportEngine(models.AbstractModel):
 
     @api.model
     def _get_pnl_or_bs(self, options, report_type):
-        domain = [('parent_state', '=', 'posted')]
-        if report_type == 'profit_loss':
-            if options.get('date_from'): domain.append(('date', '>=', options['date_from']))
-            if options.get('date_to'): domain.append(('date', '<=', options['date_to']))
-        else:
-            if options.get('date_to'): domain.append(('date', '<=', options['date_to']))
+        company_id = options.get('company_id') or self.env.company.id
 
+        # 1. Get Journal Columns (Selected journals or all in company)
         if options.get('journal_ids'):
-            domain.append(('journal_id', 'in', options['journal_ids']))
+            journals = self.env['account.journal'].browse(options['journal_ids'])
+        else:
+            journals = self.env['account.journal'].search([('company_id', '=', company_id)])
 
-        move_lines = self.env['account.move.line'].search(domain)
+        journal_names = sorted(journals.mapped('name'))
 
+        # 2. Pre-fetch relevant accounts to build the structure
+        acc_domain = [('company_id', '=', company_id)]
+        if report_type == 'profit_loss':
+            acc_domain.append(('internal_group', 'in', ['income', 'expense']))
+        else:
+            acc_domain.append(('internal_group', 'in', ['asset', 'liability', 'equity']))
+
+        all_accounts = self.env['account.account'].search(acc_domain, order="code ASC")
+
+        # 3. Initialize accounts map with 0.0 for every account and journal
         accounts_map = {}
-        used_journals = set()
+        for acc in all_accounts:
+            accounts_map[acc.id] = {
+                'account_id': acc.id,
+                'account_code': acc.code or '',
+                'account_name': acc.name,
+                'internal_group': acc.internal_group,
+                'journal_balances': {j: 0.0 for j in journal_names},
+                'total_balance': 0.0,
+            }
+
+        # 4. Fetch Move Lines to populate balances
+        line_domain = [('parent_state', '=', 'posted'), ('company_id', '=', company_id)]
+        if report_type == 'profit_loss':
+            if options.get('date_from'): line_domain.append(('date', '>=', options['date_from']))
+            if options.get('date_to'): line_domain.append(('date', '<=', options['date_to']))
+        else:
+            if options.get('date_to'): line_domain.append(('date', '<=', options['date_to']))
+
+        # We only look for activity in the selected/available journals
+        line_domain.append(('journal_id', 'in', journals.ids))
+
+        move_lines = self.env['account.move.line'].search(line_domain)
 
         for line in move_lines:
-            acc = line.account_id
-            j_name = line.journal_id.name or 'Misc'
-            used_journals.add(j_name)
+            aid = line.account_id.id
+            if aid in accounts_map:
+                j_name = line.journal_id.name
+                if j_name in accounts_map[aid]['journal_balances']:
+                    accounts_map[aid]['journal_balances'][j_name] += line.balance
+                    accounts_map[aid]['total_balance'] += line.balance
 
-            if acc.id not in accounts_map:
-                accounts_map[acc.id] = {
-                    'account_id': acc.id,
-                    'account_code': acc.code or '',
-                    'account_name': acc.name,
-                    'internal_group': acc.internal_group,
-                    'journal_balances': {},
-                    'total_balance': 0.0,
-                }
-
-            acc_data = accounts_map[acc.id]
-            acc_data['journal_balances'][j_name] = acc_data['journal_balances'].get(j_name, 0.0) + line.balance
-            acc_data['total_balance'] += line.balance
-
-        journal_columns = sorted(list(used_journals))
         rows = list(accounts_map.values())
 
         if report_type == 'balance_sheet':
-            res = self._structure_balance_sheet(rows, journal_columns)
+            res = self._structure_balance_sheet(rows, journal_names)
         else:
-            res = self._structure_profit_loss(rows, journal_columns)
+            res = self._structure_profit_loss(rows, journal_names)
 
-        res['journal_columns'] = journal_columns
+        res['journal_columns'] = journal_names
         return res
 
     def _structure_balance_sheet(self, rows, journal_columns):
@@ -193,7 +196,7 @@ class FinancialReportEngine(models.AbstractModel):
                 sections[ig]['accounts'].append(r)
                 sections[ig]['total'] += r['total_balance']
                 for j in journal_columns:
-                    sections[ig]['journal_totals'][j] += r.get('journal_balances', {}).get(j, 0.0)
+                    sections[ig]['journal_totals'][j] += r['journal_balances'].get(j, 0.0)
 
         return {
             'sections': sections,
@@ -214,12 +217,10 @@ class FinancialReportEngine(models.AbstractModel):
                 sections[ig]['accounts'].append(r)
                 sections[ig]['total'] += r['total_balance']
                 for j in journal_columns:
-                    sections[ig]['journal_totals'][j] += r.get('journal_balances', {}).get(j, 0.0)
+                    sections[ig]['journal_totals'][j] += r['journal_balances'].get(j, 0.0)
 
-        # Presentation: Income is usually credit (negative in DB).
-        # For P&L reports, positive Net Income is usually (Income - Expenses).
-        # Depending on your CoA, you might need: net_income = (sections['income']['total'] + sections['expense']['total']) * -1
-        net_income = (sections['income']['total'] - sections['expense']['total']) * -1
+        # Presentation adjustment: Income (Credit) is negative in DB, flip for P&L
+        net_income = (sections['income']['total'] + sections['expense']['total']) * -1
         return {
             'sections': sections,
             'net_income': net_income,
