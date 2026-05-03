@@ -2,7 +2,7 @@
 
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
-import { Component, useState, onWillStart, onMounted, xml } from "@odoo/owl";
+import { Component, useState, onWillStart } from "@odoo/owl";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Main Report Preview Client Action
@@ -13,15 +13,17 @@ class FinancialReportPreview extends Component {
     static props = ["*"];
 
     setup() {
-        this.rpc    = useService("rpc");
+        // Odoo 18: the low-level "rpc" service no longer exists.
+        // Use "orm" for model calls, and plain fetch() for custom JSON routes.
+        this.orm          = useService("orm");
         this.notification = useService("notification");
 
         this.state = useState({
-            loading:     true,
-            error:       null,
-            data:        null,
-            reportType:  "",
-            options:     {},
+            loading:    true,
+            error:      null,
+            data:       null,
+            reportType: "",
+            options:    {},
         });
 
         onWillStart(async () => {
@@ -32,11 +34,34 @@ class FinancialReportPreview extends Component {
         });
     }
 
+    /**
+     * Call a type='json' Odoo route via raw fetch (JSON-RPC 2.0).
+     * Works in Odoo 16, 17, and 18 — no dependency on the removed "rpc" service.
+     */
+    async _jsonRpc(route, params) {
+        const response = await fetch(route, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                jsonrpc: "2.0",
+                method:  "call",
+                id:      1,
+                params:  params,
+            }),
+        });
+        const json = await response.json();
+        if (json.error) {
+            const msg = json.error.data?.message || json.error.message || "RPC error";
+            throw new Error(msg);
+        }
+        return json.result;
+    }
+
     async _loadReport() {
         this.state.loading = true;
         this.state.error   = null;
         try {
-            const data = await this.rpc("/financial_reports/data", {
+            const data = await this._jsonRpc("/financial_reports/data", {
                 options: this.state.options,
             });
             if (data && data.error) {
@@ -52,18 +77,18 @@ class FinancialReportPreview extends Component {
     }
 
     async exportXlsx() {
-        const options  = this.state.options;
-        const form     = document.createElement("form");
-        form.method    = "POST";
-        form.action    = "/financial_reports/export_xlsx";
+        const options = this.state.options;
+        const form    = document.createElement("form");
+        form.method   = "POST";
+        form.action   = "/financial_reports/export_xlsx";
         form.style.display = "none";
 
         const add = (n, v) => {
-            const i = document.createElement("input");
-            i.type  = "hidden";
-            i.name  = n;
-            i.value = v;
-            form.appendChild(i);
+            const input  = document.createElement("input");
+            input.type   = "hidden";
+            input.name   = n;
+            input.value  = v;
+            form.appendChild(input);
         };
         add("options",    JSON.stringify(options));
         add("csrf_token", odoo.csrf_token);
@@ -86,7 +111,6 @@ class FinancialReportPreview extends Component {
         }[this.state.reportType] || "Financial Report";
     }
 
-    // ── helpers for template ────────────────────────────────────────────────
     fmt(val) {
         if (val === null || val === undefined) return "–";
         const n = parseFloat(val);
@@ -111,7 +135,7 @@ class FinancialReportPreview extends Component {
     }
 
     get filterSummary() {
-        const o = this.state.options;
+        const o     = this.state.options;
         const parts = [];
         if (o.journal_ids?.length)
             parts.push(`${o.journal_ids.length} journal(s)`);
