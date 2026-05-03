@@ -69,7 +69,7 @@ entries, double entry bookkeeping.
  'website': "https://www.erpheritage.com.au/",
  'license': 'LGPL-3',
  'category': 'Accounting/Accounting',
- 'version': '19.0.1.0.3',
+ 'version': '0.1',
  'depends': [
  'account',
  ],

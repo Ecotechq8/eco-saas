@@ -47,7 +47,7 @@ entries, double entry bookkeeping.
  'website': "https://www.erpheritage.com.au/",
  'license': 'LGPL-3',
  'category': 'Accounting/Accounting',
- 'version': '19.0.1.0.2',
+ 'version': '0.1',
  'depends': [
  'eh_account_dynamic_reports',
  ],
