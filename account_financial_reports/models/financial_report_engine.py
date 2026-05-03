@@ -21,57 +21,79 @@ class FinancialReportEngine(models.AbstractModel):
 
     @api.model
     def get_general_ledger(self, options):
-        params, where = self._build_where(options, include_date_range=True)
-
-        query = f"""
-            SELECT
-                aa.id                      AS account_id,
-                aa.code                    AS account_code,
-                aa.name                    AS account_name,
-                aml.id                     AS line_id,
-                am.name                    AS move_name,
-                am.date                    AS date,
-                aml.name                   AS label,
-                rp.name                    AS partner,
-                aj.name                    AS journal,
-                aml.debit,
-                aml.credit,
-                aml.balance,
-                aml.analytic_distribution
-            FROM account_move_line aml
-            JOIN account_account aa  ON aa.id = aml.account_id
-            JOIN account_move am     ON am.id = aml.move_id
-            JOIN account_journal aj  ON aj.id = aml.journal_id
-            LEFT JOIN res_partner rp ON rp.id = aml.partner_id
-            WHERE am.state = 'posted'
-              {where}
-            ORDER BY aa.code, am.date, am.name
+        """
+        Cybrosys-style General Ledger (Odoo 18 safe)
+        Uses ORM instead of raw SQL to avoid schema issues.
         """
 
-        self.env.cr.execute(query, params)
-        rows = self.env.cr.dictfetchall()
+        # -----------------------------
+        # Build domain
+        # -----------------------------
+        domain = [('parent_state', '=', 'posted')]
 
+        if options.get('date_from'):
+            domain.append(('date', '>=', options['date_from']))
+        if options.get('date_to'):
+            domain.append(('date', '<=', options['date_to']))
+
+        if options.get('journal_ids'):
+            domain.append(('journal_id', 'in', options['journal_ids']))
+
+        if options.get('analytic_account_ids'):
+            analytic_ids = self.env['account.analytic.line'].search([
+                ('account_id', 'in', options['analytic_account_ids'])
+            ]).ids
+            domain.append(('analytic_line_ids', 'in', analytic_ids))
+
+        # -----------------------------
+        # Fetch data
+        # -----------------------------
+        move_lines = self.env['account.move.line'].search(domain)
+
+        # -----------------------------
+        # Group by account
+        # -----------------------------
         accounts = {}
-        for r in rows:
-            aid = r['account_id']
-            if aid not in accounts:
-                accounts[aid] = {
-                    'account_id': aid,
-                    'account_code': r['account_code'],
-                    'account_name': r['account_name'],
+
+        for line in move_lines:
+            acc = line.account_id
+
+            if acc.id not in accounts:
+                accounts[acc.id] = {
+                    'account_id': acc.id,
+                    # SAFE: display_name works regardless of schema
+                    'account_code': acc.display_name,
+                    'account_name': acc.name,
                     'lines': [],
                     'total_debit': 0.0,
                     'total_credit': 0.0,
                     'total_balance': 0.0,
                 }
 
-            accounts[aid]['lines'].append(r)
-            accounts[aid]['total_debit'] += r['debit'] or 0.0
-            accounts[aid]['total_credit'] += r['credit'] or 0.0
-            accounts[aid]['total_balance'] += r['balance'] or 0.0
+            accounts[acc.id]['lines'].append({
+                'line_id': line.id,
+                'move_name': line.move_name,
+                'date': line.date,
+                'label': line.name,
+                'partner': line.partner_id.name if line.partner_id else '',
+                'journal': line.journal_id.name if line.journal_id else '',
+                'debit': line.debit,
+                'credit': line.credit,
+                'balance': line.balance,
+            })
 
+            accounts[acc.id]['total_debit'] += line.debit or 0.0
+            accounts[acc.id]['total_credit'] += line.credit or 0.0
+            accounts[acc.id]['total_balance'] += line.balance or 0.0
+
+        # -----------------------------
+        # Sort results
+        # -----------------------------
         result = sorted(accounts.values(), key=lambda x: x['account_code'])
 
+        # -----------------------------
+        # Grand totals
+        # -----------------------------
         grand = {
             'debit': sum(a['total_debit'] for a in result),
             'credit': sum(a['total_credit'] for a in result),
