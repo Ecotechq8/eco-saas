@@ -11,6 +11,7 @@ class FinancialReportEngine(models.AbstractModel):
 
     @api.model
     def _get_analytics(self, options, company_id):
+        """Helper to get analytic accounts for columns."""
         ana_ids = options.get('analytic_account_ids') or []
         domain = [('company_id', 'in', [company_id, False])]
         if ana_ids:
@@ -19,13 +20,15 @@ class FinancialReportEngine(models.AbstractModel):
 
     @api.model
     def get_general_ledger(self, options):
+        """Activity-based detail report."""
         company_id = options.get('company_id') or self.env.company.id
         self = self.with_company(company_id)
+
         domain = [('parent_state', '=', 'posted')]
         if options.get('date_from'): domain.append(('date', '>=', options['date_from']))
         if options.get('date_to'): domain.append(('date', '<=', options['date_to']))
 
-        # Analytic filter for GL (standard row-based)
+        # Analytic Filtering
         ana_ids = options.get('analytic_account_ids') or []
         if ana_ids:
             ana_clauses = [f"analytic_distribution ? '{aid}'" for aid in ana_ids]
@@ -36,8 +39,10 @@ class FinancialReportEngine(models.AbstractModel):
         for line in move_lines:
             acc = line.account_id
             if acc.id not in accounts:
-                accounts[acc.id] = {'account_code': acc.code, 'account_name': acc.name, 'lines': [], 'total_debit': 0.0,
-                                    'total_credit': 0.0, 'total_balance': 0.0}
+                accounts[acc.id] = {
+                    'account_code': acc.code, 'account_name': acc.name,
+                    'lines': [], 'total_debit': 0.0, 'total_credit': 0.0, 'total_balance': 0.0
+                }
             accounts[acc.id]['lines'].append({
                 'date': line.date, 'move_name': line.move_name, 'label': line.name,
                 'partner': line.partner_id.name or '', 'journal': line.journal_id.name,
@@ -48,10 +53,7 @@ class FinancialReportEngine(models.AbstractModel):
             accounts[acc.id]['total_balance'] += line.balance
 
         res = sorted(accounts.values(), key=lambda x: x['account_code'] or '')
-        return {'accounts': res, 'report_type': 'general_ledger',
-                'grand_totals': {'debit': sum(a['total_debit'] for a in res),
-                                 'credit': sum(a['total_credit'] for a in res),
-                                 'balance': sum(a['total_balance'] for a in res)}}
+        return {'accounts': res, 'report_type': 'general_ledger'}
 
     @api.model
     def get_trial_balance(self, options):
@@ -74,37 +76,45 @@ class FinancialReportEngine(models.AbstractModel):
         ana_map = {str(a.id): a.name for a in analytics}
         ana_names = [a.name for a in analytics]
 
-        # Structure First: Load all relevant accounts
+        # 1. Structure: Load all accounts even if 0
         acc_domain = []
         if report_type == 'profit_loss':
             acc_domain.append(('internal_group', 'in', ['income', 'expense']))
-        elif report_type == 'balance_sheet':
+        else:
             acc_domain.append(('internal_group', 'in', ['asset', 'liability', 'equity']))
 
         all_accounts = self.env['account.account'].search(acc_domain, order="code asc")
-        data_map = {acc.id: {'code': acc.code, 'name': acc.name, 'group': acc.internal_group,
-                             'col_balances': {n: 0.0 for n in ana_names}, 'total': 0.0} for acc in all_accounts}
+        data_map = {acc.id: {
+            'code': acc.code, 'name': acc.name, 'group': acc.internal_group,
+            'col_balances': {n: 0.0 for n in ana_names}, 'total': 0.0
+        } for acc in all_accounts}
 
-        # Query Lines
+        # 2. Data: Query Move Lines
         line_domain = [('parent_state', '=', 'posted')]
         if options.get('date_to'): line_domain.append(('date', '<=', options['date_to']))
-        if report_type == 'profit_loss' and options.get('date_from'): line_domain.append(
-            ('date', '>=', options['date_from']))
+        if report_type == 'profit_loss' and options.get('date_from'):
+            line_domain.append(('date', '>=', options['date_from']))
 
         move_lines = self.env['account.move.line'].search(line_domain)
         for line in move_lines:
             if line.account_id.id in data_map:
                 dist = line.analytic_distribution or {}
-                for aid, weight in dist.items():
-                    if aid in ana_map:
-                        name = ana_map[aid]
-                        amt = (line.balance * weight) / 100.0
-                        data_map[line.account_id.id]['col_balances'][name] += amt
-                        data_map[line.account_id.id]['total'] += amt
+                # Attribute line balance to analytic columns
+                if not dist and not options.get('analytic_account_ids'):
+                    # Lines with no analytic go to Total only if no filter is active
+                    data_map[line.account_id.id]['total'] += line.balance
+                else:
+                    for aid, weight in dist.items():
+                        if aid in ana_map:
+                            name = ana_map[aid]
+                            amt = (line.balance * weight) / 100.0
+                            data_map[line.account_id.id]['col_balances'][name] += amt
+                            data_map[line.account_id.id]['total'] += amt
 
         rows = list(data_map.values())
-        if report_type == 'profit_loss': return self._structure_pl(rows, ana_names)
-        return self._structure_bs(rows, ana_names)
+        if report_type == 'profit_loss':
+            return self._structure_pl(rows, ana_names)
+        return self._structure_bs(rows, ana_names, report_type)
 
     def _structure_pl(self, rows, cols):
         sections = {
@@ -117,10 +127,11 @@ class FinancialReportEngine(models.AbstractModel):
             for r in sections[k]['rows']:
                 sections[k]['total'] += r['total']
                 for c in cols: sections[k]['totals'][c] += r['col_balances'][c]
-        return {'sections': sections, 'columns': cols, 'report_type': 'profit_loss',
-                'net_income': (sections['income']['total'] + sections['expense']['total']) * -1}
 
-    def _structure_bs(self, rows, cols):
+        net_inc = (sections['income']['total'] + sections['expense']['total']) * -1
+        return {'sections': sections, 'columns': cols, 'report_type': 'profit_loss', 'net_income': net_inc}
+
+    def _structure_bs(self, rows, cols, r_type):
         sections = {
             'asset': {'label': 'Assets', 'rows': [r for r in rows if r['group'] == 'asset'],
                       'totals': {c: 0.0 for c in cols}, 'total': 0.0},
@@ -133,6 +144,9 @@ class FinancialReportEngine(models.AbstractModel):
             for r in sections[k]['rows']:
                 sections[k]['total'] += r['total']
                 for c in cols: sections[k]['totals'][c] += r['col_balances'][c]
-        return {'sections': sections, 'columns': cols, 'report_type': 'balance_sheet',
-                'total_assets': sections['asset']['total'],
-                'total_liab_equity': sections['liability']['total'] + sections['equity']['total']}
+
+        return {
+            'sections': sections, 'columns': cols, 'report_type': r_type,
+            'total_assets': sections['asset']['total'],
+            'total_liab_equity': sections['liability']['total'] + sections['equity']['total']
+        }

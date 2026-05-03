@@ -14,9 +14,7 @@ class FinancialReportPreview extends Component {
             loading: true
         });
 
-        onWillStart(async () => {
-            await this.load();
-        });
+        onWillStart(async () => { await this.load(); });
     }
 
     async load() {
@@ -32,42 +30,26 @@ class FinancialReportPreview extends Component {
                 })
             });
             const res = await response.json();
-            if (res.result) {
-                this.state.data = res.result;
-            } else {
-                this.notification.add("Error loading report data", { type: "danger" });
-            }
+            this.state.data = res.result;
         } catch (err) {
-            console.error(err);
+            this.notification.add("Failed to load report", { type: "danger" });
         } finally {
             this.state.loading = false;
         }
     }
 
-    // Helper to allow template to use Object.keys
-    get Object() {
-        return Object;
-    }
+    get Object() { return Object; }
 
     fmt(v) {
-        if (v === undefined || v === null) return "0.00";
         return new Intl.NumberFormat('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
-        }).format(v);
+        }).format(v || 0);
     }
 
     exportXlsx() {
-        const optionsStr = encodeURIComponent(JSON.stringify(this.state.options));
-        const url = `/financial_reports/export_xlsx?options=${optionsStr}`;
-        window.location.href = url;
-    }
-
-    get periodLabel() {
-        if (!this.state.options) return "";
-        const from = this.state.options.date_from || "Start";
-        const to = this.state.options.date_to || "Today";
-        return `${from} → ${to}`;
+        const opt = encodeURIComponent(JSON.stringify(this.state.options));
+        window.location.href = `/financial_reports/export_xlsx?options=${opt}`;
     }
 }
 
