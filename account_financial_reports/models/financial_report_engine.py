@@ -21,16 +21,12 @@ class FinancialReportEngine(models.AbstractModel):
 
     @api.model
     def get_general_ledger(self, options):
-        """
-        Returns a list of account dicts, each containing a list of move lines.
-        options keys: date_from, date_to, journal_ids, analytic_account_ids, company_id
-        """
         params, where = self._build_where(options, include_date_range=True)
 
         query = f"""
             SELECT
                 aa.id                      AS account_id,
-                aa.account_code            AS account_code,
+                aa.code                    AS account_code,
                 aa.name                    AS account_name,
                 aml.id                     AS line_id,
                 am.name                    AS move_name,
@@ -49,13 +45,12 @@ class FinancialReportEngine(models.AbstractModel):
             LEFT JOIN res_partner rp ON rp.id = aml.partner_id
             WHERE am.state = 'posted'
               {where}
-            ORDER BY aa.account_code, am.date, am.name
+            ORDER BY aa.code, am.date, am.name
         """
 
         self.env.cr.execute(query, params)
         rows = self.env.cr.dictfetchall()
 
-        # Group by account
         accounts = {}
         for r in rows:
             aid = r['account_id']
@@ -77,7 +72,6 @@ class FinancialReportEngine(models.AbstractModel):
 
         result = sorted(accounts.values(), key=lambda x: x['account_code'])
 
-        # Grand totals
         grand = {
             'debit': sum(a['total_debit'] for a in result),
             'credit': sum(a['total_credit'] for a in result),
@@ -109,7 +103,7 @@ class FinancialReportEngine(models.AbstractModel):
         opening_sql = f"""
             SELECT
                 aa.id                AS account_id,
-                aa.account_code      AS account_code,
+                aa.code              AS account_code,
                 aa.name              AS account_name,
                 aa.account_type      AS account_type,
                 SUM(aml.debit)       AS debit,
