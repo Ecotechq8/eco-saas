@@ -10,7 +10,7 @@ class FinancialReportEngine(models.AbstractModel):
     _description = 'Financial Report Engine'
 
     # ─────────────────────────────────────────────────────────────────────────
-    # General Ledger (Standard activity-based)
+    # General Ledger
     # ─────────────────────────────────────────────────────────────────────────
     @api.model
     def get_general_ledger(self, options):
@@ -60,7 +60,7 @@ class FinancialReportEngine(models.AbstractModel):
         }
 
     # ─────────────────────────────────────────────────────────────────────────
-    # Trial Balance (Standard activity-based)
+    # Trial Balance
     # ─────────────────────────────────────────────────────────────────────────
     @api.model
     def get_trial_balance(self, options):
@@ -107,7 +107,7 @@ class FinancialReportEngine(models.AbstractModel):
         }
 
     # ─────────────────────────────────────────────────────────────────────────
-    # Balance Sheet & Profit Loss (STRUCTURE-FIRST: Shows everything)
+    # Balance Sheet & Profit Loss (Always Show Structure)
     # ─────────────────────────────────────────────────────────────────────────
     @api.model
     def get_balance_sheet(self, options):
@@ -119,18 +119,20 @@ class FinancialReportEngine(models.AbstractModel):
 
     @api.model
     def _get_pnl_or_bs(self, options, report_type):
+        # Apply company context safely
         company_id = options.get('company_id') or self.env.company.id
+        self = self.with_company(company_id)
 
-        # 1. Get Journal Columns (Selected journals or all in company)
+        # 1. Get Journal Columns (Odoo handles company filtering via search automatically)
         if options.get('journal_ids'):
             journals = self.env['account.journal'].browse(options['journal_ids'])
         else:
-            journals = self.env['account.journal'].search([('company_id', '=', company_id)])
+            journals = self.env['account.journal'].search([])
 
         journal_names = sorted(journals.mapped('name'))
 
-        # 2. Pre-fetch relevant accounts to build the structure
-        acc_domain = [('company_id', '=', company_id)]
+        # 2. Get Accounts Structure (Removed explicit company_id filter to avoid error)
+        acc_domain = []
         if report_type == 'profit_loss':
             acc_domain.append(('internal_group', 'in', ['income', 'expense']))
         else:
@@ -138,7 +140,7 @@ class FinancialReportEngine(models.AbstractModel):
 
         all_accounts = self.env['account.account'].search(acc_domain, order="code ASC")
 
-        # 3. Initialize accounts map with 0.0 for every account and journal
+        # 3. Initialize accounts map
         accounts_map = {}
         for acc in all_accounts:
             accounts_map[acc.id] = {
@@ -150,15 +152,15 @@ class FinancialReportEngine(models.AbstractModel):
                 'total_balance': 0.0,
             }
 
-        # 4. Fetch Move Lines to populate balances
-        line_domain = [('parent_state', '=', 'posted'), ('company_id', '=', company_id)]
+        # 4. Fetch Move Lines
+        line_domain = [('parent_state', '=', 'posted')]
         if report_type == 'profit_loss':
             if options.get('date_from'): line_domain.append(('date', '>=', options['date_from']))
             if options.get('date_to'): line_domain.append(('date', '<=', options['date_to']))
         else:
             if options.get('date_to'): line_domain.append(('date', '<=', options['date_to']))
 
-        # We only look for activity in the selected/available journals
+        # Filter lines by the same journals we use for columns
         line_domain.append(('journal_id', 'in', journals.ids))
 
         move_lines = self.env['account.move.line'].search(line_domain)
@@ -197,7 +199,6 @@ class FinancialReportEngine(models.AbstractModel):
                 sections[ig]['total'] += r['total_balance']
                 for j in journal_columns:
                     sections[ig]['journal_totals'][j] += r['journal_balances'].get(j, 0.0)
-
         return {
             'sections': sections,
             'total_assets': sections['asset']['total'],
@@ -219,7 +220,7 @@ class FinancialReportEngine(models.AbstractModel):
                 for j in journal_columns:
                     sections[ig]['journal_totals'][j] += r['journal_balances'].get(j, 0.0)
 
-        # Presentation adjustment: Income (Credit) is negative in DB, flip for P&L
+        # Standard P&L flip for sign
         net_income = (sections['income']['total'] + sections['expense']['total']) * -1
         return {
             'sections': sections,
