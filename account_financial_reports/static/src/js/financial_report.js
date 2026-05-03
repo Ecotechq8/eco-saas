@@ -4,17 +4,11 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { Component, useState, onWillStart } from "@odoo/owl";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Main Report Preview Client Action
-// ─────────────────────────────────────────────────────────────────────────────
-
 class FinancialReportPreview extends Component {
     static template = "account_financial_reports.ReportPreview";
     static props = ["*"];
 
     setup() {
-        // Odoo 18: the low-level "rpc" service no longer exists.
-        // Use "orm" for model calls, and plain fetch() for custom JSON routes.
         this.orm          = useService("orm");
         this.notification = useService("notification");
 
@@ -34,10 +28,6 @@ class FinancialReportPreview extends Component {
         });
     }
 
-    /**
-     * Call a type='json' Odoo route via raw fetch (JSON-RPC 2.0).
-     * Works in Odoo 16, 17, and 18 — no dependency on the removed "rpc" service.
-     */
     async _jsonRpc(route, params) {
         const response = await fetch(route, {
             method: "POST",
@@ -102,6 +92,25 @@ class FinancialReportPreview extends Component {
         });
     }
 
+    // ─────────────────────────────────────────────────────────────────────────
+    // NEW: Getters for Dynamic Journal Columns (Enterprise Style)
+    // ─────────────────────────────────────────────────────────────────────────
+
+    get journalColumns() {
+        // Returns the list of journals found by the engine
+        return this.state.data?.journal_columns || [];
+    }
+
+    getJournalBalance(account, journalName) {
+        // Safe access for the specific journal balance in the UI
+        if (!account.journal_balances) return 0;
+        return account.journal_balances[journalName] || 0;
+    }
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // Helpers
+    // ─────────────────────────────────────────────────────────────────────────
+
     get reportTitle() {
         return {
             general_ledger: "General Ledger",
@@ -133,21 +142,7 @@ class FinancialReportPreview extends Component {
             return `Period: ${o.date_from} → ${o.date_to}`;
         return o.date_to || o.date_from || "";
     }
-
-    get filterSummary() {
-        const o     = this.state.options;
-        const parts = [];
-        if (o.journal_ids?.length)
-            parts.push(`${o.journal_ids.length} journal(s)`);
-        if (o.analytic_account_ids?.length)
-            parts.push(`${o.analytic_account_ids.length} analytic account(s)`);
-        return parts.length ? "Filtered by: " + parts.join(", ") : "No additional filters";
-    }
 }
 
-// ─────────────────────────────────────────────────────────────────────────────
-// Register as a client action
-// ─────────────────────────────────────────────────────────────────────────────
 registry.category("actions").add("financial_report_preview", FinancialReportPreview);
-
 export { FinancialReportPreview };
