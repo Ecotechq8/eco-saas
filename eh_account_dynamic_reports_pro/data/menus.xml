@@ -13,7 +13,7 @@
                   parent="menu_eh_pro_root"
                   action="action_eh_report_builder"
                   sequence="10"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_report_saved_view"
                   name="Saved Views"
