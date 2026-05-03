@@ -48,7 +48,7 @@ class FinancialReportEngine(models.AbstractModel):
             LEFT JOIN res_partner     rp  ON rp.id  = aml.partner_id
             WHERE am.state = 'posted'
               {where}
-            ORDER BY aa.code, am.date, am.name
+            ORDER BY aa.account_code, am.date, am.name
         """
         self.env.cr.execute(query, params)
         rows = self.env.cr.dictfetchall()
@@ -92,7 +92,7 @@ class FinancialReportEngine(models.AbstractModel):
         opening_sql = f"""
             SELECT
                 aa.id         AS account_id,
-                aa.code       AS account_code,
+                aa.account_code       AS account_code,
                 aa.name       AS account_name,
                 aat.type      AS account_type,
                 SUM(aml.debit)   AS debit,
@@ -104,13 +104,13 @@ class FinancialReportEngine(models.AbstractModel):
             JOIN account_move      am  ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where_open}
-            GROUP BY aa.id, aa.code, aa.name, aat.type
+            GROUP BY aa.id, aa.account_code, aa.name, aat.type
         """
         # Period movements
         period_sql = f"""
             SELECT
                 aa.id         AS account_id,
-                aa.code       AS account_code,
+                aa.account_code       AS account_code,
                 aa.name       AS account_name,
                 aat.type      AS account_type,
                 SUM(aml.debit)   AS debit,
@@ -122,7 +122,7 @@ class FinancialReportEngine(models.AbstractModel):
             JOIN account_move      am  ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where_period}
-            GROUP BY aa.id, aa.code, aa.name, aat.type
+            GROUP BY aa.id, aa.account_code, aa.name, aat.type
         """
 
         self.env.cr.execute(opening_sql, params_open)
@@ -189,7 +189,7 @@ class FinancialReportEngine(models.AbstractModel):
         query = f"""
             SELECT
                 aa.id              AS account_id,
-                aa.code            AS account_code,
+                aa.account_code            AS account_code,
                 aa.name            AS account_name,
                 aa.internal_group  AS internal_group,
                 SUM(aml.balance)   AS balance
@@ -198,8 +198,8 @@ class FinancialReportEngine(models.AbstractModel):
             JOIN account_move    am ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where}
-            GROUP BY aa.id, aa.code, aa.name, aa.internal_group
-            ORDER BY aa.code
+            GROUP BY aa.id, aa.account_code, aa.name, aa.internal_group
+            ORDER BY aa.account_code
         """
         self.env.cr.execute(query, params)
         rows = self.env.cr.dictfetchall()
