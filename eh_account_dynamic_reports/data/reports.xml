@@ -101,7 +101,7 @@
                   parent="account.menu_finance_reports"
                   action="action_eh_report_analytic_balance"
                   sequence="105"
-                  groups="eh_account_base.group_eh_user"/>
+                  />
 
     </data>
 </odoo>
