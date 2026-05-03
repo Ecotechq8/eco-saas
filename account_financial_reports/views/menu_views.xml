@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Parent menu under Accounting > Reporting -->
+    <menuitem id="menu_financial_reports_root"
+              name="Custom Financial Reports"
+              parent="account.menu_finance_reports"
+              sequence="100"/>
+
+    <menuitem id="menu_general_ledger"
+              name="General Ledger"
+              parent="menu_financial_reports_root"
+              action="account_financial_reports.action_general_ledger_wizard"
+              sequence="10"/>
+
+    <menuitem id="menu_trial_balance"
+              name="Trial Balance"
+              parent="menu_financial_reports_root"
+              action="account_financial_reports.action_trial_balance_wizard"
+              sequence="20"/>
+
+    <menuitem id="menu_balance_sheet"
+              name="Balance Sheet"
+              parent="menu_financial_reports_root"
+              action="account_financial_reports.action_balance_sheet_wizard"
+              sequence="30"/>
+
+    <menuitem id="menu_profit_loss"
+              name="Profit &amp; Loss"
+              parent="menu_financial_reports_root"
+              action="account_financial_reports.action_profit_loss_wizard"
+              sequence="40"/>
+
+</odoo>

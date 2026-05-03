@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+<t t-name="account_financial_reports.ReportPreview">
+    <div class="o_fr_wrapper" style="background: #f8f9fa; height: 100vh; overflow: auto;">
+
+        <!-- Toolbar -->
+        <div class="o_fr_toolbar p-3 bg-dark text-white d-flex justify-content-between align-items-center sticky-top">
+            <div>
+                <h5 class="m-0" t-if="state.options" t-esc="state.options.report_type.replace('_',' ').toUpperCase()"/>
+                <small t-if="state.options" t-esc="state.options.date_from + ' to ' + state.options.date_to"/>
+            </div>
+            <button class="btn btn-success" t-on-click="exportXlsx">
+                <i class="fa fa-file-excel-o me-1"/> Export to Excel
+            </button>
+        </div>
+
+        <div class="o_fr_content p-4" t-if="state.data">
+
+            <!-- Matrix Layout (Balance Sheet / P&L / Trial Balance) -->
+            <table t-if="state.data.sections" class="table table-sm table-bordered bg-white shadow-sm">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th style="width:120px">Code</th>
+                        <th>Account</th>
+                        <t t-foreach="state.data.columns" t-as="col" t-key="col">
+                            <th class="text-end"><t t-esc="col"/></th>
+                        </t>
+                        <th class="text-end">Total Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="Object.keys(state.data.sections)" t-as="secKey" t-key="secKey">
+                        <t t-set="sec" t-value="state.data.sections[secKey]"/>
+                        <tr class="table-primary font-weight-bold">
+                            <td t-att-colspan="3 + state.data.columns.length" t-esc="sec.label.toUpperCase()"/>
+                        </tr>
+                        <tr t-foreach="sec.rows" t-as="row" t-key="row.code">
+                            <td><t t-esc="row.code"/></td>
+                            <td><t t-esc="row.name"/></td>
+                            <t t-foreach="state.data.columns" t-as="c" t-key="c">
+                                <td class="text-end"><t t-esc="fmt(row.col_balances[c])"/></td>
+                            </t>
+                            <td class="text-end font-weight-bold"><t t-esc="fmt(row.total)"/></td>
+                        </tr>
+                        <tr class="table-info font-weight-bold">
+                            <td colspan="2">TOTAL <t t-esc="sec.label.toUpperCase()"/></td>
+                            <t t-foreach="state.data.columns" t-as="c" t-key="c">
+                                <td class="text-end"><t t-esc="fmt(sec.totals[c])"/></td>
+                            </t>
+                            <td class="text-end"><t t-esc="fmt(sec.total)"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+
+            <!-- Detail Layout (General Ledger) -->
+            <table t-if="state.data.accounts" class="table table-sm table-bordered bg-white">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th>Date</th><th>Entry</th><th>Label</th><th>Partner</th><th>Journal</th>
+                        <th class="text-end">Debit</th><th class="text-end">Credit</th><th class="text-end">Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="state.data.accounts" t-as="acc" t-key="acc.account_code">
+                        <tr class="table-secondary font-weight-bold">
+                            <td colspan="5"><t t-esc="acc.account_code"/> <t t-esc="acc.account_name"/></td>
+                            <td class="text-end"><t t-esc="fmt(acc.total_debit)"/></td>
+                            <td class="text-end"><t t-esc="fmt(acc.total_credit)"/></td>
+                            <td class="text-end"><t t-esc="fmt(acc.total_balance)"/></td>
+                        </tr>
+                        <tr t-foreach="acc.lines" t-as="l" t-key="l.move_name">
+                            <td><t t-esc="l.date"/></td><td><t t-esc="l.move_name"/></td><td><t t-esc="l.label"/></td>
+                            <td><t t-esc="l.partner"/></td><td><t t-esc="l.journal"/></td>
+                            <td class="text-end"><t t-esc="fmt(l.debit)"/></td>
+                            <td class="text-end"><t t-esc="fmt(l.credit)"/></td>
+                            <td class="text-end"><t t-esc="fmt(l.balance)"/></td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</t>
+</templates>
