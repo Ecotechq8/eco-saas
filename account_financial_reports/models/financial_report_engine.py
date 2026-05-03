@@ -26,10 +26,11 @@ class FinancialReportEngine(models.AbstractModel):
         options keys: date_from, date_to, journal_ids, analytic_account_ids, company_id
         """
         params, where = self._build_where(options, include_date_range=True)
+
         query = f"""
             SELECT
                 aa.id                      AS account_id,
-                aa.code                    AS account_code,
+                aa.account_code            AS account_code,
                 aa.name                    AS account_name,
                 aml.id                     AS line_id,
                 am.name                    AS move_name,
@@ -42,14 +43,15 @@ class FinancialReportEngine(models.AbstractModel):
                 aml.balance,
                 aml.analytic_distribution
             FROM account_move_line aml
-            JOIN account_account      aa  ON aa.id  = aml.account_id
-            JOIN account_move         am  ON am.id  = aml.move_id
-            JOIN account_journal      aj  ON aj.id  = aml.journal_id
-            LEFT JOIN res_partner     rp  ON rp.id  = aml.partner_id
+            JOIN account_account aa  ON aa.id = aml.account_id
+            JOIN account_move am     ON am.id = aml.move_id
+            JOIN account_journal aj  ON aj.id = aml.journal_id
+            LEFT JOIN res_partner rp ON rp.id = aml.partner_id
             WHERE am.state = 'posted'
               {where}
             ORDER BY aa.account_code, am.date, am.name
         """
+
         self.env.cr.execute(query, params)
         rows = self.env.cr.dictfetchall()
 
@@ -59,25 +61,33 @@ class FinancialReportEngine(models.AbstractModel):
             aid = r['account_id']
             if aid not in accounts:
                 accounts[aid] = {
-                    'account_id':   aid,
+                    'account_id': aid,
                     'account_code': r['account_code'],
                     'account_name': r['account_name'],
-                    'lines':        [],
-                    'total_debit':  0.0,
+                    'lines': [],
+                    'total_debit': 0.0,
                     'total_credit': 0.0,
-                    'total_balance':0.0,
+                    'total_balance': 0.0,
                 }
+
             accounts[aid]['lines'].append(r)
-            accounts[aid]['total_debit']   += r['debit']   or 0.0
-            accounts[aid]['total_credit']  += r['credit']  or 0.0
+            accounts[aid]['total_debit'] += r['debit'] or 0.0
+            accounts[aid]['total_credit'] += r['credit'] or 0.0
             accounts[aid]['total_balance'] += r['balance'] or 0.0
 
         result = sorted(accounts.values(), key=lambda x: x['account_code'])
+
         # Grand totals
-        grand = {'debit': sum(a['total_debit'] for a in result),
-                 'credit': sum(a['total_credit'] for a in result),
-                 'balance': sum(a['total_balance'] for a in result)}
-        return {'accounts': result, 'grand_totals': grand}
+        grand = {
+            'debit': sum(a['total_debit'] for a in result),
+            'credit': sum(a['total_credit'] for a in result),
+            'balance': sum(a['total_balance'] for a in result),
+        }
+
+        return {
+            'accounts': result,
+            'grand_totals': grand
+        }
 
     @api.model
     def get_trial_balance(self, options):
@@ -85,44 +95,50 @@ class FinancialReportEngine(models.AbstractModel):
         Returns one row per account with opening balance, period movements,
         and closing balance.
         """
-        params_open, where_open = self._build_where(options, include_date_range=False, before_date_from=True)
-        params_period, where_period = self._build_where(options, include_date_range=True)
+        params_open, where_open = self._build_where(
+            options,
+            include_date_range=False,
+            before_date_from=True
+        )
+        params_period, where_period = self._build_where(
+            options,
+            include_date_range=True
+        )
 
-        # Opening balances (all posted moves BEFORE date_from)
+        # Opening balances (BEFORE date_from)
         opening_sql = f"""
             SELECT
-                aa.id         AS account_id,
-                aa.account_code       AS account_code,
-                aa.name       AS account_name,
-                aat.type      AS account_type,
-                SUM(aml.debit)   AS debit,
-                SUM(aml.credit)  AS credit,
-                SUM(aml.balance) AS balance
+                aa.id                AS account_id,
+                aa.account_code      AS account_code,
+                aa.name              AS account_name,
+                aa.account_type      AS account_type,
+                SUM(aml.debit)       AS debit,
+                SUM(aml.credit)      AS credit,
+                SUM(aml.balance)     AS balance
             FROM account_move_line aml
-            JOIN account_account aa  ON aa.id = aml.account_id
-            JOIN account_account_type aat ON aat.id = aa.user_type_id
-            JOIN account_move      am  ON am.id = aml.move_id
+            JOIN account_account aa ON aa.id = aml.account_id
+            JOIN account_move am    ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where_open}
-            GROUP BY aa.id, aa.account_code, aa.name, aat.type
+            GROUP BY aa.id, aa.account_code, aa.name, aa.account_type
         """
+
         # Period movements
         period_sql = f"""
             SELECT
-                aa.id         AS account_id,
-                aa.account_code       AS account_code,
-                aa.name       AS account_name,
-                aat.type      AS account_type,
-                SUM(aml.debit)   AS debit,
-                SUM(aml.credit)  AS credit,
-                SUM(aml.balance) AS balance
+                aa.id                AS account_id,
+                aa.account_code      AS account_code,
+                aa.name              AS account_name,
+                aa.account_type      AS account_type,
+                SUM(aml.debit)       AS debit,
+                SUM(aml.credit)      AS credit,
+                SUM(aml.balance)     AS balance
             FROM account_move_line aml
-            JOIN account_account aa  ON aa.id = aml.account_id
-            JOIN account_account_type aat ON aat.id = aa.user_type_id
-            JOIN account_move      am  ON am.id = aml.move_id
+            JOIN account_account aa ON aa.id = aml.account_id
+            JOIN account_move am    ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where_period}
-            GROUP BY aa.id, aa.account_code, aa.name, aat.type
+            GROUP BY aa.id, aa.account_code, aa.name, aa.account_type
         """
 
         self.env.cr.execute(opening_sql, params_open)
@@ -133,35 +149,40 @@ class FinancialReportEngine(models.AbstractModel):
 
         all_ids = set(opening_rows) | set(period_rows)
         result = []
+
         for aid in all_ids:
             op = opening_rows.get(aid, {})
             pr = period_rows.get(aid, {})
             base = pr if pr else op
-            open_bal  = op.get('balance', 0.0) or 0.0
-            per_deb   = pr.get('debit',   0.0) or 0.0
-            per_cred  = pr.get('credit',  0.0) or 0.0
-            per_bal   = pr.get('balance', 0.0) or 0.0
+
+            open_bal = op.get('balance', 0.0) or 0.0
+            per_deb = pr.get('debit', 0.0) or 0.0
+            per_cred = pr.get('credit', 0.0) or 0.0
+            per_bal = pr.get('balance', 0.0) or 0.0
             close_bal = open_bal + per_bal
+
             result.append({
-                'account_id':    aid,
-                'account_code':  base.get('account_code', ''),
-                'account_name':  base.get('account_name', ''),
-                'account_type':  base.get('account_type', ''),
-                'open_balance':  open_bal,
-                'period_debit':  per_deb,
+                'account_id': aid,
+                'account_code': base.get('account_code', ''),
+                'account_name': base.get('account_name', ''),
+                'account_type': base.get('account_type', ''),
+                'open_balance': open_bal,
+                'period_debit': per_deb,
                 'period_credit': per_cred,
-                'period_balance':per_bal,
+                'period_balance': per_bal,
                 'close_balance': close_bal,
             })
 
         result.sort(key=lambda x: x['account_code'])
+
         totals = {
-            'open_balance':   sum(r['open_balance']  for r in result),
-            'period_debit':   sum(r['period_debit']  for r in result),
-            'period_credit':  sum(r['period_credit'] for r in result),
-            'period_balance': sum(r['period_balance']for r in result),
-            'close_balance':  sum(r['close_balance'] for r in result),
+            'open_balance': sum(r['open_balance'] for r in result),
+            'period_debit': sum(r['period_debit'] for r in result),
+            'period_credit': sum(r['period_credit'] for r in result),
+            'period_balance': sum(r['period_balance'] for r in result),
+            'close_balance': sum(r['close_balance'] for r in result),
         }
+
         return {'lines': result, 'totals': totals}
 
     @api.model
@@ -211,9 +232,9 @@ class FinancialReportEngine(models.AbstractModel):
 
     def _structure_balance_sheet(self, rows):
         sections = {
-            'asset':     {'label': _('Assets'),      'accounts': [], 'total': 0.0},
-            'liability': {'label': _('Liabilities'),  'accounts': [], 'total': 0.0},
-            'equity':    {'label': _('Equity'),       'accounts': [], 'total': 0.0},
+            'asset': {'label': _('Assets'), 'accounts': [], 'total': 0.0},
+            'liability': {'label': _('Liabilities'), 'accounts': [], 'total': 0.0},
+            'equity': {'label': _('Equity'), 'accounts': [], 'total': 0.0},
         }
         for r in rows:
             ig = r.get('internal_group', '')
@@ -237,8 +258,8 @@ class FinancialReportEngine(models.AbstractModel):
 
     def _structure_profit_loss(self, rows):
         sections = {
-            'income':  {'label': _('Income'),    'accounts': [], 'total': 0.0},
-            'expense': {'label': _('Expenses'),  'accounts': [], 'total': 0.0},
+            'income': {'label': _('Income'), 'accounts': [], 'total': 0.0},
+            'expense': {'label': _('Expenses'), 'accounts': [], 'total': 0.0},
         }
         for r in rows:
             ig = r.get('internal_group', '')
