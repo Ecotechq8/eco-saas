@@ -74,7 +74,7 @@ entries, double entry bookkeeping.
  'account',
  ],
  'data': [
- 'security/eh_security.xml',
+ # 'security/eh_security.xml',
  'security/eh_isolation_rules.xml',
  'security/ir.model.access.csv',
  'views/report_execution_views.xml',
