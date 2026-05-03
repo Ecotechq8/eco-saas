@@ -1,0 +1,218 @@
+# Hindi translation for eh_account_base.
+# Copyright (C) 2026 ERP Heritage (https://www.erpheritage.com.au/)
+# This file is distributed under the same licence as the eh_account_base module.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ERP Heritage Accounting Suite 19.0\n"
+"Report-Msgid-Bugs-To: info@erpheritage.com.au\n"
+"POT-Creation-Date: 2026-05-02 00:00+0000\n"
+"PO-Revision-Date: 2026-05-02 00:00+0000\n"
+"Last-Translator: ERP Heritage <info@erpheritage.com.au>\n"
+"Language-Team: Hindi\n"
+"Language: hi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: eh_account_base
+msgid "Trial Balance"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Profit and Loss"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Aged Receivable"
+msgstr ""
+
+#. module: eh_account_base
+msgid "ERP Heritage Accounting Suite"
+msgstr ""
+
+#. module: eh_account_base
+msgid "EH Accounting User"
+msgstr ""
+
+#. module: eh_account_base
+msgid "EH Accounting Manager"
+msgstr ""
+
+#. module: eh_account_base
+msgid "EH Accounting Auditor (read-only)"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.execution: company isolation"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.saved_view: company isolation"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.wizard: company isolation"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Report execution audit rows are append-only. Forbidden field(s): %s"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Report execution audit rows cannot be deleted. Reason: durable compliance trail."
+msgstr ""
+
+#. module: eh_account_base
+msgid "Handler model is required for report %(code)r."
+msgstr ""
+
+#. module: eh_account_base
+msgid "Unknown handler model %(model)r for report %(code)r. Did you forget to install the addon that provides the handler?"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Unknown report code: %s"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Journal Items"
+msgstr ""
+
+#. module: eh_account_base
+msgid "%(report)s requires options['date'][%(key)s]."
+msgstr ""
+
+#. module: eh_account_base
+msgid "Date From cannot be later than Date To."
+msgstr ""
+
+#. module: eh_account_base
+msgid "options_json must not be empty."
+msgstr ""
+
+#. module: eh_account_base
+msgid "options_json must be valid JSON (got %s)."
+msgstr ""
+
+#. module: eh_account_base
+msgid "options_json must encode a dict."
+msgstr ""
+
+#. module: eh_account_base
+msgid "Only the owner can delete a saved view (%s)."
+msgstr ""
+
+#. module: eh_account_base
+msgid "Heritage Operations"
+msgstr "Heritage संचालन"
+
+#. module: eh_account_base
+msgid "Heritage Period Work"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Heritage Advanced"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Heritage"
+msgstr ""
+
+#. module: eh_account_base
+msgid "General"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Reports"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Operations"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Assets and Leases"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Banking"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Payments and SEPA"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Cheques (PDC)"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Localization"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Audit Logs"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Report Execution Audit"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.execution.list"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.execution.form"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.execution.search"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Report Audit Log"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Accounting"
+msgstr ""
+
+#. module: eh_account_base
+msgid "ERP Heritage"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.dynamic.report.list"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.dynamic.report.form"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Dynamic Reports"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Dynamic Reports Registry"
+msgstr ""
+
+#. module: eh_account_base
+msgid "res.config.settings.view.form.eh.heritage"
+msgstr ""
+
+#. module: eh_account_base
+msgid "eh.account.report.wizard.form"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Export to Excel"
+msgstr ""
+
+#. module: eh_account_base
+msgid "Cancel"
+msgstr "रद्द करें"
+
