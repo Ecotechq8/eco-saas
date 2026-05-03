@@ -165,10 +165,10 @@ class EhReportBuilder(models.Model):
         help="Header label for the value column.",
     )
 
-    _unique_code = models.Constraint(
-        'unique(code)',
-        'Builder code must be unique.',
-    )
+    # _unique_code = models.Constraint(
+    #     'unique(code)',
+    #     'Builder code must be unique.',
+    # )
 
     @api.constrains('code')
     def _check_code_format(self):

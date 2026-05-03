@@ -52,10 +52,10 @@ class EhAccountDynamicReport(models.Model):
     active = fields.Boolean(default=True)
     description = fields.Text(translate=True)
 
-    _unique_code = models.Constraint(
-        'unique(code)',
-        'Report code must be unique.',
-    )
+    # _unique_code = models.Constraint(
+    #     'unique(code)',
+    #     'Report code must be unique.',
+    # )
 
     @api.constrains('handler_model')
     def _check_handler_model(self):
