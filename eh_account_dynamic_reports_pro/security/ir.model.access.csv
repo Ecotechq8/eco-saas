@@ -1,6 +1,6 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_eh_report_saved_view_user,eh.report.saved.view.user,model_eh_report_saved_view,,1,1,1,1
-access_eh_report_saved_view_manager,eh.report.saved.view.manager,model_eh_report_saved_view,r,1,1,1,1
+access_eh_report_saved_view_manager,eh.report.saved.view.manager,model_eh_report_saved_view,,1,1,1,1
 access_eh_report_schedule_user,eh.report.schedule.user,model_eh_report_schedule,,1,1,1,0
 access_eh_report_schedule_manager,eh.report.schedule.manager,model_eh_report_schedule,,1,1,1,1
 access_eh_report_forecast_user,eh.report.forecast.user,model_eh_report_forecast,,1,1,1,0
