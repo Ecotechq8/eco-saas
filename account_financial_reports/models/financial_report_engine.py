@@ -106,26 +106,33 @@ class FinancialReportEngine(models.AbstractModel):
         }
 
     @api.model
+    @api.model
     def get_trial_balance(self, options):
         """
         Returns one row per account with opening balance, period movements,
         and closing balance.
         """
+
         params_open, where_open = self._build_where(
             options,
             include_date_range=False,
             before_date_from=True
         )
+
         params_period, where_period = self._build_where(
             options,
             include_date_range=True
         )
 
-        # Opening balances (BEFORE date_from)
+        # 🔥 FIX: NO MORE aa.code / aa.account_code
+        account_select = "COALESCE(aa.code, aa.name, aa.display_name)"
+        account_group = "COALESCE(aa.code, aa.name, aa.display_name)"
+
+        # Opening balances
         opening_sql = f"""
             SELECT
                 aa.id                AS account_id,
-                aa.code              AS account_code,
+                {account_select}     AS account_code,
                 aa.name              AS account_name,
                 aa.account_type      AS account_type,
                 SUM(aml.debit)       AS debit,
@@ -136,14 +143,14 @@ class FinancialReportEngine(models.AbstractModel):
             JOIN account_move am    ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where_open}
-            GROUP BY aa.id, aa.account_code, aa.name, aa.account_type
+            GROUP BY aa.id, {account_group}, aa.name, aa.account_type
         """
 
         # Period movements
         period_sql = f"""
             SELECT
                 aa.id                AS account_id,
-                aa.account_code      AS account_code,
+                {account_select}     AS account_code,
                 aa.name              AS account_name,
                 aa.account_type      AS account_type,
                 SUM(aml.debit)       AS debit,
@@ -154,9 +161,10 @@ class FinancialReportEngine(models.AbstractModel):
             JOIN account_move am    ON am.id = aml.move_id
             WHERE am.state = 'posted'
               {where_period}
-            GROUP BY aa.id, aa.account_code, aa.name, aa.account_type
+            GROUP BY aa.id, {account_group}, aa.name, aa.account_type
         """
 
+        # Execute
         self.env.cr.execute(opening_sql, params_open)
         opening_rows = {r['account_id']: r for r in self.env.cr.dictfetchall()}
 
