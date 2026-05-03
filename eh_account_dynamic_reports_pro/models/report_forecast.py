@@ -81,10 +81,10 @@ class EhReportForecast(models.Model):
 
     last_run = fields.Datetime(readonly=True)
 
-    _positive_horizon = models.Constraint(
-        'check(horizon_months > 0)',
-        'Forecast horizon must be at least one month.',
-    )
+    # _positive_horizon = models.Constraint(
+    #     'check(horizon_months > 0)',
+    #     'Forecast horizon must be at least one month.',
+    # )
 
     # ---- public api ----
 

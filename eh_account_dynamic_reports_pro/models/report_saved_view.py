@@ -84,10 +84,10 @@ class EhReportSavedView(models.Model):
     last_used_at = fields.Datetime(readonly=True)
     use_count = fields.Integer(default=0, readonly=True)
 
-    _unique_user_report_name = models.Constraint(
-        'unique(user_id, report_id, name)',
-        'Saved view names must be unique per user and per report.',
-    )
+    # _unique_user_report_name = models.Constraint(
+    #     'unique(user_id, report_id, name)',
+    #     'Saved view names must be unique per user and per report.',
+    # )
 
     # ---- public api ----
 

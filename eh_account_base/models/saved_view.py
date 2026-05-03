@@ -62,10 +62,10 @@ class EhReportSavedView(models.Model):
     )
     notes = fields.Char()
 
-    _unique_per_user_code = models.Constraint(
-        'unique(user_id, report_code, name)',
-        'A user cannot save two views with the same name on the same report.',
-    )
+    # _unique_per_user_code = models.Constraint(
+    #     'unique(user_id, report_code, name)',
+    #     'A user cannot save two views with the same name on the same report.',
+    # )
 
     @api.constrains('options_json')
     def _check_options_json(self):

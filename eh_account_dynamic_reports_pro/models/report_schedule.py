@@ -136,10 +136,10 @@ class EhReportSchedule(models.Model):
     )
     body = fields.Html(translate=True)
 
-    _positive_interval = models.Constraint(
-        'check(interval > 0)',
-        'Schedule interval must be a positive integer.',
-    )
+    # _positive_interval = models.Constraint(
+    #     'check(interval > 0)',
+    #     'Schedule interval must be a positive integer.',
+    # )
 
     # ---- public actions ----
 
