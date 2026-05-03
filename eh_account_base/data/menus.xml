@@ -52,13 +52,14 @@
                   name="Heritage Operations"
                   parent="account.menu_finance_entries"
                   sequence="30"
-                  groups="eh_account_base.group_eh_user"/>
+                  />
 
         <menuitem id="menu_eh_period_work"
                   name="Heritage Period Work"
                   parent="account.menu_finance_entries"
-                  sequence="32"
-                  groups="eh_account_base.group_eh_user"/>
+                  sequence="32"  />
+
+<!--                  groups="eh_account_base.group_eh_user"-->
 
         <!-- ===== Heritage advanced reports under Reporting ===== -->
 
@@ -66,7 +67,7 @@
                   name="Heritage Advanced"
                   parent="account.menu_finance_reports"
                   sequence="100"
-                  groups="eh_account_base.group_eh_user"/>
+                  />
 
         <!-- ===== Heritage Configuration root and sub-sections ===== -->
 
@@ -74,61 +75,61 @@
                   name="Heritage"
                   parent="account.menu_finance_configuration"
                   sequence="60"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_general"
                   name="General"
                   parent="menu_eh_config_root"
                   sequence="10"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_reports"
                   name="Reports"
                   parent="menu_eh_config_root"
                   sequence="20"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_operations"
                   name="Operations"
                   parent="menu_eh_config_root"
                   sequence="30"
-                  groups="eh_account_base.group_eh_manager"/>
+               />
 
         <menuitem id="menu_eh_config_assets"
                   name="Assets and Leases"
                   parent="menu_eh_config_root"
                   sequence="40"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_banking"
                   name="Banking"
                   parent="menu_eh_config_root"
                   sequence="50"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_payments"
                   name="Payments and SEPA"
                   parent="menu_eh_config_root"
                   sequence="60"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_pdc"
                   name="Cheques (PDC)"
                   parent="menu_eh_config_root"
                   sequence="70"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_localization"
                   name="Localization"
                   parent="menu_eh_config_root"
                   sequence="80"
-                  groups="eh_account_base.group_eh_manager"/>
+                  />
 
         <menuitem id="menu_eh_config_audit"
                   name="Audit Logs"
                   parent="menu_eh_config_root"
                   sequence="90"
-                  groups="eh_account_base.group_eh_auditor"/>
+                  />
 
         <!-- ===== Always-on Heritage entries owned by base ===== -->
 
@@ -140,7 +141,7 @@
                   parent="menu_eh_config_audit"
                   action="action_eh_account_report_execution"
                   sequence="10"
-                  groups="eh_account_base.group_eh_auditor"/>
+                />
 
     </data>
 </odoo>
