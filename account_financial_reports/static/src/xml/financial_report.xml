@@ -1,127 +1,133 @@
-<templates>
-    <t t-name="account_financial_reports.ReportPreview">
-        <div class="o_fr_wrapper" style="background: #f8f9fa; height: 100vh; overflow: auto;">
-            <div class="o_fr_toolbar p-3 bg-dark text-white d-flex justify-content-between align-items-center sticky-top">
-                <div>
-                    <h5 class="m-0" t-esc="state.options.report_type.replace('_',' ').toUpperCase()"/>
-                    <small t-esc="periodLabel"/>
-                </div>
-                <button class="btn btn-success" t-on-click="exportXlsx">Export to Excel</button>
+<?xml version="1.0" encoding="utf-8"?>
+<templates xml:space="preserve">
+
+<t t-name="account_financial_reports.ReportPreview">
+    <div class="o_fr_wrapper" style="background: #f8f9fa; height: 100vh; overflow: auto;">
+
+        <!-- Toolbar -->
+        <div class="o_fr_toolbar p-3 bg-dark text-white d-flex justify-content-between align-items-center sticky-top">
+            <div>
+                <h5 class="m-0" t-if="state.options.report_type" t-esc="state.options.report_type.replace('_',' ').toUpperCase()"/>
+                <small t-esc="periodLabel"/>
             </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary" t-on-click="load">
+                    <i class="fa fa-refresh me-1"/> Refresh
+                </button>
+                <button class="btn btn-success" t-on-click="exportXlsx">
+                    <i class="fa fa-file-excel-o me-1"/> Export to Excel
+                </button>
+            </div>
+        </div>
 
-            <div class="o_fr_content p-4" t-if="state.data">
+        <div class="o_fr_content p-4" t-if="state.data">
 
-                <!-- Matrix Style (BS / P&L) -->
-                <table t-if="state.data.sections" class="table table-sm table-bordered bg-white shadow-sm">
-                    <thead class="bg-primary text-white">
-                        <tr>
-                            <th style="width:100px">Code</th>
-                            <th>Account</th>
-                            <t t-foreach="state.data.columns" t-as="col" t-key="col">
-                                <th class="text-end">
-                                    <t t-esc="col"/>
-                                </th>
-                            </t>
-                            <th class="text-end">Total Balance</th>
+            <!-- Matrix Style (Balance Sheet / Profit &amp; Loss) -->
+            <table t-if="state.data.sections" class="table table-sm table-bordered bg-white shadow-sm">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th style="width:120px">Code</th>
+                        <th>Account</th>
+                        <t t-foreach="state.data.columns" t-as="col" t-key="col">
+                            <th class="text-end"><t t-esc="col"/></th>
+                        </t>
+                        <th class="text-end">Total Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Fix: Iterate through keys of the sections dictionary -->
+                    <t t-foreach="Object.keys(state.data.sections)" t-as="secKey" t-key="secKey">
+                        <t t-set="sec" t-value="state.data.sections[secKey]"/>
+
+                        <tr class="table-primary font-weight-bold">
+                            <td t-att-colspan="3 + state.data.columns.length">
+                                <t t-esc="sec.label.toUpperCase()"/>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="state.data.sections" t-as="sec" t-key="sec_item.label">
-                            <tr class="table-primary font-weight-bold">
-                                <td t-att-colspan="3 + state.data.columns.length">
-                                    <t t-esc="sec_item.label.toUpperCase()"/>
-                                </td>
-                            </tr>
-                            <tr t-foreach="sec_item.rows" t-as="row" t-key="row.code">
-                                <td>
-                                    <t t-esc="row.code"/>
-                                </td>
-                                <td>
-                                    <t t-esc="row.name"/>
-                                </td>
-                                <td t-foreach="state.data.columns" t-as="c" t-key="c" class="text-end">
-                                    <t t-esc="fmt(row.col_balances[c])"/>
-                                </td>
+
+                        <t t-foreach="sec.rows" t-as="row" t-key="row.code">
+                            <tr class="o_fr_line_row">
+                                <td t-esc="row.code"/>
+                                <td t-esc="row.name"/>
+                                <t t-foreach="state.data.columns" t-as="c" t-key="c">
+                                    <td class="text-end">
+                                        <t t-esc="fmt(row.col_balances[c])"/>
+                                    </td>
+                                </t>
                                 <td class="text-end font-weight-bold">
                                     <t t-esc="fmt(row.total)"/>
                                 </td>
                             </tr>
-                            <tr class="table-info font-weight-bold">
-                                <td colspan="2">TOTAL
-                                    <t t-esc="sec_item.label.toUpperCase()"/>
-                                </td>
-                                <td t-foreach="state.data.columns" t-as="c" t-key="c" class="text-end">
-                                    <t t-esc="fmt(sec_item.totals[c])"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(sec_item.total)"/>
-                                </td>
-                            </tr>
                         </t>
-                    </tbody>
-                </table>
 
-                <!-- General Ledger Style -->
-                <table t-if="state.data.accounts" class="table table-sm table-bordered bg-white shadow-sm">
-                    <thead class="bg-primary text-white">
-                        <tr>
-                            <th>Date</th>
-                            <th>Entry</th>
-                            <th>Label</th>
-                            <th>Partner</th>
-                            <th>Journal</th>
-                            <th class="text-end">Debit</th>
-                            <th class="text-end">Credit</th>
-                            <th class="text-end">Balance</th>
+                        <tr class="table-info font-weight-bold">
+                            <td colspan="2">TOTAL <t t-esc="sec.label.toUpperCase()"/></td>
+                            <t t-foreach="state.data.columns" t-as="c" t-key="c">
+                                <td class="text-end">
+                                    <t t-esc="fmt(sec.totals[c])"/>
+                                </td>
+                            </t>
+                            <td class="text-end border-top-double">
+                                <t t-esc="fmt(sec.total)"/>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <t t-foreach="state.data.accounts" t-as="acc" t-key="acc.account_code">
-                            <tr class="table-secondary font-weight-bold">
-                                <td colspan="5">
-                                    <t t-esc="acc.account_code"/>
-                                    <t t-esc="acc.account_name"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(acc.total_debit)"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(acc.total_credit)"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(acc.total_balance)"/>
-                                </td>
-                            </tr>
-                            <tr t-foreach="acc.lines" t-as="line" t-key="line.move_name">
-                                <td>
-                                    <t t-esc="line.date"/>
-                                </td>
-                                <td>
-                                    <t t-esc="line.move_name"/>
-                                </td>
-                                <td>
-                                    <t t-esc="line.label"/>
-                                </td>
-                                <td>
-                                    <t t-esc="line.partner"/>
-                                </td>
-                                <td>
-                                    <t t-esc="line.journal"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(line.debit)"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(line.credit)"/>
-                                </td>
-                                <td class="text-end">
-                                    <t t-esc="fmt(line.balance)"/>
-                                </td>
+                    </t>
+                </tbody>
+                <t t-if="state.data.report_type === 'profit_loss'">
+                    <tfoot>
+                        <tr class="bg-dark text-white font-weight-bold">
+                            <td t-att-colspan="2 + state.data.columns.length">NET PROFIT / (LOSS)</td>
+                            <td class="text-end"><t t-esc="fmt(state.data.net_income)"/></td>
+                        </tr>
+                    </tfoot>
+                </t>
+            </table>
+
+            <!-- General Ledger Style -->
+            <table t-if="state.data.accounts" class="table table-sm table-bordered bg-white shadow-sm">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th style="width:100px">Date</th>
+                        <th>Entry</th>
+                        <th>Label</th>
+                        <th>Partner</th>
+                        <th>Journal</th>
+                        <th class="text-end">Debit</th>
+                        <th class="text-end">Credit</th>
+                        <th class="text-end">Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-foreach="state.data.accounts" t-as="acc" t-key="acc.account_code">
+                        <tr class="table-secondary font-weight-bold">
+                            <td colspan="5"><t t-esc="acc.account_code"/> <t t-esc="acc.account_name"/></td>
+                            <td class="text-end"><t t-esc="fmt(acc.total_debit)"/></td>
+                            <td class="text-end"><t t-esc="fmt(acc.total_credit)"/></td>
+                            <td class="text-end"><t t-esc="fmt(acc.total_balance)"/></td>
+                        </tr>
+                        <t t-foreach="acc.lines" t-as="line" t-key="line.move_name">
+                            <tr>
+                                <td t-esc="line.date"/>
+                                <td t-esc="line.move_name"/>
+                                <td t-esc="line.label"/>
+                                <td t-esc="line.partner"/>
+                                <td t-esc="line.journal"/>
+                                <td class="text-end" t-esc="fmt(line.debit)"/>
+                                <td class="text-end" t-esc="fmt(line.credit)"/>
+                                <td class="text-end" t-esc="fmt(line.balance)"/>
                             </tr>
                         </t>
-                    </tbody>
-                </table>
-            </div>
+                    </t>
+                </tbody>
+            </table>
         </div>
-    </t>
+
+        <!-- Empty State -->
+        <div t-if="!state.loading &amp;&amp; !state.data" class="p-5 text-center text-muted">
+            <i class="fa fa-file-text-o fa-4x mb-3"/>
+            <p>No data found for the selected criteria.</p>
+        </div>
+
+    </div>
+</t>
 </templates>
