@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
+import re
 
 _logger = logging.getLogger(__name__)
 
@@ -29,12 +30,20 @@ def _column_exists(cr, table_name, column_name):
 
 
 def _execute_safe(cr, query, params=None, label='cleanup repair'):
+    savepoint = 'sp_%s' % re.sub(r'[^A-Za-z0-9_]', '_', label)[:40]
     try:
+        cr.execute('SAVEPOINT %s' % savepoint)
         cr.execute(query, params or ())
-        if cr.rowcount:
-            _logger.info('%s: repaired %s row(s)', label, cr.rowcount)
-        return cr.rowcount
+        count = cr.rowcount
+        cr.execute('RELEASE SAVEPOINT %s' % savepoint)
+        if count:
+            _logger.info('%s: repaired %s row(s)', label, count)
+        return count
     except Exception as exc:
+        try:
+            cr.execute('ROLLBACK TO SAVEPOINT %s' % savepoint)
+        except Exception:
+            pass
         _logger.warning('%s skipped: %s', label, exc)
         return 0
 
