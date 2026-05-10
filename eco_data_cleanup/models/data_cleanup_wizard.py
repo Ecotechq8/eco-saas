@@ -22,7 +22,7 @@ class DataCleanupWizard(models.TransientModel):
     repair_only = fields.Boolean(string='Only Repair Missing References', default=True)
 
     def init(self):
-        """Repair stale project.task references left by older cleanup runs."""
+        """Repair stale project references left by older cleanup runs."""
         self._repair_stale_project_task_references()
 
     def _repair_stale_project_task_references(self):
@@ -32,6 +32,7 @@ class DataCleanupWizard(models.TransientModel):
         repaired += self._repair_project_task_many2one_fields(existing_tables)
         repaired += self._repair_project_task_relation_tables(existing_tables)
         repaired += self._repair_project_task_default_values()
+        repaired += self._repair_project_project_references(existing_tables)
 
         if self._table_column_exists('account_move_line', 'task_id') and 'project_task' in existing_tables:
             repaired += self._execute_sql_safe("""
@@ -80,12 +81,36 @@ class DataCleanupWizard(models.TransientModel):
                     log_message='Repaired %d stale project task relation rows')
         return repaired
 
+    def _repair_project_project_references(self, existing_tables):
+        """Clear references that point to project.project rows that no longer exist."""
+        repaired = 0
+        repaired += self._repair_model_many2one_fields(existing_tables, 'project.project', 'project_project')
+        repaired += self._repair_model_relation_tables(existing_tables, 'project_project')
+        repaired += self._repair_model_default_values('project.project', 'project_project')
+
+        for table_name in ('mail_activity', 'mail_followers', 'mail_message', 'ir_attachment', 'ir_model_data'):
+            res_field = 'model' if table_name in ('mail_message', 'ir_model_data') else 'res_model'
+            if table_name in existing_tables and 'project_project' in existing_tables:
+                repaired += self._execute_sql_safe(f"""
+                    DELETE FROM {table_name} ref
+                     WHERE {res_field} = %s
+                       AND NOT EXISTS (
+                           SELECT 1 FROM project_project project WHERE project.id = ref.res_id
+                       )
+                """, ('project.project',), f'sp_repair_{table_name}_project_project',
+                    'Repaired %d stale project project references')
+        return repaired
+
     def _is_safe_identifier(self, identifier):
         return bool(identifier and IDENTIFIER_RE.match(identifier))
 
     def _repair_project_task_many2one_fields(self, existing_tables):
         """Clear stale values for every stored many2one field to project.task."""
-        if 'ir_model_fields' not in existing_tables or 'ir_model' not in existing_tables or 'project_task' not in existing_tables:
+        return self._repair_model_many2one_fields(existing_tables, 'project.task', 'project_task')
+
+    def _repair_model_many2one_fields(self, existing_tables, relation_model, target_table):
+        """Clear stale values for every stored many2one field to a model."""
+        if 'ir_model_fields' not in existing_tables or 'ir_model' not in existing_tables or target_table not in existing_tables:
             return 0
 
         repaired = 0
@@ -94,9 +119,9 @@ class DataCleanupWizard(models.TransientModel):
               FROM ir_model_fields f
               JOIN ir_model m ON m.id = f.model_id
              WHERE f.ttype = 'many2one'
-               AND f.relation = 'project.task'
+               AND f.relation = %s
                AND COALESCE(f.store, TRUE) = TRUE
-        """)
+        """, (relation_model,))
         for model_name, field_name in self.env.cr.fetchall():
             table_name = model_name.replace('.', '_')
             if (
@@ -111,7 +136,7 @@ class DataCleanupWizard(models.TransientModel):
                    SET {field_name} = NULL
                  WHERE {field_name} IS NOT NULL
                    AND NOT EXISTS (
-                       SELECT 1 FROM project_task pt WHERE pt.id = ref.{field_name}
+                       SELECT 1 FROM {target_table} target WHERE target.id = ref.{field_name}
                    )
             """, savepoint_name=f'sp_repair_m2o_{table_name}_{field_name}',
                 log_message=f'Repaired %d stale {table_name}.{field_name} references')
@@ -119,25 +144,30 @@ class DataCleanupWizard(models.TransientModel):
 
     def _repair_project_task_relation_tables(self, existing_tables):
         """Delete stale rows from relation tables that point to missing tasks."""
-        if 'project_task' not in existing_tables:
+        return self._repair_model_relation_tables(existing_tables, 'project_task')
+
+    def _repair_model_relation_tables(self, existing_tables, target_table):
+        """Delete stale rows from relation tables that point to missing records."""
+        if target_table not in existing_tables:
             return 0
 
         repaired = 0
+        column_name = '%s_id' % target_table
         self.env.cr.execute("""
             SELECT table_name
               FROM information_schema.columns
              WHERE table_schema = 'public'
-               AND column_name = 'project_task_id'
-        """)
+               AND column_name = %s
+        """, (column_name,))
         for (table_name,) in self.env.cr.fetchall():
             if table_name not in existing_tables or not self._is_safe_identifier(table_name):
                 continue
 
             repaired += self._execute_sql_safe(f"""
                 DELETE FROM {table_name} rel
-                 WHERE project_task_id IS NOT NULL
+                 WHERE {column_name} IS NOT NULL
                    AND NOT EXISTS (
-                       SELECT 1 FROM project_task pt WHERE pt.id = rel.project_task_id
+                       SELECT 1 FROM {target_table} target WHERE target.id = rel.{column_name}
                    )
             """, savepoint_name=f'sp_repair_rel_{table_name}',
                 log_message=f'Repaired %d stale {table_name} relation rows')
@@ -145,8 +175,12 @@ class DataCleanupWizard(models.TransientModel):
 
     def _repair_project_task_default_values(self):
         """Remove ir.default values that point to deleted project.task records."""
+        return self._repair_model_default_values('project.task', 'project_task')
+
+    def _repair_model_default_values(self, relation_model, target_table):
+        """Remove ir.default values that point to deleted records."""
         existing_tables = self._get_existing_tables()
-        if 'ir_default' not in existing_tables or 'ir_model_fields' not in existing_tables or 'project_task' not in existing_tables:
+        if 'ir_default' not in existing_tables or 'ir_model_fields' not in existing_tables or target_table not in existing_tables:
             return 0
 
         repaired = 0
@@ -156,12 +190,12 @@ class DataCleanupWizard(models.TransientModel):
                  USING ir_model_fields f
                  WHERE d.field_id = f.id
                    AND f.ttype = 'many2one'
-                   AND f.relation = 'project.task'
+                   AND f.relation = %s
                    AND NULLIF(regexp_replace(d.json_value::text, '[^0-9]', '', 'g'), '')::integer NOT IN (
-                       SELECT id FROM project_task
+                       SELECT id FROM """ + target_table + """
                    )
-            """, savepoint_name='sp_repair_ir_default_json',
-                log_message='Repaired %d stale project task defaults')
+            """, (relation_model,), savepoint_name=f'sp_repair_ir_default_json_{target_table}',
+                log_message=f'Repaired %d stale {relation_model} defaults')
 
         if self._table_column_exists('ir_default', 'value'):
             repaired += self._execute_sql_safe("""
@@ -169,12 +203,12 @@ class DataCleanupWizard(models.TransientModel):
                  USING ir_model_fields f
                  WHERE d.field_id = f.id
                    AND f.ttype = 'many2one'
-                   AND f.relation = 'project.task'
+                   AND f.relation = %s
                    AND NULLIF(regexp_replace(d.value::text, '[^0-9]', '', 'g'), '')::integer NOT IN (
-                       SELECT id FROM project_task
+                       SELECT id FROM """ + target_table + """
                    )
-            """, savepoint_name='sp_repair_ir_default_value',
-                log_message='Repaired %d stale project task defaults')
+            """, (relation_model,), savepoint_name=f'sp_repair_ir_default_value_{target_table}',
+                log_message=f'Repaired %d stale {relation_model} defaults')
         return repaired
 
     def action_repair_missing_references(self):
