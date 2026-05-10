@@ -1,0 +1,167 @@
+# -*- coding: utf-8 -*-
+
+import logging
+import re
+
+_logger = logging.getLogger(__name__)
+IDENTIFIER_RE = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')
+
+
+def _safe_identifier(identifier):
+    return bool(identifier and IDENTIFIER_RE.match(identifier))
+
+
+def _table_exists(cr, table_name):
+    cr.execute("""
+        SELECT 1
+          FROM information_schema.tables
+         WHERE table_schema = 'public'
+           AND table_name = %s
+         LIMIT 1
+    """, (table_name,))
+    return bool(cr.fetchone())
+
+
+def _column_exists(cr, table_name, column_name):
+    cr.execute("""
+        SELECT 1
+          FROM information_schema.columns
+         WHERE table_schema = 'public'
+           AND table_name = %s
+           AND column_name = %s
+         LIMIT 1
+    """, (table_name, column_name))
+    return bool(cr.fetchone())
+
+
+def _execute_safe(cr, query, params=None, label='cleanup repair'):
+    try:
+        cr.execute(query, params or ())
+        if cr.rowcount:
+            _logger.info('%s: repaired %s row(s)', label, cr.rowcount)
+        return cr.rowcount
+    except Exception as exc:
+        _logger.warning('%s skipped: %s', label, exc)
+        return 0
+
+
+def _repair_many2one_fields(cr):
+    repaired = 0
+    if not (_table_exists(cr, 'project_task') and _table_exists(cr, 'ir_model') and _table_exists(cr, 'ir_model_fields')):
+        return repaired
+
+    cr.execute("""
+        SELECT m.model, f.name
+          FROM ir_model_fields f
+          JOIN ir_model m ON m.id = f.model_id
+         WHERE f.ttype = 'many2one'
+           AND f.relation = 'project.task'
+           AND COALESCE(f.store, TRUE) = TRUE
+    """)
+    for model_name, field_name in cr.fetchall():
+        table_name = model_name.replace('.', '_')
+        if not (
+                _safe_identifier(table_name)
+                and _safe_identifier(field_name)
+                and _table_exists(cr, table_name)
+                and _column_exists(cr, table_name, field_name)):
+            continue
+
+        repaired += _execute_safe(cr, f"""
+            UPDATE {table_name} ref
+               SET {field_name} = NULL
+             WHERE {field_name} IS NOT NULL
+               AND NOT EXISTS (
+                   SELECT 1 FROM project_task pt WHERE pt.id = ref.{field_name}
+               )
+        """, label=f'{table_name}.{field_name}')
+    return repaired
+
+
+def _repair_relation_tables(cr):
+    repaired = 0
+    if not _table_exists(cr, 'project_task'):
+        return repaired
+
+    cr.execute("""
+        SELECT table_name
+          FROM information_schema.columns
+         WHERE table_schema = 'public'
+           AND column_name = 'project_task_id'
+    """)
+    for (table_name,) in cr.fetchall():
+        if not (_safe_identifier(table_name) and _table_exists(cr, table_name)):
+            continue
+
+        repaired += _execute_safe(cr, f"""
+            DELETE FROM {table_name} rel
+             WHERE project_task_id IS NOT NULL
+               AND NOT EXISTS (
+                   SELECT 1 FROM project_task pt WHERE pt.id = rel.project_task_id
+               )
+        """, label=table_name)
+    return repaired
+
+
+def _repair_reference_tables(cr):
+    repaired = 0
+    if not _table_exists(cr, 'project_task'):
+        return repaired
+
+    reference_tables = (
+        ('mail_activity', 'res_model'),
+        ('mail_followers', 'res_model'),
+        ('mail_message', 'model'),
+        ('ir_attachment', 'res_model'),
+        ('ir_model_data', 'model'),
+    )
+    for table_name, model_field in reference_tables:
+        if _table_exists(cr, table_name) and _column_exists(cr, table_name, 'res_id'):
+            repaired += _execute_safe(cr, f"""
+                DELETE FROM {table_name} ref
+                 WHERE {model_field} = %s
+                   AND NOT EXISTS (
+                       SELECT 1 FROM project_task pt WHERE pt.id = ref.res_id
+                   )
+            """, ('project.task',), table_name)
+    return repaired
+
+
+def _repair_defaults(cr):
+    repaired = 0
+    if not (_table_exists(cr, 'project_task') and _table_exists(cr, 'ir_default') and _table_exists(cr, 'ir_model_fields')):
+        return repaired
+
+    if _column_exists(cr, 'ir_default', 'json_value'):
+        repaired += _execute_safe(cr, """
+            DELETE FROM ir_default d
+             USING ir_model_fields f
+             WHERE d.field_id = f.id
+               AND f.ttype = 'many2one'
+               AND f.relation = 'project.task'
+               AND NULLIF(regexp_replace(d.json_value::text, '[^0-9]', '', 'g'), '')::integer NOT IN (
+                   SELECT id FROM project_task
+               )
+        """, label='ir_default.json_value')
+
+    if _column_exists(cr, 'ir_default', 'value'):
+        repaired += _execute_safe(cr, """
+            DELETE FROM ir_default d
+             USING ir_model_fields f
+             WHERE d.field_id = f.id
+               AND f.ttype = 'many2one'
+               AND f.relation = 'project.task'
+               AND NULLIF(regexp_replace(d.value::text, '[^0-9]', '', 'g'), '')::integer NOT IN (
+                   SELECT id FROM project_task
+               )
+        """, label='ir_default.value')
+    return repaired
+
+
+def migrate(cr, version):
+    repaired = 0
+    repaired += _repair_many2one_fields(cr)
+    repaired += _repair_relation_tables(cr)
+    repaired += _repair_reference_tables(cr)
+    repaired += _repair_defaults(cr)
+    _logger.info('eco_data_cleanup generic stale project.task repair completed: %s row(s)', repaired)

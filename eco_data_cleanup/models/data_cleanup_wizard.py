@@ -3,8 +3,10 @@
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 import logging
+import re
 
 _logger = logging.getLogger(__name__)
+IDENTIFIER_RE = re.compile(r'^[A-Za-z_][A-Za-z0-9_]*$')
 
 
 class DataCleanupWizard(models.TransientModel):
@@ -27,6 +29,9 @@ class DataCleanupWizard(models.TransientModel):
         """Clear references that point to project.task rows that no longer exist."""
         existing_tables = self._get_existing_tables()
         repaired = 0
+        repaired += self._repair_project_task_many2one_fields(existing_tables)
+        repaired += self._repair_project_task_relation_tables(existing_tables)
+        repaired += self._repair_project_task_default_values()
 
         if self._table_column_exists('account_move_line', 'task_id') and 'project_task' in existing_tables:
             repaired += self._execute_sql_safe("""
@@ -73,6 +78,103 @@ class DataCleanupWizard(models.TransientModel):
                        )
                 """, savepoint_name=f'sp_repair_{table_name}',
                     log_message='Repaired %d stale project task relation rows')
+        return repaired
+
+    def _is_safe_identifier(self, identifier):
+        return bool(identifier and IDENTIFIER_RE.match(identifier))
+
+    def _repair_project_task_many2one_fields(self, existing_tables):
+        """Clear stale values for every stored many2one field to project.task."""
+        if 'ir_model_fields' not in existing_tables or 'ir_model' not in existing_tables or 'project_task' not in existing_tables:
+            return 0
+
+        repaired = 0
+        self.env.cr.execute("""
+            SELECT m.model, f.name
+              FROM ir_model_fields f
+              JOIN ir_model m ON m.id = f.model_id
+             WHERE f.ttype = 'many2one'
+               AND f.relation = 'project.task'
+               AND COALESCE(f.store, TRUE) = TRUE
+        """)
+        for model_name, field_name in self.env.cr.fetchall():
+            table_name = model_name.replace('.', '_')
+            if (
+                    table_name not in existing_tables
+                    or not self._is_safe_identifier(table_name)
+                    or not self._is_safe_identifier(field_name)
+                    or not self._table_column_exists(table_name, field_name)):
+                continue
+
+            repaired += self._execute_sql_safe(f"""
+                UPDATE {table_name} ref
+                   SET {field_name} = NULL
+                 WHERE {field_name} IS NOT NULL
+                   AND NOT EXISTS (
+                       SELECT 1 FROM project_task pt WHERE pt.id = ref.{field_name}
+                   )
+            """, savepoint_name=f'sp_repair_m2o_{table_name}_{field_name}',
+                log_message=f'Repaired %d stale {table_name}.{field_name} references')
+        return repaired
+
+    def _repair_project_task_relation_tables(self, existing_tables):
+        """Delete stale rows from relation tables that point to missing tasks."""
+        if 'project_task' not in existing_tables:
+            return 0
+
+        repaired = 0
+        self.env.cr.execute("""
+            SELECT table_name
+              FROM information_schema.columns
+             WHERE table_schema = 'public'
+               AND column_name = 'project_task_id'
+        """)
+        for (table_name,) in self.env.cr.fetchall():
+            if table_name not in existing_tables or not self._is_safe_identifier(table_name):
+                continue
+
+            repaired += self._execute_sql_safe(f"""
+                DELETE FROM {table_name} rel
+                 WHERE project_task_id IS NOT NULL
+                   AND NOT EXISTS (
+                       SELECT 1 FROM project_task pt WHERE pt.id = rel.project_task_id
+                   )
+            """, savepoint_name=f'sp_repair_rel_{table_name}',
+                log_message=f'Repaired %d stale {table_name} relation rows')
+        return repaired
+
+    def _repair_project_task_default_values(self):
+        """Remove ir.default values that point to deleted project.task records."""
+        existing_tables = self._get_existing_tables()
+        if 'ir_default' not in existing_tables or 'ir_model_fields' not in existing_tables or 'project_task' not in existing_tables:
+            return 0
+
+        repaired = 0
+        if self._table_column_exists('ir_default', 'json_value'):
+            repaired += self._execute_sql_safe("""
+                DELETE FROM ir_default d
+                 USING ir_model_fields f
+                 WHERE d.field_id = f.id
+                   AND f.ttype = 'many2one'
+                   AND f.relation = 'project.task'
+                   AND NULLIF(regexp_replace(d.json_value::text, '[^0-9]', '', 'g'), '')::integer NOT IN (
+                       SELECT id FROM project_task
+                   )
+            """, savepoint_name='sp_repair_ir_default_json',
+                log_message='Repaired %d stale project task defaults')
+
+        if self._table_column_exists('ir_default', 'value'):
+            repaired += self._execute_sql_safe("""
+                DELETE FROM ir_default d
+                 USING ir_model_fields f
+                 WHERE d.field_id = f.id
+                   AND f.ttype = 'many2one'
+                   AND f.relation = 'project.task'
+                   AND NULLIF(regexp_replace(d.value::text, '[^0-9]', '', 'g'), '')::integer NOT IN (
+                       SELECT id FROM project_task
+                   )
+            """, savepoint_name='sp_repair_ir_default_value',
+                log_message='Repaired %d stale project task defaults')
         return repaired
 
     def action_repair_missing_references(self):
