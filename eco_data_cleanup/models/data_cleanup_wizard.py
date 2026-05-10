@@ -17,6 +17,7 @@ class DataCleanupWizard(models.TransientModel):
     delete_projects = fields.Boolean(string='Delete Projects & Tasks', default=True)
     delete_accounting = fields.Boolean(string='Delete Accounting Entries', default=True)
     delete_all = fields.Boolean(string='Delete All Transactions', default=True)
+    repair_only = fields.Boolean(string='Only Repair Missing References', default=True)
 
     def init(self):
         """Repair stale project.task references left by older cleanup runs."""
@@ -25,9 +26,10 @@ class DataCleanupWizard(models.TransientModel):
     def _repair_stale_project_task_references(self):
         """Clear references that point to project.task rows that no longer exist."""
         existing_tables = self._get_existing_tables()
+        repaired = 0
 
         if self._table_column_exists('account_move_line', 'task_id') and 'project_task' in existing_tables:
-            self._execute_sql_safe("""
+            repaired += self._execute_sql_safe("""
                 UPDATE account_move_line aml
                    SET task_id = NULL
                  WHERE task_id IS NOT NULL
@@ -38,7 +40,7 @@ class DataCleanupWizard(models.TransientModel):
                 log_message='Repaired %d stale account move line task references')
 
         if self._table_column_exists('helpdesk_ticket', 'task_id') and 'project_task' in existing_tables:
-            self._execute_sql_safe("""
+            repaired += self._execute_sql_safe("""
                 UPDATE helpdesk_ticket ht
                    SET task_id = NULL
                  WHERE task_id IS NOT NULL
@@ -53,7 +55,7 @@ class DataCleanupWizard(models.TransientModel):
             if table_name == 'ir_model_data':
                 res_field = 'model'
             if table_name in existing_tables and 'project_task' in existing_tables:
-                self._execute_sql_safe(f"""
+                repaired += self._execute_sql_safe(f"""
                     DELETE FROM {table_name} ref
                      WHERE {res_field} = %s
                        AND NOT EXISTS (
@@ -64,17 +66,37 @@ class DataCleanupWizard(models.TransientModel):
 
         for table_name in ('helpdesk_ticket_project_task_rel', 'ticket_helpdesk_project_task_rel'):
             if self._table_column_exists(table_name, 'project_task_id') and 'project_task' in existing_tables:
-                self._execute_sql_safe(f"""
+                repaired += self._execute_sql_safe(f"""
                     DELETE FROM {table_name} rel
                      WHERE NOT EXISTS (
                            SELECT 1 FROM project_task pt WHERE pt.id = rel.project_task_id
                        )
                 """, savepoint_name=f'sp_repair_{table_name}',
                     log_message='Repaired %d stale project task relation rows')
+        return repaired
+
+    def action_repair_missing_references(self):
+        """Repair stale cleanup references without deleting business data."""
+        self.ensure_one()
+        repaired = self._repair_stale_project_task_references()
+        self.env.cr.commit()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Repair Complete'),
+                'message': _('Repaired %s stale reference(s). No business data was deleted.') % repaired,
+                'type': 'success',
+                'sticky': False,
+            }
+        }
 
     def action_delete_all_transactions(self):
         """Delete all transactions using direct SQL (aggressive cleanup)"""
         self.ensure_one()
+
+        if self.repair_only:
+            return self.action_repair_missing_references()
         
         # Log the cleanup action
         _logger.warning('=' * 80)

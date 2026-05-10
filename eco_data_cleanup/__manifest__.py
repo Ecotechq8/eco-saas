@@ -2,7 +2,7 @@
 
 {
     'name': "ECO Data Cleanup - Delete All Transactions",
-    'version': '18.0.1.0.0',
+    'version': '18.0.1.0.1',
     'author': 'Ezzat Mohsen',
     'category': 'Tools',
     'website': '',
@@ -18,9 +18,6 @@
     - Inventory (Stock Moves, Pickings, etc.)
     - Projects & Tasks
     - Accounting (Journal Entries, Invoices, Payments, etc.)
-    
-    WARNING: This is a DESTRUCTIVE operation. All transaction data will be permanently deleted.
-    Master data (products, partners, etc.) will be preserved.
     ''',
     'depends': [
         'stock',

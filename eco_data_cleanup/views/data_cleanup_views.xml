@@ -6,10 +6,17 @@
         <field name="model">data.cleanup.wizard</field>
         <field name="arch" type="xml">
             <form string="Delete All Transactions">
+                <div class="alert alert-info" role="alert" style="margin: 10px 0;">
+                    Use <strong>Repair Missing References</strong> to fix errors like deleted
+                    project tasks without deleting current transactions.
+                </div>
                 <group>
+                    <field name="repair_only"/>
+                </group>
+                <group invisible="repair_only">
                     <field name="delete_all"/>
                 </group>
-                <group string="Select Modules to Clean" invisible="delete_all">
+                <group string="Select Modules to Clean" invisible="delete_all or repair_only">
                     <group>
                         <field name="delete_purchase"/>
                         <field name="delete_sales"/>
@@ -20,16 +27,21 @@
                         <field name="delete_accounting"/>
                     </group>
                 </group>
-                <div class="alert alert-warning" role="alert" style="margin: 10px 0;">
+                <div class="alert alert-warning" role="alert" style="margin: 10px 0;" invisible="repair_only">
                     <strong>WARNING:</strong> This action will permanently delete all selected transaction data.
                     Master data (products, partners, employees, etc.) will be preserved.
                     <br/>This operation CANNOT be undone!
                 </div>
                 <footer>
+                    <button name="action_repair_missing_references"
+                            string="Repair Missing References"
+                            type="object"
+                            class="btn-primary"/>
                     <button name="action_delete_all_transactions" 
                             string="Delete Transactions" 
                             type="object" 
                             class="btn-danger"
+                            invisible="repair_only"
                             confirm="This action will delete all selected transactions. This CANNOT be undone. Are you sure you want to proceed?"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
