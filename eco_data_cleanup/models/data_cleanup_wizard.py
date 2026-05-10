@@ -18,6 +18,60 @@ class DataCleanupWizard(models.TransientModel):
     delete_accounting = fields.Boolean(string='Delete Accounting Entries', default=True)
     delete_all = fields.Boolean(string='Delete All Transactions', default=True)
 
+    def init(self):
+        """Repair stale project.task references left by older cleanup runs."""
+        self._repair_stale_project_task_references()
+
+    def _repair_stale_project_task_references(self):
+        """Clear references that point to project.task rows that no longer exist."""
+        existing_tables = self._get_existing_tables()
+
+        if self._table_column_exists('account_move_line', 'task_id') and 'project_task' in existing_tables:
+            self._execute_sql_safe("""
+                UPDATE account_move_line aml
+                   SET task_id = NULL
+                 WHERE task_id IS NOT NULL
+                   AND NOT EXISTS (
+                       SELECT 1 FROM project_task pt WHERE pt.id = aml.task_id
+                   )
+            """, savepoint_name='sp_repair_aml_task',
+                log_message='Repaired %d stale account move line task references')
+
+        if self._table_column_exists('helpdesk_ticket', 'task_id') and 'project_task' in existing_tables:
+            self._execute_sql_safe("""
+                UPDATE helpdesk_ticket ht
+                   SET task_id = NULL
+                 WHERE task_id IS NOT NULL
+                   AND NOT EXISTS (
+                       SELECT 1 FROM project_task pt WHERE pt.id = ht.task_id
+                   )
+            """, savepoint_name='sp_repair_helpdesk_task',
+                log_message='Repaired %d stale helpdesk ticket task references')
+
+        for table_name in ('mail_activity', 'mail_followers', 'mail_message', 'ir_attachment', 'ir_model_data'):
+            res_field = 'model' if table_name == 'mail_message' else 'res_model'
+            if table_name == 'ir_model_data':
+                res_field = 'model'
+            if table_name in existing_tables and 'project_task' in existing_tables:
+                self._execute_sql_safe(f"""
+                    DELETE FROM {table_name} ref
+                     WHERE {res_field} = %s
+                       AND NOT EXISTS (
+                           SELECT 1 FROM project_task pt WHERE pt.id = ref.res_id
+                       )
+                """, ('project.task',), f'sp_repair_{table_name}',
+                    'Repaired %d stale project task references')
+
+        for table_name in ('helpdesk_ticket_project_task_rel', 'ticket_helpdesk_project_task_rel'):
+            if self._table_column_exists(table_name, 'project_task_id') and 'project_task' in existing_tables:
+                self._execute_sql_safe(f"""
+                    DELETE FROM {table_name} rel
+                     WHERE NOT EXISTS (
+                           SELECT 1 FROM project_task pt WHERE pt.id = rel.project_task_id
+                       )
+                """, savepoint_name=f'sp_repair_{table_name}',
+                    log_message='Repaired %d stale project task relation rows')
+
     def action_delete_all_transactions(self):
         """Delete all transactions using direct SQL (aggressive cleanup)"""
         self.ensure_one()
@@ -128,6 +182,36 @@ class DataCleanupWizard(models.TransientModel):
             _logger.warning('Could not delete from %s: %s', table_name, str(e))
             return 0
 
+    def _table_column_exists(self, table_name, column_name):
+        """Return whether a database table/column exists."""
+        self.env.cr.execute("""
+            SELECT 1
+              FROM information_schema.columns
+             WHERE table_schema = 'public'
+               AND table_name = %s
+               AND column_name = %s
+             LIMIT 1
+        """, (table_name, column_name))
+        return bool(self.env.cr.fetchone())
+
+    def _execute_sql_safe(self, query, params=None, savepoint_name='sp_sql', log_message=None):
+        """Execute one cleanup statement without aborting the whole transaction."""
+        try:
+            self.env.cr.execute(f"SAVEPOINT {savepoint_name}")
+            self.env.cr.execute(query, params or ())
+            count = self.env.cr.rowcount
+            self.env.cr.execute(f"RELEASE SAVEPOINT {savepoint_name}")
+            if log_message and count > 0:
+                _logger.info(log_message, count)
+            return count
+        except Exception as e:
+            try:
+                self.env.cr.execute(f"ROLLBACK TO SAVEPOINT {savepoint_name}")
+            except Exception:
+                pass
+            _logger.warning('Could not execute cleanup SQL (%s): %s', savepoint_name, str(e))
+            return 0
+
     def _delete_analytic_lines_sql(self):
         """Delete analytic lines using direct SQL"""
         _logger.info('Deleting analytic lines...')
@@ -233,6 +317,68 @@ class DataCleanupWizard(models.TransientModel):
         def next_sp():
             sp_counter[0] += 1
             return f'sp_proj_{sp_counter[0]}'
+
+        # Raw SQL deletes bypass ORM cleanup. Remove/clear all known references
+        # first so Odoo does not later try to read deleted project.task records.
+        if 'mail_activity' in existing_tables:
+            self._execute_sql_safe(
+                "DELETE FROM mail_activity WHERE res_model = %s",
+                ('project.task',),
+                next_sp(),
+                'Deleted %d project task activities'
+            )
+
+        if 'mail_followers' in existing_tables:
+            self._execute_sql_safe(
+                "DELETE FROM mail_followers WHERE res_model = %s",
+                ('project.task',),
+                next_sp(),
+                'Deleted %d project task followers'
+            )
+
+        if 'mail_message' in existing_tables:
+            self._execute_sql_safe(
+                "DELETE FROM mail_message WHERE model = %s",
+                ('project.task',),
+                next_sp(),
+                'Deleted %d project task messages'
+            )
+
+        if 'ir_attachment' in existing_tables:
+            self._execute_sql_safe(
+                "DELETE FROM ir_attachment WHERE res_model = %s",
+                ('project.task',),
+                next_sp(),
+                'Deleted %d project task attachments'
+            )
+
+        if 'ir_model_data' in existing_tables:
+            self._execute_sql_safe(
+                "DELETE FROM ir_model_data WHERE model = %s",
+                ('project.task',),
+                next_sp(),
+                'Deleted %d project task external ids'
+            )
+
+        if self._table_column_exists('account_move_line', 'task_id'):
+            self._execute_sql_safe(
+                "UPDATE account_move_line SET task_id = NULL WHERE task_id IS NOT NULL",
+                savepoint_name=next_sp(),
+                log_message='Cleared %d account move line task references'
+            )
+
+        if self._table_column_exists('helpdesk_ticket', 'task_id'):
+            self._execute_sql_safe(
+                "UPDATE helpdesk_ticket SET task_id = NULL WHERE task_id IS NOT NULL",
+                savepoint_name=next_sp(),
+                log_message='Cleared %d helpdesk ticket task references'
+            )
+
+        if 'helpdesk_ticket_project_task_rel' in existing_tables:
+            self._delete_table_data_safe('helpdesk_ticket_project_task_rel', existing_tables, next_sp())
+
+        if 'ticket_helpdesk_project_task_rel' in existing_tables:
+            self._delete_table_data_safe('ticket_helpdesk_project_task_rel', existing_tables, next_sp())
         
         self._delete_table_data_safe('project_task_project_tag_rel', existing_tables, next_sp())
         self._delete_table_data_safe('project_task_user_rel', existing_tables, next_sp())
