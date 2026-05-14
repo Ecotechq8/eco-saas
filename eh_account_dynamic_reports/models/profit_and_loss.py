@@ -8,28 +8,33 @@
 """
 Profit and Loss handler.
 
-Period income statement with two sections (Income, Expenses) and a Net
-Profit row. Inherits the sectioned handler base, so query, line, and
-section formatting come for free.
+Period income statement with three sections (Income, Cost of Revenue,
+Expenses), a Gross Profit subtotal, and a Net Profit row. Inherits the
+sectioned handler base, so query, line, and section formatting come for
+free.
 
 Sign convention:
 
 * Income accounts carry credit balances (negative). The sectioned base
   query is called with sign=-1 to flip the display to a positive amount.
-* Expense accounts carry debit balances (positive); sign=+1.
-* Net Profit = Income - Expenses, displayed as a single computed line at
-  the bottom.
+* Cost of Revenue and Expense accounts carry debit balances (positive);
+  sign=+1.
+* Gross Profit = Total Income - Cost of Revenue.
+* Net Profit = Gross Profit - Total Expenses.
 
 Section structure:
 
 * Income (account_type in 'income', 'income_other')
-* Expenses (account_type in 'expense', 'expense_depreciation',
-  'expense_direct_cost')
+* Total Income (subtotal)
+* Cost of Revenue (account_type in 'expense_direct_cost')
+* Gross Profit (computed)
+* Expenses (account_type in 'expense', 'expense_depreciation')
+* Total Expenses (subtotal)
 * Net Profit (computed)
 
-Localizations can _inherit this handler to add more sections (Cost of
-Sales, Other Income, etc.) or override the account_type tuples to match
-local chart of accounts conventions.
+Localizations can _inherit this handler to add more sections (Other
+Income, etc.) or override the account_type tuples to match local chart
+of accounts conventions.
 """
 
 from odoo import api, fields, models
@@ -44,7 +49,8 @@ class EhProfitAndLossHandler(models.AbstractModel):
     REPORT_NAME = "Profit and Loss"
 
     INCOME_TYPES = ('income', 'income_other')
-    EXPENSE_TYPES = ('expense', 'expense_depreciation', 'expense_direct_cost')
+    COST_OF_REVENUE_TYPES = ('expense_direct_cost',)
+    EXPENSE_TYPES = ('expense', 'expense_depreciation')
 
     @api.model
     def compute(self, options):
@@ -102,10 +108,15 @@ class EhProfitAndLossHandler(models.AbstractModel):
                     'lines': merged,
                     'totals': {
                         'income': totals['income'],
+                        'cost_of_revenue': totals['cost_of_revenue'],
+                        'gross_profit': totals['gross_profit'],
                         'expenses': totals['expenses'],
                         'net_profit': totals['net_profit'],
                         'amount': totals['net_profit'],
                         'prior_income': prior_totals['income'],
+                        'prior_cost_of_revenue':
+                            prior_totals['cost_of_revenue'],
+                        'prior_gross_profit': prior_totals['gross_profit'],
                         'prior_expenses': prior_totals['expenses'],
                         'prior_net_profit': prior_totals['net_profit'],
                     },
@@ -118,6 +129,8 @@ class EhProfitAndLossHandler(models.AbstractModel):
             'lines': lines,
             'totals': {
                 'income': totals['income'],
+                'cost_of_revenue': totals['cost_of_revenue'],
+                'gross_profit': totals['gross_profit'],
                 'expenses': totals['expenses'],
                 'net_profit': totals['net_profit'],
                 'amount': totals['net_profit'],
@@ -138,6 +151,12 @@ class EhProfitAndLossHandler(models.AbstractModel):
             date_from=date_from, date_to=date_to,
             posted_only=posted_only, options=options,
         )
+        cost_of_revenue_rows = self._fetch_grouped_account_totals(
+            account_types=self.COST_OF_REVENUE_TYPES, sign=+1,
+            company_ids=company_ids,
+            date_from=date_from, date_to=date_to,
+            posted_only=posted_only, options=options,
+        )
         expense_rows = self._fetch_grouped_account_totals(
             account_types=self.EXPENSE_TYPES, sign=+1,
             company_ids=company_ids,
@@ -146,14 +165,32 @@ class EhProfitAndLossHandler(models.AbstractModel):
         )
 
         income_total = round(sum(r['amount'] for r in income_rows), 2)
+        cost_of_revenue_total = round(
+            sum(r['amount'] for r in cost_of_revenue_rows), 2,
+        )
+        gross_profit = round(income_total - cost_of_revenue_total, 2)
         expense_total = round(sum(r['amount'] for r in expense_rows), 2)
-        net_profit = round(income_total - expense_total, 2)
+        net_profit = round(gross_profit - expense_total, 2)
 
         lines = []
         lines.append(self._section_header_line("Income", section_id='income'))
         lines.extend(self._render_account_lines(income_rows, show_zero))
         lines.append(self._section_total_line(
             "Total Income", income_total, section_id='income',
+        ))
+        lines.append(self._section_header_line(
+            "Cost of Revenue", section_id='cost_of_revenue',
+        ))
+        lines.extend(self._render_account_lines(
+            cost_of_revenue_rows, show_zero,
+        ))
+        lines.append(self._section_total_line(
+            "Total Cost of Revenue", cost_of_revenue_total,
+            section_id='cost_of_revenue',
+        ))
+        lines.append(self._computed_line(
+            'gross_profit', "Gross Profit", gross_profit,
+            kind='computed_total',
         ))
         lines.append(self._section_header_line(
             "Expenses", section_id='expenses',
@@ -167,6 +204,8 @@ class EhProfitAndLossHandler(models.AbstractModel):
         ))
         return lines, {
             'income': income_total,
+            'cost_of_revenue': cost_of_revenue_total,
+            'gross_profit': gross_profit,
             'expenses': expense_total,
             'net_profit': net_profit,
         }

@@ -137,14 +137,80 @@ class TestProfitAndLossHandler(EhAccountIntegrationTestCase):
         result = self.handler.compute(self.options)
         headers = self._line_by_meta_kind(result, 'section_header')
         totals = self._line_by_meta_kind(result, 'section_total')
-        self.assertEqual(len(headers), 2,
-                         "Income and Expenses section headers must appear")
-        self.assertEqual(len(totals), 2,
-                         "Income and Expenses section totals must appear")
-        self.assertEqual({h['name'] for h in headers},
-                         {'Income', 'Expenses'})
+        self.assertEqual(
+            len(headers), 3,
+            "Income, Cost of Revenue, and Expenses headers must appear",
+        )
+        self.assertEqual(
+            len(totals), 3,
+            "Income, Cost of Revenue, and Expenses totals must appear",
+        )
+        self.assertEqual(
+            [h['name'] for h in headers],
+            ['Income', 'Cost of Revenue', 'Expenses'],
+        )
+        # Gross Profit sits between Cost of Revenue and Expenses.
+        ids_in_order = [l['id'] for l in result['lines']]
+        self.assertLess(
+            ids_in_order.index('section-cost_of_revenue-total'),
+            ids_in_order.index('gross_profit'),
+        )
+        self.assertLess(
+            ids_in_order.index('gross_profit'),
+            ids_in_order.index('section-expenses-header'),
+        )
         # Net Profit always at the bottom.
         self.assertEqual(result['lines'][-1]['id'], 'net_profit')
+
+    def test_cost_of_revenue_and_gross_profit(self):
+        cogs = self._ensure_account(
+            self.env, '5100', 'Direct Materials', 'expense_direct_cost',
+        )
+        # Income 1000, COGS 400, Expenses 100  =>
+        # Gross Profit 600, Net Profit 500.
+        self._post_in_period([
+            {'account': self.account_revenue, 'credit': 1000.0},
+            {'account': self.account_cash, 'debit': 1000.0},
+        ])
+        self._post_in_period([
+            {'account': cogs, 'debit': 400.0},
+            {'account': self.account_cash, 'credit': 400.0},
+        ])
+        self._post_in_period([
+            {'account': self.account_expense, 'debit': 100.0},
+            {'account': self.account_cash, 'credit': 100.0},
+        ])
+        result = self.handler.compute(self.options)
+        self.assertAlmostEqual(
+            result['totals']['income'], 1000.0, places=2,
+        )
+        self.assertAlmostEqual(
+            result['totals']['cost_of_revenue'], 400.0, places=2,
+        )
+        self.assertAlmostEqual(
+            result['totals']['gross_profit'], 600.0, places=2,
+        )
+        self.assertAlmostEqual(
+            result['totals']['expenses'], 100.0, places=2,
+        )
+        self.assertAlmostEqual(
+            result['totals']['net_profit'], 500.0, places=2,
+        )
+        gross = self._line_by_id(result, 'gross_profit')
+        self.assertIsNotNone(gross)
+        self.assertAlmostEqual(self._amount(gross), 600.0, places=2)
+        # Cost of Revenue account should NOT appear under the Expenses
+        # section: it must only contribute to Cost of Revenue.
+        cogs_total = next(
+            self._amount(l) for l in result['lines']
+            if l['id'] == 'section-cost_of_revenue-total'
+        )
+        self.assertAlmostEqual(cogs_total, 400.0, places=2)
+        expenses_total = next(
+            self._amount(l) for l in result['lines']
+            if l['id'] == 'section-expenses-total'
+        )
+        self.assertAlmostEqual(expenses_total, 100.0, places=2)
 
     def test_section_totals_match_account_sum(self):
         self._post_in_period([
@@ -340,6 +406,12 @@ class TestProfitAndLossHandler(EhAccountIntegrationTestCase):
         ))
         self.assertIsNone(self.handler.get_drilldown_action(
             self.options, 'section-expenses-total',
+        ))
+        self.assertIsNone(self.handler.get_drilldown_action(
+            self.options, 'section-cost_of_revenue-header',
+        ))
+        self.assertIsNone(self.handler.get_drilldown_action(
+            self.options, 'gross_profit',
         ))
         self.assertIsNone(self.handler.get_drilldown_action(
             self.options, 'net_profit',
