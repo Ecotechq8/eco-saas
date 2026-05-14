@@ -207,15 +207,115 @@ class TestBalanceSheetHandler(EhAccountIntegrationTestCase):
             {'account': self.account_cash, 'debit': 100.0},
         ])
         result = self.handler.compute(self.options)
+        ids = [line['id'] for line in result['lines']]
         kinds = [
             (line.get('meta') or {}).get('kind')
             for line in result['lines']
         ]
-        # Three section header + three section total + three computed.
-        self.assertEqual(kinds.count('section_header'), 3)
-        self.assertEqual(kinds.count('section_total'), 3)
+        # Top-level section markers are preserved.
+        self.assertIn('section-assets-header', ids)
+        self.assertIn('section-assets-total', ids)
+        self.assertIn('section-liabilities-header', ids)
+        self.assertIn('section-liabilities-total', ids)
+        self.assertIn('section-equity-header', ids)
+        self.assertIn('section-equity-total', ids)
+        # Nested Current Assets / Current Liabilities groups exist.
+        self.assertIn('section-current_assets-header', ids)
+        self.assertIn('section-current_assets-total', ids)
+        self.assertIn('section-current_liabilities-header', ids)
+        self.assertIn('section-current_liabilities-total', ids)
+        # And the leaf subsections under Current Assets / Liabilities.
+        for sec in ('bank_cash', 'receivables', 'current_assets_inner',
+                    'prepayments'):
+            self.assertIn('section-%s-header' % sec, ids)
+            self.assertIn('section-%s-total' % sec, ids)
+        for sec in ('current_liabilities_inner', 'payables'):
+            self.assertIn('section-%s-header' % sec, ids)
+            self.assertIn('section-%s-total' % sec, ids)
+        # Computed rows still emitted.
         self.assertIn('current_year_earnings', kinds)
+        self.assertIn('computed_total', kinds)
         self.assertIn('balance_check', kinds)
+
+    def test_hierarchy_levels_and_totals(self):
+        # Cash 100 (asset_cash) + Receivable 300 (asset_receivable)
+        # debited against equity 400 credited.
+        self._post_in_period([
+            {'account': self.account_equity, 'credit': 400.0},
+            {'account': self.account_cash, 'debit': 100.0},
+            {'account': self.account_receivable, 'debit': 300.0},
+        ])
+        # Borrow 250: cash up, payable up. Creates a current liability.
+        self._post_in_period([
+            {'account': self.account_payable, 'credit': 250.0,
+             'partner': self.partner_a},
+            {'account': self.account_cash, 'debit': 250.0},
+        ])
+        result = self.handler.compute(self.options)
+
+        # Top-level section headers sit at level 0.
+        assets_header = next(
+            l for l in result['lines'] if l['id'] == 'section-assets-header'
+        )
+        self.assertEqual(assets_header['level'], 0)
+        self.assertEqual(assets_header['name'], "ASSETS")
+        # Current Assets group is level 1.
+        ca_header = next(
+            l for l in result['lines']
+            if l['id'] == 'section-current_assets-header'
+        )
+        self.assertEqual(ca_header['level'], 1)
+        # Bank and Cash leaf subsection is level 2.
+        bc_header = next(
+            l for l in result['lines'] if l['id'] == 'section-bank_cash-header'
+        )
+        self.assertEqual(bc_header['level'], 2)
+        # Order: ASSETS -> Current Assets group -> Bank and Cash subsection.
+        idx_assets = next(
+            i for i, l in enumerate(result['lines'])
+            if l['id'] == 'section-assets-header'
+        )
+        idx_ca = next(
+            i for i, l in enumerate(result['lines'])
+            if l['id'] == 'section-current_assets-header'
+        )
+        idx_bc = next(
+            i for i, l in enumerate(result['lines'])
+            if l['id'] == 'section-bank_cash-header'
+        )
+        self.assertLess(idx_assets, idx_ca)
+        self.assertLess(idx_ca, idx_bc)
+
+        # Subtotals roll up correctly: bank_cash + receivables == current_assets.
+        bc_total = self._amount(self._line_by_id(
+            result, 'section-bank_cash-total',
+        ))
+        recv_total = self._amount(self._line_by_id(
+            result, 'section-receivables-total',
+        ))
+        ca_total = self._amount(self._line_by_id(
+            result, 'section-current_assets-total',
+        ))
+        self.assertAlmostEqual(ca_total, bc_total + recv_total, places=2)
+        # And Total ASSETS still matches the totals['assets'] aggregate.
+        assets_total_line = self._amount(self._line_by_id(
+            result, 'section-assets-total',
+        ))
+        self.assertAlmostEqual(
+            assets_total_line, result['totals']['assets'], places=2,
+        )
+        # The hierarchical aggregate of Current Liabilities surfaces in totals.
+        self.assertIn('current_liabilities', result['totals'])
+        self.assertAlmostEqual(
+            result['totals']['current_liabilities'],
+            result['totals']['liabilities'], places=2,
+            msg="With no non-current liabilities posted, the inner "
+                "Current Liabilities subtotal equals the overall total.",
+        )
+        # Identity must still hold: Total ASSETS = LIABILITIES + EQUITY (+ CYE).
+        self.assertAlmostEqual(
+            result['totals']['balance_check'], 0.0, places=2,
+        )
 
     def test_zero_balance_account_hidden_by_default(self):
         self._post_in_period([

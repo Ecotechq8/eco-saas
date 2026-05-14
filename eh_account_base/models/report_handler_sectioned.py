@@ -256,8 +256,12 @@ class EhAccountDynamicReportSectionedHandler(models.AbstractModel):
     # ---- line factories ----
 
     @api.model
-    def _render_account_lines(self, rows, show_zero=False):
-        """Convert grouped account totals into report line dicts."""
+    def _render_account_lines(self, rows, show_zero=False, level=1):
+        """Convert grouped account totals into report line dicts.
+
+        :param level: indent level of each account row. Defaults to 1; pass
+            a deeper value when the rows sit inside a nested subsection.
+        """
         lines = []
         for r in rows:
             amount = round(r['amount'], 2)
@@ -266,7 +270,7 @@ class EhAccountDynamicReportSectionedHandler(models.AbstractModel):
             lines.append({
                 'id': "account-%s" % r['account_id'],
                 'name': "%s %s" % (r['account_code'], r['account_name']),
-                'level': 1,
+                'level': level,
                 'columns': [
                     {'expression_label': 'amount', 'value': amount},
                 ],
@@ -279,7 +283,7 @@ class EhAccountDynamicReportSectionedHandler(models.AbstractModel):
         return lines
 
     @api.model
-    def _section_header_line(self, name, section_id):
+    def _section_header_line(self, name, section_id, level=0):
         # Empty string instead of None for the value: keeps the cell
         # blank in the OWL renderer and the PDF/XLSX exporter, but is
         # also serialisable through XML-RPC (where None is rejected
@@ -288,18 +292,18 @@ class EhAccountDynamicReportSectionedHandler(models.AbstractModel):
         return {
             'id': "section-%s-header" % section_id,
             'name': name,
-            'level': 0,
+            'level': level,
             'columns': [{'expression_label': 'amount', 'value': ''}],
             'unfoldable': False,
             'meta': {'kind': 'section_header', 'section_id': section_id},
         }
 
     @api.model
-    def _section_total_line(self, name, total, section_id):
+    def _section_total_line(self, name, total, section_id, level=0):
         return {
             'id': "section-%s-total" % section_id,
             'name': name,
-            'level': 0,
+            'level': level,
             'columns': [
                 {'expression_label': 'amount', 'value': round(total, 2)},
             ],
@@ -308,14 +312,15 @@ class EhAccountDynamicReportSectionedHandler(models.AbstractModel):
         }
 
     @api.model
-    def _computed_line(self, line_id, name, amount, kind='computed'):
+    def _computed_line(self, line_id, name, amount, kind='computed', level=0):
         """Standalone computed line (Net Profit, Current Year Earnings,
-        Balance Check, etc.). Sits at level 0 in bold.
+        Balance Check, etc.). Defaults to level 0 (bold). Pass a deeper
+        level when the computed value belongs to a nested subsection.
         """
         return {
             'id': line_id,
             'name': name,
-            'level': 0,
+            'level': level,
             'columns': [
                 {'expression_label': 'amount', 'value': round(amount, 2)},
             ],
