@@ -155,11 +155,11 @@ class FoodicConnector(models.Model):
             """
         connector = self.env['foodic.connector'].search(
             [('state', '=', 'authenticated')], limit=1)
-        difference = datetime.datetime.now() - connector.last_update
         if connector and connector.is_automatically_sync:
+            now = datetime.datetime.now()
             hours_interval = datetime.timedelta(hours=connector.every_hours)
-            if hours_interval <= difference:
-                connector.last_update = datetime.datetime.now()
+            if not connector.last_update or hours_interval <= (now - connector.last_update):
+                connector.last_update = now
                 connector.sync_tags()
                 connector.sync_users()
                 connector.sync_branch()
