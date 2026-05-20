@@ -85,3 +85,5 @@ class ResUsers(models.Model):
             user_vals = user_rec.prepare_user_data(user_data)
             if user_rec:
                 user_rec.update(user_vals)
+
+
