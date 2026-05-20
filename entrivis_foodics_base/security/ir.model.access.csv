@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_foodic_connector,access.foodic.connector,model_foodic_connector,,1,1,1,1
+access_foodics_history,access.foodics.history,model_foodics_history,,1,1,1,1

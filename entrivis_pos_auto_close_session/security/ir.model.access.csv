@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_entrivis_pos_auto_close_session_entrivis_pos_auto_close_session,entrivis_pos_auto_close_session.entrivis_pos_auto_close_session,model_entrivis_pos_auto_close_session_entrivis_pos_auto_close_session,base.group_user,1,1,1,1

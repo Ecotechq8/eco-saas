@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_res_config_setting_pos" model="ir.ui.view">
+            <field name="name">view_res_config_setting_pos</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//block[@id='pos_accounting_section']" position="inside">
+                    <div class="col-12 col-lg-6 o_setting_box"
+                         title="Choose a specific fiscal position at the order depending on the kind of customer (tax exempt, onsite vs. takeaway, etc.).">
+                        <div class="o_setting_left_pane">
+                            <field name="auto_close_session"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="auto_close_session" string="Auto Close Session"/>
+                            <div class="text-muted">
+                                Auto Close the session after starting the hours define here.
+                            </div>
+                            <div class="content-group mt16"
+                                 invisible="not auto_close_session">
+                                <div class="row">
+                                    <field name="close_session_hours"/>
+                                </div>
+                                <div class="text-muted">
+                                    Note : If the pos screen is on, system will skip to close the session.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.foodics</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="inside">
+                    <app data-string="Foodics" string="Foodics" name="foodics">
+                        <block title="Foodics Configuration">
+                            <setting string="Redirect URI">
+                                <field name="redirect_uri" readonly="1"/>
+                            </setting>
+                            <setting string="Client ID">
+                                <field name="client_id" password="True"/>
+                            </setting>
+                            <setting string="Client Secret">
+                                <field name="client_secret" password="True"/>
+                            </setting>
+                        </block>
+                    </app>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_res_foodics_settings" model="ir.actions.act_window">
+            <field name="name">Foodics Settings</field>
+            <field name="res_model">res.config.settings</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="base.res_config_settings_view_form"/>
+            <field name="target">current</field>
+        </record>
+
+        <menuitem id="menu_res_config_settings"
+                  name="Foodics"
+                  parent="base.menu_config"
+                  action="action_res_foodics_settings"
+                  sequence="101" />
+    </data>
+</odoo>

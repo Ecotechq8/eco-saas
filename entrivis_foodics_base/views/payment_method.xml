@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="payment_method_form_view_foodics" model="ir.ui.view">
+        <field name="name">payment.method.normal.form.view.foodics</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet" position="inside">
+                <notebook>
+                    <page name="foodics" string="Foodics">
+                        <group>
+                            <field name="foodics_id" readonly="1"/>
+                        </group>
+                        <button name="sync_payment_method" string="Sync Payment Method" type="object"/>
+                    </page>
+                </notebook>
+            </xpath>
+        </field>
+    </record>
+</odoo>

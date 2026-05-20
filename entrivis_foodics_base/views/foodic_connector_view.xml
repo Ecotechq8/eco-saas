@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_foodic_connector_form" model="ir.ui.view">
+            <field name="name">view.foodic.connector.form</field>
+            <field name="model">foodic.connector</field>
+            <field name="arch" type="xml">
+                <form string="Foodics Connector">
+                    <header>
+                        <button name="reset_to_draft" type="object" string="Reset To Draft" invisible="state == 'draft'"/>
+                        <button name="generate_code" class="oe_highlight" type="object" string="Generate Token" invisible="state != 'draft'"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <h1>
+                            <field name="name" required="1" readonly="state != 'draft'"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="mode" widget="radio" readonly="state != 'draft'"/>
+                            </group>
+                            <group>
+                                <field name="base_url" invisible="1"/>
+                                <field name="access_url" invisible="1"/>
+                                <field name="code" invisible="1"/>
+                                <field name="foodics_state_code" invisible="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="operations" string="Operations" invisible="state == 'draft'">
+                                <group>
+                                    <group string="Sync Automatic (Every 1 hour)">
+                                        <field name="is_automatically_sync"/>
+                                        <field name="every_hours" invisible="not is_automatically_sync"/>
+                                        <field name="last_update" invisible="not is_automatically_sync"/>
+                                    </group>
+                                    <group></group>
+                                </group>
+
+                                <group string="Sync Manually">
+                                    <group>
+                                        <div></div>
+                                        <button type="object" name="sync_tags" string="Tags Sync"
+                                                class="oe_highlight"/>
+                                        <div></div>
+                                        <button type="object" name="sync_users" string="Users Sync"
+                                                class="oe_highlight"/>
+                                        <div></div>
+                                        <button type="object" name="sync_branch" string="Branch Sync"
+                                                class="oe_highlight"/>
+<!--                                        <div></div>-->
+<!--                                        <button type="object" name="sync_pos_orders" string="Pos Orders Sync"-->
+<!--                                                class="oe_highlight"/>-->
+                                        <div></div>
+                                        <button type="object" name="sync_customers" string="Customer Sync"
+                                                class="oe_highlight"/>
+                                        <div></div>
+                                        <button type="object" name="sync_modifiers" string="Modifiers Sync"
+                                                class="oe_highlight"/>
+                                    </group>
+                                    <group>
+                                        <div></div>
+                                        <button type="object" name="sync_products" string="Product Sync"
+                                                class="oe_highlight"/>
+                                        <div></div>
+                                        <button type="object" name="sync_payment_methods"
+                                                string="Payment Methods Sync" class="oe_highlight"/>
+                                        <div></div>
+                                        <button type="object" name="sync_tax_groups" string="Tax Groups Sync"
+                                                class="oe_highlight" style="width:40px"/>
+                                        <div></div>
+                                        <button type="object" name="sync_pos_taxes" string="Taxes Sync"
+                                                class="oe_highlight" style="width:40px"/>
+                                        <div></div>
+                                        <button type="object" name="sync_pos_charges" string="charges Sync"
+                                                class="oe_highlight" style="width:40px"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="access_token" string="Access Token" invisible="1">
+                                <field name="access_token"
+                                       required="state != 'draft'" readonly="state != 'draft'"/>
+                            </page>
+                            <page string="Steps For Generate Token">
+                                <field name="description" readonly="1"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_foodic_connector_list" model="ir.ui.view">
+            <field name="name">view.foodic.connector.list</field>
+            <field name="model">foodic.connector</field>
+            <field name="arch" type="xml">
+                <list string="Foodics Connector">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="action_foodic_connector" model="ir.actions.act_window">
+            <field name="name">Foodics Connector</field>
+            <field name="res_model">foodic.connector</field>
+            <field name="view_mode">list,form</field>
+            <field name="view_id" ref="view_foodic_connector_list"/>
+        </record>
+
+        <menuitem id="menu_foodic_connector_root"
+                  web_icon="entrivis_foodics_base,static/description/icon.png"
+                  name="Foodics Connector"
+                  sequence="1"/>
+
+        <menuitem id="menu_connector"
+                  name="Connector"
+                  parent="menu_foodic_connector_root"
+                  sequence="1"/>
+
+        <menuitem id="menu_foodic_connector"
+                  name="Foodics Connector"
+                  parent="menu_connector"
+                  action="action_foodic_connector"
+                  sequence="1"/>
+    </data>
+</odoo>

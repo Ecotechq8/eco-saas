@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sync_res_partner_form" model="ir.ui.view">
+            <field name="name">sync.res.partner.form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <!--                <xpath expr="//form/sheet" position="before">-->
+                <!--                    <header>-->
+                <!--                        <button class="oe_highlight" name="sync_specific_customer" string="Sync Customer" type="object"/>-->
+                <!--                    </header>-->
+                <!--                </xpath>-->
+                <!--                <xpath expr="//field[@name='vat']" position="after">-->
+                <!--                    <field name="foodics_id" readonly="1"/>-->
+                <!--                </xpath>-->
+                <xpath expr="//notebook" position="inside">
+                    <page name="foodics" string="Foodics">
+                        <group>
+                            <field name="foodics_id" readonly="1"/>
+                        </group>
+                        <button name="sync_single_customers" string="Sync User" type="object"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_sync_res_partner" model="ir.actions.server">
+            <field name="name">Sync Customer</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="binding_model_id" ref="base.model_res_partner"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">
+                action = records.sync_all_customer()
+            </field>
+        </record>
+    </data>
+</odoo>
