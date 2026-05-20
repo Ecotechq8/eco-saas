@@ -43,7 +43,7 @@
         'views/account_tax_view.xml',
         'views/account_tax_group_view.xml',
         'views/pos_order_view.xml',
-        # 'data/sync_data_cron.xml',
+        'data/sync_data_cron.xml',
         'views/pos_session_view.xml',
         # 'views/order_tracking_view.xml',
         # 'views/sale_order_view.xml',
