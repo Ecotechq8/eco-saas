@@ -2,7 +2,7 @@
 <odoo noupdate="1">
     <record id="ir_cron_sync_data" model="ir.cron">
         <field name="name">Sync: Import data foodics to odoo</field>
-        <field name="model_id" eval="env['ir.model'].search([('model', '=', 'foodic.connector')]).id"/>
+        <field name="model_id" ref="model_foodic_connector"/>
         <field name="state">code</field>
         <field name="code">model.sync_all_data()</field>
         <field name="user_id" ref="base.user_root"/>
