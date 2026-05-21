@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_dynamic_pdf_template">
+        <t t-call="web.html_container">
+            <t t-set="report_styles">
+                <style type="text/css">
+                    .eh_pdf_page { font-family: Arial, sans-serif; font-size: 9pt; color: #2c3e50; }
+                    .eh_pdf_title { font-size: 16pt; font-weight: 700; color: #2c3e50; margin: 0 0 6px 0; }
+                    .eh_pdf_meta { font-size: 8pt; color: #6c757d; margin-bottom: 12px; }
+                    .eh_pdf_meta strong { color: #495057; }
+                    .eh_pdf_table { width: 100%; border-collapse: collapse; }
+                    .eh_pdf_table thead th {
+                        background: #f1f3f5;
+                        border-bottom: 1.5pt solid #495057;
+                        padding: 4pt 6pt;
+                        font-weight: 700;
+                        text-align: left;
+                        font-size: 8pt;
+                        text-transform: uppercase;
+                    }
+                    .eh_pdf_table tbody td {
+                        padding: 3pt 6pt;
+                        border-bottom: 0.25pt solid #dee2e6;
+                        font-size: 9pt;
+                    }
+                    .eh_pdf_table .text-end { text-align: right; }
+                    .eh_pdf_section_row td { font-weight: 600; background: #fafbfc; }
+                    .eh_pdf_section_header td {
+                        background: #e9ecef;
+                        font-size: 10pt;
+                        border-top: 1pt solid #495057;
+                    }
+                    .eh_pdf_section_total td {
+                        border-top: 1pt solid #495057;
+                        background: #f1f3f5;
+                    }
+                    .eh_pdf_account_header td,
+                    .eh_pdf_partner_header td {
+                        background: #e9ecef;
+                        font-weight: 700;
+                        border-top: 0.5pt solid #495057;
+                    }
+                    .eh_pdf_account_total td,
+                    .eh_pdf_partner_total td {
+                        background: #f1f3f5;
+                        border-top: 0.5pt solid #495057;
+                    }
+                    .eh_pdf_computed td {
+                        font-weight: 700;
+                        background: #fff3cd;
+                        border-top: 1.5pt solid #ffc107;
+                    }
+                    .eh_pdf_balance_check td {
+                        font-style: italic;
+                        background: #f8f9fa;
+                        color: #6c757d;
+                    }
+                    .eh_pdf_opening td,
+                    .eh_pdf_cash_balance td {
+                        font-style: italic;
+                    }
+                </style>
+            </t>
+            <t t-foreach="rendered" t-as="r">
+                <t t-call="web.external_layout">
+                    <div class="page eh_pdf_page">
+                        <h1 class="eh_pdf_title">
+                            <t t-out="r.get('doc').name"/>
+                        </h1>
+                        <div class="eh_pdf_meta">
+                            <t t-set="meta" t-value="r.get('payload').get('meta', {})"/>
+                            <t t-if="meta.get('date_from') and meta.get('date_to')">
+                                <strong>Period:</strong>
+                                <t t-out="meta.get('date_from')"/>
+                                to
+                                <t t-out="meta.get('date_to')"/>
+                            </t>
+                            <t t-elif="meta.get('date_to')">
+                                <strong>As at:</strong>
+                                <t t-out="meta.get('date_to')"/>
+                            </t>
+                            <span class="ms-3">
+                                <strong>Posted only:</strong>
+                                <t t-out="'Yes' if meta.get('posted_only') else 'No'"/>
+                            </span>
+                            <t t-set="curr" t-value="r.get('payload').get('currency') or {}"/>
+                            <span class="ms-3" t-if="curr">
+                                <strong>Currency:</strong>
+                                <t t-if="curr.get('multi_currency')">
+                                    Multi-currency
+                                </t>
+                                <t t-else="">
+                                    <t t-out="curr.get('name', '')"/>
+                                    <t t-if="curr.get('symbol')">
+                                        (<t t-out="curr.get('symbol')"/>)
+                                    </t>
+                                </t>
+                            </span>
+                            <span class="ms-3">
+                                <strong>Generated:</strong>
+                                <t t-out="r.get('payload').get('generated_at', '')"/>
+                            </span>
+                        </div>
+                        <table class="eh_pdf_table">
+                            <thead>
+                                <tr>
+                                    <t t-foreach="r.get('payload').get('columns') or []"
+                                       t-as="col">
+                                        <th t-att-class="'text-end' if col.get('figure_type') in ('monetary', 'integer', 'float', 'percentage') else ''">
+                                            <t t-out="col.get('name')"/>
+                                        </th>
+                                    </t>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="r.get('lines') or []" t-as="line">
+                                    <tr t-att-class="line.get('css_class')">
+                                        <td t-att-style="'padding-left: %sem;' % str((line.get('level') or 0) * 1.0)">
+                                            <t t-out="line.get('name')"/>
+                                        </td>
+                                        <t t-foreach="line.get('cells') or []" t-as="cell">
+                                            <td t-att-class="'text-end' if cell.get('align_right') else ''">
+                                                <t t-out="cell.get('display')"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                </t>
+                                <t t-if="not r.get('lines')">
+                                    <tr>
+                                        <td t-att-colspan="len(r.get('payload').get('columns') or []) or 1"
+                                            class="text-center"
+                                            style="color: #6c757d; padding: 16pt;">
+                                            No data for the selected filters.
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                        <div class="eh_pdf_footer"
+                             style="margin-top: 18pt; padding-top: 6pt; border-top: 0.25pt solid #C9A372; font-size: 7.5pt; color: #6c757d; text-align: center; letter-spacing: 0.04em;">
+                            Made with <span style="color: #ffffff; background: #1A2C3D; padding: 0 4px; border-radius: 4px;">🤍</span> from Melbourne by ERP Heritage
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
