@@ -20,19 +20,19 @@
                                 <field name="mode" widget="radio" readonly="state != 'draft'"/>
                             </group>
                             <group>
-                                <field name="base_url" invisible="1"/>
-                                <field name="access_url" invisible="1"/>
-                                <field name="code" invisible="1"/>
-                                <field name="foodics_state_code" invisible="1"/>
+                                <field name="base_url"/>
+                                <field name="access_url"/>
+                                <field name="code"/>
+                                <field name="foodics_state_code"/>
                             </group>
                         </group>
                         <notebook>
-                            <page name="operations" string="Operations" invisible="state == 'draft'">
+                            <page name="operations" string="Operations">
                                 <group>
                                     <group string="Sync Automatic (Every 1 hour)">
                                         <field name="is_automatically_sync"/>
-                                        <field name="every_hours" invisible="not is_automatically_sync"/>
-                                        <field name="last_update" invisible="not is_automatically_sync"/>
+                                        <field name="every_hours"/>
+                                        <field name="last_update"/>
                                     </group>
                                     <group></group>
                                 </group>
@@ -77,7 +77,7 @@
                                     </group>
                                 </group>
                             </page>
-                            <page name="access_token" string="Access Token" invisible="1">
+                            <page name="access_token" string="Access Token">
                                 <field name="access_token"
                                        required="state != 'draft'" readonly="state != 'draft'"/>
                             </page>
