@@ -1,29 +1,22 @@
 /** @odoo-module **/
 
 import { ProductScreen } from "@point_of_sale/app/screens/product_screen/product_screen";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
-import { useService } from "@web/core/utils/hooks";
 
-patch(ProductScreen.prototype, "entrivis_pos_auto_close_session.ProductScreen", {
-    /**
-     * Override _onClickPay to check session state before allowing payment
-     */
+patch(ProductScreen.prototype, {
     async _onClickPay() {
-        const posSessionState = this.pos.pos_session.state;
-        console.log("Pos Session State", posSessionState);
-
+        const posSessionState = this.pos.pos_session?.state;
         if (posSessionState === "closed") {
-            // Do not confirm the order and show error popup
-            this.dialog.add("AlertDialog", {
-                title: this.env._t("This Session is Already Closed"),
-                body: this.env._t(
+            this.dialog.add(AlertDialog, {
+                title: _t("This Session is Already Closed"),
+                body: _t(
                     "As per configuration this session is opened from decided hours. Click Okay to close the Screen."
                 ),
             });
             return;
         }
-
-        // If session is open, call the original _onClickPay method
         await super._onClickPay(...arguments);
     },
 });

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <record id="view_res_config_setting_pos" model="ir.ui.view">
+        <record id="view_res_config_setting_pos_1" model="ir.ui.view">
             <field name="name">view_res_config_setting_pos</field>
             <field name="model">res.config.settings</field>
             <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
@@ -32,13 +32,13 @@
             </field>
         </record>
 
-        <record id="res_config_settings_view_form" model="ir.ui.view">
+        <record id="res_config_settings_view_form_1" model="ir.ui.view">
             <field name="name">res.config.settings.view.form.inherit.foodics</field>
             <field name="model">res.config.settings</field>
             <field name="inherit_id" ref="base.res_config_settings_view_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//form" position="inside">
-                    <app data-string="Foodics" string="Foodics" name="foodics">
+                    <app data-string="Foodics" string="Foodics" name="entrivis_pos_auto_close_session">
                         <block title="Foodics Configuration">
                             <setting string="Redirect URI">
                                 <field name="redirect_uri" readonly="1"/>
@@ -61,6 +61,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="base.res_config_settings_view_form"/>
             <field name="target">current</field>
+            <field name="context">{'module': 'entrivis_pos_auto_close_session'}</field>
         </record>
 
         <menuitem id="menu_res_config_settings"

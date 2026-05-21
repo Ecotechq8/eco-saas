@@ -2,21 +2,26 @@
 {
     'name': "Entrivis POS Auto Close Session",
 
-    'summary': """""",
+    'summary': "Auto-close POS sessions after a configurable runtime, plus Foodics OAuth settings.",
 
-    'description': """""",
+    'description': """
+Entrivis POS Auto Close Session
+================================
+* Cron that auto-closes any opened POS session whose runtime exceeds the
+  configured number of hours.
+* Settings page (Foodics tab) exposing the Foodics OAuth credentials:
+  redirect URI, client ID, client secret.
+* POS frontend guard that blocks payment if the active session has been
+  closed server-side.
+""",
 
     'author': "Entrivis Tech. Pvt. Ltd.",
     'website': "https://www.entrivistech.com",
 
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/18.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
+    'category': 'Point of Sale',
     'version': '18.0.1.0.0',
 
-    # any module necessary for this one to work correctly
-    'depends': ['base', 'point_of_sale'],
+    'depends': ['base', 'point_of_sale', 'entrivis_foodics_base'],
 
     # always loaded
     'data': [
