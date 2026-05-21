@@ -1,0 +1,214 @@
+# Vietnamese translation for eh_account_dynamic_reports_pro.
+# Copyright (C) 2026 ERP Heritage (https://www.erpheritage.com.au/)
+# This file is distributed under the same licence as the eh_account_dynamic_reports_pro module.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ERP Heritage Accounting Suite 19.0\n"
+"Report-Msgid-Bugs-To: info@erpheritage.com.au\n"
+"POT-Creation-Date: 2026-05-02 00:00+0000\n"
+"PO-Revision-Date: 2026-05-02 00:00+0000\n"
+"Last-Translator: ERP Heritage <info@erpheritage.com.au>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Trial Balance, quarter to date"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "P and L, year to date with comparatives"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Monthly P and L to finance team (demo)"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.builder: company isolation"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.builder.line: company isolation"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.forecast: company isolation"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.saved.view: company isolation"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.schedule: company isolation"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Formula does not parse: %s"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Formula uses a disallowed construct: %s"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Only numeric constants are allowed."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Operator not allowed."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Unary operator not allowed."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Node type not allowed."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Builder code must match [a-z][a-z0-9_]* (got %r)."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Builder must be published before it can be viewed."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Line code must match [a-z][a-z0-9_]* (got %r)."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Line code %r is duplicated within builder %s."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Schedule '%s' has no recipient emails configured."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Could not build any attachment for delivery."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "base_date_from cannot be later than base_date_to."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Builder handler invoked without a report code in context. Render through the eh.account.dynamic.report orchestrator."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "No builder record matches code %r. Was the builder deleted while the published report still references it?"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Saved view name is required."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Saved view options must be a dict."
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Custom Reports"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Report Builder"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Saved Views"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Scheduled Deliveries"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Forecast Scenarios"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "ERP Heritage: Run due scheduled reports"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.forecast.list"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.forecast.form"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Run Projection"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.builder.list"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.builder.form"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Publish"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Unpublish"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Open in Viewer"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Duplicate"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.builder.search"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.saved.view.list"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.saved.view.form"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.schedule.list"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "eh.report.schedule.form"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Run Now"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Pause"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Resume"
+msgstr ""
+
+#. module: eh_account_dynamic_reports_pro
+msgid "Scheduled Reports"
+msgstr ""
+
