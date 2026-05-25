@@ -2,7 +2,7 @@
 
 {
     "name": "Access Control",
-    "version": "18.0.1.0.0",
+    "version": "18.0.1.0.1",
     "author": "VERTS Services India Pvt. Ltd.",
     "website": 'http://www.verts.co.in',
     "license": 'AGPL-3',
