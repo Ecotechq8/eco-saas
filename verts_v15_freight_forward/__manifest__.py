@@ -9,7 +9,7 @@
     "description": """This module adds the features of finance localization related to India""",
     "website": "http://www.verts.co.in",
     "depends": ['sale', 'stock', 'sale_management', 'purchase', 'verts_v15_basic_masters', 'verts_v15_print_template',
-                'product', 'crm', 'analytic', 'verts_v15_profiles'
+                'product', 'crm', 'analytic'
                 ],
     "category": "Generic Modules",
     'license': "LGPL-3",
