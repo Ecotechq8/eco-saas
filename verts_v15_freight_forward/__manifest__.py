@@ -4,7 +4,7 @@
 
 {
     "name": "verts_v15_freight_forward",
-    "version": "18.0.1.0.1",
+    "version": "18.0.1.0.2",
     "author": "VERTS Services India Pvt. Ltd.",
     "description": """This module adds the features of finance localization related to India""",
     "website": "http://www.verts.co.in",
