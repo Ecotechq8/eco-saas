@@ -267,48 +267,44 @@
                     <table class="table table-sm o_main_table"
                            style="width: 100%; border: 1px solid #dee2e6; margin-top: 15px; font-size: 11px; border-collapse: collapse;">
                         <thead>
-                            <tr style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; border-bottom: 2px solid #dee2e6; text-align: left;">
-                                <th style="padding: 6px;">Description</th>
-                                <th style="padding: 6px; text-align: right;">Quantity</th>
-                                <th style="padding: 6px; text-align: left;">Unit</th>
-                                <th style="padding: 6px; text-align: right;">Price</th>
-                                <th style="padding: 6px; text-align: left;">Taxes</th>
-                                <th style="padding: 6px; text-align: right;">Subtotal</th>
-                                <th style="padding: 6px; text-align: right;">VAT</th>
-                                <th style="padding: 6px; text-align: right;">Subtotal</th>
+                            <tr style="background-color: #104a8e; color: white; border: 1px solid #104a8e; text-align: center;">
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>الوصف</b><br/>DESCRIPTION</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>الكمية</b><br/>QUANTITY</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>سعر الوحدة</b><br/>UNIT PRICE</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>نسبة الضريبة</b><br/>TAXES</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>المجموع الفرعي بدون الضريبة</b><br/>SUBTOTAL<br/>(EXCLUSIVE OF VAT)</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>قيمة الضريبة</b><br/>VAT<br/>AMOUNT</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>المجموع شامل ضريبة القيمة المضافة</b><br/>SUBTOTAL<br/>(INCLUSIVE OF VAT)</th>
                             </tr>
                         </thead>
                         <tbody>
                             <t t-foreach="o.invoice_line_ids" t-as="line">
                                 <tr t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''" style="border-bottom: 1px solid #dee2e6; vertical-align: top;">
                                     <t t-if="not line.display_type or line.display_type == 'product'">
-                                        <td style="padding: 6px;">
+                                        <td style="padding: 6px; border: 1px solid #dee2e6; text-align: left;">
                                             <span t-out="line.name"/>
                                         </td>
-                                        <td style="padding: 6px; text-align: right;">
-                                            <span t-out="line.quantity"/>
+                                        <td style="padding: 6px; text-align: right; border: 1px solid #dee2e6;">
+                                            <span t-out="'%.2f' % line.quantity"/>
                                         </td>
-                                        <td style="padding: 6px; text-align: left;">
-                                            <span t-out="line.product_uom_id.name"/>
+                                        <td style="padding: 6px; text-align: right; border: 1px solid #dee2e6;">
+                                            <span t-field="line.price_unit" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
-                                        <td style="padding: 6px; text-align: right;">
-                                            <span t-field="line.price_unit"/>
-                                        </td>
-                                        <td style="padding: 6px; text-align: left;">
+                                        <td style="padding: 6px; text-align: right; border: 1px solid #dee2e6;">
                                             <span t-out="', '.join(line.tax_ids.mapped('name'))"/>
                                         </td>
-                                        <td style="padding: 6px; text-align: right;">
-                                            <span t-field="line.price_subtotal"/>
+                                        <td style="padding: 6px; text-align: right; border: 1px solid #dee2e6;">
+                                            <span t-field="line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
-                                        <td style="padding: 6px; text-align: right;">
+                                        <td style="padding: 6px; text-align: right; border: 1px solid #dee2e6;">
                                             <span t-out="line.price_total - line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
-                                        <td style="padding: 6px; text-align: right;">
-                                            <span t-field="line.price_total"/>
+                                        <td style="padding: 6px; text-align: right; border: 1px solid #dee2e6;">
+                                            <span t-field="line.price_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
                                     </t>
                                     <t t-else="">
-                                        <td colspan="8" style="padding: 6px;">
+                                        <td colspan="7" style="padding: 6px; border: 1px solid #dee2e6; text-align: left;">
                                             <span t-out="line.name"/>
                                         </td>
                                     </t>
@@ -317,70 +313,48 @@
                         </tbody>
                     </table>
 
-                    <div style="margin-top: 10px; border-top: 1px solid #dee2e6; padding-top: 10px;">
-                        <p style="font-weight: bold; text-align: right;">Total :
-                            <span t-field="o.amount_total_signed"/>
-                        </p>
+                    <div style="margin-top: 10px; padding-top: 10px;">
                         <p style="text-align: left;">
                             <strong>
-                                <span t-out="o.company_currency_id.amount_to_text(o.amount_total_signed)"/>
+                                <span t-out="o.company_currency_id.amount_to_text(o.amount_total)"/>
                             </strong>
                         </p>
 
-                        <!-- Two-column layout: Summary table on right -->
+                        <!-- Two-column layout: Summary table on right (which appears on left in RTL) -->
                         <div style="width: 100%; display: table; margin-top: 10px;">
                             <!-- Left column: Spacer -->
-                            <div style="display: table-cell; width: 60%; vertical-align: top;">
+                            <div style="display: table-cell; width: 40%; vertical-align: top;">
                             </div>
 
-                            <!-- Right column: Summary table, shown only if paid_amount is not zero or None -->
-                            <t t-set="pmt_content"
-                               t-value="(o.invoice_payments_widget and o.invoice_payments_widget != 'false' and json.loads(o.invoice_payments_widget).get('content')) or []"/>
-                            <t t-set="last_pmt" t-value="pmt_content and pmt_content[-1] or False"/>
-                            <t t-set="paid_amount" t-value="o.amount_total - o.amount_residual"/>
-
-                            <t t-if="paid_amount">  <!-- Condition to show table only if paid_amount is not zero or None -->
-                                <div style="display: table-cell; width: 40%; vertical-align: top;">
-                                    <table style="width:100%; border:1px solid #dee2e6; border-collapse:collapse; font-size:11px;">
-                                        <!-- Row 1: Total -->
-                                        <tr style="background:#f8f9fa;">
-                                            <td style="padding:4px; font-weight:bold; border:1px solid #dee2e6;">Total</td>
-                                            <td style="padding:4px; text-align:right; border:1px solid #dee2e6;">
-                                                <span t-field="o.amount_total"
-                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Row 2: Paid on DATE | amount -->
-                                        <tr>
-                                            <td style="padding:4px; border:1px solid #dee2e6;">
-                                                <t t-if="last_pmt">
-                                                    Paid on
-                                                    <t t-set="pdt" t-value="last_pmt.get('date')"/>
-                                                    <t t-if="pdt and '-' in pdt"
-                                                       t-out="datetime.datetime.strptime(pdt, '%Y-%m-%d').strftime('%d/%m/%Y')"/>
-                                                    <t t-elif="pdt" t-out="pdt"/>
-                                                </t>
-                                                <t t-if="not last_pmt">Paid</t>
-                                            </td>
-                                            <td style="padding:4px; text-align:right; border:1px solid #dee2e6;">
-                                                <span t-out="paid_amount"
-                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Row 3: Amount Due -->
-                                        <tr style="background:#f8f9fa;">
-                                            <td style="padding:4px; font-weight:bold; border:1px solid #dee2e6;">Amount Due
-                                            </td>
-                                            <td style="padding:4px; text-align:right; border:1px solid #dee2e6;">
-                                                <span t-field="o.amount_residual"
-                                                      t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </t>
+                            <!-- Right column: Summary table -->
+                            <div style="display: table-cell; width: 60%; vertical-align: top;">
+                                <table style="width: 100%; border-collapse: collapse; font-size: 11px; border: 1px solid #dee2e6;">
+                                    <tr>
+                                        <td style="padding: 6px; border: 1px solid #dee2e6; text-align: right; font-weight: bold; width: 65%;">
+                                            Invoice Taxable Amount /<br/>المبلغ الخاضع للضريبة غير شامل ضريبة القيمة المضافة
+                                        </td>
+                                        <td style="padding: 6px; border: 1px solid #dee2e6; text-align: right; width: 35%;">
+                                            <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 6px; border: 1px solid #dee2e6; text-align: right; font-weight: bold;">
+                                            VAT Taxes
+                                        </td>
+                                        <td style="padding: 6px; border: 1px solid #dee2e6; text-align: right;">
+                                            <span t-out="o.amount_total - o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                    <tr style="background-color: #104a8e; color: white;">
+                                        <td style="padding: 6px; border: 1px solid #104a8e; text-align: right; font-weight: bold;">
+                                            Invoice Total (inclusive of VAT) / إجمالي قيمة الفاتورة شامل ضريبة القيمة المضافة
+                                        </td>
+                                        <td style="padding: 6px; border: 1px solid #104a8e; text-align: right;">
+                                            <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </div>
                     </div>
 
