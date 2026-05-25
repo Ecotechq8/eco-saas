@@ -11,31 +11,31 @@
 
 		<record id="group_header_user_export_menu" model="res.groups">
 			<field name="name">01. Freight Forward Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_quotation_menu" model="res.groups">
 			<field name="name">02. Show Freight Forward Quotation Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_export_sales_order_menu" model="res.groups">
 			<field name="name">03. Show Freight Forward Sales Orders Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_product_menu" model="res.groups">
 			<field name="name">04. Product Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_reports_menu" model="res.groups">
 			<field name="name">05. Reporting Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
@@ -43,198 +43,198 @@
 		
 		<record id="group_export_configuration_menu" model="res.groups">
 			<field name="name">06. Configuration Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		
 		<record id="group_export_config_submenu1" model="res.groups">
 			<field name="name">07. ECGC Rating Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu2" model="res.groups">
 			<field name="name">08. ECGC Premium Rate Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu3" model="res.groups">
 			<field name="name">09. Terminal Handling Charges(THC) Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu4" model="res.groups">
 			<field name="name">10. Empty Trailer Cost Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu5" model="res.groups">
 			<field name="name">11. Health Certificate Charges Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu6" model="res.groups">
 			<field name="name">12. Insurance % Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu7" model="res.groups">
 			<field name="name">13. Freight Forward Expenses Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu8" model="res.groups">
 			<field name="name">14. Freight Forward Documents Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu9" model="res.groups">
 			<field name="name">15. Transit Duration Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu10" model="res.groups">
 			<field name="name">16. Incoterms Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		
 		<record id="group_export_config_submenu11" model="res.groups">
 			<field name="name">17. Country Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu12" model="res.groups">
 			<field name="name">18. Ports Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu13" model="res.groups">
 			<field name="name">19. International Region Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		
 		<record id="group_export_config_submenu14" model="res.groups">
 			<field name="name">20. Payment Terms Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu15" model="res.groups">
 			<field name="name">21. Point of Stuffing Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu16" model="res.groups">
 			<field name="name">22. Export Party Master Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu17" model="res.groups">
 			<field name="name">23. Export Product Category Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu18" model="res.groups">
 			<field name="name">24. QC Parameters Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu19" model="res.groups">
 			<field name="name">25. QC Parameters Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		
 		<record id="group_export_config_submenu20" model="res.groups">
 			<field name="name">26. Common Schedule Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu21" model="res.groups">
 			<field name="name">27. Container Type Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu22" model="res.groups">
 			<field name="name">28. Product Mix Variants Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		
 		<record id="group_export_config_submenu23" model="res.groups">
 			<field name="name">29. Export Packing Type Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu24" model="res.groups">
 			<field name="name">30. Term OF Shipment Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 		
 		<record id="group_export_config_submenu25" model="res.groups">
 			<field name="name">31. Export Invoices Menu</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_shipping_line_menu26" model="res.groups">
 			<field name="name">32. Shipping Line</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_cha_menu27" model="res.groups">
 			<field name="name">33. Custom House Agents</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_cha_profitable" model="res.groups">
 			<field name="name">34.Profitable field Visible</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_cha_vendor" model="res.groups">
 			<field name="name">35.Vendor Button Visible</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_cha_invoice" model="res.groups">
 			<field name="name">36.Invoice Smart Button Visible</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
 		<record id="group_cha_invoice_button" model="res.groups">
 			<field name="name">36.Invoice Button Visible</field>
-			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+			<!-- <field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/> -->
 			<field name="category_id" ref="module_export_pro_categ_id"/>
 		</record>
 
