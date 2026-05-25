@@ -314,16 +314,15 @@
                     </table>
 
                     <div style="margin-top: 10px; padding-top: 10px;">
-                        <p style="text-align: left;">
-                            <strong>
-                                <span t-out="o.company_currency_id.amount_to_text(o.amount_total)"/>
-                            </strong>
-                        </p>
-
-                        <!-- Two-column layout: Summary table on right (which appears on left in RTL) -->
+                        <!-- Two-column layout: Summary table on right -->
                         <div style="width: 100%; display: table; margin-top: 10px;">
-                            <!-- Left column: Spacer -->
-                            <div style="display: table-cell; width: 40%; vertical-align: top;">
+                            <!-- Left column: Amount in words -->
+                            <div style="display: table-cell; width: 40%; vertical-align: top; padding-right: 15px;">
+                                <p style="text-align: left;">
+                                    <strong>
+                                        <span t-out="o.company_currency_id.amount_to_text(o.amount_total)"/>
+                                    </strong>
+                                </p>
                             </div>
 
                             <!-- Right column: Summary table -->
