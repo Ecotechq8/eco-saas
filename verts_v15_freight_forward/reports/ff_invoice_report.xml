@@ -268,13 +268,13 @@
                            style="width: 100%; border: 1px solid #dee2e6; margin-top: 15px; font-size: 11px; border-collapse: collapse;">
                         <thead>
                             <tr style="background-color: #104a8e; color: white; border: 1px solid #104a8e; text-align: center;">
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>الوصف</b><br/>DESCRIPTION</th>
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>الكمية</b><br/>QUANTITY</th>
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>سعر الوحدة</b><br/>UNIT PRICE</th>
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>نسبة الضريبة</b><br/>TAXES</th>
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>المجموع الفرعي بدون الضريبة</b><br/>SUBTOTAL<br/>(EXCLUSIVE OF VAT)</th>
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>قيمة الضريبة</b><br/>VAT<br/>AMOUNT</th>
-                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle;"><b>المجموع شامل ضريبة القيمة المضافة</b><br/>SUBTOTAL<br/>(INCLUSIVE OF VAT)</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>الوصف</b><br/>DESCRIPTION</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>الكمية</b><br/>QUANTITY</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>سعر الوحدة</b><br/>UNIT PRICE</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>نسبة الضريبة</b><br/>TAXES</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>المجموع الفرعي بدون الضريبة</b><br/>SUBTOTAL<br/>(EXCLUSIVE OF VAT)</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>قيمة الضريبة</b><br/>VAT<br/>AMOUNT</th>
+                                <th style="padding: 6px; border: 1px solid #dee2e6; vertical-align: middle; color: white;"><b>المجموع شامل ضريبة القيمة المضافة</b><br/>SUBTOTAL<br/>(INCLUSIVE OF VAT)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -346,10 +346,10 @@
                                         </td>
                                     </tr>
                                     <tr style="background-color: #104a8e; color: white;">
-                                        <td style="padding: 6px; border: 1px solid #104a8e; text-align: right; font-weight: bold;">
+                                        <td style="padding: 6px; border: 1px solid #104a8e; text-align: right; font-weight: bold; color: white;">
                                             Invoice Total (inclusive of VAT) / إجمالي قيمة الفاتورة شامل ضريبة القيمة المضافة
                                         </td>
-                                        <td style="padding: 6px; border: 1px solid #104a8e; text-align: right;">
+                                        <td style="padding: 6px; border: 1px solid #104a8e; text-align: right; color: white;">
                                             <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                         </td>
                                     </tr>
