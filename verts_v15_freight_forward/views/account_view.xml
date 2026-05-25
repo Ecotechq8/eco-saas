@@ -159,6 +159,9 @@
                   <span class="oe_inline o_form_label mr-3 ml-5 oe_edit_only" groups="base.group_multi_currency"> in </span>
                   <field name="currency_id" groups="base.group_multi_currency"/>
                 </div>
+                <field name="delivery_date"/>
+                <field name="delivery_note"/>
+                <field name="documented_number"/>
               </group>
               <group string="Order Type" name="order_type" colspan="4" col="4">
                 <field name="order_type" readonly="1"/>
@@ -588,6 +591,18 @@
       <field name="arch" type="xml">
         <xpath expr="//field[@name='partner_bank_id']" position="after">
           <field name="cur_rate"/>
+        </xpath>
+      </field>
+    </record>
+    <record id="view_move_form_inherit_delivery_details" model="ir.ui.view">
+      <field name="name">account.move.form.inherit.delivery.details</field>
+      <field name="model">account.move</field>
+      <field name="inherit_id" ref="account.view_move_form"/>
+      <field name="arch" type="xml">
+        <xpath expr="//div[@name='journal_div']" position="after">
+          <field name="delivery_date" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')" readonly="state != 'draft'"/>
+          <field name="delivery_note" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')" readonly="state != 'draft'"/>
+          <field name="documented_number" invisible="move_type not in ('out_invoice', 'out_refund', 'in_invoice', 'in_refund', 'out_receipt', 'in_receipt')" readonly="state != 'draft'"/>
         </xpath>
       </field>
     </record>

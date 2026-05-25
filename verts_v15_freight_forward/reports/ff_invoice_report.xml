@@ -19,15 +19,16 @@
                                 <td style="width: 33%; height: 49px; font-size: 50px;" align="center">
 
                                 </td>
-                                <td style="width: 33%; height: 49px;">
+                                <td style="width: 33%; height: 49px; font-size: 11px; line-height: 15px;">
                                     <strong>
-                                        Bobyan Complex, Office #31,
-                                        <br/>
-                                        Ground Floor, Dajeej – Farwaniya.
-                                        <br/>
-                                        P.O.Box 21575 Safat 13076, Kuwait
-                                        <br/>
-                                        Tel : +965-22020345 / 22020346
+                                        <span t-field="o.company_id.name"/><br/>
+                                        <span t-field="o.company_id.street"/><br/>
+                                        <span t-if="o.company_id.street2" t-field="o.company_id.street2"/><br/>
+                                        <span t-field="o.company_id.city"/>
+                                        <span t-if="o.company_id.state_id">, <span t-field="o.company_id.state_id.name"/></span>
+                                        <span t-if="o.company_id.country_id">, <span t-field="o.company_id.country_id.name"/></span><br/>
+                                        <span t-if="o.company_id.phone">Tel: <span t-field="o.company_id.phone"/><br/></span>
+                                        <span t-if="o.company_id.vat">VAT: <span t-field="o.company_id.vat"/></span>
                                     </strong>
                                 </td>
                             </tr>
@@ -40,33 +41,35 @@
                         <b>Invoice</b>
                     </h1>
 
-                    <table style="width: 100%; border: 1px solid #000; font-size: 11px; border-collapse: collapse;">
+                    <table style="width: 100%; border: 1px solid #dee2e6; font-size: 11px; border-collapse: collapse;">
                         <tr>
                             <!-- LEFT BOX -->
-                            <td style="width: 50%; vertical-align: top; border-right: 1px solid #000; padding: 4px;">
+                            <td style="width: 50%; vertical-align: top; border-right: 1px solid #dee2e6; padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
                                     <tr>
-                                        <td style="padding: 2px;">
+                                        <td style="padding: 2px; width: 25%;">
                                             <strong>Customer</strong>
                                         </td>
-                                        <td style="padding: 2px;">:
+                                        <td style="padding: 2px; width: 75%;">:
                                             <span t-out="o.partner_id.name"/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td></td>
+                                        <td style="padding: 2px;">
+                                            <strong>Address</strong>
+                                        </td>
                                         <td style="padding: 2px;">:
-                                            <span t-out="o.partner_id.street"/>
-                                            <span t-out="o.partner_id.street2"/>
                                             <span t-out="o.partner_id.city"/>
+                                            <t t-if="o.partner_id.state_id">, <span t-out="o.partner_id.state_id.name"/></t>
+                                            <t t-if="o.partner_id.country_id">, <span t-out="o.partner_id.country_id.name"/></t>
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
+                                    <tr t-if="o.partner_id.vat">
+                                        <td style="padding: 2px;">
+                                            <strong>VAT</strong>
+                                        </td>
                                         <td style="padding: 2px;">:
-                                            <span t-out="o.partner_id.state_id.name"/>
-                                            <span t-out="o.partner_id.country_id.name"/>
-                                            <span t-out="o.partner_id.zip"/>
+                                            <span t-out="o.partner_id.vat"/>
                                         </td>
                                     </tr>
                                     <tr>
@@ -167,7 +170,7 @@
                             </td>
 
                             <!-- RIGHT BOX -->
-                            <td style="width: 50%; vertical-align: top; padding: 4px;">
+                            <td style="width: 50%; vertical-align: top; padding: 6px;">
                                 <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
                                     <tr>
                                         <td style="padding: 2px;">
@@ -212,7 +215,7 @@
                                     </tr>
                                     <tr>
                                         <td style="padding: 2px;">
-                                            <strong>Master Number</strong>
+                                            <strong>Bill of Lading No.</strong>
                                         </td>
                                         <td style="padding: 2px;">:
                                             <t t-if="o.mode == 'air'">
@@ -261,63 +264,60 @@
                     </table>
 
                     <!-- Invoice Table -->
-                    <table class="table"
-                           style="width: 100%; border: 1px solid #000; margin-top: 15px; font-size: 11px; border-collapse: collapse;">
+                    <table class="table table-sm o_main_table"
+                           style="width: 100%; border: 1px solid #dee2e6; margin-top: 15px; font-size: 11px; border-collapse: collapse;">
                         <thead>
-                            <tr style="background-color: #eee; text-align: center;">
-                                <th style="border: 1px solid #000;">No</th>
-                                <th style="border: 1px solid #000;">Description</th>
-                                <th style="border: 1px solid #000;">Currency</th>
-                                <th style="border: 1px solid #000;">Per Unit</th>
-                                <th style="border: 1px solid #000;">Unit</th>
-                                <th style="border: 1px solid #000;">Curr. Amount</th>
-                                <th style="border: 1px solid #000;">ROE</th>
-                                <th style="border: 1px solid #000;">Amt in KWD</th>
+                            <tr style="background-color: #f8f9fa; border-top: 1px solid #dee2e6; border-bottom: 2px solid #dee2e6; text-align: left;">
+                                <th style="padding: 6px;">Description</th>
+                                <th style="padding: 6px; text-align: right;">Quantity</th>
+                                <th style="padding: 6px; text-align: left;">Unit</th>
+                                <th style="padding: 6px; text-align: right;">Price</th>
+                                <th style="padding: 6px; text-align: left;">Taxes</th>
+                                <th style="padding: 6px; text-align: right;">Subtotal</th>
+                                <th style="padding: 6px; text-align: right;">VAT</th>
+                                <th style="padding: 6px; text-align: right;">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <t t-set="counter" t-value="1"/>
                             <t t-foreach="o.invoice_line_ids" t-as="line">
-                                <tr>
-                                    <td style="border: 1px solid #000; text-align: center;">
-                                        <span t-out="counter"/>
-                                    </td>
-                                    <td style="border: 1px solid #000;">
-                                        <span t-out="line.name"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: center;">
-                                        <span t-out="line.currency_id.name"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right;">
-                                        <span t-field="line.price_unit"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right;">
-                                        <span t-out="line.quantity"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right;">
-                                        <span t-field="line.price_total"/>
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right;">
-                                        <t t-if="line.debit">
-                                            <span t-out="'{:.12g}'.format(line.debit / line.price_total) if line.price_total else 0"/>
-                                        </t>
-                                        <t t-if="line.credit">
-                                            <span t-out="'{:.12g}'.format(line.credit / line.price_total) if line.price_total else 0"/>
-                                        </t>
-                                    </td>
-                                    <td style="border: 1px solid #000; text-align: right;">
-                                        <t t-if="line.debit" t-out="line.debit"
-                                           t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
-                                        <t t-if="line.credit" t-out="line.credit"
-                                           t-options='{"widget": "monetary", "display_currency": line.company_currency_id}'/>
-                                    </td>
+                                <tr t-att-class="'fw-bold o_line_section' if line.display_type == 'line_section' else 'fst-italic o_line_note' if line.display_type == 'line_note' else ''" style="border-bottom: 1px solid #dee2e6; vertical-align: top;">
+                                    <t t-if="not line.display_type or line.display_type == 'product'">
+                                        <td style="padding: 6px;">
+                                            <span t-out="line.name"/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: right;">
+                                            <span t-out="line.quantity"/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: left;">
+                                            <span t-out="line.product_uom_id.name"/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: right;">
+                                            <span t-field="line.price_unit"/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: left;">
+                                            <span t-out="', '.join(line.tax_ids.mapped('name'))"/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: right;">
+                                            <span t-field="line.price_subtotal"/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: right;">
+                                            <span t-out="line.price_total - line.price_subtotal" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                        <td style="padding: 6px; text-align: right;">
+                                            <span t-field="line.price_total"/>
+                                        </td>
+                                    </t>
+                                    <t t-else="">
+                                        <td colspan="8" style="padding: 6px;">
+                                            <span t-out="line.name"/>
+                                        </td>
+                                    </t>
                                 </tr>
-                                <t t-set="counter" t-value="counter + 1"/>
                             </t>
                         </tbody>
                     </table>
 
-                    <div style="margin-top: 10px; border-top: 1px solid #000; padding-top: 10px;">
+                    <div style="margin-top: 10px; border-top: 1px solid #dee2e6; padding-top: 10px;">
                         <p style="font-weight: bold; text-align: right;">Total :
                             <span t-field="o.amount_total_signed"/>
                         </p>
@@ -327,14 +327,10 @@
                             </strong>
                         </p>
 
-                        <!-- Two-column layout: Additional Remarks on left, Summary table on right -->
+                        <!-- Two-column layout: Summary table on right -->
                         <div style="width: 100%; display: table; margin-top: 10px;">
-                            <!-- Left column: Additional Remarks -->
-                            <div style="display: table-cell; width: 60%; vertical-align: top; padding-right: 20px;">
-                                <p style="border-top: 1px solid #000; padding-top: 10px;">
-                                    <strong>Additional Remarks :</strong>
-                                    <span t-field="o.narration"/>
-                                </p>
+                            <!-- Left column: Spacer -->
+                            <div style="display: table-cell; width: 60%; vertical-align: top;">
                             </div>
 
                             <!-- Right column: Summary table, shown only if paid_amount is not zero or None -->
@@ -345,11 +341,11 @@
 
                             <t t-if="paid_amount">  <!-- Condition to show table only if paid_amount is not zero or None -->
                                 <div style="display: table-cell; width: 40%; vertical-align: top;">
-                                    <table style="width:100%; border:1px solid #000; border-collapse:collapse; font-size:11px;">
+                                    <table style="width:100%; border:1px solid #dee2e6; border-collapse:collapse; font-size:11px;">
                                         <!-- Row 1: Total -->
-                                        <tr style="background:#b79a90;">
-                                            <td style="padding:4px; font-weight:bold; border:1px solid #000;">Total</td>
-                                            <td style="padding:4px; text-align:right; border:1px solid #000;">
+                                        <tr style="background:#f8f9fa;">
+                                            <td style="padding:4px; font-weight:bold; border:1px solid #dee2e6;">Total</td>
+                                            <td style="padding:4px; text-align:right; border:1px solid #dee2e6;">
                                                 <span t-field="o.amount_total"
                                                       t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                             </td>
@@ -357,7 +353,7 @@
 
                                         <!-- Row 2: Paid on DATE | amount -->
                                         <tr>
-                                            <td style="padding:4px; border:1px solid #000;">
+                                            <td style="padding:4px; border:1px solid #dee2e6;">
                                                 <t t-if="last_pmt">
                                                     Paid on
                                                     <t t-set="pdt" t-value="last_pmt.get('date')"/>
@@ -367,17 +363,17 @@
                                                 </t>
                                                 <t t-if="not last_pmt">Paid</t>
                                             </td>
-                                            <td style="padding:4px; text-align:right; border:1px solid #000;">
+                                            <td style="padding:4px; text-align:right; border:1px solid #dee2e6;">
                                                 <span t-out="paid_amount"
                                                       t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                             </td>
                                         </tr>
 
                                         <!-- Row 3: Amount Due -->
-                                        <tr style="background:#111; color:#fff;">
-                                            <td style="padding:4px; font-weight:bold; border:1px solid #000;">Amount Due
+                                        <tr style="background:#f8f9fa;">
+                                            <td style="padding:4px; font-weight:bold; border:1px solid #dee2e6;">Amount Due
                                             </td>
-                                            <td style="padding:4px; text-align:right; border:1px solid #000;">
+                                            <td style="padding:4px; text-align:right; border:1px solid #dee2e6;">
                                                 <span t-field="o.amount_residual"
                                                       t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                             </td>
@@ -392,15 +388,9 @@
                         <!-- Left: Terms -->
                         <div style="display:table-cell; width:60%; vertical-align:top;">
                             <strong>Terms:</strong>
-                            <ul style="padding-left: 15px;">
-                                <li>Cheques should be issued in favor of Bahman International Cargo</li>
-                                <li>Any discrepancy should be notified to us in writing within 7 days from the
-                                    invoice date.
-                                </li>
-                                <li>If no comments are received within 7 days from receipt of this invoice, the
-                                    same shall be considered as approved.
-                                </li>
-                            </ul>
+                            <div style="margin-top: 5px; min-height: 50px;">
+                                <span t-field="o.narration"/>
+                            </div>
                             <p style="margin-top: 10px;">E.&amp;O.E</p>
                             <p style="font-size:11px;">This is a computer-generated document and does not
                                 require a signature or stamp.

@@ -95,6 +95,8 @@ class AccountMove(models.Model):
     hawb = fields.Char(string="HAWB")
     customer_po_ref = fields.Char(string="Customer’s PO Ref.")
     ref_num = fields.Char(string='Shipper Ref. Number')
+    delivery_note = fields.Char(string="Delivery Note")
+    documented_number = fields.Char(string="Documented Number")
     move_container_line = fields.One2many('move.container.lines', 'move_id', string='Container Line')  ##by kajal
 
     # def action_post(self):
