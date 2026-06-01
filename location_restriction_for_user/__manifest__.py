@@ -10,10 +10,10 @@
     'depends': ['base', 'stock', 'sale', 'sale_stock'],
     'data': [
 
-        'views/res_user_inh_view.xml'
+        'views/res_user_inh_view.xml',
+        'views/stock_picking_type_views.xml',
     ],
     'installable': True,
     'auto_install': False,
     'application': True
 }
-
