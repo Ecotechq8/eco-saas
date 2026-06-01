@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="stock.stock_picking_type_action" model="ir.actions.act_window">
-        <field name="context">{'restrict_inventory_dashboard_default_warehouse': True}</field>
+        <field name="context">{'restrict_inventory_dashboard_warehouses': True}</field>
     </record>
 </odoo>
