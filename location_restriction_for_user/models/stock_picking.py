@@ -12,7 +12,11 @@ class Picking(models.Model):
         )
 
     def _get_user_default_internal_picking_type(self):
-        warehouse = self.env.user.with_company(self.env.company)._get_default_warehouse_id()
+        user = self.env.user.with_company(self.env.company)
+        allowed_warehouses = user._get_allowed_stock_warehouses()
+        warehouse = user._get_default_warehouse_id()
+        if allowed_warehouses and warehouse not in allowed_warehouses:
+            warehouse = allowed_warehouses[:1]
         if warehouse and warehouse.int_type_id:
             return warehouse.int_type_id
         return self.env['stock.picking.type']

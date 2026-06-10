@@ -1,50 +1,94 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    <record id="warehouse_user_restrict" model="res.groups">
-        <field name="name">Restrict Stock Warehouse Locations</field>
-        <field name="category_id" ref="base.module_category_hidden"/>
-    </record>
-
     <record id="restrict_stock_picking" model="ir.rule">
-        <field name="name">Restrict Stock Picking</field>
+        <field name="name">Allowed Warehouses: Transfers</field>
         <field name="model_id" ref="stock.model_stock_picking"/>
         <field name="domain_force">
-            ['|',('location_id','in',user.allow_location_ids.ids),('location_dest_id','in',user.allow_location_ids.ids)]
+            (user.inventory_dashboard_warehouse_ids
+             and [('picking_type_id.warehouse_id', 'in', user.inventory_dashboard_warehouse_ids.ids)]
+             or [(1, '=', 1)])
         </field>
-        <field name="groups" eval="[(4, ref('location_restriction_for_user.warehouse_user_restrict'))]"/>
+        <field name="groups" eval="[(5, 0, 0)]"/>
     </record>
+
     <record id="restrict_stock_picking_type" model="ir.rule">
-        <field name="name">Restrict Stock Picking Type</field>
+        <field name="name">Allowed Warehouses: Operation Types</field>
         <field name="model_id" ref="stock.model_stock_picking_type"/>
         <field name="domain_force">
-            ['|',('default_location_src_id','in',user.allow_location_ids.ids),('default_location_dest_id','in',user.allow_location_ids.ids)]
+            (user.inventory_dashboard_warehouse_ids
+             and [('warehouse_id', 'in', user.inventory_dashboard_warehouse_ids.ids)]
+             or [(1, '=', 1)])
         </field>
-        <field name="groups" eval="[(4, ref('location_restriction_for_user.warehouse_user_restrict'))]"/>
+        <field name="groups" eval="[(5, 0, 0)]"/>
     </record>
+
     <record id="restrict_stock_warehouse" model="ir.rule">
-        <field name="name">Restrict Stock Warehouse</field>
+        <field name="name">Allowed Warehouses: Warehouses</field>
         <field name="model_id" ref="stock.model_stock_warehouse"/>
-        <field name="domain_force">[('lot_stock_id','in',user.allow_location_ids.ids)]</field>
-        <field name="groups" eval="[(4, ref('location_restriction_for_user.warehouse_user_restrict'))]"/>
+        <field name="domain_force">
+            (user.inventory_dashboard_warehouse_ids
+             and [('id', 'in', user.inventory_dashboard_warehouse_ids.ids)]
+             or [(1, '=', 1)])
+        </field>
+        <field name="groups" eval="[(5, 0, 0)]"/>
     </record>
 
     <record id="restrict_stock_location" model="ir.rule">
-        <field name="name">Restrict Stock Location</field>
+        <field name="name">Allowed Warehouses: Internal Locations</field>
         <field name="model_id" ref="stock.model_stock_location"/>
-        <field name="domain_force">['|', ('id','in',user.allow_location_ids.ids), ('location_id', 'not in',
-            user.allow_location_ids.ids)]
+        <field name="domain_force">
+            (user.inventory_dashboard_warehouse_ids
+             and ['|',
+                  ('usage', '!=', 'internal'),
+                  ('id', 'child_of', user.inventory_dashboard_warehouse_ids.mapped('view_location_id').ids)]
+             or [(1, '=', 1)])
         </field>
-        <field name="groups" eval="[(4, ref('location_restriction_for_user.warehouse_user_restrict'))]"/>
+        <field name="groups" eval="[(5, 0, 0)]"/>
+    </record>
+
+    <record id="restrict_stock_quant" model="ir.rule">
+        <field name="name">Allowed Warehouses: Inventory Quantities</field>
+        <field name="model_id" ref="stock.model_stock_quant"/>
+        <field name="domain_force">
+            (user.inventory_dashboard_warehouse_ids
+             and [('location_id', 'child_of',
+                   user.inventory_dashboard_warehouse_ids.mapped('view_location_id').ids)]
+             or [(1, '=', 1)])
+        </field>
+        <field name="groups" eval="[(5, 0, 0)]"/>
+    </record>
+
+    <record id="restrict_stock_move" model="ir.rule">
+        <field name="name">Allowed Warehouses: Stock Moves</field>
+        <field name="model_id" ref="stock.model_stock_move"/>
+        <field name="domain_force">
+            (user.inventory_dashboard_warehouse_ids
+             and [('picking_type_id.warehouse_id', 'in',
+                   user.inventory_dashboard_warehouse_ids.ids)]
+             or [(1, '=', 1)])
+        </field>
+        <field name="groups" eval="[(5, 0, 0)]"/>
+    </record>
+
+    <record id="restrict_stock_move_line" model="ir.rule">
+        <field name="name">Allowed Warehouses: Stock Move Lines</field>
+        <field name="model_id" ref="stock.model_stock_move_line"/>
+        <field name="domain_force">
+            (user.inventory_dashboard_warehouse_ids
+             and [('move_id.picking_type_id.warehouse_id', 'in',
+                   user.inventory_dashboard_warehouse_ids.ids)]
+             or [(1, '=', 1)])
+        </field>
+        <field name="groups" eval="[(5, 0, 0)]"/>
     </record>
 
     <record id="stock_picking_rule_users" model="ir.rule">
-        <field name="name">Restrict Warehouse Transfers</field>
+        <field name="name">Obsolete Location-Based Transfer Restriction</field>
         <field name="model_id" ref="stock.model_stock_picking"/>
-        <field name="domain_force">['|', ('location_id','in', user.allow_location_ids.ids), ('location_dest_id', 'in'
-            , user.allow_location_ids.ids)]
-        </field>
-        <field name="groups" eval="[(4, ref('location_restriction_for_user.warehouse_user_restrict'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(5, 0, 0)]"/>
+        <field name="active" eval="False"/>
     </record>
 
 </odoo>

@@ -27,21 +27,7 @@
             </field>
         </field>
     </record>
-
-    <record id="res_users_view_form_preferences_inventory_dashboard_warehouses" model="ir.ui.view">
-        <field name="name">res.users.preferences.inventory.dashboard.warehouses</field>
-        <field name="model">res.users</field>
-        <field name="inherit_id" ref="sale_stock.res_users_view_form_preferences"/>
-        <field name="arch" type="xml">
-            <field name="property_warehouse_id" position="after">
-                <field name="inventory_dashboard_warehouse_ids"
-                       widget="many2many_tags"
-                       groups="stock.group_stock_multi_warehouses"/>
-            </field>
-        </field>
-    </record>
 </odoo>
-
 
 
 

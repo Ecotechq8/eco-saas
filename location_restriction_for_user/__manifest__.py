@@ -9,7 +9,7 @@
     'license': 'LGPL-3',
     'depends': ['base', 'stock', 'sale', 'sale_stock'],
     'data': [
-
+        'security/security_groups.xml',
         'views/res_user_inh_view.xml',
         'views/stock_picking_type_views.xml',
     ],

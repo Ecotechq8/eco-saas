@@ -6,17 +6,7 @@ class StockPickingType(models.Model):
 
     @api.model
     def _get_user_inventory_dashboard_warehouses(self):
-        user = self.env.user.with_company(self.env.company)
-        if "inventory_dashboard_warehouse_ids" in user._fields:
-            warehouses = user.inventory_dashboard_warehouse_ids
-            if warehouses:
-                return warehouses
-        for field_name in ("property_warehouse_id", "default_warehouse_id"):
-            if field_name in user._fields:
-                warehouse = user[field_name]
-                if warehouse:
-                    return warehouse
-        return self.env["stock.warehouse"]
+        return self.env.user._get_allowed_stock_warehouses()
 
     @api.model
     def _restrict_dashboard_domain_to_user_warehouses(self, domain):
