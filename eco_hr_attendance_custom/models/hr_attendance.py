@@ -3,6 +3,7 @@
 
 
 from odoo import fields, models, api, _
+from odoo.exceptions import ValidationError
 import pytz
 from odoo import models, api
 from odoo.http import request
@@ -13,6 +14,19 @@ class HrAttendance(models.Model):
     _inherit = 'hr.attendance'
 
     e_modified_time = fields.Datetime('Modified Check in', readonly=1)
+
+    @api.constrains('check_in', 'check_out')
+    def _check_no_future_attendance_dates(self):
+        now = fields.Datetime.now()
+        for attendance in self:
+            if attendance.check_in and attendance.check_in > now:
+                raise ValidationError(_(
+                    'You cannot create or import attendance records with a future Check In date.'
+                ))
+            if attendance.check_out and attendance.check_out > now:
+                raise ValidationError(_(
+                    'You cannot create or import attendance records with a future Check Out date.'
+                ))
 
     def action_modify_checkin_time(self):
         for rec in self:
