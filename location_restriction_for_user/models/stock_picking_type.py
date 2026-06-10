@@ -23,11 +23,24 @@ class StockPickingType(models.Model):
         if not self.env.context.get("restrict_inventory_dashboard_warehouses"):
             return domain
 
+        return self._restrict_domain_to_user_warehouses(domain)
+
+    @api.model
+    def _restrict_domain_to_user_warehouses(self, domain):
         warehouses = self._get_user_inventory_dashboard_warehouses()
         if not warehouses:
             return domain
 
         return [("warehouse_id", "in", warehouses.ids)] + list(domain or [])
+
+    @api.model
+    def name_search(self, name="", args=None, operator="ilike", limit=100):
+        return super().name_search(
+            name=name,
+            args=self._restrict_domain_to_user_warehouses(args),
+            operator=operator,
+            limit=limit,
+        )
 
     @api.model
     def _search(self, domain, *args, **kwargs):
