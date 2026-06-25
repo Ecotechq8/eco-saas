@@ -13,6 +13,7 @@ It supports both manual entry and timer-based logging for convenience.
     'version': '0.1',
     'depends': ['hr_timesheet'],
     'data': [
+        'data/internal_project_data.xml',
         'views/timesheet_grid.xml',
     ],
     'assets': {

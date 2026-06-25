@@ -4,3 +4,5 @@
 from . import ir_ui_view
 from . import ir_actions
 from . import timesheet
+from . import res_company
+from . import res_config_settings
