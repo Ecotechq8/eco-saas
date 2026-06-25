@@ -3,9 +3,8 @@
 
 
 from odoo import fields, models, api, _
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 import pytz
-from odoo import models, api
 from odoo.http import request
 import requests
 
@@ -14,6 +13,32 @@ class HrAttendance(models.Model):
     _inherit = 'hr.attendance'
 
     e_modified_time = fields.Datetime('Modified Check in', readonly=1)
+    state = fields.Selection(
+        [
+            ('draft', 'Draft'),
+            ('confirmed', 'Confirmed'),
+        ],
+        string='Status',
+        default='draft',
+        required=True,
+        copy=False,
+    )
+
+    def _check_attendance_confirm_action_allowed(self):
+        if not self.env.user.has_group('eco_hr_attendance_custom.group_attendance_confirmation_actions'):
+            raise UserError(_('You are not allowed to confirm attendance records.'))
+
+    def action_confirm_attendance(self):
+        self._check_attendance_confirm_action_allowed()
+        self.filtered(lambda attendance: attendance.state != 'confirmed').write({
+            'state': 'confirmed',
+        })
+
+    def action_set_attendance_to_draft(self):
+        self._check_attendance_confirm_action_allowed()
+        self.filtered(lambda attendance: attendance.state != 'draft').write({
+            'state': 'draft',
+        })
 
     @api.constrains('check_in', 'check_out')
     def _check_no_future_attendance_dates(self):
@@ -88,6 +113,15 @@ class HrAttendance(models.Model):
         return super().create(vals)
 
     def write(self, vals):
+        if {'check_in', 'check_out'} & set(vals):
+            locked_attendances = self.filtered(
+                lambda attendance: attendance.state == 'confirmed' and vals.get('state', attendance.state) == 'confirmed'
+            )
+            if locked_attendances:
+                raise UserError(_(
+                    'You cannot modify Check In or Check Out on confirmed attendance records. '
+                    'Set the attendance back to Draft first.'
+                ))
 
         # Detect if checkout is being written
         if "check_out" in vals:

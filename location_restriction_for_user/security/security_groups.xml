@@ -5,7 +5,8 @@
         <field name="name">Allowed Warehouses: Transfers</field>
         <field name="model_id" ref="stock.model_stock_picking"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and [('picking_type_id.warehouse_id', 'in', user.inventory_dashboard_warehouse_ids.ids)]
              or [(1, '=', 1)])
         </field>
@@ -16,7 +17,8 @@
         <field name="name">Allowed Warehouses: Operation Types</field>
         <field name="model_id" ref="stock.model_stock_picking_type"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and [('warehouse_id', 'in', user.inventory_dashboard_warehouse_ids.ids)]
              or [(1, '=', 1)])
         </field>
@@ -27,7 +29,8 @@
         <field name="name">Allowed Warehouses: Warehouses</field>
         <field name="model_id" ref="stock.model_stock_warehouse"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and [('id', 'in', user.inventory_dashboard_warehouse_ids.ids)]
              or [(1, '=', 1)])
         </field>
@@ -38,7 +41,8 @@
         <field name="name">Allowed Warehouses: Internal Locations</field>
         <field name="model_id" ref="stock.model_stock_location"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and ['|',
                   ('usage', '!=', 'internal'),
                   ('id', 'child_of', user.inventory_dashboard_warehouse_ids.mapped('view_location_id').ids)]
@@ -51,7 +55,8 @@
         <field name="name">Allowed Warehouses: Inventory Quantities</field>
         <field name="model_id" ref="stock.model_stock_quant"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and [('location_id', 'child_of',
                    user.inventory_dashboard_warehouse_ids.mapped('view_location_id').ids)]
              or [(1, '=', 1)])
@@ -63,7 +68,8 @@
         <field name="name">Allowed Warehouses: Stock Moves</field>
         <field name="model_id" ref="stock.model_stock_move"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and [('picking_type_id.warehouse_id', 'in',
                    user.inventory_dashboard_warehouse_ids.ids)]
              or [(1, '=', 1)])
@@ -75,7 +81,8 @@
         <field name="name">Allowed Warehouses: Stock Move Lines</field>
         <field name="model_id" ref="stock.model_stock_move_line"/>
         <field name="domain_force">
-            (user.inventory_dashboard_warehouse_ids
+            (not user.has_group('base.group_system')
+             and user.inventory_dashboard_warehouse_ids
              and [('move_id.picking_type_id.warehouse_id', 'in',
                    user.inventory_dashboard_warehouse_ids.ids)]
              or [(1, '=', 1)])

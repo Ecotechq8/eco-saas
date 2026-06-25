@@ -5,10 +5,47 @@
         <field name="model">hr.attendance</field>
         <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
         <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_in']" position="attributes">
+                <attribute name="readonly">state == 'confirmed'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='check_out']" position="attributes">
+                <attribute name="readonly">state == 'confirmed'</attribute>
+            </xpath>
             <xpath expr="//field[@name='check_out']" position="after">
                 <field name="e_modified_time"/>
+                <field name="state" widget="badge" decoration-success="state == 'confirmed'" decoration-info="state == 'draft'"/>
             </xpath>
 
+        </field>
+    </record>
+
+    <record id="hr_attendance_view_form" model="ir.ui.view">
+        <field name="name">hr.attendance.form.confirmation.status</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.hr_attendance_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='check_in']" position="attributes">
+                <attribute name="readonly">state == 'confirmed'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='check_out']" position="attributes">
+                <attribute name="readonly">state == 'confirmed'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='check_out']" position="after">
+                <field name="state" widget="statusbar" statusbar_visible="draft,confirmed" readonly="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_users_form_attendance_confirm_actions" model="ir.ui.view">
+        <field name="name">res.users.form.attendance.confirm.actions</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='access_rights']" position="inside">
+                <group string="Attendance">
+                    <field name="show_attendance_confirm_actions" groups="base.group_system"/>
+                </group>
+            </xpath>
         </field>
     </record>
 </odoo>

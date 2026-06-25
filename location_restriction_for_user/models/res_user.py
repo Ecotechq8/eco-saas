@@ -20,6 +20,8 @@ class ResUsers(models.Model):
 
     def _get_allowed_stock_warehouses(self):
         self.ensure_one()
+        if self.has_group('base.group_system'):
+            return self.env['stock.warehouse']
         return self.with_company(self.env.company).inventory_dashboard_warehouse_ids
 
     @property
