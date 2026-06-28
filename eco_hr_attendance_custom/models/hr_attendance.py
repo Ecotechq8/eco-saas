@@ -24,17 +24,60 @@ class HrAttendance(models.Model):
         copy=False,
     )
 
+    @api.model
+    def _ensure_custom_schema(self):
+        """Repair databases where this addon code was deployed before upgrade."""
+        registry_flag = '_eco_hr_attendance_custom_schema_checked'
+        if getattr(self.env.registry, registry_flag, False):
+            return
+
+        self.env.cr.execute("""
+            SELECT column_name
+              FROM information_schema.columns
+             WHERE table_schema = 'public'
+               AND table_name = 'hr_attendance'
+               AND column_name IN ('state', 'e_modified_time')
+        """)
+        existing_columns = {column for (column,) in self.env.cr.fetchall()}
+        schema_was_complete = {'state', 'e_modified_time'} <= existing_columns
+
+        if 'state' not in existing_columns:
+            self.env.cr.execute("""
+                ALTER TABLE hr_attendance
+                    ADD COLUMN state varchar
+            """)
+
+        self.env.cr.execute("""
+            UPDATE hr_attendance
+               SET state = 'draft'
+             WHERE state IS NULL
+        """)
+
+        if 'e_modified_time' not in existing_columns:
+            self.env.cr.execute("""
+                ALTER TABLE hr_attendance
+                    ADD COLUMN e_modified_time timestamp
+            """)
+
+        if schema_was_complete:
+            setattr(self.env.registry, registry_flag, True)
+
+    def init(self):
+        self._ensure_custom_schema()
+
     def _check_attendance_confirm_action_allowed(self):
         if not self.env.user.has_group('eco_hr_attendance_custom.group_attendance_confirmation_actions'):
             raise UserError(_('You are not allowed to confirm attendance records.'))
 
     def action_confirm_attendance(self):
+        self._ensure_custom_schema()
         self._check_attendance_confirm_action_allowed()
         self.filtered(lambda attendance: attendance.state != 'confirmed').write({
             'state': 'confirmed',
         })
 
     def action_set_attendance_to_draft(self):
+        self._ensure_custom_schema()
         self._check_attendance_confirm_action_allowed()
         self.filtered(lambda attendance: attendance.state != 'draft').write({
             'state': 'draft',
@@ -100,6 +143,7 @@ class HrAttendance(models.Model):
 
     @api.model
     def create(self, vals):
+        self._ensure_custom_schema()
         location = self._get_ip_location()
 
         if location:
@@ -113,6 +157,7 @@ class HrAttendance(models.Model):
         return super().create(vals)
 
     def write(self, vals):
+        self._ensure_custom_schema()
         if {'check_in', 'check_out'} & set(vals):
             locked_attendances = self.filtered(
                 lambda attendance: attendance.state == 'confirmed' and vals.get('state', attendance.state) == 'confirmed'
