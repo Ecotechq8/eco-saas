@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="action_report_hr_attendance_pdf" model="ir.actions.report">
+        <field name="name">Attendance PDF</field>
+        <field name="model">hr.attendance</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">eco_hr_attendance_custom.report_hr_attendance_pdf</field>
+        <field name="report_file">eco_hr_attendance_custom.report_hr_attendance_pdf</field>
+    </record>
+
+    <template id="report_hr_attendance_pdf">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="text-center mb-3">
+                    <t t-if="request.env.company.logo">
+                        <img
+                            class="o_company_logo_big"
+                            t-att-src="image_data_uri(request.env.company.logo)"
+                        />
+                    </t>
+                    <h3>Attendance</h3>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <thead>
+                        <tr>
+                            <th>Employee</th>
+                            <th>Department</th>
+                            <th>Check In</th>
+                            <th>Check Out</th>
+                            <th class="text-end">Worked Hours</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="docs" t-as="attendance">
+                            <tr>
+                                <td>
+                                    <span t-field="attendance.employee_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="attendance.employee_id.department_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="attendance.check_in"/>
+                                </td>
+                                <td>
+                                    <span t-field="attendance.check_out"/>
+                                </td>
+                                <td class="text-end">
+                                    <span
+                                        t-field="attendance.worked_hours"
+                                        t-options="{'widget': 'float_time'}"
+                                    />
+                                </td>
+                                <td>
+                                    <span t-field="attendance.state"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+</odoo>

@@ -83,6 +83,11 @@ class HrAttendance(models.Model):
             'state': 'draft',
         })
 
+    def action_export_attendance_pdf(self):
+        return self.env.ref(
+            'eco_hr_attendance_custom.action_report_hr_attendance_pdf'
+        ).report_action(self)
+
     @api.constrains('check_in', 'check_out')
     def _check_no_future_attendance_dates(self):
         now = fields.Datetime.now()
@@ -176,7 +181,6 @@ class HrAttendance(models.Model):
                 vals.update({
                     "out_latitude": location.get("latitude"),
                     "out_longitude": location.get("longitude"),
-                    "out_city": location.get("city"),
                     "out_country_name": location.get("country"),
                 })
 
