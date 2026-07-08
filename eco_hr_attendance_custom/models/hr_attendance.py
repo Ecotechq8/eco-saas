@@ -185,3 +185,4 @@ class HrAttendance(models.Model):
                 })
 
         return super().write(vals)
+

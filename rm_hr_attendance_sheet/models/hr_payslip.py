@@ -46,7 +46,15 @@ class Payslip(models.Model):
         return res
 
     @api.onchange('employee_id')
-    def onchange_employee_id(self):
+    def onchange_employee_id(self, date_from=None, date_to=None, employee_id=False, contract_id=False):
+        if date_from or date_to or employee_id or contract_id:
+            return super().onchange_employee_id(
+                date_from,
+                date_to,
+                employee_id=employee_id,
+                contract_id=contract_id,
+            )
+
         work_entry_obj = self.env['hr.work.entry.type']
         overtime_work_entry = work_entry_obj.search([('code', '=', 'ATTSHOT')])
         latin_work_entry = work_entry_obj.search([('code', '=', 'ATTSHLI')])
