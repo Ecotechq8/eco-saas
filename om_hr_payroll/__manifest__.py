@@ -18,6 +18,7 @@
         'security/hr_payroll_security.xml',
         'security/ir.model.access.csv',
         'data/hr_payroll_sequence.xml',
+        'data/hr_payslip_server_actions.xml',
         'data/hr_payroll_category.xml',
         'data/hr_payroll_data.xml',
         'wizard/hr_payroll_payslips_by_employees_views.xml',
