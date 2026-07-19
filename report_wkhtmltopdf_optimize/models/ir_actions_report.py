@@ -46,6 +46,11 @@ class IrActionsReport(models.Model):
             if not batch_size and report.model == 'hr.payslip':
                 batch_size = 10
             
+        _logger.info(
+            "PDF Optimization - report_ref: %s, resolved report: %s (model: %s), batch_size: %s, res_ids count: %s",
+            report_ref, report, getattr(report, 'model', 'N/A') if report else 'N/A', batch_size, len(res_ids) if res_ids else 0
+        )
+
         if batch_size > 0 and res_ids and isinstance(res_ids, (list, tuple)) and len(res_ids) > batch_size:
             _logger.info(
                 "Splitting PDF rendering of %s for %d records into batches of size %d",
