@@ -1,4 +1,5 @@
 import babel
+import re
 from datetime import date, datetime, time
 from dateutil.relativedelta import relativedelta
 from pytz import timezone
@@ -553,6 +554,52 @@ class HrPayslipLine(models.Model):
     def _compute_total(self):
         for line in self:
             line.total = float(line.quantity) * line.amount * line.rate / 100
+
+    def get_rule_hours(self):
+        """Return only the worked hours used by this salary rule."""
+        self.ensure_one()
+        worked_day_lines = self.slip_id.worked_days_line_ids.filtered(
+            lambda worked_day: worked_day.contract_id == self.contract_id
+        )
+
+        # Attendance-generated rules normally share their code with the
+        # corresponding worked-days line (for example OVT, ABS, and LATE).
+        matching_lines = worked_day_lines.filtered(
+            lambda worked_day: worked_day.code == self.code
+        )
+        if matching_lines:
+            return sum(matching_lines.mapped('number_of_hours'))
+
+        # Other rules can refer to a worked-days or work-entry code in their
+        # formulas (for example BASIC -> WORK100 or OVT -> ATTSHOT).
+        rule = self.salary_rule_id
+        expressions = filter(None, (
+            rule.quantity,
+            rule.condition_python,
+            rule.condition_range,
+            rule.amount_python_compute,
+            rule.amount_percentage_base,
+        ))
+        referenced_codes = set()
+        patterns = (
+            r"worked_days\s*\.\s*get\(\s*['\"]([^'\"]+)['\"]",
+            r"worked_days\s*\.?\s*\[\s*['\"]([^'\"]+)['\"]\s*\]",
+            r"worked_days\s*\.\s*(?!get\b)([A-Za-z_]\w*)",
+        )
+        for expression in expressions:
+            for pattern in patterns:
+                referenced_codes.update(re.findall(pattern, expression))
+
+        matching_lines = worked_day_lines.filtered(
+            lambda worked_day: (
+                worked_day.code in referenced_codes
+                or (
+                    getattr(worked_day, 'work_entry_type_id', False)
+                    and worked_day.work_entry_type_id.code in referenced_codes
+                )
+            )
+        )
+        return sum(matching_lines.mapped('number_of_hours'))
 
     @api.model_create_multi
     def create(self, vals_list):

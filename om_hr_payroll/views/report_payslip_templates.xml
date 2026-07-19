@@ -87,7 +87,7 @@
                                         <span t-field="line.name"/>
                                     </td>
                                     <td>
-                                        <span t-esc="sum(o.worked_days_line_ids.filtered(lambda worked_day: worked_day.contract_id == line.contract_id).mapped('number_of_hours'))"/>
+                                        <span t-esc="line.get_rule_hours()"/>
                                     </td>
                                     <td>
                                         <span t-esc="line.amount"
