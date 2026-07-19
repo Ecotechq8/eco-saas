@@ -40,6 +40,22 @@ class HrPayslip(models.Model):
         'res.company', string='Company', copy=False,
         default=lambda self: self.env.company
     )
+    currency_id = fields.Many2one(
+        'res.currency', related='company_id.currency_id', string='Currency',
+        readonly=True,
+    )
+    basic_salary = fields.Monetary(
+        string='Basic Salary', compute='_compute_salary_totals', store=True,
+        currency_field='currency_id',
+    )
+    gross_salary = fields.Monetary(
+        string='Gross Salary', compute='_compute_salary_totals', store=True,
+        currency_field='currency_id',
+    )
+    net_salary = fields.Monetary(
+        string='Net Salary', compute='_compute_salary_totals', store=True,
+        currency_field='currency_id',
+    )
     worked_days_line_ids = fields.One2many(
         'hr.payslip.worked_days', 'payslip_id',
         string='Payslip Worked Days', copy=True
@@ -57,6 +73,20 @@ class HrPayslip(models.Model):
         help="Indicates this payslip has a refund of another")
     payslip_run_id = fields.Many2one('hr.payslip.run', string='Payslip Batches', copy=False)
     payslip_count = fields.Integer(compute='_compute_payslip_count', string="Payslip Computation Details")
+
+    @api.depends(
+        'line_ids.code', 'line_ids.quantity', 'line_ids.amount',
+        'line_ids.rate',
+    )
+    def _compute_salary_totals(self):
+        for payslip in self:
+            totals_by_code = dict.fromkeys(('BASIC', 'GROSS', 'NET'), 0.0)
+            for line in payslip.line_ids:
+                if line.code in totals_by_code:
+                    totals_by_code[line.code] += line.total
+            payslip.basic_salary = totals_by_code.get('BASIC', 0.0)
+            payslip.gross_salary = totals_by_code.get('GROSS', 0.0)
+            payslip.net_salary = totals_by_code.get('NET', 0.0)
 
     def _compute_details_by_salary_rule_category(self):
         for payslip in self:
