@@ -564,6 +564,10 @@ class HrPayslipLine(models.Model):
     rate = fields.Float(string='Rate (%)', default=100.0)
     amount = fields.Float()
     quantity = fields.Float(default=1.0)
+    worked_hours = fields.Float(
+        string='Hours', compute='_compute_worked_hours',
+        help='Number of hours from the Worked Days & Inputs line used by this salary rule.',
+    )
     total = fields.Float(compute='_compute_total', string='Total', store=True)
 
     @api.depends('slip_id.struct_id', 'contract_id.struct_id')
@@ -576,6 +580,19 @@ class HrPayslipLine(models.Model):
         for line in self:
             line.total = float(line.quantity) * line.amount * line.rate / 100
 
+    @api.depends(
+        'code', 'contract_id', 'salary_rule_id.quantity',
+        'salary_rule_id.condition_python', 'salary_rule_id.condition_range',
+        'salary_rule_id.amount_python_compute',
+        'salary_rule_id.amount_percentage_base',
+        'slip_id.worked_days_line_ids.code',
+        'slip_id.worked_days_line_ids.number_of_hours',
+        'slip_id.worked_days_line_ids.contract_id',
+    )
+    def _compute_worked_hours(self):
+        for line in self:
+            line.worked_hours = line.get_rule_hours()
+
     def get_rule_hours(self):
         """Return only the worked hours used by this salary rule."""
         self.ensure_one()
@@ -583,16 +600,8 @@ class HrPayslipLine(models.Model):
             lambda worked_day: worked_day.contract_id == self.contract_id
         )
 
-        # Attendance-generated rules normally share their code with the
-        # corresponding worked-days line (for example OVT, ABS, and LATE).
-        matching_lines = worked_day_lines.filtered(
-            lambda worked_day: worked_day.code == self.code
-        )
-        if matching_lines:
-            return sum(matching_lines.mapped('number_of_hours'))
-
-        # Other rules can refer to a worked-days or work-entry code in their
-        # formulas (for example BASIC -> WORK100 or OVT -> ATTSHOT).
+        # Rules can refer to a worked-days or work-entry code in their formulas
+        # (for example BASIC -> WORK100 or OVT -> ATTSHOT).
         rule = self.salary_rule_id
         expressions = filter(None, (
             rule.quantity,
@@ -611,16 +620,33 @@ class HrPayslipLine(models.Model):
             for pattern in patterns:
                 referenced_codes.update(re.findall(pattern, expression))
 
+        def work_entry_code(worked_day):
+            work_entry_type = getattr(worked_day, 'work_entry_type_id', False)
+            return work_entry_type.code if work_entry_type else False
+
+        # Prefer the exact salary-rule code whose work-entry type is also
+        # referenced by the rule. This avoids adding a regular leave row to an
+        # attendance absence row when both happen to use code ABS.
         matching_lines = worked_day_lines.filtered(
-            lambda worked_day: (
-                worked_day.code in referenced_codes
-                or (
-                    getattr(worked_day, 'work_entry_type_id', False)
-                    and worked_day.work_entry_type_id.code in referenced_codes
-                )
-            )
+            lambda worked_day: worked_day.code == self.code
+            and work_entry_code(worked_day) in referenced_codes
         )
-        return sum(matching_lines.mapped('number_of_hours'))
+        if not matching_lines:
+            matching_lines = worked_day_lines.filtered(
+                lambda worked_day: worked_day.code == self.code
+            )
+        if not matching_lines:
+            matching_lines = worked_day_lines.filtered(
+                lambda worked_day: worked_day.code in referenced_codes
+            )
+        if not matching_lines:
+            matching_lines = worked_day_lines.filtered(
+                lambda worked_day: work_entry_code(worked_day) in referenced_codes
+            )
+
+        # A salary rule uses one Worked Days & Inputs row. Do not sum other
+        # rows that happen to share a code or work-entry type.
+        return matching_lines[:1].number_of_hours if matching_lines else 0.0
 
     @api.model_create_multi
     def create(self, vals_list):

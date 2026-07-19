@@ -15,6 +15,7 @@
                     <field name="code"/>
                     <field name="salary_rule_id" optional="show"/>
                     <field name="quantity"/>
+                    <field name="worked_hours" optional="show"/>
                     <field name="rate"/>
                     <field name="amount"/>
                     <field name="total"/>
@@ -261,6 +262,7 @@
                                         <field name="category_id"/>
                                         <field name="sequence" invisible="1"/>
                                         <field name="quantity"/>
+                                        <field name="worked_hours" optional="show"/>
                                         <field name="rate"/>
                                         <field name="salary_rule_id"/>
                                         <field name="amount"/>

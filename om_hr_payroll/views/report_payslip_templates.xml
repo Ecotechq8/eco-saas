@@ -87,7 +87,7 @@
                                         <span t-field="line.name"/>
                                     </td>
                                     <td>
-                                        <span t-esc="line.get_rule_hours()"/>
+                                        <span t-field="line.worked_hours"/>
                                     </td>
                                     <td>
                                         <span t-esc="line.amount"
