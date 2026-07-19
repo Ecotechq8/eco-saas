@@ -27,20 +27,24 @@ class IrActionsReport(models.Model):
         report = self
         if not isinstance(report_ref, int):
             # Resolve XML ID or name
-            report = self.env.ref(report_ref, raise_if_not_found=False) or self.search([('report_name', '=', report_ref)], limit=1)
+            resolved_report = self.env.ref(report_ref, raise_if_not_found=False)
+            if resolved_report and resolved_report._name == 'ir.actions.report':
+                report = resolved_report
+            else:
+                report = self.search([('report_name', '=', report_ref)], limit=1)
         else:
             report = self.browse(report_ref)
             
         report = report[:1]
 
         # Determine the batch size to use from the resolved report
-        batch_size = report.pdf_batch_size if report else 0
-        
-        # Check report model dynamically to apply a default optimization
-        # Payslips are notoriously huge and prone to wkhtmltopdf errors, so we default to a batch size of 10
-        # unless an explicit batch size is configured.
-        if not batch_size and report and report.model == 'hr.payslip':
-            batch_size = 10
+        batch_size = 0
+        if report and report._name == 'ir.actions.report':
+            batch_size = report.pdf_batch_size
+            
+            # Payslips default to a batch size of 10 if not explicitly configured
+            if not batch_size and report.model == 'hr.payslip':
+                batch_size = 10
             
         if batch_size > 0 and res_ids and isinstance(res_ids, (list, tuple)) and len(res_ids) > batch_size:
             _logger.info(
