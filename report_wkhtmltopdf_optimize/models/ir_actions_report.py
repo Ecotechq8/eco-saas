@@ -19,6 +19,10 @@ class IrActionsReport(models.Model):
     )
 
     def _render_qweb_pdf(self, report_ref, res_ids=None, data=None):
+        # Resolve docids if passed as a string (common when called from controllers)
+        if isinstance(res_ids, str):
+            res_ids = [int(x) for x in res_ids.split(',') if x.strip()]
+
         # Determine the batch size to use
         batch_size = self.pdf_batch_size
         
