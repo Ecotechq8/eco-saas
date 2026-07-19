@@ -23,12 +23,7 @@ class IrActionsReport(models.Model):
         if isinstance(res_ids, str):
             res_ids = [int(x) for x in res_ids.split(',') if x.strip()]
 
-        # Determine the batch size to use
-        batch_size = self.pdf_batch_size
-        
-        # Check report model dynamically to apply a default optimization
-        # Payslips are notoriously huge and prone to wkhtmltopdf errors, so we default to a batch size of 10
-        # unless an explicit batch size is configured.
+        # Resolve the actual report record first
         report = self
         if not isinstance(report_ref, int):
             # Resolve XML ID or name
@@ -37,7 +32,13 @@ class IrActionsReport(models.Model):
             report = self.browse(report_ref)
             
         report = report[:1]
+
+        # Determine the batch size to use from the resolved report
+        batch_size = report.pdf_batch_size if report else 0
         
+        # Check report model dynamically to apply a default optimization
+        # Payslips are notoriously huge and prone to wkhtmltopdf errors, so we default to a batch size of 10
+        # unless an explicit batch size is configured.
         if not batch_size and report and report.model == 'hr.payslip':
             batch_size = 10
             
