@@ -45,6 +45,10 @@ class HrPayslip(models.Model):
         'hr.payslip.worked_days', 'payslip_id',
         string='Payslip Worked Days', copy=True
     )
+    total_overtime_hours = fields.Float(
+        string='Total Overtime Hours', compute='_compute_total_overtime_hours',
+        store=True,
+    )
     input_line_ids = fields.One2many(
         'hr.payslip.input', 'payslip_id',
         string='Payslip Inputs', copy=True
@@ -58,6 +62,23 @@ class HrPayslip(models.Model):
         help="Indicates this payslip has a refund of another")
     payslip_run_id = fields.Many2one('hr.payslip.run', string='Payslip Batches', copy=False)
     payslip_count = fields.Integer(compute='_compute_payslip_count', string="Payslip Computation Details")
+
+    @api.depends(
+        'worked_days_line_ids.code',
+        'worked_days_line_ids.number_of_hours',
+    )
+    def _compute_total_overtime_hours(self):
+        for payslip in self:
+            overtime_lines = payslip.worked_days_line_ids.filtered(
+                lambda worked_day: worked_day.code == 'OVT'
+                or (
+                    getattr(worked_day, 'work_entry_type_id', False)
+                    and worked_day.work_entry_type_id.code == 'ATTSHOT'
+                )
+            )
+            payslip.total_overtime_hours = sum(
+                overtime_lines.mapped('number_of_hours')
+            )
 
     def _compute_details_by_salary_rule_category(self):
         for payslip in self:
