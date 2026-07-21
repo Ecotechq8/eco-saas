@@ -16,10 +16,8 @@
                                          t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
                                          style="max-height: 80px;"/>
                                 </td>
-                                <td style="width: 33%;" align="center" valign="middle">
-                                    <img t-if="o.company_id.country_id.code == 'SA' and o.l10n_sa_qr_code_str"
-                                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"
-                                         style="max-height: 80px; max-width: 80px;"/>
+                                <td style="width: 33%; height: 49px; font-size: 50px;" align="center">
+
                                 </td>
                                 <td style="width: 33%; height: 49px; font-size: 11px; line-height: 15px;">
                                     <strong>
@@ -318,13 +316,17 @@
                     <div style="margin-top: 10px; padding-top: 10px;">
                         <!-- Two-column layout: Summary table on right -->
                         <div style="width: 100%; display: table; margin-top: 10px;">
-                            <!-- Left column: Amount in words -->
+                            <!-- Left column: Amount in words and ZATCA QR Code -->
                             <div style="display: table-cell; width: 40%; vertical-align: top; padding-right: 15px;">
                                 <p style="text-align: left;">
                                     <strong>
                                         <span t-out="o.company_currency_id.amount_to_text(o.amount_total)"/>
                                     </strong>
                                 </p>
+                                <div t-if="o.company_id.country_id.code == 'SA' and o.l10n_sa_qr_code_str" style="margin-top: 15px; text-align: left;">
+                                    <img t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 150, 150)"
+                                         style="max-height: 150px; max-width: 150px;"/>
+                                </div>
                             </div>
 
                             <!-- Right column: Summary table -->
