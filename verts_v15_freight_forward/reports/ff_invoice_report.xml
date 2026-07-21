@@ -16,8 +16,10 @@
                                          t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
                                          style="max-height: 80px;"/>
                                 </td>
-                                <td style="width: 33%; height: 49px; font-size: 50px;" align="center">
-
+                                <td style="width: 33%;" align="center" valign="middle">
+                                    <img t-if="o.company_id.country_id.code == 'SA' and o.l10n_sa_qr_code_str"
+                                         t-att-src="'/report/barcode/?barcode_type=%s&amp;value=%s&amp;width=%s&amp;height=%s'%('QR', quote_plus(o.l10n_sa_qr_code_str), 100, 100)"
+                                         style="max-height: 80px; max-width: 80px;"/>
                                 </td>
                                 <td style="width: 33%; height: 49px; font-size: 11px; line-height: 15px;">
                                     <strong>
