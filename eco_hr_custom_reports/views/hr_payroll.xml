@@ -13,4 +13,32 @@
             </header>
         </field>
     </record>
+
+    <!-- Salary Computation Analysis Pivot View Inherit -->
+    <record id="view_hr_payslip_line_pivot_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.line.pivot.inherit</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_line_pivot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//pivot" position="inside">
+                <field name="number_of_days" type="measure"/>
+                <field name="number_of_absence_days" type="measure"/>
+                <field name="number_of_hours" type="measure"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Payslip Line List View Inherit -->
+    <record id="view_hr_payslip_line_tree_inherit" model="ir.ui.view">
+        <field name="name">hr.payslip.line.list.inherit</field>
+        <field name="model">hr.payslip.line</field>
+        <field name="inherit_id" ref="om_hr_payroll.view_hr_payslip_line_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='worked_hours']" position="after">
+                <field name="number_of_days" optional="show"/>
+                <field name="number_of_absence_days" optional="show"/>
+                <field name="number_of_hours" optional="show"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>
