@@ -86,9 +86,13 @@
                     <field name="structure_id" type="col"/>
                     <field name="salary_rule_id" type="col"/>
                     <field name="total" type="measure"/>
+                    <field name="number_of_days" type="measure"/>
+                    <field name="number_of_absence_days" type="measure"/>
+                    <field name="number_of_hours" type="measure"/>
                 </pivot>
             </field>
         </record>
+
 
         <!-- payslip -->
 
