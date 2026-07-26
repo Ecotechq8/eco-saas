@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ff_crm_config,ff.crm.config,model_ff_crm_config,base.group_user,1,1,1,1
+access_lead_order_line,lead.order.line,model_lead_order_line,base.group_user,1,1,1,1
+access_lead_container_lines,lead.container.lines,model_lead_container_lines,base.group_user,1,1,1,1
+access_lead_container_lines,lead.container.lines,model_lead_container_lines,base.group_user,1,1,1,1
+access_box_details_wizard,box.details.wizard,model_box_details_wizard,,1,1,1,1
+access_box_details_line,box.details.line,model_box_details_line,,1,1,1,1
+access_cargo_sales_report,cargo.sales.report,model_cargo_sales_report,,1,1,1,1
+access_air_import_cargo_sales_report,air.import.cargo.sales.report,model_air_import_cargo_sales_report,,1,1,1,1
+access_cargo_sea_freight_report,cargo.sea.freight.report,model_cargo_sea_freight_report,,1,1,1,1

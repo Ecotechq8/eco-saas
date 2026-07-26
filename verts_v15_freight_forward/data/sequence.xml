@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+
+        <!-- Sequences -->
+        <record id="seq_export_sale" model="ir.sequence">
+            <field name="name">seq.export.sale</field>
+            <field name="code">seq.export.sale</field>
+            <field name="prefix">EP-SO</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_cargo_order_sale" model="ir.sequence">
+            <field name="name">cargo.order.seq</field>
+            <field name="code">cargo.order.seq</field>
+            <field name="prefix">CO</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_sea_export_seq_id" model="ir.sequence">
+            <field name="name">cargo.sea.export.seq</field>
+            <field name="code">cargo.sea.export.seq</field>
+            <field name="prefix">SFE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_sea_import_seq_id" model="ir.sequence">
+            <field name="name">cargo.sea.import.seq</field>
+            <field name="code">cargo.sea.import.seq</field>
+            <field name="prefix">SFI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_air_export_seq_id" model="ir.sequence">
+            <field name="name">cargo.air.export.seq</field>
+            <field name="code">cargo.air.export.seq</field>
+            <field name="prefix">AFE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="cargo_air_import_seq_id" model="ir.sequence">
+            <field name="name">cargo.air.import.seq</field>
+            <field name="code">cargo.air.import.seq</field>
+            <field name="prefix">AFI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="custom_clearance_import_seq_id" model="ir.sequence">
+            <field name="name">cargo.clearance.import.seq</field>
+            <field name="code">cargo.clearance.import.seq</field>
+            <field name="prefix">CLI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="custom_clearance_export_seq_id" model="ir.sequence">
+            <field name="name">cargo.clearance.export.seq</field>
+            <field name="code">cargo.clearance.export.seq</field>
+            <field name="prefix">CLE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_land_import_seq_id" model="ir.sequence">
+            <field name="name">cargo.land.import.seq</field>
+            <field name="code">cargo.land.import.seq</field>
+            <field name="prefix">RFI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_land_export_seq_id" model="ir.sequence">
+            <field name="name">cargo.land.export.seq</field>
+            <field name="code">cargo.land.export.seq</field>
+            <field name="prefix">RFE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_courier_import_seq_id" model="ir.sequence">
+            <field name="name">cargo.courier.import.seq</field>
+            <field name="code">cargo.courier.import.seq</field>
+            <field name="prefix">CI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_courier_export_seq_id" model="ir.sequence">
+            <field name="name">cargo.courier.export.seq</field>
+            <field name="code">cargo.courier.export.seq</field>
+            <field name="prefix">CE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_air_cross_trade_seq_id" model="ir.sequence">
+            <field name="name">cargo.air.cross_trade.seq</field>
+            <field name="code">cargo.air.cross_trade.seq</field>
+            <field name="prefix">CTA</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="cargo_sea_cross_trade_seq_id" model="ir.sequence">
+            <field name="name">cargo.sea.cross_trade.seq</field>
+            <field name="code">cargo.sea.cross_trade.seq</field>
+            <field name="prefix">CTS</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!--        <record id="packing_removal_cargo_seq_id" model="ir.sequence">-->
+        <!--            <field name="name">packing.removal.cargo.seq</field>-->
+        <!--            <field name="code">packing.removal.cargo.seq</field>-->
+        <!--            <field name="prefix">PAR</field>-->
+        <!--            <field name="padding">4</field>-->
+        <!--            <field name="company_id" eval="False"/>-->
+        <!--        </record>-->
+
+        <!--        <record id="warehousing_cargo_seq_id" model="ir.sequence">-->
+        <!--            <field name="name">warehousing.cargo.seq</field>-->
+        <!--            <field name="code">warehousing.cargo.seq</field>-->
+        <!--            <field name="prefix">WHL</field>-->
+        <!--            <field name="padding">4</field>-->
+        <!--            <field name="company_id" eval="False"/>-->
+        <!--        </record>-->
+
+        <record id="res_partner_customer_seq" model="ir.sequence">
+            <field name="name">res.partner.customer.seq</field>
+            <field name="code">res.partner.customer.seq</field>
+            <field name="prefix">C</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="res_partner_vendor_seq" model="ir.sequence">
+            <field name="name">res.partner.vendor.seq</field>
+            <field name="code">res.partner.vendor.seq</field>
+            <field name="prefix">V</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_job_order_sale" model="ir.sequence">
+            <field name="name">job.order.seq</field>
+            <field name="code">job.order.seq</field>
+            <field name="prefix">JO</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="job_sea_export_seq_id" model="ir.sequence">
+            <field name="name">job.sea.export.seq</field>
+            <field name="code">job.sea.export.seq</field>
+            <field name="prefix">SFE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="job_sea_import_seq_id" model="ir.sequence">
+            <field name="name">job.sea.import.seq</field>
+            <field name="code">job.sea.import.seq</field>
+            <field name="prefix">SFI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="job_air_export_seq_id" model="ir.sequence">
+            <field name="name">job.air.export.seq</field>
+            <field name="code">job.air.export.seq</field>
+            <field name="prefix">AFE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        <record id="job_air_import_seq_id" model="ir.sequence">
+            <field name="name">job.air.import.seq</field>
+            <field name="code">job.air.import.seq</field>
+            <field name="prefix">AFI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="custom_clearance_import_seq_id" model="ir.sequence">
+            <field name="name">job.clearance.import.seq</field>
+            <field name="code">job.clearance.import.seq</field>
+            <field name="prefix">CLI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="custom_clearance_export_seq_id" model="ir.sequence">
+            <field name="name">job.clearance.export.seq</field>
+            <field name="code">job.clearance.export.seq</field>
+            <field name="prefix">CLE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="job_land_import_seq_id" model="ir.sequence">
+            <field name="name">job.land.import.seq</field>
+            <field name="code">job.land.import.seq</field>
+            <field name="prefix">RFI</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="job_land_export_seq_id" model="ir.sequence">
+            <field name="name">job.land.export.seq</field>
+            <field name="code">job.land.export.seq</field>
+            <field name="prefix">RFE</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        
+        <record id="hr_employee_sequence_id" model="ir.sequence">
+            <field name="name">employee.sequence</field>
+            <field name="code">employee.sequence</field>
+            <field name="prefix">S</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

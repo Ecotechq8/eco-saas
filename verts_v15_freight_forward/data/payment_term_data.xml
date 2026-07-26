@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="payment_term_DP_CAD" model="account.payment.term">
+            <field name="name">DP/CAD</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_DA_OD_1_90" model="account.payment.term">
+            <field name="name">DA/OD 1-90</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_DA_OD_91_180" model="account.payment.term">
+            <field name="name">DA/OD 91-180</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_DA_OD_181_270" model="account.payment.term">
+            <field name="name">DA/OD 181-270</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_DA_OD_271_360" model="account.payment.term">
+            <field name="name">DA/OD 271-360</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_LC_AT_SIGHT" model="account.payment.term">
+            <field name="name">LC AT SIGHT</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_LC_90_days" model="account.payment.term">
+            <field name="name">LC 90 DAYS</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_LC_91_180" model="account.payment.term">
+            <field name="name">LC 91-180 DAYS</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_LC_181_270" model="account.payment.term">
+            <field name="name">LC 181-270 DAYS</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_LC_271_360" model="account.payment.term">
+            <field name="name">LC 271-360 DAYS</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_tt_against_proof_of_dispatch" model="account.payment.term">
+            <field name="name">TT-AGAINST PROOF OF DISPATCH</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+        <record id="payment_term_ADVANCE" model="account.payment.term">
+		<field name="name">ADVANCE</field>
+		<field name="export_payment_term" eval="True" />
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<template id="samay_agro_pdf2_report">
+			<t t-call="web.html_container">
+				<t t-foreach="docs" t-as="o">
+					<style>
+						table td {border:1px solid #ccc;}
+					</style>
+
+					<table width="100%" >
+						<tr>
+							<td rowspan="4" align="left" >
+								<img t-if="o.company_id.logo"
+									t-attf-src="data:image/*;base64,{{o.company_id.logo}}"
+									style="max-height: 80px;padding-bottom: 10px;" align="right" />
+
+									<u>Consigner</u>
+									:
+									<b>
+									<span t-field="o.company_id.name" />
+								</b>
+									<span t-field="o.company_id.street" />,<span t-field="o.company_id.street2" />
+									<span t-field="o.company_id.city" />
+									<span t-field="o.company_id.state_id.name" />
+									<span t-field="o.company_id.zip" />
+
+
+
+									<span t-field="o.company_id.country_id.name" />
+									E:
+									<span t-field="o.company_id.email" />
+									W:
+									<span t-field="o.company_id.website" />
+									P:
+									<span t-field="o.company_id.phone" />
+									<span t-if="o.company_id.country_id.code=='IN'"> GSTIN:</span>
+									<span t-if="o.company_id.country_id.code!='IN'">TAX/VAT No:</span>
+									<span t-field="o.company_id.vat" />
+
+
+
+
+								
+							</td>
+
+							<td>Date</td>
+							<td>02/04/2019 12:00</td>
+						</tr>
+						<tr>
+							<td >Invoice No.</td>
+							<td>A19/SAP/E/000071</td>
+						</tr>
+						<tr>
+							<td>Port of Loading</td>
+							<td>NAVASHEVA(INDIA)</td>
+						</tr>
+						<tr>
+							<td>Port of Discharge</td>
+							<td>New York</td>
+						</tr>
+						<tr>
+							<td rowspan="3">
+								<p align="left">
+									<b>
+										<u>Marka</u>
+									</b>
+									A19/EXPN/000001
+								</p>
+							</td>
+							<td colspan="2">Container Size 40"</td>
+						</tr>
+						<tr>
+							<td>Production Date</td>
+							<td></td>
+						</tr>
+						<tr>
+							<td>DO Date</td>
+							<td></td>
+						</tr>
+					</table>
+					<h1 align="center">WORK ORDER</h1>
+					<p align="left">R/Sir,</p>
+					<p align="left">We confirm hereby following transaction concluded on
+						behalf for our account and the risk ofthe
+						mentioned buyer as per given termshere under .
+					</p>
+
+					<table width="100%">
+						<tr>
+							<td rowspan="2" width="20%"><b></b></td>
+							<td >Cut Size</td>
+							<td width="10%">Mesh Size</td>
+							<td width="10%">SHU</td>
+							<td width="10%">Colour Value</td>
+							<td width="10%">Variety</td>
+							<td width="10%">Stem Type</td>
+							<td width="10%">Quality</td>
+							<td width="10%">Polish</td>
+							<td width="10%">Afltoxin</td>
+						</tr>
+						<tr>
+							<td width="10%">Seeds</td>
+							<td width="10%">Treatment</td>
+							<td width="10%">Packing</td>
+							<td width="10%">Packing</td>
+							<td width="10%">Moisture</td>
+							<td width="10%">Marking</td>
+							<td width="10%">Curcumin</td>
+							<td colspan="2" width="10%">other</td>
+
+
+						</tr>
+						<tr>
+							<td rowspan="2">CRUSHED CHILLY 1/8"
+								1,102.00 Bags , Packing :
+								22.68 kg / 50 lbs ,
+								Packing Type : Paper
+								Bags
+							</td>
+							<td>1/8"</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>Other</td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>B1 less than 15</td>
+						</tr>
+						<tr>
+							<td>30-40% app</td>
+							<td>ETO</td>
+							<td>22.68kg / 50lbs</td>
+							<td>Paper Bags</td>
+							<td></td>
+							<td>Plain</td>
+							<td></td>
+							<td></td>
+							<td></td>
+
+						</tr>
+
+					</table>
+
+					<p align="left">On signing the PO kindly please return the same by mail
+						or courier .</p>
+					<p align="right">For SAMAY AGRO PRODUCTS - N</p>
+					<br></br>
+					<p align="left">Receiver's Signature and Stamp</p>
+
+					<p align="right">
+						<h7>Authorised Signatory</h7>
+					</p>
+				</t>
+			</t>
+		</template>
+	</data>
+</odoo>

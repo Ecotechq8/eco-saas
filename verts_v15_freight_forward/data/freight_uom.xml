@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model='uom.uom' id='uom.product_uom_kgm'>
+            <field name='freight_forward_forms' eval="True" />
+        </record>
+        <record model='uom.uom' id='uom.product_uom_lb'>
+            <field name='freight_forward_forms' eval="True" />
+        </record>
+        <record model='uom.uom' id='uom.product_uom_cm'>
+            <field name='freight_forward_forms' eval="True" />
+        </record>
+        <record model='uom.uom' id='uom.product_uom_meter'>
+            <field name='freight_forward_forms' eval="True" />
+        </record>
+        <record model='uom.uom' id='uom.product_uom_inch'>
+            <field name='freight_forward_forms' eval="True" />
+        </record>
+
+    </data>
+</odoo>

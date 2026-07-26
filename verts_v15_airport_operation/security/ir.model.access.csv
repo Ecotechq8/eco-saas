@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_inbound_flight,access.inbound.flight,model_inbound_flight,base.group_user,1,1,1,1
+access_gsa_invoice_flt_details,gsa.invoice.flt.details,model_gsa_invoice_flt_details,base.group_user,1,1,1,1
+
+
+
+
+
+

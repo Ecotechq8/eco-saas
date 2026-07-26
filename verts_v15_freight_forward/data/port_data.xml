@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="port_long_beach" model="ports">
+            <field name="name">Long Beach</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Houston" model="ports">
+            <field name="name">Houston</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Felixstowe" model="ports">
+            <field name="name">Felixstowe</field>
+            <field name="country_id" ref="base.uk"/>
+        </record>
+        <record id="port_Shuwaikh" model="ports">
+            <field name="name">Shuwaikh (Kuwait)</field>
+            <field name="country_id" ref="base.kw"/>
+        </record>
+        <record id="port_Sousse" model="ports">
+            <field name="name">Sousse</field>
+            <field name="country_id" ref="base.tn"/>
+        </record>
+        <record id="port_Tianjin" model="ports">
+            <field name="name">Tianjin</field>
+            <field name="country_id" ref="base.cn"/>
+        </record>
+        <record id="port_Manzanillo" model="ports">
+            <field name="name">Manzanillo</field>
+            <field name="country_id" ref="base.mx"/>
+        </record>
+        <record id="port_Veracruz" model="ports">
+            <field name="name">Veracruz</field>
+            <field name="country_id" ref="base.mx"/>
+        </record>
+        <record id="port_Toronto" model="ports">
+            <field name="name">Toronto</field>
+            <field name="country_id" ref="base.ca"/>
+        </record>
+        <record id="port_Buenos_Aires" model="ports">
+            <field name="name">Buenos Aires</field>
+            <field name="country_id" ref="base.ar"/>
+        </record>
+        <record id="port_Melbourne" model="ports">
+            <field name="name">Melbourne</field>
+            <field name="country_id" ref="base.au"/>
+        </record>
+        <record id="port_Chittagong" model="ports">
+            <field name="name">Chittagong</field>
+            <field name="country_id" ref="base.bd"/>
+        </record>
+         <record id="port_Jakarta" model="ports">
+            <field name="name">Jakarta</field>
+            <field name="country_id" ref="base.id"/>
+        </record>
+         <record id="port_Port_Klang" model="ports">
+            <field name="name">Port Klang</field>
+            <field name="country_id" ref="base.my"/>
+        </record>
+         <record id="port_Singapore" model="ports">
+            <field name="name">Singapore</field>
+            <field name="country_id" ref="base.sg"/>
+        </record>
+         <record id="port_Jebel_Ali" model="ports">
+            <field name="name">Jebel Ali</field>
+            <field name="country_id" ref="base.ae"/>
+        </record>
+         <record id="port_Odessa" model="ports">
+            <field name="name">Odessa</field>
+            <field name="country_id" ref="base.ua"/>
+        </record>
+         <record id="port_Petersberg" model="ports">
+            <field name="name">St. Petersberg</field>
+            <field name="country_id" ref="base.ru"/>
+        </record>
+         <record id="port_Busan" model="ports">
+            <field name="name">Busan</field>
+            <field name="country_id" ref="base.kr"/>
+        </record>
+         <record id="port_Gdynia" model="ports">
+            <field name="name">Gdynia</field>
+            <field name="country_id" ref="base.pl"/>
+        </record>
+         <record id="port_Durban" model="ports">
+            <field name="name">Durban</field>
+            <field name="country_id" ref="base.za"/>
+        </record>
+         <record id="port_Haiphong" model="ports">
+            <field name="name">Haiphong</field>
+            <field name="country_id" ref="base.vn"/>
+        </record>
+         <record id="port_Bangkok" model="ports">
+            <field name="name">Bangkok</field>
+            <field name="country_id" ref="base.th"/>
+        </record>
+         <record id="port_Cape_Town" model="ports">
+            <field name="name">Cape Town</field>
+            <field name="country_id" ref="base.za"/>
+        </record>
+         <record id="port_Colombo" model="ports">
+            <field name="name">Colombo</field>
+            <field name="country_id" ref="base.lk"/>
+        </record>
+         <record id="port_New_York" model="ports">
+            <field name="name">New York</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+         <record id="port_Jeddah" model="ports">
+            <field name="name">Jeddah</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+         <record id="port_Port_Luis" model="ports">
+            <field name="name">Port Luis</field>
+            <field name="country_id" ref="base.mu"/>
+        </record>
+         <record id="port_Poti" model="ports">
+            <field name="name">Poti</field>
+            <field name="country_id" ref="base.ge"/>
+        </record>
+         <record id="port_Bahrain" model="ports">
+            <field name="name">Bahrain</field>
+            <field name="country_id" ref="base.bh"/>
+        </record>
+         <record id="port_Alger" model="ports">
+            <field name="name">Alger</field>
+            <field name="country_id" ref="base.dz"/>
+        </record>
+         <record id="port_Rotterdam" model="ports">
+            <field name="name">Rotterdam</field>
+            <field name="country_id" ref="base.nl"/>
+        </record>
+        <record id="port_Bandar_Abbas" model="ports">
+            <field name="name">Bandar Abbas</field>
+            <field name="country_id" ref="base.ir"/>
+        </record>
+        <record id="port_Chicago" model="ports">
+            <field name="name">Chicago</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Los_Angeles" model="ports">
+            <field name="name">Los Angeles</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Baltimore" model="ports">
+            <field name="name">Baltimore</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Port_Sudan" model="ports">
+            <field name="name">Port Sudan</field>
+            <field name="country_id" ref="base.sd"/>
+        </record>
+        <record id="port_Qingdao" model="ports">
+            <field name="name">Qingdao</field>
+            <field name="country_id" ref="base.cn"/>
+        </record>
+        <record id="port_Savannah" model="ports">
+            <field name="name">Savannah</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Beirut" model="ports">
+            <field name="name">Beirut</field>
+            <field name="country_id" ref="base.lb"/>
+        </record>
+        <record id="port_Riyadh" model="ports">
+            <field name="name">Riyadh</field>
+            <field name="country_id" ref="base.sa"/>
+        </record>
+        <record id="port_Mersin" model="ports">
+            <field name="name">Mersin</field>
+            <field name="country_id" ref="base.tr"/>
+        </record>
+        <record id="port_Gioia_Tauro" model="ports">
+            <field name="name">Gioia Tauro</field>
+            <field name="country_id" ref="base.it"/>
+        </record>
+        <record id="port_Genoa" model="ports">
+            <field name="name">Genoa</field>
+            <field name="country_id" ref="base.it"/>
+        </record>
+        <record id="port_Durres" model="ports">
+            <field name="name">Durres</field>
+            <field name="country_id" ref="base.al"/>
+        </record>
+        <record id="port_Copenhagen" model="ports">
+            <field name="name">Copenhagen</field>
+            <field name="country_id" ref="base.dk"/>
+        </record>
+        <record id="port_TEST_PORT" model="ports">
+            <field name="name">TEST PORT</field>
+            <field name="country_id" ref="base.af"/>
+        </record>
+        <record id="port_Shekou" model="ports">
+            <field name="name">Shekou</field>
+            <field name="country_id" ref="base.cn"/>
+        </record>
+        <record id="port_NAPLES" model="ports">
+            <field name="name">NAPLES</field>
+            <field name="country_id" ref="base.it"/>
+        </record>
+        <record id="port_TEST" model="ports">
+            <field name="name">TEST</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Jacksonville" model="ports">
+            <field name="name">Jacksonville</field>
+            <field name="country_id" ref="base.us"/>
+        </record>
+        <record id="port_Tanjung_Priok" model="ports">
+            <field name="name">Tanjung Priok</field>
+            <field name="country_id" ref="base.id"/>
+        </record>
+        <record id="port_Naples" model="ports">
+            <field name="name">Naples</field>
+            <field name="country_id" ref="base.it"/>
+        </record>
+        <record id="port_Hamburg" model="ports">
+            <field name="name">Hamburg</field>
+            <field name="country_id" ref="base.de"/>
+        </record>
+        <record id="port_Ashdod" model="ports">
+            <field name="name">Ashdod</field>
+            <field name="country_id" ref="base.il"/>
+        </record>
+        <record id="port_nagpur_icd" model="ports">
+            <field name="name">Nagpur ICD</field>
+            <field name="country_id" ref="base.in"/>
+        </record>
+
+    </data>
+</odoo>

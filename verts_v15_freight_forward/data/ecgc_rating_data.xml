@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- ECGC Rating -->
+        
+        <record id="ecgc_rating_a1" model="ecgc.rating">
+            <field name="name">A1</field>
+            <field name="risk_perception">Insignificant Risk</field>
+        </record>
+        <record id="ecgc_rating_a2" model="ecgc.rating">
+            <field name="name">A2</field>
+            <field name="risk_perception">Low Risk</field>
+        </record>
+        <record id="ecgc_rating_b1" model="ecgc.rating">
+            <field name="name">B1</field>
+            <field name="risk_perception">Moderately Low Risk</field>
+        </record>
+        <record id="ecgc_rating_b2" model="ecgc.rating">
+            <field name="name">B2</field>
+            <field name="risk_perception">Moderate Risk</field>
+        </record>
+        <record id="ecgc_rating_c1" model="ecgc.rating">
+            <field name="name">C1</field>
+            <field name="risk_perception">Moderately High Risk</field>
+        </record>
+        <record id="ecgc_rating_c2" model="ecgc.rating">
+            <field name="name">C2</field>
+            <field name="risk_perception">High Risk</field>
+        </record>
+        <record id="ecgc_rating_d" model="ecgc.rating">
+            <field name="name">D</field>
+            <field name="risk_perception">Very High Risk</field>
+        </record>        
+    </data>
+</odoo>

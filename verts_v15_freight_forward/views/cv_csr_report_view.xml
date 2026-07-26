@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="view_cv_csr_report_form" model="ir.ui.view">
+    <field name="name">cv.csr.report.form</field>
+    <field name="model">cv.csr.report</field>
+    <field name="arch" type="xml">
+      <form string="CSR Report">
+        <header>
+          <button name="action_post" type="object" string="Confirm" class="oe_highlight" invisible="state not in ('draft')"/>
+          <button name="action_generate_excel" string="Print Excel" type="object"/>
+          <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+        </header>
+        <sheet>
+          <group>
+            <group>
+              <field name="sequence" readonly="1"/>
+              <field name="type"/>
+              <field name="partner_id"/>
+              <field name="commission_percentage"/>
+              <field name="remarks"/>
+            </group>
+            <group>
+              <field name="company_id" readonly="1"/>
+              <field name="date"/>
+              <field name="date_from" required="1"/>
+              <field name="date_to" required="1"/>
+            </group>
+          </group>
+          <button name="fetch_cv_csv_lines_commission" string="Fetch Commission" type="object" class="oe_highlight"/>
+          <field name="purchase_order_line_ids" invisible="1"/>
+          <notebook>
+            <page string="Report Lines">
+              <field name="cv_line_ids">
+                <list editable="bottom">
+                  <field name="type" invisible="1"/>
+                  <field name="date"/>
+                  <field name="agent_id"/>
+                  <field name="mawb"/>
+                  <field name="destination_code"/>
+                  <field name="gross_weight"/>
+                  <field name="chargeable_weight"/>
+                  <field name="rate"/>
+                  <field name="air_freight"/>
+                  <field name="other_charges"/>
+                  <field name="total_amount"/>
+                  <field name="amount"/>
+                </list>
+              </field>
+            </page>
+          </notebook>
+        </sheet>
+      </form>
+    </field>
+  </record>
+  <record id="view_cv_csr_report_tree" model="ir.ui.view">
+    <field name="name">cv.csr.report.tree</field>
+    <field name="model">cv.csr.report</field>
+    <field name="arch" type="xml">
+      <list string="CSR Reports">
+        <field name="sequence"/>
+        <field name="type"/>
+        <field name="partner_id"/>
+        <field name="date_from"/>
+        <field name="date_to"/>
+      </list>
+    </field>
+  </record>
+  <record id="action_cv_csr_report" model="ir.actions.act_window">
+    <field name="name">CSR Report</field>
+    <field name="res_model">cv.csr.report</field>
+    <field name="view_mode">list,form</field>
+  </record>
+</odoo>

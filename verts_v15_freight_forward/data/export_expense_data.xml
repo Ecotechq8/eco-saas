@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="export_expense_01" model="product.template">
+            <field name="name">Sample Courier (MF)</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">2000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_02" model="product.template">
+            <field name="name">THC Nagpur</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">3550</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_03" model="product.template">
+            <field name="name">THC Mumbai</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">9500</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_04" model="product.template">
+            <field name="name">Bill of Lading Expenses</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">3000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_05" model="product.template">
+            <field name="name">VGM</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">2000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_06" model="product.template">
+            <field name="name">Line Seal</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">300</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_07" model="product.template">
+            <field name="name">MUC</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">150</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_08" model="product.template">
+            <field name="name">Agency</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">3000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_09" model="product.template">
+            <field name="name">Fumigation MBR</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">2000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_10" model="product.template">
+            <field name="name">Fumigation ALP</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">0</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_11" model="product.template">
+            <field name="name">Empty Fumigation MBR</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">0</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_12" model="product.template">
+            <field name="name">Phyto Certificate</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">1000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_13" model="product.template">
+            <field name="name">A1 Certificate</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">2200</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_14" model="product.template">
+            <field name="name">GSP Certificate</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">1000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_15" model="product.template">
+            <field name="name">COO</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">500</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_16" model="product.template">
+            <field name="name">CFS Charge</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">16000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_17" model="product.template">
+            <field name="name">TUV Testing</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">10000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_18" model="product.template">
+            <field name="name">Silica Gel+Kraft</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">2600</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_19" model="product.template">
+            <field name="name">DOC Courier</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">2000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+        <record id="export_expense_20" model="product.template">
+            <field name="name">SMisc Expenses</field>
+            <field name="categ_id" ref="product.product_category_all"/>
+            <field name="standard_price">5000</field>
+            <field name="type">service</field>
+            <field name="is_export_expense" eval="True" />
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+
+        <!-- Root Menu -->
+        <record id="group_airport_operations_root" model="res.groups">
+            <field name="name">Airport Operations - Root</field>
+        </record>
+
+        <!-- Flight Operation -->
+        <record id="group_flight_operation" model="res.groups">
+            <field name="name">Airport Operations - Flight Operation</field>
+            <field name="implied_ids" eval="[(4, ref('group_airport_operations_root'))]"/>
+        </record>
+
+        <!-- GSA Invoice -->
+        <record id="group_gsa_invoice" model="res.groups">
+            <field name="name">Airport Operations - GSA Invoice</field>
+            <field name="implied_ids" eval="[(4, ref('group_airport_operations_root'))]"/>
+        </record>
+
+        <!-- GSA Export Commission -->
+        <record id="group_gsa_commission" model="res.groups">
+            <field name="name">Airport Operations - GSA Export Commission</field>
+            <field name="implied_ids" eval="[(4, ref('group_airport_operations_root'))]"/>
+        </record>
+
+        <!-- Configuration -->
+        <record id="group_airport_config" model="res.groups">
+            <field name="name">Airport Operations - Configuration</field>
+            <field name="implied_ids" eval="[(4, ref('group_airport_operations_root'))]"/>
+        </record>
+
+        <!-- Airlines -->
+        <record id="group_airlines" model="res.groups">
+            <field name="name">Airport Operations - Airlines</field>
+            <field name="implied_ids" eval="[(4, ref('group_airport_config'))]"/>
+        </record>
+
+    </data>
+</odoo>

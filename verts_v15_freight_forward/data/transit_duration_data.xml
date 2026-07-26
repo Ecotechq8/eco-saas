@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <record id="trans_duration_long_beach" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_long_beach"/>
+            <field name="transit_days">31.00</field>
+        </record>
+        <record id="trans_duration_Houston" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Houston"/>
+            <field name="transit_days">30</field>
+        </record>
+        <record id="trans_duration_Felixstowe" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Felixstowe"/>
+            <field name="transit_days">23</field>
+        </record>
+        <record id="trans_duration_Shuwaikh" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Shuwaikh"/>
+            <field name="transit_days">15</field>
+        </record>
+        <record id="trans_duration_Sousse" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Sousse"/>
+            <field name="transit_days">30</field>
+        </record>
+        <record id="trans_duration_Tianjin" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Tianjin"/>
+            <field name="transit_days">15</field>
+        </record>
+        <record id="trans_duration_Manzanillo" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Manzanillo"/>
+            <field name="transit_days">48</field>
+        </record>
+        <record id="trans_duration_Veracruz" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Veracruz"/>
+            <field name="transit_days">55</field>
+        </record>
+        <record id="trans_duration_Toronto" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Toronto"/>
+            <field name="transit_days">40</field>
+        </record>
+        <record id="trans_duration_Buenos" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Buenos_Aires"/>
+            <field name="transit_days">31</field>
+        </record>
+        <record id="trans_duration_Melbourne" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Melbourne"/>
+            <field name="transit_days">28</field>
+        </record>
+        <record id="trans_duration_Chittagong" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Chittagong"/>
+            <field name="transit_days">18</field>
+        </record>
+        <record id="trans_duration_Jakarta" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Jakarta"/>
+            <field name="transit_days">14</field>
+        </record>
+        <record id="trans_duration_Port_Klang" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Port_Klang"/>
+            <field name="transit_days">9</field>
+        </record>
+        <record id="trans_duration_Singapore" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Singapore"/>
+            <field name="transit_days">5</field>
+        </record>
+        <record id="trans_duration_Jebel" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Jebel_Ali"/>
+            <field name="transit_days">4</field>
+        </record>
+        <record id="trans_duration_Odessa" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Odessa"/>
+            <field name="transit_days">28</field>
+        </record>
+        <record id="trans_duration_Petersberg" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Petersberg"/>
+            <field name="transit_days">27</field>
+        </record>
+        <record id="trans_duration_busan" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Busan"/>
+            <field name="transit_days">20</field>
+        </record>
+        <record id="trans_duration_Gdynia" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Gdynia"/>
+            <field name="transit_days">25</field>
+        </record>
+        <record id="trans_duration_Durban" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Durban"/>
+            <field name="transit_days">18</field>
+        </record>
+        <record id="trans_duration_Haiphong" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Haiphong"/>
+            <field name="transit_days">18</field>
+        </record>
+        <record id="trans_duration_Bangkok" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Bangkok"/>
+            <field name="transit_days">15</field>
+        </record>
+        <record id="trans_duration_Cape_Town" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Cape_Town"/>
+            <field name="transit_days">18</field>
+        </record>
+        <record id="trans_duration_Colombo" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Colombo"/>
+            <field name="transit_days">5</field>
+        </record>
+        <record id="trans_duration_New_York" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_New_York"/>
+            <field name="transit_days">21</field>
+        </record>
+        <record id="trans_duration_Jeddah" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Jeddah"/>
+            <field name="transit_days">21</field>
+        </record>
+        <record id="trans_duration_Port_Luis" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Port_Luis"/>
+            <field name="transit_days">18</field>
+        </record>
+        <record id="trans_duration_Poti" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Poti"/>
+            <field name="transit_days">37</field>
+        </record>
+        <record id="trans_duration_Bahrain" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Bahrain"/>
+            <field name="transit_days">10</field>
+        </record>
+        <record id="trans_duration_Alger" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Alger"/>
+            <field name="transit_days">22</field>
+        </record>
+        <record id="trans_duration_Rotterdam" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Rotterdam"/>
+            <field name="transit_days">30</field>
+        </record>
+        <record id="trans_duration_Bandar_Abbas" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Bandar_Abbas"/>
+            <field name="transit_days">15</field>
+        </record>
+        <record id="trans_duration_Chicago" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Chicago"/>
+            <field name="transit_days">30</field>
+        </record>
+        <record id="trans_duration_Los_Angeles" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Los_Angeles"/>
+            <field name="transit_days">31</field>
+        </record>
+        <record id="trans_duration_Baltimore" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Baltimore"/>
+            <field name="transit_days">30</field>
+        </record>
+        <record id="trans_duration_Port_Sudan" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Port_Sudan"/>
+            <field name="transit_days">22</field>
+        </record>
+        <record id="trans_duration_Qingdao" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Qingdao"/>
+            <field name="transit_days">15</field>
+        </record>
+        <record id="trans_duration_Savannah" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Savannah"/>
+            <field name="transit_days">26</field>
+        </record>
+        <record id="trans_duration_Beirut" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Beirut"/>
+            <field name="transit_days">24</field>
+        </record>
+        <record id="trans_duration_Riyadh" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Riyadh"/>
+            <field name="transit_days">14</field>
+        </record>
+        <record id="trans_duration_Mersin" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Mersin"/>
+            <field name="transit_days">22</field>
+        </record>
+        <record id="trans_duration_Gioia_Tauro" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Gioia_Tauro"/>
+            <field name="transit_days">28</field>
+        </record>
+        <record id="trans_duration_Genoa" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Genoa"/>
+            <field name="transit_days">22</field>
+        </record>
+        <record id="trans_duration_Durres" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Durres"/>
+            <field name="transit_days">20</field>
+        </record>
+        <record id="trans_duration_Copenhagen" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Copenhagen"/>
+            <field name="transit_days">32</field>
+        </record>
+        <record id="trans_duration_TEST_PORT" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_TEST_PORT"/>
+            <field name="transit_days">1</field>
+        </record>
+        <record id="trans_duration_Shekou" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Shekou"/>
+            <field name="transit_days">21</field>
+        </record>
+        <record id="trans_duration_NAPLES" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_NAPLES"/>
+            <field name="transit_days">22</field>
+        </record>
+        <record id="trans_duration_TEST" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_TEST"/>
+            <field name="transit_days">12</field>
+        </record>
+        <record id="trans_duration_Jacksonville" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Jacksonville"/>
+            <field name="transit_days">45</field>
+        </record>
+        <record id="trans_duration_Tanjung_Priok" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Tanjung_Priok"/>
+            <field name="transit_days">16</field>
+        </record>
+        <record id="trans_duration_Naples" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Naples"/>
+            <field name="transit_days">20</field>
+        </record>
+        <record id="trans_duration_Hamburg" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Hamburg"/>
+            <field name="transit_days">25</field>
+        </record>
+        <record id="trans_duration_Ashdod" model="transit.duration">
+            <field name="origin_port_id" ref="verts_v15_basic_masters.ports_10"/>
+            <field name="dest_port_id" ref="verts_v15_freight_forward.port_Ashdod"/>
+            <field name="transit_days">23</field>
+        </record>
+
+    </data>
+</odoo>

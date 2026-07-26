@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <!-- Menu Item for Inbound Flight Master -->
+  <menuitem id="menu_inbound_flight_master" name="Airport Operations" sequence="10" groups="verts_v15_airport_operation.group_airport_operations_root"/>
+  <menuitem id="menu_inbound_flight" name="Flight Operation" parent="menu_inbound_flight_master" action="action_inbound_flight" sequence="1" groups="verts_v15_airport_operation.group_flight_operation"/>
+  <menuitem id="menu_gsa_invoice" name="GSA Invoice" parent="menu_inbound_flight_master" action="action_gsa_invoice_move" sequence="2" groups="verts_v15_airport_operation.group_gsa_invoice"/>
+  <menuitem id="menu_gsa_invoice_commission" name="GSA Export Commission" parent="menu_inbound_flight_master" action="action_gsa_commission_invoice_move" sequence="3" groups="verts_v15_airport_operation.group_gsa_commission"/>
+  <menuitem id="menu_configuration_menu" name="Configuration" parent="menu_inbound_flight_master" sequence="5" groups="verts_v15_airport_operation.group_airport_config"/>
+  <menuitem id="menu_airline_id" name="Airlines" parent="menu_configuration_menu" sequence="1" action="verts_v15_freight_forward.action_is_airline" groups="verts_v15_airport_operation.group_airlines"/>
+</odoo>

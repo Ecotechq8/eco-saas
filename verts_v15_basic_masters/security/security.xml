@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record model="ir.module.category" id="module_multi_branch_category">
+			<field name="name">Multi Branches</field>
+			<field name="sequence">500</field>
+            <field name="visible" eval="1"/>
+		</record>
+		<record id="group_multi_branches" model="res.groups">
+			<field name="name">Show Multi Branches</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_sale_multi_branch" model="res.groups">
+			<field name="name">For Sale Multi Branch</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_account_multi_branch" model="res.groups">
+			<field name="name">For Account Multi Branch</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_bill_multi_branch" model="res.groups">
+			<field name="name">For Bill Multi Branch</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_payment_multi_branch" model="res.groups">
+			<field name="name">For Payment Multi Branch</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_journal_multi_branch" model="res.groups">
+			<field name="name">For Journal Multi Branch</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_stock_picking_multi_branch" model="res.groups">
+			<field name="name">For Stock Picking</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_stock_warehouse_multi_branch" model="res.groups">
+			<field name="name">For Stock Warehouse</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_stock_picking_type_multi_branch" model="res.groups">
+			<field name="name">For Stock Picking Type</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_stock_valuation_multi_branch" model="res.groups">
+			<field name="name">For Stock Valuation</field>
+			<field name="category_id" ref="verts_v15_basic_masters.module_multi_branch_category"/>
+			<field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+		</record>
+		<record id="group_header_user_visible" model="res.groups">
+			<field name="name">Visible user header menu</field>
+			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+		</record>
+		<record id="group_header_main_master" model="res.groups">
+			<field name="name">Show Main master Menu</field>
+			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+		</record>
+		<record id="group_resource_calendar" model="res.groups">
+			<field name="name">Resource Calendar Menu</field>
+			<field name="users" eval="[(4, ref('verts_v15_profiles.admin_user_profile_id'))]"/>
+		</record>
+	</data>
+</odoo>

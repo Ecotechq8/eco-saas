@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+  <record id="partner_form_inherit_inherit" model="ir.ui.view">
+    <field name="name">res.partner.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+      <field name="lang" position="after">
+        <field name="prefer_mode_transport_id" options="{'no_create': True}"/>
+        <!--					attrs="{'invisible':[('supplier','=',True)]}" -->
+        <!--				/>-->
+        <field name="prefer_shipment_vendor_id" options="{'no_create': True}"/>
+        <!--					attrs="{'invisible':[('customer','=',True)]}" -->
+        <!--				/>-->
+      </field>
+      <xpath expr="//field[@name='city']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <field name="street2" position="after">
+        <field style="text-transform: capitalize;" name="city_id" placeholder="City"/>
+      </field>
+      <xpath expr="//field[@name='child_ids']/form/sheet/group/group/div/div/field[@name='street2']" position="after">
+        <field style="text-transform: capitalize;" name="city_id" placeholder="City"/>
+      </xpath>
+      <xpath expr="//field[@name='child_ids']/form/sheet/group/group/div/div/field[@name='city']" position="attributes">
+        <attribute name="invisible">1</attribute>
+      </xpath>
+      <xpath expr="//field[@name='child_ids']/form/sheet/group/group/div/div/field[@name='zip']" position="attributes">
+        <attribute name="placeholder">Pin Code</attribute>
+      </xpath>
+      <!--			<xpath-->
+      <!--				expr="//field[@name='child_ids']/form/sheet/group/group/div/div/field[@name='zip']"-->
+      <!--				position="before">-->
+      <!--				<group>-->
+      <!--					<field name="vat" string="GST No"/>-->
+      <!--				</group>-->
+      <!--			</xpath>-->
+    </field>
+  </record>
+</odoo>
