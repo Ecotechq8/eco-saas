@@ -5,6 +5,21 @@ from odoo import api, models, fields
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
+    analytic_account_id = fields.Many2one(
+        'account.analytic.account',
+        string='Analytic Account',
+        compute='_compute_analytic_account_id'
+    )
+
+    @api.depends('analytic_distribution')
+    def _compute_analytic_account_id(self):
+        for line in self:
+            if line.analytic_distribution:
+                account_ids = [int(id_str) for id_str in line.analytic_distribution.keys() if str(id_str).isdigit()]
+                line.analytic_account_id = account_ids[0] if account_ids else False
+            else:
+                line.analytic_account_id = False
+
     @api.model
     def _query_get(self, domain=None):
         self.check_access('read')
