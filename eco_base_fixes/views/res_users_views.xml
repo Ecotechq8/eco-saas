@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Reset standard Users window action domain to clear lingering domain from uninstalled profiles module -->
+        <record id="base.action_res_users" model="ir.actions.act_window">
+            <field name="domain">[]</field>
+        </record>
+
+    </data>
+</odoo>
