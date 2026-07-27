@@ -68,7 +68,7 @@
                                                 <span t-field="line.name"/>
                                             </td>
                                             <td>
-                                                <span t-field="line.analytic_account_id.display_name"/>
+                                                <span t-field="line.analytic_account_id.display_name" t-if="line.analytic_account_id"/>
                                             </td>
                                             <td class="text-end">
                                                 <span t-field="line.debit"

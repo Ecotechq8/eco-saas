@@ -80,11 +80,13 @@ class AccountMoveLine(models.Model):
 class AccountMove(models.Model):
     _inherit = 'account.move'
 
+    payment_id = fields.Many2one('account.payment', string='Payment', related='origin_payment_id')
 
     def update_all_adjustment(self, partial_id):
-        self.payment_id.update_adjust_amount()
-        adjusted_invoice_ids = self.payment_id.adjusted_invoice_ids.filtered(lambda r:r.partial_id.id == partial_id)
-        adjusted_invoice_ids.unlink()
+        if self.payment_id:
+            self.payment_id.update_adjust_amount()
+            adjusted_invoice_ids = self.payment_id.adjusted_invoice_ids.filtered(lambda r: r.partial_id.id == partial_id)
+            adjusted_invoice_ids.unlink()
 
     def js_remove_outstanding_partial(self, partial_id):
         ''' Called by the 'payment' widget to remove a reconciled entry to the present invoice.
@@ -102,7 +104,7 @@ class AccountMove(models.Model):
                 ('account_id', 'in', pay_term_lines.account_id.ids),
                 ('parent_state', '=', 'posted'),
                 ('partner_id', '=', move.commercial_partner_id.id),
-                ('payment_id', '=', move.payment_id.id),
+                ('payment_id', '=', move.payment_id.id if move.payment_id else False),
             ]
             if move.is_inbound():
                 domain.append(('balance', '<', 0.0))
