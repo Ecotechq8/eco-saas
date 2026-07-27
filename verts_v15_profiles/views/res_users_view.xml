@@ -31,7 +31,7 @@
       </field>
     </record>
     <record id="base.action_res_users" model="ir.actions.act_window">
-      <field name="domain" eval="[('id', '!=', ref('base.user_root')), ('is_user_profile', '=', False)]"/>
+      <field name="domain" eval="[('id', '!=', ref('base.user_root'))]"/>
     </record>
     <record id="base.action_res_users_view2" model="ir.actions.act_window.view">
       <field name="view_id" ref="view_res_user_form"/>
@@ -165,7 +165,7 @@
       <field name="res_model">res.users</field>
       <field name="view_mode">list,kanban,form</field>
       <field name="view_id" ref="view_users_tree"/>
-      <field name="domain">[('is_user_profile', '=', False)]</field>
+      <field name="domain">[]</field>
       <field name="search_view_id" ref="base.view_users_search"/>
       <field name="context">{'search_default_no_share': 1}</field>
       <field name="help">Create and manage users that will connect to the system. Users can be deactivated should
