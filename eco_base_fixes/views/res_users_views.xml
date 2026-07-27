@@ -2,9 +2,21 @@
 <odoo>
     <data>
 
-        <!-- Reset standard Users window action domain to clear lingering domain from uninstalled profiles module -->
+        <!-- 1. Reset standard Users window action domain and view mode -->
         <record id="base.action_res_users" model="ir.actions.act_window">
             <field name="domain">[]</field>
+            <field name="view_mode">list,kanban,form</field>
+            <field name="view_id" ref="base.view_users_tree"/>
+        </record>
+
+        <!-- 2. Reset standard Users tree view link to base.view_users_tree -->
+        <record id="base.action_res_users_view1" model="ir.actions.act_window.view">
+            <field name="view_id" ref="base.view_users_tree"/>
+        </record>
+
+        <!-- 3. Reset standard Users form view link back to base.view_users_form -->
+        <record id="base.action_res_users_view2" model="ir.actions.act_window.view">
+            <field name="view_id" ref="base.view_users_form"/>
         </record>
 
     </data>
