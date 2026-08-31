@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="product_template_form_subscription" model="ir.ui.view">
+        <field name="name">product.template.form.subscription</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <!-- v18 has no v19 "sale_option" pill strip; add a plain "Subscription" toggle in the
+                 product's General Information settings, next to the product type. -->
+            <field name="type" position="after">
+                <field name="recurring_invoice" string="Subscription"/>
+            </field>
+        </field>
+    </record>
+</odoo>

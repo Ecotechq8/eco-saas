@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- v18 groups: category_id is set directly on the group (v19 uses a res.groups.privilege
+         record + privilege_id). res.groups has no `sequence` in v18, and the users M2M is `users`. -->
+    <record id="group_subscription_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="category_id" ref="base.module_category_sales"/>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="comment">Access to view and manage subscriptions.</field>
+    </record>
+
+    <record id="group_subscription_manager" model="res.groups">
+        <field name="name">Administrator</field>
+        <field name="category_id" ref="base.module_category_sales"/>
+        <field name="implied_ids" eval="[(4, ref('group_subscription_user'))]"/>
+        <!-- grant to admin/root so menus gated by these groups are visible on a fresh install -->
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="comment">Full access to subscriptions, plans and configuration.</field>
+    </record>
+</odoo>
