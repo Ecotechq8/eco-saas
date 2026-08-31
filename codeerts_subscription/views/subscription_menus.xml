@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- web_icon added in the store-assets phase once static/description/icon.png exists. -->
     <menuitem id="menu_subscription_root"
               name="Subscriptions"
               sequence="90"
+              web_icon="codeerts_subscription,static/description/icon.png"
               groups="group_subscription_user"/>
 
     <menuitem id="menu_subscription_orders"
