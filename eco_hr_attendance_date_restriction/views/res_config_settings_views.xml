@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_attendance_restriction" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.attendance.restriction</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="hr_attendance.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//app[@name='hr_attendance']" position="inside">
+                <block title="Attendance Date Restrictions" name="attendance_date_restriction_block">
+                    <setting string="Restrict Past Attendance Records"
+                             help="Prevent employees from creating or importing attendance records older than a specific number of days from the current date.">
+                        <field name="attendance_restrict_past_days"/>
+                        <div invisible="not attendance_restrict_past_days" class="content-group mt-2">
+                            <div class="row mt-1 align-items-center">
+                                <label for="attendance_max_past_days" class="col-lg-4 o_light_label" string="Allowed Past Days"/>
+                                <div class="col-lg-8 d-flex align-items-center">
+                                    <field name="attendance_max_past_days" class="text-center" style="width: 5ch;"/>
+                                    <span class="ms-2">Days</span>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <field name="attendance_allow_manager_bypass"/>
+                                <label for="attendance_allow_manager_bypass" class="o_light_label ms-2" string="Allow Attendance Managers to bypass this restriction"/>
+                            </div>
+                        </div>
+                    </setting>
+                </block>
+            </xpath>
+        </field>
+    </record>
+</odoo>

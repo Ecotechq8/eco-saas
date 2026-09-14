@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="group_hr_attendance_bypass_date_limit" model="res.groups">
+        <field name="name">Bypass Attendance Past Date Restriction</field>
+        <field name="category_id" ref="base.module_category_human_resources_attendances"/>
+        <field name="implied_ids" eval="[(4, ref('hr_attendance.group_hr_attendance_officer'))]"/>
+        <field name="comment">Users in this group are permitted to create, edit, or import attendance records older than the configured past days limit.</field>
+    </record>
+</odoo>

@@ -1,0 +1,88 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* eco_hr_attendance_date_restriction
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-16 18:00+0000\n"
+"PO-Revision-Date: 2026-08-16 18:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+
+#. module: eco_hr_attendance_date_restriction
+#: model:res.groups,name:eco_hr_attendance_date_restriction.group_hr_attendance_bypass_date_limit
+msgid "Bypass Attendance Past Date Restriction"
+msgstr "تجاوز تقييد التاريخ السابق للحضور"
+
+#. module: eco_hr_attendance_date_restriction
+#: model:ir.model.fields,field_description:eco_hr_attendance_date_restriction.field_res_company__attendance_restrict_past_days
+#: model:ir.model.fields,field_description:eco_hr_attendance_date_restriction.field_res_config_settings__attendance_restrict_past_days
+msgid "Restrict Past Attendance Entries"
+msgstr "تقييد تسجيل الحضور للتواريخ السابقة"
+
+#. module: eco_hr_attendance_date_restriction
+#: model:ir.model.fields,field_description:eco_hr_attendance_date_restriction.field_res_company__attendance_max_past_days
+#: model:ir.model.fields,field_description:eco_hr_attendance_date_restriction.field_res_config_settings__attendance_max_past_days
+msgid "Maximum Past Days Allowed"
+msgstr "الحد الأقصى للأيام السابقة المسموح بها"
+
+#. module: eco_hr_attendance_date_restriction
+#: model:ir.model.fields,field_description:eco_hr_attendance_date_restriction.field_res_company__attendance_allow_manager_bypass
+#: model:ir.model.fields,field_description:eco_hr_attendance_date_restriction.field_res_config_settings__attendance_allow_manager_bypass
+msgid "Allow Attendance Managers to Bypass"
+msgstr "السماح لمديري الحضور بالتجاوز"
+
+#. module: eco_hr_attendance_date_restriction
+#: model_terms:ir.ui.view,arch_db:eco_hr_attendance_date_restriction.res_config_settings_view_form_inherit_attendance_restriction
+msgid "Attendance Date Restrictions"
+msgstr "قيود تاريخ الحضور والانصراف"
+
+#. module: eco_hr_attendance_date_restriction
+#: model_terms:ir.ui.view,arch_db:eco_hr_attendance_date_restriction.res_config_settings_view_form_inherit_attendance_restriction
+msgid "Restrict Past Attendance Records"
+msgstr "تقييد سجلات الحضور السابقة"
+
+#. module: eco_hr_attendance_date_restriction
+#: model_terms:ir.ui.view,arch_db:eco_hr_attendance_date_restriction.res_config_settings_view_form_inherit_attendance_restriction
+msgid "Allowed Past Days"
+msgstr "الأيام السابقة المسموحة"
+
+#. module: eco_hr_attendance_date_restriction
+#: model_terms:ir.ui.view,arch_db:eco_hr_attendance_date_restriction.res_config_settings_view_form_inherit_attendance_restriction
+msgid "Allow Attendance Managers to bypass this restriction"
+msgstr "السماح لمديري الحضور بتجاوز هذا القيد"
+
+#. module: eco_hr_attendance_date_restriction
+#: code:addons/eco_hr_attendance_date_restriction/models/hr_attendance.py:0
+#, python-format
+msgid ""
+"You cannot create or import attendance records with a Check In date older than %(days)s days from today.\n"
+"• Employee: %(employee)s\n"
+"• Check In Date: %(check_in)s\n"
+"• Earliest Allowed Date: %(limit_date)s"
+msgstr ""
+"لا يمكنك إنشاء أو استيراد سجلات حضور بتاريخ تسجيل دخول أقدم من %(days)s أيام من تاريخ اليوم.\n"
+"• الموظف: %(employee)s\n"
+"• تاريخ تسجيل الدخول: %(check_in)s\n"
+"• أقرب تاريخ مسموح به: %(limit_date)s"
+
+#. module: eco_hr_attendance_date_restriction
+#: code:addons/eco_hr_attendance_date_restriction/models/hr_attendance.py:0
+#, python-format
+msgid ""
+"You cannot create or import attendance records with a Check Out date older than %(days)s days from today.\n"
+"• Employee: %(employee)s\n"
+"• Check Out Date: %(check_out)s\n"
+"• Earliest Allowed Date: %(limit_date)s"
+msgstr ""
+"لا يمكنك إنشاء أو استيراد سجلات حضور بتاريخ تسجيل خروج أقدم من %(days)s أيام من تاريخ اليوم.\n"
+"• الموظف: %(employee)s\n"
+"• تاريخ تسجيل الخروج: %(check_out)s\n"
+"• أقرب تاريخ مسموح به: %(limit_date)s"
