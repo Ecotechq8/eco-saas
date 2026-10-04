@@ -161,8 +161,12 @@ class AttendanceSheet(models.Model):
             sheet.no_late = len(late_lines)
             # Compute Absence
             absence_lines = sheet.line_ids.filtered(
-                lambda l: l.diff_time > 0 and l.status == "ab")
-            sheet.tot_absence = sum([l.diff_time for l in absence_lines])
+                lambda l: l.status == "ab" or (l.diff_time > 0 and l.status == "ab"))
+            standard_day_hours = (
+                sheet.att_policy_id.number_of_hours_per_day if sheet.att_policy_id and sheet.att_policy_id.number_of_hours_per_day
+                else (sheet.contract_id.workdays_hour if sheet.contract_id and sheet.contract_id.workdays_hour else 8.0)
+            )
+            sheet.tot_absence = sum([l.diff_time if l.diff_time > 0 else standard_day_hours for l in absence_lines])
             sheet.no_absence = len(absence_lines)
             # Compute Attendance
             if sheet.line_ids:
@@ -738,8 +742,8 @@ class AttendanceSheet(models.Model):
             #         line.number_of_days -= absence_value[0] if absence_value else 0.0
             #         line.number_of_days -= unpaid_value[0] if unpaid_value else 0.0
             # End of code #####################################
-            payslip_id.compute_sheet()
             sheet.payslip_id = payslip_id
+            payslip_id.compute_sheet()
             payslips += payslip_id
         return payslips
 

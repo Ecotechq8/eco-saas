@@ -108,3 +108,17 @@ class HrContract(models.Model):
 
     fuel_allowance = fields.Monetary()
     food_allowance = fields.Monetary()
+
+    def get_food_allowance_daily_rate(self):
+        self.ensure_one()
+        if not self.food_allowance:
+            return 0.0
+        days = getattr(self, 'number_of_month_days', 30.0) or 30.0
+        return self.food_allowance / days
+
+    def compute_food_allowance(self, absent_days=0.0):
+        self.ensure_one()
+        if not self.food_allowance:
+            return 0.0
+        daily_rate = self.get_food_allowance_daily_rate()
+        return max(0.0, self.food_allowance - (daily_rate * (absent_days or 0.0)))

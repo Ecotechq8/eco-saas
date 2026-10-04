@@ -80,7 +80,47 @@ class HrPayslip(models.Model):
                 overtime_lines.mapped('number_of_hours')
             )
 
+    number_of_absence_days = fields.Float(
+        string='Number of Absence Days', compute='_compute_absence_totals',
+        store=True,
+    )
+    total_absence_hours = fields.Float(
+        string='Total Absence Hours', compute='_compute_absence_totals',
+        store=True,
+    )
+
+    @api.depends(
+        'worked_days_line_ids.code',
+        'worked_days_line_ids.number_of_days',
+        'worked_days_line_ids.number_of_hours',
+    )
+    def _compute_absence_totals(self):
+        for payslip in self:
+            absence_lines = payslip.worked_days_line_ids.filtered(
+                lambda w: w.code in ('ABS', 'ATTSHAB') or
+                          (hasattr(w, 'work_entry_type_id') and w.work_entry_type_id and w.work_entry_type_id.code in ('ABS', 'ATTSHAB')) or
+                          getattr(w, 'is_unpaid', False)
+            )
+            if absence_lines:
+                payslip.number_of_absence_days = sum(abs(w.number_of_days) for w in absence_lines)
+                payslip.total_absence_hours = sum(abs(w.number_of_hours) for w in absence_lines)
+            else:
+                leave_days = getattr(payslip, 'number_of_leave_days', 0.0)
+                payslip.number_of_absence_days = leave_days
+                payslip.total_absence_hours = leave_days * 8.0
+
+    def get_food_allowance_amount(self):
+        self.ensure_one()
+        contract = self.contract_id
+        if not contract or not getattr(contract, 'food_allowance', False):
+            return 0.0
+        days = getattr(contract, 'number_of_month_days', 30.0) or 30.0
+        daily_rate = contract.food_allowance / days
+        absent_days = self.number_of_absence_days
+        return max(0.0, contract.food_allowance - (daily_rate * absent_days))
+
     def _compute_details_by_salary_rule_category(self):
+
         for payslip in self:
             payslip.details_by_salary_rule_category = payslip.mapped('line_ids').filtered(lambda line: line.category_id)
 
@@ -286,7 +326,24 @@ class HrPayslip(models.Model):
                 self.env = env
 
             def __getattr__(self, attr):
-                return attr in self.dict and self.dict.__getitem__(attr) or 0.0
+                if isinstance(self.dict, dict):
+                    return self.dict.get(attr, 0.0)
+                return getattr(self.dict, attr, 0.0)
+
+            def __getitem__(self, attr):
+                if isinstance(self.dict, dict):
+                    return self.dict.get(attr, 0.0)
+                return getattr(self.dict, attr, 0.0)
+
+            def __contains__(self, attr):
+                if isinstance(self.dict, dict):
+                    return attr in self.dict
+                return hasattr(self.dict, attr)
+
+            def get(self, attr, default=0.0):
+                if isinstance(self.dict, dict):
+                    return self.dict.get(attr, default)
+                return getattr(self.dict, attr, default)
 
         class InputLine(BrowsableObject):
             """a class that will be used into the python code, mainly for usability purposes"""
@@ -345,8 +402,11 @@ class HrPayslip(models.Model):
         payslip = self.env['hr.payslip'].browse(payslip_id)
         for worked_days_line in payslip.worked_days_line_ids:
             worked_days_dict[worked_days_line.code] = worked_days_line
+            if getattr(worked_days_line, 'work_entry_type_id', False) and worked_days_line.work_entry_type_id.code:
+                worked_days_dict[worked_days_line.work_entry_type_id.code] = worked_days_line
         for input_line in payslip.input_line_ids:
             inputs_dict[input_line.code] = input_line
+
 
         categories = BrowsableObject(payslip.employee_id.id, {}, self.env)
         inputs = InputLine(payslip.employee_id.id, inputs_dict, self.env)
