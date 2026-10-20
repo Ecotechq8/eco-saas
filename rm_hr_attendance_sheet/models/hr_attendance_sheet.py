@@ -186,7 +186,7 @@ class AttendanceSheet(models.Model):
         float_time = split_time[0] + split_time[1] / 60.0
         return float_time
 
-    def get_attendance_intervals(self, employee, day_start, day_end, tz):
+    def get_attendance_intervals(self, employee, day_start, day_end, tz, exclude_ids=None):
         """
 
         :param employee:
@@ -199,16 +199,21 @@ class AttendanceSheet(models.Model):
         day_end_native = day_end.replace(tzinfo=tz).astimezone(
             pytz.utc).replace(tzinfo=None)
         res = []
+        if exclude_ids is None:
+            exclude_ids = set()
         attendances = self.env['hr.attendance'].sudo().search(
             [('employee_id', '=', employee.id),
-             ('check_in', '>=', day_start_native),
-             ('check_in', '<=', day_end_native)],
+             ('check_in', '<=', day_end_native),
+             ('check_out', '>=', day_start_native)],
             order="check_in")
         for att in attendances:
             check_in = att.check_in
             check_out = att.check_out
             if not check_out:
                 continue
+            if att.id in exclude_ids:
+                continue
+            exclude_ids.add(att.id)
             res.append((check_in, check_out))
         return res
 
@@ -250,9 +255,11 @@ class AttendanceSheet(models.Model):
             from_date = att_sheet.date_from
             to_date = att_sheet.date_to
             emp = att_sheet.employee_id
-            tz = pytz.timezone(emp.tz)
-            if not tz:
-                raise exceptions.Warning("Please add time zone for employee : %s" % emp.name)
+            tz_str = emp.tz or emp.user_id.tz or self.env.user.tz or att_sheet.company_id.partner_id.tz or 'UTC'
+            try:
+                tz = pytz.timezone(tz_str)
+            except Exception:
+                tz = pytz.utc
             calendar_id = emp.contract_id.resource_calendar_id if not att_sheet.att_policy_id.is_flexible else False
             if not calendar_id and not att_sheet.att_policy_id.is_flexible:
                 raise ValidationError(_('Please add working hours to the %s `s contract ' % emp.name))
@@ -263,6 +270,7 @@ class AttendanceSheet(models.Model):
             all_dates = [(from_date + timedelta(days=x)) for x in range((to_date - from_date).days + 1)]
             abs_cnt = 0
             late_cnt = []
+            processed_att_ids = set()
             for day in all_dates:
                 day_start = datetime(day.year, day.month, day.day)
                 day_end = day_start.replace(hour=23, minute=59, second=59)
@@ -276,7 +284,7 @@ class AttendanceSheet(models.Model):
                 date = day.strftime('%Y-%m-%d')
                 work_intervals = att_sheet._get_work_intervals(calendar_id, day_start, day_end,
                                                                tz) if not att_sheet.att_policy_id.is_flexible else []
-                attendance_intervals = self.get_attendance_intervals(emp, day_start, day_end, tz)
+                attendance_intervals = self.get_attendance_intervals(emp, day_start, day_end, tz, exclude_ids=processed_att_ids)
                 leaves = self._get_emp_leave_intervals(emp, day_start, day_end)
                 public_holiday = self.get_public_holiday(date, emp)
                 reserved_intervals = []
